@@ -34,4 +34,5 @@ foreach ($data['products'] as $product) {
     ]);
 }
 
+
 echo "✅ Import abgeschlossen.";
