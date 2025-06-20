@@ -46,7 +46,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     <?php endif; ?>
                     <hr>
                     <a href="#">Passwort vergessen?</a>
-                    <a href="#">Retoure anmelden?</a>
+                    <a href="index.php?page=return&action=form">Retoure anmelden?</a>
                 </div>
             </div>
             <a href="index.php?page=cart&action=view" title="Warenkorb">
