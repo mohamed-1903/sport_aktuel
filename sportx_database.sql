@@ -132,3 +132,15 @@ CREATE TABLE poll_votes (
     FOREIGN KEY (option_id) REFERENCES poll_options(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+-- Retouren
+CREATE TABLE returns (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT,
+    user_id INT,
+    reason TEXT,
+    status ENUM('beantragt', 'genehmigt', 'abgelehnt', 'abgeschlossen') DEFAULT 'beantragt',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
