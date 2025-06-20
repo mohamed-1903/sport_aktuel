@@ -215,4 +215,13 @@ http://localhost/sportx/index.php?page=admin&action=addProduct
 
 ---
 
+## ↩️ **Neue Retouren-Funktion**
+
+- Controller: `returnController.php`
+- Model: `returnModel.php`
+- Views: `view/return/returnFormView.php`, `view/return/returnSuccessView.php`
+- Aufrufbeispiel: `index.php?page=return&action=form&order_id=123`
+
+---
+
 Wenn du möchtest, kann ich diesen Ablauf visuell als Diagramm darstellen oder dir eine Beispielroute komplett mit Code zeigen. Sag einfach, was du brauchst!

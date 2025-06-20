@@ -38,6 +38,10 @@ switch ($page) {
         require_once 'controller/orderController.php';
         break;
 
+    case 'return':
+        require_once 'controller/returnController.php';
+        break;
+
     case 'community':
         require_once 'controller/communityController.php';
         break;
