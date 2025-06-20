@@ -180,7 +180,8 @@ function resetFields() {
   updateDisplay(); // Alles neu anzeigen
 }
 
-// Zoomfunktion bei Hover über Hauptbild
+// Zoomfunktion deaktiviert
+/*
 (function () {
   const container = document.querySelector(".zoom-bg-container");
   const img = document.getElementById("main-image");
@@ -220,6 +221,7 @@ function resetFields() {
     }
   };
 })();
+*/
 
 // Brutto-Anzeige (nur Steuer) bei Eingabe von Netto
 function zeigePreis() {
@@ -252,14 +254,15 @@ function changeImage(src, index) {
   currentImageIndex = index;
 }
 
-// Modal öffnen per Klick auf Hauptbild
-document.getElementById("main-image").addEventListener("click", () => {
-  const thumbs = [...document.querySelectorAll(".additional-images img")];
-  zoomImages = thumbs.map((img) => img.src);
-  openZoomModal();
-});
+// Modalfunktion deaktiviert
+// document.getElementById("main-image").addEventListener("click", () => {
+//   const thumbs = [...document.querySelectorAll(".additional-images img")];
+//   zoomImages = thumbs.map((img) => img.src);
+//   openZoomModal();
+// });
 
-// Modal öffnen
+// Modalfunktionen deaktiviert
+/*
 function openZoomModal() {
   zoomScale = 1;
   document.body.classList.add("modal-open");
@@ -274,7 +277,6 @@ function closeZoomModal() {
   document.getElementById("zoomModal").classList.add("hidden");
 }
 
-// Bildwechsel
 function nextZoomImage() {
   currentImageIndex = (currentImageIndex + 1) % zoomImages.length;
   updateZoomImage();
@@ -285,7 +287,6 @@ function prevZoomImage() {
   updateZoomImage();
 }
 
-// Zoomsteuerung
 function zoomIn() {
   zoomScale = Math.min(3, zoomScale + 0.25);
   updateZoomImage();
@@ -305,14 +306,12 @@ function updateZoomImage() {
   zoomImage.src = zoomImages[currentImageIndex];
   zoomImage.style.transform = `scale(${zoomScale})`;
 }
-// ✨ Klick außerhalb vom Content schließt das Modal
 document.getElementById("zoomModal").addEventListener("click", (e) => {
   const content = document.getElementById("zoomModalContent");
   if (!content.contains(e.target)) {
     closeZoomModal();
   }
 });
-// 🎯 Tastatursteuerung fürs Modal
 document.addEventListener("keydown", (e) => {
   const modal = document.getElementById("zoomModal");
   if (modal.classList.contains("hidden")) return;
@@ -340,6 +339,7 @@ document.addEventListener("keydown", (e) => {
       break;
   }
 });
+*/
 function flyToTarget(startEl, targetSelector) {
   const target = document.querySelector(targetSelector);
   if (!startEl || !target) return;

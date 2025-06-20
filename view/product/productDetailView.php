@@ -1,19 +1,7 @@
 <?php include 'view/layout/header.php'; ?>
 
 <main class="produkte">
-  <div id="zoomModal" class="zoom-modal hidden">
-    <div class="zoom-modal-content" id="zoomModalContent">
-      <span class="zoom-close" onclick="closeZoomModal()">×</span>
-      <img id="zoom-image" src="" alt="Zoomed" />
-      <div class="zoom-controls">
-        <button onclick="prevZoomImage()">←</button>
-        <button onclick="zoomIn()">+</button>
-        <button onclick="zoomOut()">−</button>
-        <button onclick="resetZoom()">⟳</button>
-        <button onclick="nextZoomImage()">→</button>
-      </div>
-    </div>
-  </div>
+
 
   <?php foreach ($productsToShow as $index => $product):
     $name = $product['name'] ?? 'Produktname nicht verfügbar';
