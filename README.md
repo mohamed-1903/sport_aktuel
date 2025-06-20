@@ -221,6 +221,7 @@ http://localhost/sportx/index.php?page=admin&action=addProduct
 - Model: `returnModel.php`
 - Views: `view/return/returnFormView.php`, `view/return/returnSuccessView.php`
 - Aufrufbeispiel: `index.php?page=return&action=form&order_id=123`
+- Das Formular sollte über die Bestellübersicht aufgerufen werden, damit die Bestellnummer übergeben wird.
 
 ---
 

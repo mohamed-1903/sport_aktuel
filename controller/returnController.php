@@ -16,14 +16,18 @@ $action = $_GET['action'] ?? 'form';
 switch ($action) {
     case 'submit':
         $orderId = isset($_POST['order_id']) ? (int)$_POST['order_id'] : 0;
-        $reason = trim($_POST['reason'] ?? '');
-        if ($orderId > 0 && $reason !== '') {
+        $reason  = trim($_POST['reason'] ?? '');
+
+        if ($orderId <= 0) {
+            $error = 'Bitte eine gültige Bestellung auswählen.';
+        } elseif ($reason === '') {
+            $error = 'Bitte einen Grund angeben.';
+        } else {
             requestReturn($orderId, $_SESSION['user_id'], $reason);
             header("Location: index.php?page=return&action=success");
             exit;
         }
-        $error = 'Bitte einen Grund angeben.';
-        $orderId = $orderId ?: ($_GET['order_id'] ?? '');
+
         require 'view/return/returnFormView.php';
         break;
 

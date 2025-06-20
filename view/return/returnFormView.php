@@ -5,6 +5,9 @@
   <?php if (!empty($error)): ?>
     <p style="color: red;"><?= htmlspecialchars($error) ?></p>
   <?php endif; ?>
+  <?php if (empty($orderId)): ?>
+    <p style="color: red;">Bitte rufen Sie die Retoure über Ihre Bestellung auf.</p>
+  <?php endif; ?>
   <form action="index.php?page=return&action=submit" method="post" style="margin-top: 1em;">
     <input type="hidden" name="order_id" value="<?= htmlspecialchars($orderId) ?>">
     <label for="reason">Grund für die Rückgabe:</label><br>
