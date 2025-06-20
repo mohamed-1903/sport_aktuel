@@ -22,6 +22,8 @@ switch ($action) {
                 echo "Produkt nicht gefunden.";
                 exit;
             }
+            $product['iid'] = $product['id'];
+            $product['priceValue'] = $product['price'];
             $productsToShow[] = $product;
         } elseif ($id && $id2) {
             $p1 = getProductById($id);
@@ -29,6 +31,10 @@ switch ($action) {
             if (!$p1 || !$p2) {
                 echo "Eines oder beide Produkte nicht gefunden.";
                 exit;
+            }
+            foreach ([$p1, $p2] as &$p) {
+                $p['iid'] = $p['id'];
+                $p['priceValue'] = $p['price'];
             }
             $productsToShow = [$p1, $p2];
         }
