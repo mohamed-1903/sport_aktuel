@@ -47,14 +47,14 @@
           <button class="btn-add-to-cart"
                   data-iid="<?= (int)$product['iid'] ?>"
                   data-name="<?= htmlspecialchars($product['name']) ?>"
-                  data-price="<?= (float)$product['priceaValue'] ?>"
+                  data-price="<?= (float)$product['price'] ?>"
                   data-image="<?= htmlspecialchars($product['image_main']) ?>">
             🛒 In den Warenkorb
           </button>
           <button class="btn-add-to-watch"
                   data-iid="<?= (int)$product['iid'] ?>"
                   data-name="<?= htmlspecialchars($product['name']) ?>"
-                  data-price="<?= (float)$product['priceaValue'] ?>"
+                  data-price="<?= (float)$product['price'] ?>"
                   data-image="<?= htmlspecialchars($product['image_main']) ?>">
             🤍 Merken
           </button>
