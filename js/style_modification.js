@@ -1,46 +1,44 @@
-// js/darkmode.js
-
+// ✅ Dark-/Light-Mode Toggle
 document.addEventListener("DOMContentLoaded", () => {
-  const toggleBtn = document.getElementById("theme-toggle");
-  const body = document.body;
+  const toggleButton = document.getElementById("theme-toggle");
+  const savedTheme = localStorage.getItem("theme");
 
-  // Zustand aus localStorage wiederherstellen␊
-  const savedMode = localStorage.getItem("theme-mode");
-  if (savedMode === "light") {
-    body.classList.add("light-mode");
+  if (savedTheme === "light") {
+    document.body.classList.add("light-mode");
+    toggleButton.textContent = "🌙";
+  } else {
+    document.body.classList.add("dark-mode");
+    toggleButton.textContent = "☀️";
   }
 
-  // Toggle-Logik␊
-  toggleBtn?.addEventListener("click", () => {
-    body.classList.toggle("light-mode");
-    const mode = body.classList.contains("light-mode") ? "light" : "dark";
-    localStorage.setItem("theme-mode", mode);
+  toggleButton.addEventListener("click", () => {
+    document.body.classList.toggle("light-mode");
+    document.body.classList.toggle("dark-mode");
+    const theme = document.body.classList.contains("light-mode")
+      ? "light"
+      : "dark";
+    localStorage.setItem("theme", theme);
+    toggleButton.textContent = theme === "light" ? "🌙" : "☀️";
   });
 });
 
-// Scroll-To-Top Button
+// ✅ Scroll-To-Top Button
 document.addEventListener("DOMContentLoaded", () => {
-    const scrollBtn = document.getElementById("scrollTopBtn");
-    if (!scrollBtn) return;
+  const scrollBtn = document.getElementById("scrollTopBtn");
+  if (!scrollBtn) return;
 
-    const checkScrollAvailability = () => {
-        const scrollable = document.documentElement.scrollHeight > window.innerHeight;
-        scrollBtn.style.display = scrollable && window.scrollY > 300 ? "flex" : "none";
-    };
+  const checkScrollAvailability = () => {
+    const scrollable =
+      document.documentElement.scrollHeight > window.innerHeight;
+    scrollBtn.style.display =
+      scrollable && window.scrollY > 300 ? "flex" : "none";
+  };
 
-    window.addEventListener("scroll", checkScrollAvailability);
-    window.addEventListener("resize", checkScrollAvailability);
-    checkScrollAvailability();
+  window.addEventListener("scroll", checkScrollAvailability);
+  window.addEventListener("resize", checkScrollAvailability);
+  checkScrollAvailability();
 
-    scrollBtn.addEventListener("click", () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-});
-
-// Body Transition Effect
-document.addEventListener("DOMContentLoaded", () => {
-    document.body.classList.add("transitioning");
-    setTimeout(() => {
-        document.body.classList.remove("transitioning");
-    }, 400);
+  scrollBtn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
 });

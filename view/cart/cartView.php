@@ -1,11 +1,11 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+  session_start();
 }
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: index.php?page=auth&action=login&redirect=cart");
-    exit;
+  header("Location: index.php?page=auth&action=login&redirect=cart");
+  exit;
 }
 
 include 'view/layout/header.php';
@@ -21,6 +21,8 @@ $total = 0;
     <div class="button-row">
       <a href="index.php">
         <button class="btn-zurueck-startseite">Zurück zur Startseite</button>
+        <button class="btn-delete-all" onclick="clearList()">🧹 Alle löschen</button>
+
       </a>
     </div>
 
@@ -37,37 +39,39 @@ $total = 0;
       </thead>
       <tbody>
         <?php if (empty($cartItems)): ?>
-          <tr><td colspan="6">Dein Warenkorb ist leer.</td></tr>
-        <?php else:
+          <tr>
+            <td colspan="6">Dein Warenkorb ist leer.</td>
+          </tr>
+          <?php else:
           foreach ($cartItems as $item):
             $sum = $item['quantity'] * $item['price'];
             $total += $sum;
-        ?>
-          <tr>
-            <td>
-              <img src="<?= htmlspecialchars($item['image']) ?>" width="60" />
-              <?= htmlspecialchars($item['name']) ?>
-            </td>
-            <td><?= htmlspecialchars($item['size']) ?></td>
-            <td>
-              <form action="index.php?page=cart&action=update" method="post">
-                <input type="hidden" name="id" value="<?= (int)$item['id'] ?>">
-                <input type="hidden" name="size" value="<?= htmlspecialchars($item['size']) ?>">
-                <input type="number" name="quantity" value="<?= (int)$item['quantity'] ?>" min="1" />
-                <button type="submit">✔</button>
-              </form>
-            </td>
-            <td><?= number_format($item['price'], 2, ',', '.') ?> €</td>
-            <td><?= number_format($sum, 2, ',', '.') ?> €</td>
-                          <td>
-              <form action="index.php?page=cart&action=remove" method="post" style="display:inline">
-                <input type="hidden" name="id" value="<?= (int)$item['id'] ?>">
-                <input type="hidden" name="size" value="<?= htmlspecialchars($item['size']) ?>">
-                <button type="submit" class="remove-btn">❌</button>
-              </form>
-            </td>
-          </tr>
-        <?php endforeach; ?>
+          ?>
+            <tr>
+              <td>
+                <img src="<?= htmlspecialchars($item['image']) ?>" width="60" />
+                <?= htmlspecialchars($item['name']) ?>
+              </td>
+              <td><?= htmlspecialchars($item['size']) ?></td>
+              <td>
+                <form action="index.php?page=cart&action=update" method="post">
+                  <input type="hidden" name="id" value="<?= (int)$item['id'] ?>">
+                  <input type="hidden" name="size" value="<?= htmlspecialchars($item['size']) ?>">
+                  <input type="number" name="quantity" value="<?= (int)$item['quantity'] ?>" min="1" />
+                  <button type="submit">✔</button>
+                </form>
+              </td>
+              <td><?= number_format($item['price'], 2, ',', '.') ?> €</td>
+              <td><?= number_format($sum, 2, ',', '.') ?> €</td>
+              <td>
+                <form action="index.php?page=cart&action=remove" method="post" style="display:inline">
+                  <input type="hidden" name="id" value="<?= (int)$item['id'] ?>">
+                  <input type="hidden" name="size" value="<?= htmlspecialchars($item['size']) ?>">
+                  <button type="submit" class="remove-btn">❌</button>
+                </form>
+              </td>
+            </tr>
+          <?php endforeach; ?>
         <?php endif; ?>
       </tbody>
     </table>
@@ -76,7 +80,8 @@ $total = 0;
   <!-- ✅ Rechte Seite – Zusammenfassung -->
   <aside class="cart-summary">
     <h3>Zusammenfassung</h3>
-    <?php $netto = $total / 1.19; $mwst = $total - $netto; ?>
+    <?php $netto = $total / 1.19;
+    $mwst = $total - $netto; ?>
     <p>Zwischensumme: <span><?= number_format($total, 2, ',', '.') ?> €</span></p>
     <p>Versandkosten: <span>0,00 €</span></p>
     <hr>

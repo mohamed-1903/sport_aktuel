@@ -180,8 +180,7 @@ function resetFields() {
   updateDisplay(); // Alles neu anzeigen
 }
 
-// Zoomfunktion deaktiviert
-/*
+// Zoomfunktion bei Hover über Hauptbild
 (function () {
   const container = document.querySelector(".zoom-bg-container");
   const img = document.getElementById("main-image");
@@ -221,7 +220,6 @@ function resetFields() {
     }
   };
 })();
-*/
 
 // Brutto-Anzeige (nur Steuer) bei Eingabe von Netto
 function zeigePreis() {
@@ -254,15 +252,14 @@ function changeImage(src, index) {
   currentImageIndex = index;
 }
 
-// Modalfunktion deaktiviert
-// document.getElementById("main-image").addEventListener("click", () => {
-//   const thumbs = [...document.querySelectorAll(".additional-images img")];
-//   zoomImages = thumbs.map((img) => img.src);
-//   openZoomModal();
-// });
+// Modal öffnen per Klick auf Hauptbild
+document.getElementById("main-image").addEventListener("click", () => {
+  const thumbs = [...document.querySelectorAll(".additional-images img")];
+  zoomImages = thumbs.map((img) => img.src);
+  openZoomModal();
+});
 
-// Modalfunktionen deaktiviert
-/*
+// Modal öffnen
 function openZoomModal() {
   zoomScale = 1;
   document.body.classList.add("modal-open");
@@ -277,6 +274,7 @@ function closeZoomModal() {
   document.getElementById("zoomModal").classList.add("hidden");
 }
 
+// Bildwechsel
 function nextZoomImage() {
   currentImageIndex = (currentImageIndex + 1) % zoomImages.length;
   updateZoomImage();
@@ -287,6 +285,7 @@ function prevZoomImage() {
   updateZoomImage();
 }
 
+// Zoomsteuerung
 function zoomIn() {
   zoomScale = Math.min(3, zoomScale + 0.25);
   updateZoomImage();
@@ -306,12 +305,14 @@ function updateZoomImage() {
   zoomImage.src = zoomImages[currentImageIndex];
   zoomImage.style.transform = `scale(${zoomScale})`;
 }
+// ✨ Klick außerhalb vom Content schließt das Modal
 document.getElementById("zoomModal").addEventListener("click", (e) => {
   const content = document.getElementById("zoomModalContent");
   if (!content.contains(e.target)) {
     closeZoomModal();
   }
 });
+// 🎯 Tastatursteuerung fürs Modal
 document.addEventListener("keydown", (e) => {
   const modal = document.getElementById("zoomModal");
   if (modal.classList.contains("hidden")) return;
@@ -339,7 +340,6 @@ document.addEventListener("keydown", (e) => {
       break;
   }
 });
-*/
 function flyToTarget(startEl, targetSelector) {
   const target = document.querySelector(targetSelector);
   if (!startEl || !target) return;
@@ -393,25 +393,3 @@ function flyToTarget(startEl, targetSelector) {
     }
   });
 }
-
-document.querySelectorAll(".btn-add-to-cart").forEach(btn => {
-  btn.addEventListener("click", function () {
-    const size = document.getElementById("size").value;
-    if (!size) {
-      alert("Bitte wähle eine Größe aus.");
-      return;
-    }
-
-    const item = {
-      id: this.dataset.iid,
-      name: this.dataset.name,
-      price: this.dataset.price,
-      image: this.dataset.image,
-      size: size,
-      quantity: document.getElementById("quantity").value
-    };
-
-    // Hier: item an Warenkorb-Logik übergeben
-    console.log("Zum Warenkorb:", item);
-  });
-});

@@ -1,26 +1,22 @@
 <?php include 'view/layout/header.php'; ?>
 
-<div class="watchlist-wrapper">
-    <h2>Meine Favoriten</h2>
-    <section id="watchlist-container">
-        <?php if (!empty($watchlistItems)): ?>
-            <?php foreach ($watchlistItems as $item): ?>
-                <div class="watchlist-card">
-                    <img src="<?= htmlspecialchars($item['image']) ?>" alt="<?= htmlspecialchars($item['name']) ?>">
-                    <h3><?= htmlspecialchars($item['name']) ?></h3>
-                    <p><?= number_format($item['price'], 2) ?>€</p>
-                    <div class="button-group">
-                        <a href="index.php?page=product&action=detail&id=<?= (int)$item['id'] ?>"><button>Details</button></a>
-                        <a href="index.php?page=watchlist&action=remove&id=<?= (int)$item['id'] ?>"><button>Entfernen</button></a>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p>Deine Favoritenliste ist leer.</p>
-        <?php endif; ?>
-    </section>
+<div class="produkte">
+    <h1>🧡 Deine Merkliste</h1>
+    <div id="watchlist-container" class="einzelprodukt-grid"></div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <button class="btn-delete-all" onclick="clearWatchlist()">🧹 Alle löschen</button>
+    </div>
+
 </div>
 
+<!-- Produktdaten direkt ins JS einbinden -->
+<script id="json-data" type="application/json">
+    <?= file_get_contents("produkte.json"); ?>
+</script>
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
+
 <script src="js/style_modification.js"></script>
-<?php include 'view/layout/footer.php'; ?>
+<script src="js/watchlist.js"></script>
+<script src="js/filterandsearch.js"></script>
+<script src="js/produkt.js"></script>
