@@ -24,3 +24,10 @@ function applyFilter() {
 document.addEventListener("DOMContentLoaded", () => {
   applyFilter();
 });
+
+function resetFilter() {
+  document.querySelectorAll(
+    "#filter-marke, #filter-farbe, #filter-preis, #filter-mannschaft, #filter-geschlecht"
+  ).forEach((sel) => (sel.value = ""));
+  applyFilter();
+}

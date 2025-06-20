@@ -1,15 +1,4 @@
 
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SportX - Dein Sportshop</title>
-    <link rel="icon" type="image/png" href="img/logo.png">
-    <link rel="stylesheet" href="css/mystyle.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
-</head>
-<body>
 <?php include 'view/layout/header.php'; ?>
 <section class="welcome">
     <img src="img/logo.png" alt="SportX Logo" class="welcome-logo">
@@ -70,5 +59,3 @@ $topProdukte = array_slice($topProdukte, 0, 4);
 <script src="js/style_modification.js"></script>
 <script src="js/filterandsearch.js"></script>
 <script src="js/produkt.js"></script>
-</body>
-</html>

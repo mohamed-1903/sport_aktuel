@@ -7,8 +7,11 @@ if (session_status() === PHP_SESSION_NONE) {
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SportX</title>
+    <link rel="icon" type="image/png" href="img/logo.png">
     <link rel="stylesheet" href="css/mystyle.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
 <header>
@@ -93,6 +96,4 @@ if (session_status() === PHP_SESSION_NONE) {
         </ul>
     </nav>
 </header>
-</body>
-</html>
 
