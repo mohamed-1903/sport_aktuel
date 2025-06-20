@@ -1962,3 +1962,60 @@ body:not(.light-mode) .error {
   font-size: 48px;
   margin-bottom: 20px;
 }
+
+/* ----- Zusätzliche Styles für statische Seiten und Filter ----- */
+.content {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  line-height: 1.6;
+}
+
+.content h2 {
+  color: var(--accent-color);
+  margin-bottom: 0.8em;
+}
+
+.content form {
+  display: grid;
+  gap: 15px;
+}
+
+.content input,
+.content textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background: var(--card-bg);
+  color: var(--text-color);
+}
+
+.content button {
+  width: fit-content;
+  background: var(--accent-color);
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.content button:hover {
+  background: #e6c200;
+}
+
+.reset-filter {
+  background: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid #555;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.reset-filter:hover {
+  background: var(--accent-color);
+  color: #000;
+}

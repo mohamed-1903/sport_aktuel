@@ -53,6 +53,7 @@
         <option value="Damen">Damen</option>
         <option value="Unisex">Unisex</option>
       </select>
+      <button type="button" class="reset-filter" onclick="resetFilter()">Zurücksetzen</button>
     </section>
 
     <section class="einzelprodukt-grid" id="produktContainer">
