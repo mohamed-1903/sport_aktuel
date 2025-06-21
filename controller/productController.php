@@ -6,8 +6,10 @@ $action = $_GET['action'] ?? 'list';
 
 switch ($action) {
     case 'detail':
-        $id = $_GET['id'] ?? null;
-        $id2 = $_GET['id2'] ?? null;
+        // Ermöglicht alternative Parameter wie iid1/iid2 für Links à la
+        // item.php?iid1=1234&iid2=2222
+        $id = $_GET['id'] ?? $_GET['iid'] ?? $_GET['iid1'] ?? null;
+        $id2 = $_GET['id2'] ?? $_GET['iid2'] ?? null;
 
         if (!$id && !$id2) {
             echo "Parameter 'id' oder 'id2' fehlen!";
@@ -15,6 +17,7 @@ switch ($action) {
         }
 
         $productsToShow = [];
+        $allProducts = [];
 
         if ($id && !$id2) {
             $product = getProductById($id);
@@ -25,6 +28,8 @@ switch ($action) {
             $product['iid'] = $product['id'];
             $product['priceValue'] = $product['price'];
             $productsToShow[] = $product;
+            // Produktliste für Vergleichsdialog laden
+            $allProducts = getAllProducts();
         } elseif ($id && $id2) {
             $p1 = getProductById($id);
             $p2 = getProductById($id2);
@@ -38,6 +43,9 @@ switch ($action) {
             }
             $productsToShow = [$p1, $p2];
         }
+
+        $allProducts = getAllProducts();
+        $currentId = $productsToShow[0]['id'];
 
         require 'view/product/productDetailView.php';
         break;

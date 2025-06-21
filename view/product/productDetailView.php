@@ -18,7 +18,7 @@
   <?php foreach ($productsToShow as $index => $product):
     // 🧩 Produktdaten extrahieren mit Fallbacks
     $name = $product['name'] ?? 'Produktname nicht verfügbar';
-    $price = $product['priceValue'] ?? 'Preis nicht verfügbar';
+    $price = isset($product['priceValue']) && is_numeric($product['priceValue']) ? $product['priceValue'] : 0;
     $imageMain = $product['image_main'] ?? ($product['imagepath'] ?? 'img/placeholder.jpg');
     $images = $product['images'] ?? [$imageMain];
     $description = $product['description'] ?? 'Keine Beschreibung verfügbar';
@@ -32,10 +32,9 @@
       <div class="produkt-grid">
         <!-- 📸 Bilderbereich -->
         <div class="image-wrapper">
-          <div class="zoom-bg-container" id="zoomContainer">
-            <img id="main-image" src="<?= htmlspecialchars($imageMain) ?>" alt="<?= htmlspecialchars($name) ?>" />
+          <div class="zoom-bg-container" id="zoomContainer-<?= $index ?>">
+            <img id="main-image-<?= $index ?>" src="<?= htmlspecialchars($imageMain) ?>" alt="<?= htmlspecialchars($name) ?>" />
           </div>
-
           <div class="additional-images">
             <?php foreach ($images as $imgIndex => $img): ?>
               <img src="<?= htmlspecialchars($img) ?>" onclick="changeImage('<?= htmlspecialchars($img) ?>', <?= $imgIndex ?>)" />
@@ -46,16 +45,25 @@
         <!-- 🛒 Produktdetails & Optionen -->
         <div>
           <h1><?= htmlspecialchars($name) ?></h1>
-          <p id="original-price" class="price-old" style="display: none;"></p>
-          <p id="final-price">
-            <span id="finalPriceValue" class="preis"><?= htmlspecialchars($price) ?></span>
-            <del id="basePrice" class="preis" style="display:none;"><?= htmlspecialchars($price) ?></del>
-            <span id="discountLabel" class="rabatt" style="display:none;">-20%</span>
+          <p id="original-price-<?= $index ?>" class="price-old" style="display: none;"></p>
+          <p id="final-price-<?= $index ?>">
+            <?php if (isset($product['priceValue']) && is_numeric($product['priceValue'])): ?>
+              <span id="finalPriceValue-<?= $index ?>" class="preis">
+                <?= number_format((float)$product['priceValue'], 2, ',', '.') ?>€ inkl. Mwst.
+              </span>
+              <del id="basePrice-<?= $index ?>" class="preis" style="display:none;">
+                <?= number_format((float)$product['priceValue'], 2, ',', '.') ?>€
+              </del>
+            <?php else: ?>
+              <span class="preis">Preis nicht verfügbar</span>
+            <?php endif; ?>
+            <span id="discountLabel-<?= $index ?>" class="rabatt" style="display:none;">-20%</span>
           </p>
 
+
           <!-- 👕 Größenauswahl -->
-          <label for="size">Größe:</label>
-          <select id="size" class="size-dropdown">
+          <label for="size-<?= $index ?>">Größe:</label>
+          <select id="size-<?= $index ?>" class="size-dropdown">
             <option value="" disabled selected>-- Bitte auswählen --</option>
             <?php foreach ($sizes as $size): ?>
               <option value="<?= $size ?>"><?= $size ?></option>
@@ -63,35 +71,46 @@
           </select>
 
           <!-- 🔢 Mengenauswahl -->
-          <label for="quantity">Menge:</label>
-          <input type="number" id="quantity" value="1" min="1" class="size-dropdown" />
+          <label for="quantity-<?= $index ?>">Menge:</label>
+          <input type="number" id="quantity-<?= $index ?>" value="1" min="1" class="size-dropdown" />
 
           <!-- 🧺 Aktionen -->
-          <div class="button-reihe" data-iid="<?= (int)$product['iid'] ?>">
+          <div class="button-reihe" data-iid="<?= (int)$product['id'] ?>">
+            <?php
+            $iid = isset($product['iid']) ? (int)$product['iid'] : 0;
+            $name = $product['name'] ?? 'Unbekanntes Produkt';
+            $price = isset($product['priceValue']) ? (float)$product['priceValue'] : 0.00;
+            $image = $product['image_main'] ?? 'img/placeholder.jpg';
+            ?>
+
+            <!-- 🛒 In den Warenkorb -->
             <button
               class="btn-add-to-cart"
-              data-iid="<?= (int)$product['iid'] ?>"
-              data-name="<?= htmlspecialchars($product['name']) ?>"
-              data-price="<?= (float)$product['priceValue'] ?>"
-              data-image="<?= htmlspecialchars($product['image_main']) ?>">
+              data-iid="<?= $iid ?>"
+              data-name="<?= htmlspecialchars($name) ?>"
+              data-price="<?= $price ?>"
+              data-image="<?= htmlspecialchars($image) ?>">
               🛒
             </button>
 
+            <!-- ❤️ Zur Merkliste -->
             <button
               class="btn-add-to-watch"
-              data-iid="<?= (int)$product['iid'] ?>"
-              data-name="<?= htmlspecialchars($product['name']) ?>"
-              data-price="<?= (float)$product['priceValue'] ?>"
-              data-image="<?= htmlspecialchars($product['image_main']) ?>">
+              data-iid="<?= $iid ?>"
+              data-name="<?= htmlspecialchars($name) ?>"
+              data-price="<?= $price ?>"
+              data-image="<?= htmlspecialchars($image) ?>">
               ❤️
             </button>
+
+
           </div>
-          <!-- 📄 Produktbeschreibung ein-/ausklappbar -->
+          <!-- 📄 Produktbeschreibung -->
           <div class="produkt-info">
-            <h3 id="toggle-info">
+            <h3 id="toggle-info-<?= $index ?>">
               <span class="toggle-icon">+</span> Produktinformationen
             </h3>
-            <div id="description-full" class="hidden">
+            <div id="description-full-<?= $index ?>" class="hidden">
               <p><?= nl2br(htmlspecialchars($description)) ?></p>
             </div>
           </div>
@@ -111,15 +130,14 @@
 
     <div class="button-rows">
       <!-- 🎟 Rabattcode -->
-      <label for="pin">Rabatt-PIN eingeben:</label>
-      <input type="text" id="pin" maxlength="5" placeholder="5-stellig" />
-      <button onclick="checkPin()">Anwenden</button>
-      <p id="rabatt-info"></p>
+      <label for="pin-<?= $index ?>">Rabatt-PIN eingeben:</label>
+      <input type="text" id="pin-<?= $index ?>" maxlength="5" placeholder="5-stellig" />
+      <p id="rabatt-info-<?= $index ?>"></p>
 
       <!-- 🎁 Geschenkoption -->
       <div class="gift-wrap">
         <label>
-          <input type="checkbox" id="giftWrap" onchange="calculateAndDisplay()" />
+          <input type="checkbox" id="giftWrap-<?= $index ?>" />
           🎁 Geschenkverpackung (+ 2 €)
         </label>
       </div>
@@ -128,7 +146,18 @@
       <button onclick="resetFields()">Felder zurücksetzen</button>
     </div>
   </section>
-
+  <div class="compare-section">
+    <label for="compareInput">Produkt zum Vergleichen auswählen:</label>
+    <input id="compareInput" list="compareOptions" placeholder="Name eingeben">
+    <datalist id="compareOptions">
+      <?php foreach ($allProducts as $p): ?>
+        <?php if ($p['id'] != $currentId): ?>
+          <option data-id="<?= (int)$p['id'] ?>" value="<?= htmlspecialchars($p['name']) ?>"></option>
+        <?php endif; ?>
+      <?php endforeach; ?>
+    </datalist>
+    <button id="compareBtn">Produkt vergleichen</button>
+  </div>
   <!-- 🧾 Dynamische Sammelliste / Warenkorb -->
   <section id="sammelliste">
     <h2>🗂️ Dein Warenkorb</h2>
@@ -151,30 +180,21 @@
   </section>
 </main>
 <script>
-          const item = {
-          id: addButton.dataset.iid,
-          name: addButton.dataset.name,
-          price: addButton.dataset.price,
-          image: addButton.dataset.image,
-          size: size,
-          quantity: quantity
-        };
-
-        fetch("index.php?page=cart&action=add", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(item)
-        }).then(res => {
-          if (res.ok) {
-            alert("✅ Produkt wurde zum Warenkorb hinzugefügt.");
-          } else {
-            alert("❌ Fehler beim Hinzufügen des Produkts.");
-          }
-        });
+  document.getElementById('compareBtn').addEventListener('click', () => {
+    const input = document.getElementById('compareInput').value.trim();
+    const options = document.querySelectorAll('#compareOptions option');
+    let secondId = null;
+    options.forEach(opt => {
+      if (opt.value === input) secondId = opt.dataset.id;
+    });
+    if (!secondId) {
+      alert('Produkt nicht gefunden');
+      return;
+    }
+    const id = <?= (int)$currentId ?>;
+    window.location.href = `index.php?page=product&action=detail&id=${id}&id2=${secondId}`;
+  });
 </script>
-
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
 <script src="js/style_modification.js"></script>
 <script src="js/filterandsearch.js"></script>

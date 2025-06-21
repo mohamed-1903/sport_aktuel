@@ -12,7 +12,7 @@
 
 <!-- Produktdaten direkt ins JS einbinden -->
 <script id="json-data" type="application/json">
-    <?= file_get_contents("produkte.json"); ?>
+    <?= file_get_contents("data/products.json"); ?>
 </script>
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
 

@@ -1,7 +1,16 @@
 <?php
+// controller/cartController.php
+
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+$userId = $_SESSION['user_id'] ?? null;
+
+require_once 'model/cartModel.php';
+require_once 'model/productModel.php';
+
+$action = $_GET['action'] ?? 'view';
+
 
 if (!isset($_SESSION['user_id'])) {
   header("Location: index.php?page=auth&action=login&redirect=cart");
@@ -9,8 +18,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 include 'view/layout/header.php';
-require_once 'model/cartModel.php';
-$cartItems = getCartItems();
+$cartItems = getCartItems($_SESSION['user_id']);
 $total = 0;
 ?>
 
@@ -22,7 +30,6 @@ $total = 0;
       <a href="index.php">
         <button class="btn-zurueck-startseite">Zurück zur Startseite</button>
         <button class="btn-delete-all" onclick="clearList()">🧹 Alle löschen</button>
-
       </a>
     </div>
 
@@ -37,7 +44,7 @@ $total = 0;
           <th></th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="cart-table-body">
         <?php if (empty($cartItems)): ?>
           <tr>
             <td colspan="6">Dein Warenkorb ist leer.</td>
@@ -49,13 +56,13 @@ $total = 0;
           ?>
             <tr>
               <td>
-                <img src="<?= htmlspecialchars($item['image']) ?>" width="60" />
+                <img src="<?= htmlspecialchars($item['image_main']) ?>" width="60" />
                 <?= htmlspecialchars($item['name']) ?>
               </td>
               <td><?= htmlspecialchars($item['size']) ?></td>
               <td>
                 <form action="index.php?page=cart&action=update" method="post">
-                  <input type="hidden" name="id" value="<?= (int)$item['id'] ?>">
+                  <input type="hidden" name="id" value="<?= (int)$item['product_id'] ?>">
                   <input type="hidden" name="size" value="<?= htmlspecialchars($item['size']) ?>">
                   <input type="number" name="quantity" value="<?= (int)$item['quantity'] ?>" min="1" />
                   <button type="submit">✔</button>

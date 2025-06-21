@@ -29,33 +29,33 @@ switch ($action) {
         header("Location: index.php?page=auth&action=login&logout=1");
         exit;
 
-case 'login':
-default:
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $email = $_POST['email'] ?? '';
-        $password = $_POST['password'] ?? '';
+    case 'login':
+    default:
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = $_POST['email'] ?? '';
+            $password = $_POST['password'] ?? '';
 
-        $user = loginUser($email, $password);
+            $user = loginUser($email, $password);
 
-        if ($user) {
-            session_start();
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['username'];
-$_SESSION['is_admin'] = $user['is_admin'];if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
-  header('Location: index.php?page=auth&action=login');
-  exit;
-}
+            if ($user) {
+                session_start();
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['is_admin'] = $user['is_admin'];
+                if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
+                    header('Location: index.php?page=auth&action=login');
+                    exit;
+                }
 
-            $redirect = $_GET['redirect'] ?? 'index';
-            header("Location: index.php?page={$redirect}");
-            exit;
-        } else {
-            $_SESSION['login_error'] = "Login fehlgeschlagen. Bitte überprüfe deine Zugangsdaten.";
-            header("Location: index.php?page=auth&action=login");
-            exit;
+                $redirect = $_GET['redirect'] ?? 'index';
+                header("Location: index.php?page={$redirect}");
+                exit;
+            } else {
+                $_SESSION['login_error'] = "Login fehlgeschlagen. Bitte überprüfe deine Zugangsdaten.";
+                header("Location: index.php?page=auth&action=login");
+                exit;
+            }
         }
-    }
-    require 'view/auth/loginView.php';
-    break;
-
+        require 'view/auth/loginView.php';
+        break;
 }

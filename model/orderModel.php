@@ -17,6 +17,17 @@ function saveOrder(int $userId, array $cartItems): bool {
 
     return false;
 }
+function cancelOrderIfNew(int $orderId, int $userId): void {
+    global $db;
+
+    $stmt = $db->prepare("
+        UPDATE orders 
+        SET status = 'storniert', updated_at = NOW() 
+        WHERE id = ? AND user_id = ? AND status = 'neu'
+    ");
+    $stmt->execute([$orderId, $userId]);
+}
+
 
 function getOrdersByUser(int $userId): array {
     global $db;

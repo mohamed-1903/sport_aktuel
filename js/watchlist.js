@@ -68,6 +68,8 @@ function toggleWatchlist(iid, el = null) {
     list.splice(index, 1);
     if (el) el.textContent = "🤍";
     zeigeToast("💔 Produkt wurde aus der Merkliste entfernt", "#cc0000");
+    const name = el?.dataset.name || "Produkt";
+    const image = el?.dataset.image || "img/placeholder.jpg";
     zeigeWatchRemovePreview({ name, image });
   } else {
     list.push(iid);

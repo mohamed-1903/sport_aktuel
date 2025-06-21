@@ -1,271 +1,149 @@
-// Konstanten und Variablen
-const TAX_RATE = 0.19; // Mehrwertsteuersatz (19 %)
-let subtotal = getBasePrice(); // Basispreis (ohne Rabatte) wird initial geladen
 const DISCOUNT_CODES = {
-  // Gültige Rabattcodes mit zugehörigem Rabatt in Prozent
   12345: 10,
   54321: 15,
   11111: 20,
   "00000": 5,
 };
 
-let quantity = 1; // Standardmenge
-let giftWrap = false; // Geschenkverpackung standardmäßig deaktiviert
-let appliedCode = ""; // Eingegebener Rabattcode (leer zu Beginn)
-
-// DOM-Elemente referenzieren
-const finalValueEl = document.getElementById("finalPriceValue"); // Anzeige: Endpreis
-const originalPriceEl = document.getElementById("original-price"); // Anzeige: Ursprünglicher Preis (durchgestrichen)
-const discountLabelEl = document.getElementById("discountLabel"); // Anzeige: Rabattlabel (z. B. -10%)
-const infoEl = document.getElementById("rabatt-info"); // Anzeige: Hinweis bei Rabattcode
-const qtyInput = document.getElementById("quantity"); // Eingabefeld für Menge
-const giftCheckbox = document.getElementById("giftWrap"); // Checkbox für Geschenkverpackung
-const pinInput = document.getElementById("pin"); // Eingabefeld für Rabattcode (PIN)
-const applyBtn = document.getElementById("apply-discount"); // Button zur Rabattcode-Anwendung (nicht genutzt im Code)
-
-// Hauptbild beim Klick auf ein Vorschaubild ändern
-function changeImage(imageSrc, index) {
-  const mainImage = document.getElementById("main-image"); // Hauptbild
-  const additionalImages = document.querySelectorAll(".additional-images img"); // Alle Vorschaubilder
-
-  mainImage.src = imageSrc; // Hauptbild ändern
-
-  additionalImages.forEach((img, i) => {
-    img.classList.toggle("selected", i === index - 1); // Bildauswahl visuell hervorheben
-  });
-}
-
-document
-  .getElementById("toggle-info")
-  .addEventListener("click", toggleDescription);
-
-// Beschreibung ein-/ausklappen
-function toggleDescription() {
-  const desc = document.getElementById("description-full");
-  const icon = document.querySelector("#toggle-info .toggle-icon");
-
-  const isHidden = desc.classList.toggle("hidden");
-  icon.textContent = isHidden ? "+" : "-";
-}
-
-// Info-Sektion ein-/ausklappen
-const toggleInfo = document.getElementById("toggle-info");
-const infoContent = document.getElementById("info-content");
-
-toggleInfo.addEventListener("click", () => {
-  infoContent.classList.toggle("show"); // Sichtbarkeit umschalten
+// Initialisierung pro Produktcontainer
+document.addEventListener("DOMContentLoaded", () => {
+  document
+    .querySelectorAll("[data-product-index]")
+    .forEach((section) => setupProduct(section));
 });
 
-// Aufpreis für Geschenkverpackung
-function getGiftWrapCharge() {
-  return document.getElementById("giftWrap").checked ? 2 : 0; // 2 € wenn aktiv
+function setupProduct(section) {
+  const idx = section.dataset.productIndex;
+
+  const qtyInput = section.querySelector(`#quantity-${idx}`);
+  const mainImage = section.querySelector(`#main-image-${idx}`);
+  const additionalImages = section.querySelectorAll(".additional-images img");
+  const toggleInfo = section.querySelector(`#toggle-info-${idx}`);
+  const desc = section.querySelector(`#description-full-${idx}`);
+  const zoomContainer = section.querySelector(`#zoomContainer-${idx}`);
+
+  section._zoomData = { currentIndex: 0 };
+
+  additionalImages.forEach((img, i) =>
+    img.addEventListener("click", () => changeImage(section, img.src, i))
+  );
+
+  mainImage.addEventListener("click", () => openZoomModal(section));
+
+  if (toggleInfo) {
+    toggleInfo.addEventListener("click", () => toggleDescription(section));
+  }
+
+  zoomContainer.addEventListener("mouseenter", () => enableZoom(section));
+  zoomContainer.addEventListener("mouseleave", () => disableZoom(section));
+  zoomContainer.addEventListener("mousemove", (e) => moveZoom(section, e));
+
+  qtyInput.addEventListener("input", () => updateDisplay(section));
+  const giftWrapEl = section.querySelector(`#giftWrap-${idx}`);
+  const pinInputEl = section.querySelector(`#pin-${idx}`);
+
+  giftWrapEl?.addEventListener("change", () => updateDisplay(section));
+  pinInputEl?.addEventListener("input", () => updateDisplay(section));
+
+  updateDisplay(section);
 }
 
-// Bruttoberechnung aus Netto
-function getTotalPrice(priceWOTax) {
-  const taxRate = 0.19;
-  return priceWOTax * (1 + taxRate); // Netto + 19 %
+function changeImage(section, src, index) {
+  const idx = section.dataset.productIndex;
+  const mainImage = section.querySelector(`#main-image-${idx}`);
+  const images = section.querySelectorAll(".additional-images img");
+
+  mainImage.src = src;
+  images.forEach((img, i) => img.classList.toggle("selected", i === index));
+
+  section._zoomData.currentIndex = index;
+
+  const container = section.querySelector(`#zoomContainer-${idx}`);
+  if (container.classList.contains("zoomed")) {
+    container.style.backgroundImage = `url('${src}')`;
+  }
 }
 
-// Basispreis mit Geschenk und Menge (ohne Rabatt)
-function calculateBasePrice() {
-  const raw = document.getElementById("priceWOTax").value.trim(); // Netto-Preisfeld
-  const quantity = parseInt(document.getElementById("quantity").value) || 1;
-  if (raw === "") return null;
-
-  const priceWOTax = parseFloat(raw);
-  if (isNaN(priceWOTax) || priceWOTax <= 0) return null;
-
-  const taxed = getTotalPrice(priceWOTax); // Preis mit Steuer
-  const gift = getGiftWrapCharge(); // Geschenkzuschlag
-  return (taxed + gift) * quantity;
+function toggleDescription(section) {
+  const idx = section.dataset.productIndex;
+  const desc = section.querySelector(`#description-full-${idx}`);
+  const icon = section.querySelector(`#toggle-info-${idx} .toggle-icon`);
+  const hidden = desc.classList.toggle("hidden");
+  if (icon) icon.textContent = hidden ? "+" : "-";
 }
 
-// Hauptfunktion zur Preisberechnung
-function calculatePrice() {
-  const qty = parseInt(qtyInput.value) || 1;
-  const gift = giftCheckbox.checked;
-  const pin = pinInput.value.trim();
-  let subtotal = getBasePrice() * qty;
+function getBasePrice(section) {
+  const idx = section.dataset.productIndex;
+  const el = section.querySelector(`#basePrice-${idx}`);
+  return parseFloat(el?.textContent) || 0;
+}
 
-  if (gift) subtotal += 2; // Geschenkzuschlag hinzufügen
+function calculatePrice(section) {
+  const idx = section.dataset.productIndex;
+  const qty = parseInt(section.querySelector(`#quantity-${idx}`).value) || 1;
+  const gift = section.querySelector(`#giftWrap-${idx}`)?.checked;
+  const pin = section.querySelector(`#pin-${idx}`)?.value.trim() || "";
+
+  let subtotal = getBasePrice(section) * qty;
+  if (gift) subtotal += 2;
 
   const discountPercent = DISCOUNT_CODES[pin] || 0;
-  const discounted = subtotal * (1 - discountPercent / 100); // Rabatt anwenden
-
-  return {
-    original: subtotal,
-    final: discounted,
-    discount: discountPercent,
-  };
+  const discounted = subtotal * (1 - discountPercent / 100);
+  return { original: subtotal, final: discounted, discount: discountPercent };
 }
 
-// Anzeige aktualisieren je nach Rabatt & Eingabe
-function updateDisplay() {
-  const { original, final, discount } = calculatePrice();
+function updateDisplay(section) {
+  const idx = section.dataset.productIndex;
+  const { original, final, discount } = calculatePrice(section);
+  const finalValueEl = section.querySelector(`#finalPriceValue-${idx}`);
+  const originalPriceEl = section.querySelector(`#original-price-${idx}`);
+  const discountLabelEl = section.querySelector(`#discountLabel-${idx}`);
+  const infoEl = section.querySelector(`#rabatt-info-${idx}`);
 
   if (discount > 0) {
     originalPriceEl.style.display = "inline";
     originalPriceEl.textContent = `${original.toFixed(2)}€ inkl. Mwst.`;
     originalPriceEl.style.textDecoration = "line-through";
-
     discountLabelEl.style.display = "inline";
     discountLabelEl.textContent = `-${discount}%`;
-
-    infoEl.textContent = `✔ Rabattcode akzeptiert: ${discount}%`;
-    infoEl.style.color = "green";
+    if (infoEl) {
+      infoEl.textContent = `✔ Rabattcode akzeptiert: ${discount}%`;
+      infoEl.style.color = "green";
+    }
   } else {
     originalPriceEl.style.display = "none";
     discountLabelEl.style.display = "none";
-
-    if (appliedCode.length >= 5) {
-      infoEl.textContent = "❌ Ungültiger PIN-Code.";
-      infoEl.style.color = "red";
-    } else {
-      infoEl.textContent = "";
+    if (infoEl) {
+      if (document.getElementById("pin").value.trim().length >= 5) {
+        infoEl.textContent = "❌ Ungültiger PIN-Code.";
+        infoEl.style.color = "red";
+      } else {
+        infoEl.textContent = "";
+      }
     }
   }
-
-  finalValueEl.textContent = `${final.toFixed(2)}€ inkl. Mwst.`; // Endpreis aktualisieren
+  finalValueEl.textContent = `${final.toFixed(2)}€ inkl. Mwst.`;
 }
 
-// Event-Listener beim Laden der Seite
-window.addEventListener("DOMContentLoaded", () => {
-  updateDisplay(); // Direkt anzeigen
-
-  qtyInput.addEventListener("input", (e) => {
-    quantity = parseInt(e.target.value) || 1;
-    updateDisplay(); // Menge ändert sich
-  });
-
-  giftCheckbox.addEventListener("change", (e) => {
-    giftWrap = e.target.checked;
-    updateDisplay(); // Geschenkoption ändert sich
-  });
-
-  pinInput.addEventListener("input", (e) => {
-    appliedCode = e.target.value.trim();
-    updateDisplay(); // Rabattcode-Eingabe
-  });
-});
-
-// Anzeige zurücksetzen auf Anfangswert
-function resetFinalPriceDisplay(price) {
-  document.getElementById("originalPrice").style.display = "none";
-  document.getElementById("discountLabel").style.display = "none";
-  document.getElementById("finalPriceValue").textContent = `${price.toFixed(
-    2
-  )}€ inkl. Mwst.`;
-}
-
-// Formularfelder & Anzeige zurücksetzen
-function resetFields() {
-  document.getElementById("netto").value = "";
-  document.getElementById("bruttoErgebnis").textContent = "";
-
-  document.getElementById("pin").value = "";
-  document.getElementById("rabatt-info").textContent = "";
-
-  document.getElementById("giftWrap").checked = false;
-
-  document.getElementById("quantity").value = 1;
-
-  document.getElementById("finalPriceValue").textContent = "";
-  document.getElementById("original-price").style.display = "none";
-  document.getElementById("discountLabel").style.display = "none";
-  document.getElementById("basePrice").style.display = "none";
-  appliedCode = "";
-  quantity = 1;
-  giftWrap = false;
-  updateDisplay(); // Alles neu anzeigen
-}
-
-// Zoomfunktion bei Hover über Hauptbild
-(function () {
-  const container = document.querySelector(".zoom-bg-container");
-  const img = document.getElementById("main-image");
-  const zoomFactor = 1.5;
-
-  function enableZoom() {
-    container.classList.add("zoomed");
-    container.style.backgroundImage = `url('${img.src}')`;
-    container.style.backgroundSize = `${zoomFactor * 100}%`;
-    container.style.backgroundPosition = `center center`;
-  }
-
-  function disableZoom() {
-    container.classList.remove("zoomed");
-    container.style.backgroundImage = "";
-    container.style.backgroundSize = "";
-    container.style.backgroundPosition = "";
-  }
-
-  function moveZoom(e) {
-    const rect = container.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    container.style.backgroundPosition = `${x}% ${y}%`; // Zoompunkt aktualisieren
-  }
-
-  container.addEventListener("mouseenter", enableZoom);
-  container.addEventListener("mouseleave", disableZoom);
-  container.addEventListener("mousemove", moveZoom);
-
-  const originalChangeImage = window.changeImage;
-  window.changeImage = (src, idx) => {
-    originalChangeImage(src, idx);
-    img.src = src;
-    if (container.classList.contains("zoomed")) {
-      enableZoom(); // Zoom neu anwenden nach Bildwechsel
-    }
-  };
-})();
-
-// Brutto-Anzeige (nur Steuer) bei Eingabe von Netto
-function zeigePreis() {
-  const nettoPreis = parseFloat(document.getElementById("netto").value);
-  if (!isNaN(nettoPreis)) {
-    const brutto = getTotalPrice(nettoPreis).toFixed(2);
-    document.getElementById(
-      "bruttoErgebnis"
-    ).innerText = `Preis mit 19% Steuer: ${brutto} €`;
-  } else {
-    document.getElementById("bruttoErgebnis").innerText =
-      "Bitte einen gültigen Preis eingeben.";
-  }
-}
-
-// Basispreis (aus verstecktem Element) extrahieren
-function getBasePrice() {
-  const el = document.getElementById("basePrice");
-  if (!el) return 0;
-  return parseFloat(el.textContent) || 0;
-}
-let currentImageIndex = 0;
+// ---- Zoom Handling ----
+let currentSection = null;
 let zoomImages = [];
+let currentImageIndex = 0;
 let zoomScale = 1;
 
-// Bild wechseln + Index merken
-function changeImage(src, index) {
-  const mainImage = document.getElementById("main-image");
-  mainImage.src = src;
-  currentImageIndex = index;
-}
-
-// Modal öffnen per Klick auf Hauptbild
-document.getElementById("main-image").addEventListener("click", () => {
-  const thumbs = [...document.querySelectorAll(".additional-images img")];
+function openZoomModal(section) {
+  currentSection = section;
+  const idx = section.dataset.productIndex;
+  const thumbs = [...section.querySelectorAll(".additional-images img")];
   zoomImages = thumbs.map((img) => img.src);
-  openZoomModal();
-});
-
-// Modal öffnen
-function openZoomModal() {
+  currentImageIndex = section._zoomData.currentIndex || 0;
   zoomScale = 1;
-  document.body.classList.add("modal-open");
+
   const zoomImage = document.getElementById("zoom-image");
   zoomImage.src = zoomImages[currentImageIndex];
   zoomImage.style.transform = `scale(${zoomScale})`;
+
+  document.body.classList.add("modal-open");
   document.getElementById("zoomModal").classList.remove("hidden");
 }
 
@@ -274,18 +152,17 @@ function closeZoomModal() {
   document.getElementById("zoomModal").classList.add("hidden");
 }
 
-// Bildwechsel
 function nextZoomImage() {
   currentImageIndex = (currentImageIndex + 1) % zoomImages.length;
   updateZoomImage();
 }
+
 function prevZoomImage() {
   currentImageIndex =
     (currentImageIndex - 1 + zoomImages.length) % zoomImages.length;
   updateZoomImage();
 }
 
-// Zoomsteuerung
 function zoomIn() {
   zoomScale = Math.min(3, zoomScale + 0.25);
   updateZoomImage();
@@ -300,22 +177,17 @@ function resetZoom() {
   zoomScale = 1;
   updateZoomImage();
 }
+
 function updateZoomImage() {
   const zoomImage = document.getElementById("zoom-image");
   zoomImage.src = zoomImages[currentImageIndex];
   zoomImage.style.transform = `scale(${zoomScale})`;
 }
-// ✨ Klick außerhalb vom Content schließt das Modal
-document.getElementById("zoomModal").addEventListener("click", (e) => {
-  const content = document.getElementById("zoomModalContent");
-  if (!content.contains(e.target)) {
-    closeZoomModal();
-  }
-});
+
 // 🎯 Tastatursteuerung fürs Modal
 document.addEventListener("keydown", (e) => {
   const modal = document.getElementById("zoomModal");
-  if (modal.classList.contains("hidden")) return;
+  if (!modal || modal.classList.contains("hidden")) return;
 
   switch (e.key) {
     case "ArrowRight":
@@ -340,6 +212,56 @@ document.addEventListener("keydown", (e) => {
       break;
   }
 });
+// ✨ Klick außerhalb vom Content schließt das Modal
+document.getElementById("zoomModal").addEventListener("click", (e) => {
+  const content = document.getElementById("zoomModalContent");
+  if (!content.contains(e.target)) {
+    closeZoomModal();
+  }
+});
+
+function enableZoom(section) {
+  const idx = section.dataset.productIndex;
+  const container = section.querySelector(`#zoomContainer-${idx}`);
+  const img = section.querySelector(`#main-image-${idx}`);
+  container.classList.add("zoomed");
+  container.style.backgroundImage = `url('${img.src}')`;
+  container.style.backgroundSize = `150%`;
+  container.style.backgroundPosition = `center center`;
+}
+function disableZoom(section) {
+  const idx = section.dataset.productIndex;
+  const container = section.querySelector(`#zoomContainer-${idx}`);
+  container.classList.remove("zoomed");
+  container.style.backgroundImage = "";
+  container.style.backgroundSize = "";
+  container.style.backgroundPosition = "";
+}
+function moveZoom(section, e) {
+  const container = section.querySelector(
+    `#zoomContainer-${section.dataset.productIndex}`
+  );
+  const rect = container.getBoundingClientRect();
+  const x = ((e.clientX - rect.left) / rect.width) * 100;
+  const y = ((e.clientY - rect.top) / rect.height) * 100;
+  container.style.backgroundPosition = `${x}% ${y}%`;
+}
+
+// ----- Steuerrechner -----
+function zeigePreis() {
+  const nettoInput = document.getElementById("netto");
+  const ergebnisEl = document.getElementById("bruttoErgebnis");
+
+  const nettoPreis = parseFloat(nettoInput.value);
+  if (!isNaN(nettoPreis)) {
+    const brutto = getTotalPrice(nettoPreis).toFixed(2);
+    ergebnisEl.innerText = `Preis mit 19% Steuer: ${brutto} €`;
+  } else {
+    ergebnisEl.innerText = "Bitte einen gültigen Preis eingeben.";
+  }
+}
+
+// Animation aus anderen Skripten genutzt
 function flyToTarget(startEl, targetSelector) {
   const target = document.querySelector(targetSelector);
   if (!startEl || !target) return;
@@ -348,43 +270,34 @@ function flyToTarget(startEl, targetSelector) {
   const endRect = target.getBoundingClientRect();
 
   const symbol = startEl.textContent.trim();
-
   const clone = document.createElement("div");
   clone.classList.add("fly-to-target");
   clone.textContent = symbol;
 
-  // exakte Startposition (Mitte von startEl)
   const startX = startRect.left + startRect.width / 2;
   const startY = startRect.top + startRect.height / 2;
-
-  // exakte Zielposition (Mitte von target)
   const endX = endRect.left + endRect.width / 2;
   const endY = endRect.top + endRect.height / 2;
-
-  // Differenz
   const dx = endX - startX;
   const dy = endY - startY;
 
   clone.style.position = "fixed";
   clone.style.left = `${startX}px`;
   clone.style.top = `${startY}px`;
-  clone.style.transform = `translate(0, 0)`; // Start ohne Verschiebung
+  clone.style.transform = `translate(0, 0)`;
   clone.style.setProperty("--fly-transform", `translate(${dx}px, ${dy}px)`);
 
   document.body.appendChild(clone);
 
-  // Animation starten
   requestAnimationFrame(() => {
     clone.classList.add("fly-to-target-anim");
   });
 
   clone.addEventListener("animationend", () => clone.remove());
-  // Animation starten
   requestAnimationFrame(() => {
     clone.classList.add("fly-to-target-anim");
   });
 
-  // Beim Ankommen entfernen + Ziel aufblinken
   clone.addEventListener("animationend", () => {
     clone.remove();
     if (target) {
@@ -393,3 +306,50 @@ function flyToTarget(startEl, targetSelector) {
     }
   });
 }
+function resetFields(section) {
+  const idx = section.dataset.productIndex;
+
+  section.querySelector(`#pin-${idx}`).value = "";
+  section.querySelector(`#rabatt-info-${idx}`).textContent = "";
+  section.querySelector(`#giftWrap-${idx}`).checked = false;
+  section.querySelector(`#quantity-${idx}`).value = 1;
+
+  const finalValueEl = section.querySelector(`#finalPriceValue-${idx}`);
+  const originalPriceEl = section.querySelector(`#original-price-${idx}`);
+  const discountLabelEl = section.querySelector(`#discountLabel-${idx}`);
+  const basePriceEl = section.querySelector(`#basePrice-${idx}`);
+
+  finalValueEl.textContent = "";
+  originalPriceEl.style.display = "none";
+  discountLabelEl.style.display = "none";
+  basePriceEl.style.display = "none";
+
+  updateDisplay(section);
+}
+function resetFinalPriceDisplay(price, section) {
+  const idx = section.dataset.productIndex;
+  section.querySelector(`#original-price-${idx}`).style.display = "none";
+  section.querySelector(`#discountLabel-${idx}`).style.display = "none";
+  section.querySelector(
+    `#finalPriceValue-${idx}`
+  ).textContent = `${price.toFixed(2)}€ inkl. Mwst.`;
+}
+document.addEventListener("DOMContentLoaded", () => {
+  const compareBtn = document.getElementById("showCompareForm");
+  if (!compareBtn) return;
+
+  const form = document.getElementById("compareForm");
+  const select = document.getElementById("compareSelect");
+  const submit = document.getElementById("compareSubmit");
+
+  compareBtn.addEventListener("click", () => {
+    form.classList.toggle("hidden");
+  });
+
+  submit.addEventListener("click", () => {
+    const otherId = select.value;
+    if (!otherId) return;
+    const currentId = compareBtn.dataset.currentId;
+    window.location.href = `index.php?page=product&action=detail&id=${currentId}&id2=${otherId}`;
+  });
+});

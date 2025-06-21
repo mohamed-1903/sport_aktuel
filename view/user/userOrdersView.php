@@ -14,51 +14,82 @@ $orders = getOrdersByUser($_SESSION['user_id']);
 include 'view/layout/header.php';
 ?>
 
-<main class="form-wrapper" style="padding: 2em;">
-  <h1 style="text-align: center;">📦 Meine Bestellungen</h1>
+
+<section class="main-content">
+  <?php if (!empty($_SESSION['message'])): ?>
+  <div class="toast-popup show" id="toastMessage">
+    <?= htmlspecialchars($_SESSION['message']) ?>
+  </div>
+    <script>
+    // Anzeige direkt beim Laden aktivieren
+    const toast = document.getElementById('toastMessage');
+    if (toast) {
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+  </script>
+  <?php unset($_SESSION['message']); ?>
+<?php endif; ?>
+
+
+  <h1>Meine Bestellungen</h1>
 
   <?php if (empty($orders)): ?>
-    <p style="text-align: center;">Du hast noch keine Bestellungen aufgegeben.</p>
+    <p>Du hast noch keine Bestellungen.</p>
   <?php else: ?>
-    <table class="cart-table" style="margin: auto;">
+    <?php
+    $labels = [
+      'neu' => '🕓 Neu – noch stornierbar',
+      'in_bearbeitung' => '🔧 In Bearbeitung',
+      'abgeschlossen' => '✅ Abgeschlossen',
+      'abgelehnt' => '❌ Abgelehnt',
+      'storniert' => '🚫 Storniert',
+    ];
+    ?>
+
+    <table class="cart-table">
       <thead>
         <tr>
-          <th>#</th>
+          <th>Bestell-ID</th>
           <th>Datum</th>
           <th>Status</th>
           <th>Details</th>
-          <th>Retoure</th>
+          <th>Aktion</th>
         </tr>
       </thead>
-      <tbody>
-        <?php foreach ($orders as $order): ?>
-          <tr>
-            <td>#<?= (int)$order['id'] ?></td>
-            <td><?= date("d.m.Y H:i", strtotime($order['created_at'])) ?></td>
-            <td><?= htmlspecialchars($order['status']) ?></td>
-            <td>
-              <?php $items = json_decode($order['admin_comment'], true); ?>
-              <?php if (is_array($items)): ?>
-                <?php foreach ($items as $item): ?>
-  <div><?= htmlspecialchars($item['name']) ?> (<?= $item['quantity'] ?>x Größe <?= $item['size'] ?>)</div>
-<?php endforeach; ?>
+      <?php foreach ($orders as $order): ?>
+        <tr>
+          <td>#<?= (int)$order['id'] ?></td>
+          <td><?= date("d.m.Y H:i", strtotime($order['created_at'])) ?></td>
+          <td><?= htmlspecialchars($order['status']) ?></td>
+          <td>
+            <?php $items = json_decode($order['admin_comment'], true); ?>
+            <?php if (is_array($items)): ?>
+              <?php foreach ($items as $item): ?>
+                <div><?= htmlspecialchars($item['name']) ?> (<?= $item['quantity'] ?>x Größe <?= $item['size'] ?>)</div>
+              <?php endforeach; ?>
 
-              <?php else: ?>
-                <em>Keine Details verfügbar</em>
-              <?php endif; ?>
-            </td>
-            <td>
-              <?php if ($order['status'] === 'abgeschlossen'): ?>
-                <a href="index.php?page=return&action=form&order_id=<?= (int)$order['id'] ?>">Retoure</a>
-              <?php endif; ?>
-            </td>
-          </tr>
-        <?php endforeach; ?>
+            <?php else: ?>
+              <em>Keine Details verfügbar</em>
+            <?php endif; ?>
+          </td>
+          <td>
+            <?php if ($order['status'] === 'neu'): ?>
+              <form method="post" action="index.php?page=order&action=cancel&id=<?= $order['id'] ?>" onsubmit="return confirm('Wirklich stornieren?');">
+                <button type="submit" class="btn-delete-all">Stornieren</button>
+              </form>
+            <?php else: ?>
+              <em>Keine Aktion</em>
+            <?php endif; ?>
+          </td>
+        </tr>
+      <?php endforeach; ?>
       </tbody>
     </table>
   <?php endif; ?>
-</main>
-
+</section>
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
 <script src="js/style_modification.js"></script>
 <script src="js/filterandsearch.js"></script>

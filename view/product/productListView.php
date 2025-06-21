@@ -65,6 +65,8 @@
           $preis = floatval(preg_replace('/[^0-9.]/', '', $produkt["price"]));
           $mannschaft = stripos($produkt["name"], "Bayern") !== false ? "Bayern" : (stripos($produkt["name"], "Dortmund") !== false ? "Dortmund" : "");
           $discount = $produkt["discount"] ?? 0;
+          ?>
+          <?php
           $marke = $produkt["marke"] ?? "Unbekannt";
           $farbe = $produkt["farbe"] ?? "Unbekannt";
           $geschlecht = $produkt["geschlecht"] ?? "Unbekannt";
@@ -79,12 +81,12 @@
             <section class="produkt-wrapper">
               <section class="image-wrapper">
                 <img src="<?= htmlspecialchars($produkt["image_main"] ?? "")
- ?>" alt="<?= htmlspecialchars($produkt["name"]) ?>">
+                          ?>" alt="<?= htmlspecialchars($produkt["name"]) ?>">
               </section>
 
               <section class="produkt-info">
                 <h3><?= htmlspecialchars($produkt["name"]) ?></h3>
-                <p><?= htmlspecialchars($produkt["price"]) ?>
+                <p><?= htmlspecialchars($produkt["price"]) ?>€ <span>inkl. Mwst.</span>
                   <?php if ($discount > 0): ?>
                     <span class="rabatt">-<?= $discount ?>%</span>
                   <?php endif; ?>
@@ -101,8 +103,8 @@
                 data-iid="<?= (int)$produkt['iid'] ?>"
                 data-name="<?= htmlspecialchars($produkt['name']) ?>"
                 data-price="<?= (float)$produkt['price'] ?? 0 ?>"
-                data-image="<?=htmlspecialchars($produkt["image_main"] ?? "")
-?>">
+                data-image="<?= htmlspecialchars($produkt["image_main"] ?? "")
+                            ?>">
                 🛒
               </button>
 
@@ -111,7 +113,7 @@
                 data-name="<?= htmlspecialchars($produkt['name']) ?>"
                 data-price="<?= (float)$produkt['price'] ?? 0 ?>"
                 data-image="<?= htmlspecialchars($produkt["image_main"] ?? "")
- ?>">
+                            ?>">
                 🤍
               </button>
             </section>

@@ -1,91 +1,79 @@
-
-// Filterfunktion
+// ✅ FILTERFUNKTION
 window.applyFilter = function () {
-  // Liest die aktuellen Werte der Filterfelder aus
   const filterWerte = {
-    marke: document.getElementById("filter-marke")?.value || "", // Marke
-    farbe: document.getElementById("filter-farbe")?.value || "", // Farbe
+    marke: document.getElementById("filter-marke")?.value || "",
+    farbe: document.getElementById("filter-farbe")?.value || "",
     maxPreis:
-      parseFloat(document.getElementById("filter-preis")?.value) || Infinity, // Maximaler Preis
-    mannschaft: document.getElementById("filter-mannschaft")?.value || "", // Mannschaft
-    geschlecht: document.getElementById("filter-geschlecht")?.value || "", // Geschlecht
+      parseFloat(document.getElementById("filter-preis")?.value) || Infinity,
+    mannschaft: document.getElementById("filter-mannschaft")?.value || "",
+    geschlecht: document.getElementById("filter-geschlecht")?.value || "",
   };
 
-  // Holt alle Produkte mit der Klasse "einzelprodukt"
-  const produkte = document.querySelectorAll(".einzelprodukt");
+  document.querySelectorAll(".einzelprodukt").forEach((produkt) => {
+    const p = produkt.dataset;
+    const preis = parseFloat(p.preis);
+    const sichtbar =
+      (!filterWerte.marke || p.marke === filterWerte.marke) &&
+      (!filterWerte.farbe || p.farbe === filterWerte.farbe) &&
+      (!filterWerte.mannschaft || p.mannschaft === filterWerte.mannschaft) &&
+      (!filterWerte.geschlecht || p.geschlecht === filterWerte.geschlecht) &&
+      preis <= filterWerte.maxPreis;
 
-  // Für jedes Produkt wird geprüft, ob es die Filter erfüllt
-  produkte.forEach((produkt) => {
-    const pMarke = produkt.getAttribute("data-marke"); // Marke des Produkts
-    const pFarbe = produkt.getAttribute("data-farbe"); // Farbe
-    const pPreis = parseFloat(produkt.getAttribute("data-preis")); // Preis
-    const pMannschaft = produkt.getAttribute("data-mannschaft"); // Mannschaft
-    const pGeschlecht = produkt.getAttribute("data-geschlecht"); // Geschlecht
-
-    // Überprüft, ob alle Filterbedingungen erfüllt sind
-    const filterErfüllt =
-      (filterWerte.marke === "" || pMarke === filterWerte.marke) &&
-      (filterWerte.farbe === "" || pFarbe === filterWerte.farbe) &&
-      (filterWerte.maxPreis === Infinity || pPreis <= filterWerte.maxPreis) &&
-      (filterWerte.mannschaft === "" ||
-        pMannschaft === filterWerte.mannschaft) &&
-      (filterWerte.geschlecht === "" || pGeschlecht === filterWerte.geschlecht);
-
-    // Zeigt oder versteckt das Produkt je nach Filterergebnis
-    produkt.style.display = filterErfüllt ? "block" : "none";
+    produkt.style.display = sichtbar ? "block" : "none";
   });
 };
-// Funktion zur Produktsuche über ein Eingabefeld
+
+// ✅ PRODUKTSUCHE mit Feedback
 function produktSuche() {
   const eingabe = document
     .getElementById("produktsuche")
     ?.value.toLowerCase()
     .trim();
-  const produkte = document.querySelectorAll(".einzelprodukt");
   const feedbackEl = document.getElementById("such-feedback");
 
+  // Nur Feedback-Text anzeigen, keine DOM-Änderung!
   if (!eingabe || eingabe.length < 2) {
-    // Wenn zu kurz: alles zeigen
-    produkte.forEach((p) => (p.style.display = "block"));
     if (feedbackEl) feedbackEl.textContent = "";
     return;
   }
 
-  let treffer = 0;
-
-  produkte.forEach((produkt) => {
-    const name = produkt.querySelector("h3")?.innerText.toLowerCase() || "";
-    const marke = produkt.dataset.marke?.toLowerCase() || "";
-    const farbe = produkt.dataset.farbe?.toLowerCase() || "";
-    const geschlecht = produkt.dataset.geschlecht?.toLowerCase() || "";
-    const mannschaft = produkt.dataset.mannschaft?.toLowerCase() || "";
-
-    const text = `${name} ${marke} ${farbe} ${geschlecht} ${mannschaft}`;
-    const sichtbar = text.includes(eingabe);
-
-    produkt.style.display = sichtbar ? "block" : "none";
-    if (sichtbar) treffer++;
-  });
+  const treffer = alleProdukte.filter((p) =>
+    [p.name, p.marke, p.farbe, p.geschlecht, p.mannschaft]
+      .map((s) => (s || "").toLowerCase())
+      .join(" ")
+      .includes(eingabe)
+  );
 
   if (feedbackEl) {
     feedbackEl.textContent =
-      treffer === 0
+      treffer.length === 0
         ? "❌ Keine passenden Produkte gefunden."
-        : `✅ ${treffer} Produkt${treffer === 1 ? "" : "e"} gefunden.`;
+        : `✅ ${treffer.length} Produkt${
+            treffer.length === 1 ? "" : "e"
+          } gefunden.`;
   }
 }
-// ✅ Live-Suche mit Autocomplete + Vorschau
+
+// 🔁 FILTER ZURÜCKSETZEN
+window.resetFilter = function () {
+  document
+    .querySelectorAll(".filterbar select")
+    .forEach((sel) => (sel.selectedIndex = 0));
+  const suche = document.getElementById("produktsuche");
+  if (suche) suche.value = "";
+  applyFilter();
+  produktSuche();
+};
+
+// ✅ AUTOCOMPLETE & LADEN
 let alleProdukte = [];
-let autocompleteVorschlag = "";
 let fokusIndex = -1;
 
 document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("produktsuche");
   const shadow = document.getElementById("autocomplete-shadow");
   const liste = document.getElementById("such-vorschlaege");
-  const feedbackEl = document.getElementById("such-feedback");
 
-  // 🔁 Input Events
   if (input) {
     input.addEventListener("input", () => {
       produktSuche();
@@ -97,7 +85,6 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
-  // ❌ Liste schließen bei Klick außerhalb
   document.addEventListener("click", (e) => {
     if (!e.target.closest(".search-container")) {
       liste.style.display = "none";
@@ -105,14 +92,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 📦 Produkte für Autocomplete laden
   fetch("produkte.json")
     .then((res) => res.json())
     .then((data) => {
       alleProdukte = data.products || [];
     });
 
-  // 🔄 Dynamisches Laden der Produktcontainer
   if (typeof produktKonfigurationen !== "undefined") {
     produktKonfigurationen.forEach(({ containerId, urls }) => {
       ladeProdukte(containerId, urls);
@@ -120,65 +105,27 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// 🔽 PRODUKT LADEN
+// 🔽 PRODUKTE LADEN
 function ladeProdukte(containerId, urls) {
   const container = document.getElementById(containerId);
-  if (!container) return console.warn("⚠️ Container fehlt:", containerId);
+  if (!container) return;
 
-  const fetchPromises = urls.map((url) =>
-    fetch(url)
-      .then((res) => res.text())
-      .then((html) => {
-        const temp = document.createElement("div");
-        temp.innerHTML = html;
-        Array.from(temp.children).forEach((el) =>
-          container.appendChild(el)
-        );
-      })
-  );
-
-  Promise.all(fetchPromises).then(() => applyFilter());
-}
-
-// 🔍 TEXT-SUCHE
-function produktSuche() {
-  const eingabe = document.getElementById("produktsuche")?.value.toLowerCase().trim();
-  const produkte = document.querySelectorAll(".einzelprodukt");
-  const feedbackEl = document.getElementById("such-feedback");
-
-  if (!eingabe || eingabe.length < 2) {
-    produkte.forEach((p) => (p.style.display = "block"));
-    if (feedbackEl) feedbackEl.textContent = "";
-    return;
-  }
-
-  let treffer = 0;
-
-  produkte.forEach((produkt) => {
-    const text = [
-      produkt.querySelector("h3")?.innerText,
-      produkt.dataset.marke,
-      produkt.dataset.farbe,
-      produkt.dataset.geschlecht,
-      produkt.dataset.mannschaft,
-    ]
-      .map((s) => (s || "").toLowerCase())
-      .join(" ");
-
-    const sichtbar = text.includes(eingabe);
-    produkt.style.display = sichtbar ? "block" : "none";
-    if (sichtbar) treffer++;
+  Promise.all(
+    urls.map((url) =>
+      fetch(url)
+        .then((res) => res.text())
+        .then((html) => {
+          const temp = document.createElement("div");
+          temp.innerHTML = html;
+          Array.from(temp.children).forEach((el) => container.appendChild(el));
+        })
+    )
+  ).then(() => {
+    applyFilter();
+    produktSuche();
   });
-
-  if (feedbackEl) {
-    feedbackEl.textContent =
-      treffer === 0
-        ? "❌ Keine passenden Produkte gefunden."
-        : `✅ ${treffer} Produkt${treffer === 1 ? "" : "e"} gefunden.`;
-  }
 }
 
-// ✨ AUTOCOMPLETE
 function autocompleteSuche() {
   const input = document.getElementById("produktsuche");
   const liste = document.getElementById("such-vorschlaege");
@@ -189,33 +136,50 @@ function autocompleteSuche() {
   autocompleteVorschlag = "";
   fokusIndex = -1;
 
-  const match = alleProdukte.find((p) =>
-    p.name.toLowerCase().startsWith(wert)
-  );
-  shadow.value = wert && match ? match.name : "";
+  if (wert.length < 1) {
+    liste.innerHTML = "";
+    liste.style.display = "none";
+    shadow.value = "";
+    return;
+  }
 
-  const treffer = alleProdukte.filter((p) =>
-    p.name.toLowerCase().includes(wert)
-  );
+  const produkte = Array.from(document.querySelectorAll(".einzelprodukt"));
+  const treffer = produkte.filter((el) => {
+    const name = el.querySelector("h3")?.innerText.toLowerCase() || "";
+    return name.includes(wert);
+  });
 
   if (treffer.length > 0) {
-    treffer.slice(0, 5).forEach((p) => {
+    const match = treffer.find((el) =>
+      el.querySelector("h3")?.innerText.toLowerCase().startsWith(wert)
+    );
+    shadow.value = match?.querySelector("h3")?.innerText || "";
+
+    treffer.slice(0, 5).forEach((el) => {
+      const name = el.querySelector("h3")?.innerText;
+      const price = parseFloat(el.dataset.preis)?.toFixed(2) + " €" || "Preis?";
+      const img = el.querySelector("img")?.src || "";
+
       const li = document.createElement("li");
       li.innerHTML = `
-        <img src="${p.imageMain}" alt="${p.name}" />
+        <img src="${img}" alt="${name}" />
         <div>
-          <strong>${p.name}</strong><br>
-          <small>${p.priceValue.toFixed(2)} €</small>
-        </div>`;
+          <strong>${name}</strong><br>
+          <small>${price}</small>
+        </div>
+      `;
       li.addEventListener("click", () => {
-        window.location.href = `Produkt_Sport.php?iid=${p.iid}`;
+        const link = el.querySelector("a")?.href;
+        if (link) window.location.href = link;
       });
+
       liste.appendChild(li);
     });
     liste.style.display = "block";
   } else {
     liste.innerHTML = `<li class="keine-treffer-box"><div class="keine-treffer-icon">🔍</div><div><strong>Keine Treffer</strong></div></li>`;
     liste.style.display = "block";
+    shadow.value = "";
   }
 }
 
@@ -227,11 +191,9 @@ function handleTastaturNavigation(e, liste, input, shadow) {
   if (e.key === "ArrowDown") {
     e.preventDefault();
     fokusIndex = (fokusIndex + 1) % eintraege.length;
-    updateFokus(eintraege);
   } else if (e.key === "ArrowUp") {
     e.preventDefault();
     fokusIndex = (fokusIndex - 1 + eintraege.length) % eintraege.length;
-    updateFokus(eintraege);
   } else if (e.key === "Enter" && fokusIndex >= 0) {
     e.preventDefault();
     eintraege[fokusIndex].click();
@@ -246,6 +208,8 @@ function handleTastaturNavigation(e, liste, input, shadow) {
     liste.style.display = "none";
     shadow.value = "";
   }
+
+  updateFokus(eintraege);
 }
 
 function updateFokus(eintraege) {
@@ -255,30 +219,26 @@ function updateFokus(eintraege) {
   });
 }
 
-// 🧪 FILTER
-window.applyFilter = function () {
-  const filterWerte = {
-    marke: document.getElementById("filter-marke")?.value || "",
-    farbe: document.getElementById("filter-farbe")?.value || "",
-    maxPreis: parseFloat(document.getElementById("filter-preis")?.value) || Infinity,
-    mannschaft: document.getElementById("filter-mannschaft")?.value || "",
-    geschlecht: document.getElementById("filter-geschlecht")?.value || "",
-  };
-
-  document.querySelectorAll(".einzelprodukt").forEach((produkt) => {
-    const pMarke = produkt.dataset.marke;
-    const pFarbe = produkt.dataset.farbe;
-    const pPreis = parseFloat(produkt.dataset.preis);
-    const pMannschaft = produkt.dataset.mannschaft;
-    const pGeschlecht = produkt.dataset.geschlecht;
-
-    const passt =
-      (filterWerte.marke === "" || pMarke === filterWerte.marke) &&
-      (filterWerte.farbe === "" || pFarbe === filterWerte.farbe) &&
-      (filterWerte.maxPreis === Infinity || pPreis <= filterWerte.maxPreis) &&
-      (filterWerte.mannschaft === "" || pMannschaft === filterWerte.mannschaft) &&
-      (filterWerte.geschlecht === "" || pGeschlecht === filterWerte.geschlecht);
-
-    produkt.style.display = passt ? "block" : "none";
+// 🔄 Alle Filter zurücksetzen und erneut anwenden
+window.resetFilter = function () {
+  document.querySelectorAll(".filterbar select").forEach((sel) => {
+    sel.selectedIndex = 0;
   });
+  const suche = document.getElementById("produktsuche");
+  if (suche) {
+    suche.value = "";
+  }
+  applyFilter();
+  if (typeof produktSuche === "function") {
+    produktSuche();
+  }
+};
+window.resetFilter = function () {
+  document
+    .querySelectorAll(".filterbar select")
+    .forEach((sel) => (sel.selectedIndex = 0));
+  const suche = document.getElementById("produktsuche");
+  if (suche) suche.value = "";
+  applyFilter();
+  produktSuche();
 };

@@ -2065,3 +2065,31 @@ body:not(.light-mode) .error {
   background: var(--accent-color);
   color: #000;
 }
+
+.compare-section {
+  margin: 20px 0;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.compare-section input {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #555;
+  background: var(--card-bg);
+  color: var(--text-color);
+}
+
+.compare-section button {
+  background: var(--accent-color);
+  color: #000;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.compare-section button:hover {
+  background: #e6c200;
+}

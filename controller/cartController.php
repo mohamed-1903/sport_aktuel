@@ -1,6 +1,12 @@
 <?php
 // controller/cartController.php
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+$userId = $_SESSION['user_id'] ?? null;
+
 require_once 'model/cartModel.php';
 require_once 'model/productModel.php';
 
@@ -9,19 +15,34 @@ $action = $_GET['action'] ?? 'view';
 switch ($action) {
     case 'add':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $data = json_decode(file_get_contents('php://input'), true);
+            if (!$userId) {
+                http_response_code(403);
+                echo json_encode(['error' => 'Nicht eingeloggt']);
+                exit;
+            }
 
-            if (is_array($data) && isset($data['id'], $data['name'], $data['price'], $data['image'], $data['size'], $data['quantity'])) {
-                addToCart([
+            if (
+                isset($_SERVER['CONTENT_TYPE']) &&
+                strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false
+            ) {
+                $data = json_decode(file_get_contents('php://input'), true);
+            } else {
+                $data = $_POST;
+            }
+
+            if (is_array($data) && isset($data['id'], $data['size'], $data['quantity'])) {
+                addToCart($userId, [
                     'id' => (int)$data['id'],
-                    'name' => trim($data['name']),
-                    'price' => (float)$data['price'],
-                    'image' => trim($data['image']),
                     'size' => trim($data['size']),
                     'quantity' => max(1, (int)$data['quantity'])
                 ]);
                 session_write_close();
-                http_response_code(200);
+
+                if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
+                    http_response_code(200);
+                } else {
+                    header('Location: index.php?page=cart');
+                }
             } else {
                 http_response_code(400);
                 echo json_encode(['error' => 'Invalid input']);
@@ -32,31 +53,109 @@ switch ($action) {
         break;
 
     case 'remove':
-        // Support sowohl GET- als auch POST-Anfragen, damit der
-        // Entfernen-Button als Formular genutzt werden kann
+        if (!$userId) {
+            header("Location: index.php?page=auth&action=login&redirect=cart");
+            exit;
+        }
+
         $id = $_POST['id'] ?? ($_GET['id'] ?? null);
         $size = $_POST['size'] ?? ($_GET['size'] ?? null);
         if ($id !== null && $size !== null) {
-            removeFromCart((int)$id, trim($size));
+            removeFromCart($userId, (int)$id, trim($size));
             session_write_close();
         }
         header("Location: index.php?page=cart&action=view");
         exit;
 
     case 'update':
+        if (!$userId) {
+            header("Location: index.php?page=auth&action=login&redirect=cart");
+            exit;
+        }
+
         $id = $_POST['id'] ?? null;
         $size = $_POST['size'] ?? null;
         $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
-           if ($id !== null && $size !== null && $quantity > 0) {
-            updateCartQuantity((int)$id, trim($size), $quantity);
+        if ($id !== null && $size !== null && $quantity > 0) {
+            updateCartQuantity($userId, (int)$id, trim($size), $quantity);
             session_write_close();
         }
         header("Location: index.php?page=cart&action=view");
         exit;
+    case 'count':
+        session_start();
+        $userId = $_SESSION['user_id'] ?? null;
+        if (!$userId) {
+            echo json_encode(['count' => 0]);
+            exit;
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode(['count' => countCartItems($userId)]);
+        exit;
+
+    case 'clear':
+        session_start();
+        $userId = $_SESSION['user_id'] ?? null;
+        if ($userId) {
+            clearCart($userId);
+        }
+        header('Location: index.php?page=cart');
+        exit;
+
+    case 'json':
+        session_start();
+        $userId = $_SESSION['user_id'] ?? null;
+        if (!$userId) {
+            echo json_encode([]);
+            exit;
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode(getCartItems($userId));
+        exit;
+
+    case 'toggle':
+        session_start();
+        $userId = $_SESSION['user_id'] ?? null;
+        if (!$userId) {
+            echo json_encode(['status' => 'error', 'message' => 'Nicht eingeloggt']);
+            exit;
+        }
+
+        $data = json_decode(file_get_contents("php://input"), true);
+        if (!isset($data['product_id'], $data['size'], $data['qty'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Ungültige Daten']);
+            exit;
+        }
+
+        $items = getCartItems($userId);
+        $inCart = false;
+        foreach ($items as $item) {
+            if ($item['product_id'] == $data['product_id'] && $item['size'] == $data['size']) {
+                removeFromCart($userId, $data['product_id'], $data['size']);
+                echo json_encode(['status' => 'ok', 'in_cart' => false]);
+                exit;
+            }
+        }
+
+        addToCart($userId, [
+            'id' => (int)$data['product_id'],
+            'size' => trim($data['size']),
+            'quantity' => (int)$data['qty']
+        ]);
+        echo json_encode(['status' => 'ok', 'in_cart' => true]);
+        exit;
+
 
     case 'view':
     default:
-        $cartItems = getCartItems();
+        if (!$userId) {
+            header("Location: index.php?page=auth&action=login&redirect=cart");
+            exit;
+        }
+
+        $cartItems = getCartItems($userId);
         require 'view/cart/cartView.php';
         break;
 }

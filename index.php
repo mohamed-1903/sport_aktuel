@@ -45,10 +45,12 @@ switch ($page) {
     case 'community':
         require_once 'controller/communityController.php';
         break;
-case 'user':
-  require_once 'controller/userController.php';
-  break;
-
+    case 'user':
+        require_once 'controller/userController.php';
+        break;
+    case 'user':
+        require_once 'controller/userController.php';
+        break;
     case 'static':
         $staticAction = $_GET['action'] ?? 'index';
         switch ($staticAction) {
