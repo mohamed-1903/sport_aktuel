@@ -39,7 +39,8 @@ switch ($action) {
                 session_write_close();
 
                 if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
-                    http_response_code(200);
+                    header('Content-Type: application/json');
+                    echo json_encode(['status' => 'ok']);
                 } else {
                     header('Location: index.php?page=cart');
                 }
