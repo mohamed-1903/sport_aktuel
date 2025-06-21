@@ -44,7 +44,7 @@ document.addEventListener("click", (e) => {
 });
 
 function toggleCart(iid, btn = null, size = "M", qty = 1) {
-  const payload = { product_id: iid, size, qty };
+  const payload = { id: iid, size, quantity: qty };
 
   fetch("index.php?page=cart&action=add", {
     method: "POST",
