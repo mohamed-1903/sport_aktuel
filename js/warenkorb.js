@@ -31,8 +31,10 @@ document.addEventListener("click", (e) => {
   }
 
   // 🧪 Falls nicht vorhanden – jetzt erst Größe und Menge prüfen
-  const sizeSelect = document.getElementById("size");
-  const quantityInput = document.getElementById("quantity");
+  const container = btn.closest('[data-product-index]');
+  const idx = container ? container.dataset.productIndex : null;
+  const sizeSelect = idx ? container.querySelector(`#size-${idx}`) : null;
+  const quantityInput = idx ? container.querySelector(`#quantity-${idx}`) : null;
 
   if (sizeSelect && quantityInput) {
     const size = sizeSelect.value;
