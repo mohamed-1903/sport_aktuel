@@ -27,7 +27,7 @@ include 'view/layout/header.php';
           <th>Datum</th>
           <th>Status</th>
           <th>Details</th>
-          <th>Retoure</th>
+          <th>Aktion</th>
         </tr>
       </thead>
       <tbody>
@@ -50,6 +50,11 @@ include 'view/layout/header.php';
             <td>
               <?php if ($order['status'] === 'abgeschlossen'): ?>
                 <a href="index.php?page=return&action=form&order_id=<?= (int)$order['id'] ?>">Retoure</a>
+              <?php elseif ($order['status'] === 'neu'): ?>
+                <form action="index.php?page=order&action=cancel" method="post">
+                  <input type="hidden" name="order_id" value="<?= (int)$order['id'] ?>">
+                  <button type="submit" class="btn-checkout">Stornieren</button>
+                </form>
               <?php endif; ?>
             </td>
           </tr>
