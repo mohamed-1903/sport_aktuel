@@ -32,13 +32,13 @@
       <div class="produkt-grid">
         <!-- 📸 Bilderbereich -->
         <div class="image-wrapper">
-          <div class="zoom-bg-container" id="zoomContainer">
-            <img id="main-image" src="<?= htmlspecialchars($imageMain) ?>" alt="<?= htmlspecialchars($name) ?>" />
+          <div class="zoom-bg-container" id="zoomContainer-<?= $index ?>">
+            <img id="main-image-<?= $index ?>" src="<?= htmlspecialchars($imageMain) ?>" alt="<?= htmlspecialchars($name) ?>" />
           </div>
 
           <div class="additional-images">
             <?php foreach ($images as $imgIndex => $img): ?>
-              <img src="<?= htmlspecialchars($img) ?>" onclick="changeImage('<?= htmlspecialchars($img) ?>', <?= $imgIndex ?>)" />
+              <img src="<?= htmlspecialchars($img) ?>" />
             <?php endforeach; ?>
           </div>
         </div>
@@ -46,16 +46,16 @@
         <!-- 🛒 Produktdetails & Optionen -->
         <div>
           <h1><?= htmlspecialchars($name) ?></h1>
-          <p id="original-price" class="price-old" style="display: none;"></p>
-          <p id="final-price">
-            <span id="finalPriceValue" class="preis"><?= htmlspecialchars($price) ?></span>
-            <del id="basePrice" class="preis" style="display:none;"><?= htmlspecialchars($price) ?></del>
-            <span id="discountLabel" class="rabatt" style="display:none;">-20%</span>
+          <p id="original-price-<?= $index ?>" class="price-old" style="display: none;"></p>
+          <p id="final-price-<?= $index ?>">
+            <span id="finalPriceValue-<?= $index ?>" class="preis"><?= htmlspecialchars($price) ?></span>
+            <del id="basePrice-<?= $index ?>" class="preis" style="display:none;"><?= htmlspecialchars($price) ?></del>
+            <span id="discountLabel-<?= $index ?>" class="rabatt" style="display:none;">-20%</span>
           </p>
 
           <!-- 👕 Größenauswahl -->
           <label for="size">Größe:</label>
-          <select id="size" class="size-dropdown">
+          <select id="size-<?= $index ?>" class="size-dropdown">
             <option value="" disabled selected>-- Bitte auswählen --</option>
             <?php foreach ($sizes as $size): ?>
               <option value="<?= $size ?>"><?= $size ?></option>
@@ -64,7 +64,7 @@
 
           <!-- 🔢 Mengenauswahl -->
           <label for="quantity">Menge:</label>
-          <input type="number" id="quantity" value="1" min="1" class="size-dropdown" />
+          <input type="number" id="quantity-<?= $index ?>" value="1" min="1" class="size-dropdown" />
 
           <!-- 🧺 Aktionen -->
           <div class="button-reihe" data-iid="<?= (int)$product['iid'] ?>">
@@ -88,10 +88,10 @@
           </div>
           <!-- 📄 Produktbeschreibung ein-/ausklappbar -->
           <div class="produkt-info">
-            <h3 id="toggle-info">
+            <h3 id="toggle-info-<?= $index ?>">
               <span class="toggle-icon">+</span> Produktinformationen
             </h3>
-            <div id="description-full" class="hidden">
+            <div id="description-full-<?= $index ?>" class="hidden">
               <p><?= nl2br(htmlspecialchars($description)) ?></p>
             </div>
           </div>
@@ -150,30 +150,6 @@
     </div>
   </section>
 </main>
-<script>
-          const item = {
-          id: addButton.dataset.iid,
-          name: addButton.dataset.name,
-          price: addButton.dataset.price,
-          image: addButton.dataset.image,
-          size: size,
-          quantity: quantity
-        };
-
-        fetch("index.php?page=cart&action=add", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(item)
-        }).then(res => {
-          if (res.ok) {
-            alert("✅ Produkt wurde zum Warenkorb hinzugefügt.");
-          } else {
-            alert("❌ Fehler beim Hinzufügen des Produkts.");
-          }
-        });
-</script>
 
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
 <script src="js/style_modification.js"></script>
