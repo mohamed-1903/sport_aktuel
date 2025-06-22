@@ -1,15 +1,13 @@
 // ✅ Dark-/Light-Mode Toggle
 document.addEventListener("DOMContentLoaded", () => {
   const toggleButton = document.getElementById("theme-toggle");
-  const savedTheme = localStorage.getItem("theme") || "dark";
+  const savedTheme = localStorage.getItem("theme");
 
   if (savedTheme === "light") {
     document.body.classList.add("light-mode");
-    document.body.setAttribute("data-theme", "light");
     toggleButton.textContent = "🌙";
   } else {
     document.body.classList.add("dark-mode");
-    document.body.setAttribute("data-theme", "dark");
     toggleButton.textContent = "☀️";
   }
 
@@ -19,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const theme = document.body.classList.contains("light-mode")
       ? "light"
       : "dark";
-    document.body.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
     toggleButton.textContent = theme === "light" ? "🌙" : "☀️";
   });
