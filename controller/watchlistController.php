@@ -54,6 +54,40 @@ switch ($action) {
             echo json_encode(['status' => 'ok', 'in_watchlist' => true]);
         }
         exit;
+    case 'toggleBulk':
+        header('Content-Type: application/json');
+        if (!$userId) {
+            http_response_code(403);
+            echo json_encode(['status' => 'error', 'message' => 'Nicht eingeloggt']);
+            exit;
+        }
+        $data = json_decode(file_get_contents('php://input'), true);
+        $ids = $data['product_ids'] ?? null;
+        if (!is_array($ids)) {
+            http_response_code(400);
+            echo json_encode(['status' => 'error', 'message' => 'Fehlende IDs']);
+            exit;
+        }
+        $result = toggleWatchlistBulk($userId, $ids);
+        echo json_encode(['status' => 'ok', 'results' => $result, 'count' => countWatchlistItems($userId)]);
+        exit;
+    case 'sync':
+        header('Content-Type: application/json');
+        if (!$userId) {
+            http_response_code(403);
+            echo json_encode(['status' => 'error', 'message' => 'Nicht eingeloggt']);
+            exit;
+        }
+        $data = json_decode(file_get_contents('php://input'), true);
+        $ids = $data['watchlist'] ?? $data['ids'] ?? null;
+        if (!is_array($ids)) {
+            http_response_code(400);
+            echo json_encode(['status' => 'error']);
+            exit;
+        }
+        setWatchlistItems($userId, $ids);
+        echo json_encode(['status' => 'ok']);
+        exit;
     case 'json':
         header('Content-Type: application/json');
         if (!$userId) {

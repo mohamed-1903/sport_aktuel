@@ -246,3 +246,14 @@ Neben jeder "Produkt x"-Überschrift befindet sich jetzt ein ❌-Button. Damit k
 
 Beim Hinzufügen in den Warenkorb muss auf der Detailseite eine Größe gewählt werden. Wird keine Größe ausgewählt, erscheint eine Fehlermeldung und der Artikel wird nicht übernommen.
 Nach einem erfolgreichen Hinzufügen zeigt der Warenkorb-Button oben kurz ein ✅ (zwei Sekunden) und wechselt danach wieder zur normalen Anzeige mit der Anzahl der Artikel.
+
+## ❤️ Serverseitige Merkliste
+
+Die Merkliste funktioniert nun wie der Warenkorb.
+Die Tabellen `watchlists` und `watchlist_items` müssen im Datenbankschema enthalten sein.
+Importiere dazu die aktuelle `sportx_database.sql` oder lasse das System die Tabellen automatisch beim ersten Aufruf anlegen.
+Um mehrere Produkte gleichzeitig zur Merkliste hinzuzufügen oder daraus zu entfernen, sende eine POST-Anfrage an `index.php?page=watchlist&action=toggleBulk` mit einem JSON-Array der Produkt-IDs:
+
+```json
+{ "product_ids": [1, 2, 3] }
+```

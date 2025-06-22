@@ -1,8 +1,31 @@
 <?php
 // model/watchlistModel.php
 require_once 'model/db.php';
+function ensureWatchlistSchema(): void {
+    global $db;
+    static $done = false;
+    if ($done) {
+        return;
+    }
+    $db->exec("CREATE TABLE IF NOT EXISTS watchlists (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+    )");
+    $db->exec("CREATE TABLE IF NOT EXISTS watchlist_items (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        watchlist_id INT,
+        product_id INT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (watchlist_id) REFERENCES watchlists (id) ON DELETE CASCADE,
+        FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE
+    )");
+    $done = true;
+}
 
 function getWatchlistId(int $userId, bool $create = false): ?int {
+    ensureWatchlistSchema();
     global $db;
     $stmt = $db->prepare('SELECT id FROM watchlists WHERE user_id = ? LIMIT 1');
     $stmt->execute([$userId]);
@@ -86,4 +109,26 @@ function isInWatchlist(int $userId, int $productId): bool {
     );
     $stmt->execute([$userId, $productId]);
     return (bool)$stmt->fetchColumn();
+}
+
+function setWatchlistItems(int $userId, array $productIds): void {
+    clearWatchlist($userId);
+    foreach ($productIds as $pid) {
+        addToWatchlist($userId, (int)$pid);
+    }
+}
+
+function toggleWatchlistBulk(int $userId, array $productIds): array {
+    $results = [];
+    foreach ($productIds as $pid) {
+        $pid = (int)$pid;
+        if (isInWatchlist($userId, $pid)) {
+            removeFromWatchlist($userId, $pid);
+            $results[] = ['id' => $pid, 'in_watchlist' => false];
+        } else {
+            addToWatchlist($userId, $pid);
+            $results[] = ['id' => $pid, 'in_watchlist' => true];
+        }
+    }
+    return $results;
 }

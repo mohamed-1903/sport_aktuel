@@ -85,6 +85,7 @@ CREATE TABLE watchlists (
 );
 
 -- Watchlist-Items
+
 CREATE TABLE watchlist_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
     watchlist_id INT,
