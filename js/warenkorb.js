@@ -60,7 +60,7 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
           const price = parseFloat(btn.dataset.price) || 0;
           zeigeProduktPreview({ name, image, price, size, qty });
         }
-        updateCartCount();
+        updateCartCount((cnt) => zeigeCartBestaetigung(cnt));
         loadList();
       } else {
         zeigeToast("⚠️ Fehler: " + (data.error || "Unbekannt"), "#cc0000");
@@ -94,15 +94,32 @@ function updateCartButtons() {
     );
 }
 
-function updateCartCount() {
+function updateCartCount(callback) {
   fetch("index.php?page=cart&action=count")
     .then((res) => res.json())
     .then((data) => {
       const cartButton = document.getElementById("cart-button");
+      const count = data.count || 0;
       if (cartButton) {
-        cartButton.innerHTML = `🛒 (${data.count || 0})`;
+        cartButton.innerHTML = `🛒 (${count})`;
+      }
+      if (typeof callback === "function") {
+        callback(count);
       }
     });
+}
+
+function zeigeCartBestaetigung(count) {
+  const cartButton = document.getElementById("cart-button");
+  if (!cartButton) return;
+
+  const zielText = `🛒 (${count})`;
+  cartButton.innerHTML = "✅";
+
+  clearTimeout(cartButton._resetTimer);
+  cartButton._resetTimer = setTimeout(() => {
+    cartButton.innerHTML = zielText;
+  }, 2000);
 }
 
 // ✅ Warenkorbliste darstellen
