@@ -30,10 +30,6 @@ switch ($page) {
         require_once 'controller/watchlistController.php';
         break;
 
-    case 'theme':
-        require_once 'controller/themeController.php';
-        break;
-
     case 'admin':
         require_once 'controller/adminController.php';
         break;

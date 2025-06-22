@@ -28,15 +28,6 @@ switch ($action) {
     case 'remove':
         $id = $_POST['id'] ?? ($_GET['id'] ?? null);
         if ($userId && $id !== null) {
-            require_once 'model/productModel.php';
-            $product = getProductById((int)$id);
-            if ($product) {
-                $_SESSION['watch_removed'] = [
-                    'name' => $product['name'],
-                    'image' => $product['image_main'],
-                    'id' => (int)$id
-                ];
-            }
             removeFromWatchlist($userId, (int)$id);
         }
         header('Location: index.php?page=watchlist&action=view');

@@ -1,23 +1,27 @@
 // ✅ Dark-/Light-Mode Toggle
 document.addEventListener("DOMContentLoaded", () => {
   const toggleButton = document.getElementById("theme-toggle");
-  if (!toggleButton) return;
+  const savedTheme = localStorage.getItem("theme") || "dark";
 
-  const applyTheme = (theme) => {
-    document.body.classList.toggle("light-mode", theme === "light");
-    document.body.classList.toggle("dark-mode", theme === "dark");
-    document.body.setAttribute("data-theme", theme);
-    toggleButton.textContent = theme === "light" ? "🌙" : "☀️";
-  };
-
-  fetch("index.php?page=theme&action=get")
-    .then((r) => r.json())
-    .then((d) => applyTheme(d.theme || "dark"));
+  if (savedTheme === "light") {
+    document.body.classList.add("light-mode");
+    document.body.setAttribute("data-theme", "light");
+    toggleButton.textContent = "🌙";
+  } else {
+    document.body.classList.add("dark-mode");
+    document.body.setAttribute("data-theme", "dark");
+    toggleButton.textContent = "☀️";
+  }
 
   toggleButton.addEventListener("click", () => {
-    fetch("index.php?page=theme&action=toggle", { method: "POST" })
-      .then((r) => r.json())
-      .then((d) => applyTheme(d.theme));
+    document.body.classList.toggle("light-mode");
+    document.body.classList.toggle("dark-mode");
+    const theme = document.body.classList.contains("light-mode")
+      ? "light"
+      : "dark";
+    document.body.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+    toggleButton.textContent = theme === "light" ? "🌙" : "☀️";
   });
 });
 
