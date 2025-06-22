@@ -70,6 +70,8 @@ CREATE TABLE cart_items (
     product_id INT,
     size VARCHAR(10),
     quantity INT DEFAULT 1,
+    discount INT DEFAULT 0,
+    gift TINYINT(1) DEFAULT 0,
     FOREIGN KEY (cart_id) REFERENCES cart(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );

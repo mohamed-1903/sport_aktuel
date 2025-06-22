@@ -36,17 +36,18 @@ function addToCart(int $userId, array $item): void
     // Prüfen ob Eintrag schon existiert
     $stmt = $db->prepare("SELECT id, quantity FROM cart_items WHERE cart_id = ? AND product_id = ? AND size = ?");
     $stmt->execute([$cartId, $item['id'], $item['size']]);
-$existing = $stmt->fetch();
+    $existing = $stmt->fetch();
+
+    $gift = !empty($item['gift']) ? 1 : 0;
+    $discount = isset($item['discount']) ? (int)$item['discount'] : 0;
 
     if ($existing) {
-        // Menge aktualisieren
         $newQty = $existing['quantity'] + $item['quantity'];
-        $update = $db->prepare("UPDATE cart_items SET quantity = ? WHERE id = ?");
-        $update->execute([$newQty, $existing['id']]);
+        $update = $db->prepare("UPDATE cart_items SET quantity = ?, discount = ?, gift = ? WHERE id = ?");
+        $update->execute([$newQty, $discount, $gift, $existing['id']]);
     } else {
-        // Neues Produkt einfügen
-        $insert = $db->prepare("INSERT INTO cart_items (cart_id, product_id, size, quantity) VALUES (?, ?, ?, ?)");
-        $insert->execute([$cartId, $item['id'], $item['size'], $item['quantity']]);
+        $insert = $db->prepare("INSERT INTO cart_items (cart_id, product_id, size, quantity, discount, gift) VALUES (?, ?, ?, ?, ?, ?)");
+        $insert->execute([$cartId, $item['id'], $item['size'], $item['quantity'], $discount, $gift]);
     }
 }
 
@@ -59,6 +60,8 @@ function getCartItems(int $userId): array
                 ci.product_id,
                 ci.size,
                 ci.quantity,
+                ci.discount,
+                ci.gift,
                 p.name,
                 p.price,
                 p.image_main

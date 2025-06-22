@@ -26,6 +26,18 @@ switch ($action) {
                 echo json_encode(['error' => 'Nicht eingeloggt']);
                 exit;
             }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $expectJson = isset($_SERVER['CONTENT_TYPE']) &&
+                strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false;
+            if ($expectJson) {
+                header('Content-Type: application/json');
+            }
+
+            if (!$userId) {
+                http_response_code(403);
+                echo json_encode(['error' => 'Nicht eingeloggt']);
+                exit;
+            }
 
             if (
                 isset($_SERVER['CONTENT_TYPE']) &&
@@ -36,6 +48,31 @@ switch ($action) {
                 $data = $_POST;
             }
 
+            if (is_array($data) && isset($data['id'], $data['size'], $data['quantity'])) {
+                try {
+                    addToCart($userId, [
+                        'id' => (int)$data['id'],
+                        'size' => trim($data['size']),
+                        'quantity' => max(1, (int)$data['quantity']),
+                        'discount' => isset($data['discount']) ? (int)$data['discount'] : 0,
+                        'gift' => !empty($data['gift'])
+                    ]);
+                } catch (PDOException $e) {
+                    http_response_code(500);
+                    echo json_encode(['error' => 'Datenbankfehler']);
+                    exit;
+                }
+                session_write_close();
+
+                if ($expectJson) {
+                    echo json_encode(['status' => 'ok']);
+                } else {
+                    header('Location: index.php?page=cart');
+                }
+            } else {
+                http_response_code(400);
+                echo json_encode(['error' => 'Invalid input']);
+            }
             if (is_array($data) && isset($data['id'], $data['size'], $data['quantity'])) {
                 try {
                     addToCart($userId, [
@@ -84,7 +121,6 @@ switch ($action) {
                     'quantity' => max(1, (int)$data['quantity'])
                 ]);
                 session_write_close();
-
                 if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
                     header('Content-Type: application/json');
                     echo json_encode(['status' => 'ok']);
@@ -183,6 +219,9 @@ switch ($action) {
     case 'toggle':
         session_start();
         header('Content-Type: application/json');
+    case 'toggle':
+        session_start();
+        header('Content-Type: application/json');
         $userId = $_SESSION['user_id'] ?? null;
         if (!$userId) {
             echo json_encode(['status' => 'error', 'message' => 'Nicht eingeloggt']);
@@ -205,6 +244,21 @@ switch ($action) {
             }
         }
 
+        try {
+            addToCart($userId, [
+                'id' => (int)$data['product_id'],
+                'size' => trim($data['size']),
+                'quantity' => (int)$data['qty'],
+                'discount' => isset($data['discount']) ? (int)$data['discount'] : 0,
+                'gift' => !empty($data['gift'])
+            ]);
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(['status' => 'error', 'message' => 'Datenbankfehler']);
+            exit;
+        }
+        echo json_encode(['status' => 'ok', 'in_cart' => true]);
+        exit;
         try {
             addToCart($userId, [
                 'id' => (int)$data['product_id'],
