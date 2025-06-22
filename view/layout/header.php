@@ -58,6 +58,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <div id="toast-popup" class="toast-popup"></div>
     <div id="cart-preview-popup" class="cart-preview-popup"></div>
     <div id="watchlist-preview-popup" class="watchlist-preview-popup"></div>
+    <div id="watch-popup" class="watchlist-preview-popup"></div>
     <nav>
         <ul class="nav-menu">
             <li class="dropdown">

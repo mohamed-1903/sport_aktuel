@@ -50,7 +50,7 @@ function toggleWatchlist(iid, btn = null) {
         } else {
           if (btn) btn.textContent = "🤍";
           flyToTarget(btn, "#watchlist-button", "🤍");
-          zeigeWatchPreview({ name, image, price, productId: iid });
+          zeigeWatchRemovePreview({ name, image, productId: iid });
           updateWatchlistCount(); // sofort aktualisieren bei Entfernen
           zeigeToast("💔 Produkt wurde aus der Merkliste entfernt", "#cc0000");
         }
@@ -135,7 +135,7 @@ function loadWatchlist() {
             <p>${parseFloat(item.price).toFixed(2)} €</p>
             <button class="remove-watch" data-id="${
               item.product_id
-            }">🗑️ Entfernen</button>
+            }" data-name="${item.name}" data-image="${item.image_main}">🗑️ Entfernen</button>
             <a href="index.php?page=product&action=detail&id=${
               item.product_id
             }"><button>🔍 Anzeigen</button></a>
@@ -145,13 +145,16 @@ function loadWatchlist() {
 
       container.querySelectorAll(".remove-watch").forEach((btn) => {
         btn.addEventListener("click", () => {
-          removeFromWatchlist(btn.dataset.id);
+          removeFromWatchlist(btn.dataset.id, {
+            name: btn.dataset.name,
+            image: btn.dataset.image,
+          });
         });
       });
     });
 }
 
-function removeFromWatchlist(id) {
+function removeFromWatchlist(id, info = {}) {
   fetch("index.php?page=watchlist&action=remove", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -160,6 +163,13 @@ function removeFromWatchlist(id) {
     loadWatchlist();
     updateWatchButtons();
     updateWatchlistCount();
+    if (info.name && info.image) {
+      zeigeWatchRemovePreview({
+        name: info.name,
+        image: info.image,
+        productId: id,
+      });
+    }
   });
 }
 
