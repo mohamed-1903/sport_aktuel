@@ -31,7 +31,6 @@
         <?php if (count($productsToShow) > 1): ?>
           <button class="remove-product" data-remove-index="<?= $index ?>">❌</button>
         <?php endif; ?>
-
       </h2>
       <div class="produkt-grid">
         <!-- 📸 Bilderbereich -->
@@ -184,7 +183,7 @@
   </section>
 </main>
 <script>
-  document.getElementById('compareBtn').addEventListener('click', () => {
+  document.getElementById('compareBtn').addEventListener('click', () => {␊
     const input = document.getElementById('compareInput').value.trim();
     const options = document.querySelectorAll('#compareOptions option');
     let secondId = null;
