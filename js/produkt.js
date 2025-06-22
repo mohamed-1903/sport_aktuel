@@ -244,12 +244,15 @@ document.addEventListener("keydown", (e) => {
   }
 });
 // ✨ Klick außerhalb vom Content schließt das Modal
-document.getElementById("zoomModal").addEventListener("click", (e) => {
-  const content = document.getElementById("zoomModalContent");
-  if (!content.contains(e.target)) {
-    closeZoomModal();
-  }
-});
+const zoomModalEl = document.getElementById("zoomModal");
+if (zoomModalEl) {
+  zoomModalEl.addEventListener("click", (e) => {
+    const content = document.getElementById("zoomModalContent");
+    if (content && !content.contains(e.target)) {
+      closeZoomModal();
+    }
+  });
+}
 
 function enableZoom(section) {
   const idx = section.dataset.productIndex;
