@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
   updateCartButtons();
   updateCartCount();
 });
-const isOnProductDetailPage =
+// avoid conflicts with watchlist script
+const isOnProductDetailPageCart =
   window.location.href.includes("page=product") &&
   window.location.href.includes("action=detail");
 
@@ -260,7 +261,7 @@ function zeigeProduktPreview({ name, image, price, productId }) {
         <div class="popup-buttons">
           <a href="index.php?page=cart&action=view">Zum Warenkorb</a>
           ${
-            !isOnProductDetailPage
+            !isOnProductDetailPageCart
               ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
               : ""
           }

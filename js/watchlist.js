@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
   updateWatchButtons();
   updateWatchlistCount();
 });
-const isOnProductDetailPage =
+// avoid conflicts with other scripts
+const isOnProductDetailPageWatch =
   window.location.href.includes("page=product") &&
   window.location.href.includes("action=detail");
 
@@ -203,7 +204,7 @@ function zeigeWatchPreview({ name, image, price, productId }) {
         <div class="popup-buttons">
           <a href="index.php?page=watchlist&action=view">Merkliste</a>
           ${
-            !isOnProductDetailPage
+            !isOnProductDetailPageWatch
               ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
               : ""
           }
