@@ -37,10 +37,10 @@ switch ($action) {
             }
 
             $id = $data['product_id'] ?? $data['id'] ?? null;
-            $size = $data['size'] ?? null;
+            $size = isset($data['size']) ? trim($data['size']) : null;
             $quantity = $data['quantity'] ?? $data['qty'] ?? null;
 
-            if ($id !== null && $size !== null && $quantity !== null) {
+            if ($id !== null && $size !== null && $size !== '' && $quantity !== null) {
                 try {
                     addToCart($userId, [
                         'id' => (int)$id,
@@ -63,9 +63,12 @@ switch ($action) {
                 }
             } else {
                 http_response_code(400);
-                echo json_encode(['error' => 'Invalid input']);
+                $msg = 'Invalid input';
+                if ($size === null || $size === '') {
+                    $msg = 'Groesse erforderlich';
+                }
+                echo json_encode(['error' => $msg]);
             }
-
             exit;
         }
         break;
@@ -77,8 +80,8 @@ switch ($action) {
         }
 
         $id = $_POST['id'] ?? ($_GET['id'] ?? null);
-        $size = $_POST['size'] ?? ($_GET['size'] ?? null);
-        if ($id !== null && $size !== null) {
+        $size = isset($_POST['size']) ? trim($_POST['size']) : (isset($_GET['size']) ? trim($_GET['size']) : null);
+        if ($id !== null && $size !== null && $size !== '') {
             removeFromCart($userId, (int)$id, trim($size));
             session_write_close();
         }
@@ -93,9 +96,9 @@ switch ($action) {
         }
 
         $id = $_POST['id'] ?? null;
-        $size = $_POST['size'] ?? null;
+        $size = isset($_POST['size']) ? trim($_POST['size']) : null;
         $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
-        if ($id !== null && $size !== null && $quantity > 0) {
+        if ($id !== null && $size !== null && $size !== '' && $quantity > 0) {
             updateCartQuantity($userId, (int)$id, trim($size), $quantity);
             session_write_close();
         }
@@ -146,13 +149,15 @@ switch ($action) {
         }
 
         $data = json_decode(file_get_contents("php://input"), true);
-        if (!isset($data['product_id'], $data['size'], $data['qty'])) {
+        if (!isset($data['product_id'], $data['size'], $data['qty']) || trim($data['size']) === '') {
+            $msg = trim($data['size']) === '' ? 'Groesse erforderlich' : 'Fehlende Felder';
             echo json_encode([
                 'status' => 'error',
-                'message' => 'Fehlende Felder: ' . json_encode($data)
+                'message' => $msg
             ]);
             exit;
         }
+
 
 
         $items = getCartItems($userId);

@@ -45,7 +45,6 @@ switch ($action) {
 
         require 'view/product/productDetailView.php';
         break;
-
     case 'list':
     default:
         $category = $_GET['category'] ?? '';
