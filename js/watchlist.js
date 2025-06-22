@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
   updateWatchButtons();
   updateWatchlistCount();
 });
+const isOnProductDetailPage =
+  window.location.href.includes("page=product") &&
+  window.location.href.includes("action=detail");
 
 document.addEventListener("click", (e) => {
   const btn = e.target.closest(".btn-add-to-watch");
@@ -46,7 +49,7 @@ function toggleWatchlist(iid, btn = null) {
         } else {
           if (btn) btn.textContent = "🤍";
           flyToTarget(btn, "#watchlist-button", "🤍");
-          zeigeWatchRemovePreview({ name, image });
+          zeigeWatchPreview({ name, image, price, productId: iid });
           updateWatchlistCount(); // sofort aktualisieren bei Entfernen
           zeigeToast("💔 Produkt wurde aus der Merkliste entfernt", "#cc0000");
         }
@@ -186,20 +189,33 @@ function zeigeWatchButtonBestaetigung() {
 }
 
 // 🔔 Popup bei Hinzufügen zur Watchlist
-function zeigeWatchPreview({ name, image, price }) {
+function zeigeWatchPreview({ name, image, price, productId }) {
   const popup = document.getElementById("watchlist-preview-popup");
   if (!popup) return;
+
   popup.innerHTML = `
-    <img src="${image}" alt="${name}">
-    <div style="overflow: hidden;">
-      <strong>${name}</strong>
-      <small>Preis: ${price.toFixed(2)} €</small>
-      <small>❤️ Zur Merkliste hinzugefügt</small>
-    </div>`;
-  popup.style.display = "block";
+    <div class="popup-content-flex">
+      <img src="${image}" alt="${name}" />
+      <div class="popup-text-info">
+        <strong>${name}</strong>
+        <small>❤️ Zur Merkliste hinzugefügt</small>
+        <small>${price.toFixed(2)} €</small>
+        <div class="popup-buttons">
+          <a href="index.php?page=watchlist&action=view">Merkliste</a>
+          ${
+            !isOnProductDetailPage
+              ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
+              : ""
+          }
+        </div>
+      </div>
+    </div>
+  `;
+
+  popup.classList.add("show");
   clearTimeout(popup._hideTimer);
   popup._hideTimer = setTimeout(() => {
-    popup.style.display = "none";
+    popup.classList.remove("show");
   }, 4000);
 }
 

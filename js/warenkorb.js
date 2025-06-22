@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
   updateCartButtons();
   updateCartCount();
 });
+const isOnProductDetailPage =
+  window.location.href.includes("page=product") &&
+  window.location.href.includes("action=detail");
 
 // 🧠 Globale Button-Steuerung für ALLE .btn-add-to-cart Buttons
 document.addEventListener("click", (e) => {
@@ -243,26 +246,36 @@ function zeigeToast(text, farbe = "#333") {
     el.classList.remove("show");
   }, 2500);
 }
-function zeigeProduktPreview({ name, image, price, size = "M", qty = 1 }) {
+function zeigeProduktPreview({ name, image, price, productId }) {
   const popup = document.getElementById("cart-preview-popup");
   if (!popup) return;
 
   popup.innerHTML = `
-    <img src="${image}" alt="${name}">
-    <div style="overflow: hidden;">
-      <strong>${name}</strong>
-      <small>Preis: ${price.toFixed(2)} €</small>
-      <small>Größe: ${size} | Menge: ${qty}</small>
+    <div class="popup-content-flex">
+      <img src="${image}" alt="${name}" />
+      <div class="popup-text-info">
+        <strong>${name}</strong>
+        <small>🛒 In den Warenkorb gelegt</small>
+        <small>${price.toFixed(2)} €</small>
+        <div class="popup-buttons">
+          <a href="index.php?page=cart&action=view">Zum Warenkorb</a>
+          ${
+            !isOnProductDetailPage
+              ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
+              : ""
+          }
+        </div>
+      </div>
     </div>
   `;
 
-  popup.style.display = "block";
-
+  popup.classList.add("show");
   clearTimeout(popup._hideTimer);
   popup._hideTimer = setTimeout(() => {
-    popup.style.display = "none";
+    popup.classList.remove("show");
   }, 4000);
 }
+
 function zeigeCartRemovePreview({ name, image }) {
   const popup = document.getElementById("cart-popup");
   if (!popup) return;
