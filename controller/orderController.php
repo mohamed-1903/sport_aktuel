@@ -3,19 +3,13 @@
 require_once 'model/orderModel.php';
 require_once 'model/cartModel.php';
 
-$action = $_GET['action'] ?? 'checkout';
-
-if (in_array($action, ['admin', 'updateStatus'])) {
-    if (!isset($_SESSION['user_id']) || empty($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
-        header("Location: index.php?page=auth&action=login&unauthorized=1");
-        exit;
-    }
-} else {
-    if (!isset($_SESSION['user_id'])) {
-        header("Location: index.php?page=auth&action=login&redirect=order");
-        exit;
-    }
+if (!isset($_SESSION['user_id'])) {
+    header("Location: index.php?page=auth&action=login&redirect=order");
+    exit;
 }
+
+
+$action = $_GET['action'] ?? 'checkout';
 
 switch ($action) {
     case 'checkout':
@@ -51,28 +45,18 @@ switch ($action) {
         break;
 
     case 'cancel':
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'])) {
-            $orderId = (int)$_POST['order_id'];
-            cancelOrder($orderId, $_SESSION['user_id']);
-        }
-        header("Location: index.php?page=user&action=orders");
-        exit;
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $orderId = (int) ($_GET['id'] ?? 0);
+            $userId = $_SESSION['user_id'] ?? null;
 
-    case 'admin':
-        $statusFilter = $_GET['status'] ?? 'neu';
-        $orders = getOrdersByStatus($statusFilter);
-        require 'view/admin/manageOrdersView.php';
-        break;
+            if ($orderId && $userId) {
+                cancelOrderIfNew($orderId, $userId);
+                $_SESSION['message'] = '✅ Bestellung wurde erfolgreich storniert.';
+            }
 
-    case 'updateStatus':
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'], $_POST['status'])) {
-            $orderId = (int)$_POST['order_id'];
-            $newStatus = $_POST['status'];
-            updateOrderStatus($orderId, $newStatus);
-            $redirect = $_POST['redirect'] ?? 'neu';
-            header("Location: index.php?page=order&action=admin&status=" . urlencode($redirect));
+            // Kein harter Redirect, sondern Soft-Reload:
+            header("Location: " . $_SERVER['HTTP_REFERER']);
             exit;
         }
-        header("Location: index.php?page=order&action=admin");
-        exit;
+        break;
 }

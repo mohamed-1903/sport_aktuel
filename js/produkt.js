@@ -262,13 +262,14 @@ function zeigePreis() {
 }
 
 // Animation aus anderen Skripten genutzt
-function flyToTarget(startEl, targetSelector, symbol = "❤️") {
+function flyToTarget(startEl, targetSelector) {
   const target = document.querySelector(targetSelector);
   if (!startEl || !target) return;
 
   const startRect = startEl.getBoundingClientRect();
   const endRect = target.getBoundingClientRect();
 
+  const symbol = startEl.textContent.trim();
   const clone = document.createElement("div");
   clone.classList.add("fly-to-target");
   clone.textContent = symbol;
@@ -292,13 +293,19 @@ function flyToTarget(startEl, targetSelector, symbol = "❤️") {
     clone.classList.add("fly-to-target-anim");
   });
 
+  clone.addEventListener("animationend", () => clone.remove());
+  requestAnimationFrame(() => {
+    clone.classList.add("fly-to-target-anim");
+  });
+
   clone.addEventListener("animationend", () => {
     clone.remove();
-    target.classList.add("pulse-highlight");
-    setTimeout(() => target.classList.remove("pulse-highlight"), 1000);
+    if (target) {
+      target.classList.add("pulse-highlight");
+      setTimeout(() => target.classList.remove("pulse-highlight"), 1000);
+    }
   });
 }
-
 function resetFields(section) {
   const idx = section.dataset.productIndex;
 

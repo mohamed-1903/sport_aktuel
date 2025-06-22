@@ -17,21 +17,21 @@ include 'view/layout/header.php';
 
 <section class="main-content">
   <?php if (!empty($_SESSION['message'])): ?>
-  <div class="toast-popup show" id="toastMessage">
-    <?= htmlspecialchars($_SESSION['message']) ?>
-  </div>
+    <div class="toast-popup show" id="toastMessage">
+      <?= htmlspecialchars($_SESSION['message']) ?>
+    </div>
     <script>
-    // Anzeige direkt beim Laden aktivieren
-    const toast = document.getElementById('toastMessage');
-    if (toast) {
-      toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 3000);
-    }
-  </script>
-  <?php unset($_SESSION['message']); ?>
-<?php endif; ?>
+      // Anzeige direkt beim Laden aktivieren
+      const toast = document.getElementById('toastMessage');
+      if (toast) {
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 3000);
+      }
+    </script>
+    <?php unset($_SESSION['message']); ?>
+  <?php endif; ?>
 
 
   <h1>Meine Bestellungen</h1>
@@ -90,6 +90,7 @@ include 'view/layout/header.php';
     </table>
   <?php endif; ?>
 </section>
+
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
 <script src="js/style_modification.js"></script>
 <script src="js/filterandsearch.js"></script>
