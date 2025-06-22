@@ -44,7 +44,7 @@ function addToCart(int $userId, array $item): void
         $update = $db->prepare("UPDATE cart_items SET quantity = ? WHERE id = ?");
         $update->execute([$newQty, $existing['id']]);
     } else {
-        // Neues Produkt einfügen␊
+        // Neues Produkt einfügen
         $insert = $db->prepare("INSERT INTO cart_items (cart_id, product_id, size, quantity) VALUES (?, ?, ?, ?)");
         $insert->execute([$cartId, $item['id'], $item['size'], $item['quantity']]);
     }
