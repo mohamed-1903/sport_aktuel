@@ -56,9 +56,33 @@ $total = 0;
             $einzelpreis = $rabattPreis + (($item['gift'] ?? 0) ? 2 : 0);
             $sum = $einzelpreis * $item['quantity'];
             $total += $sum;
+
           ?>
             <tr>
               <td>
+                <img src="<?= htmlspecialchars($item['image_main']) ?>" width="60" />
+                <?= htmlspecialchars($item['name']) ?><br>
+                <small>Größe: <?= htmlspecialchars($item['size']) ?></small><br>
+                <?php if (!empty($item['gift'])): ?>
+                  <small>🎁 Geschenkverpackung</small><br>
+                <?php endif; ?>
+                <?php if (!empty($item['discount'])): ?>
+                  <small>🎟️ Rabatt: <?= (int)$item['discount'] ?>%</small>
+                <?php endif; ?>
+              </td>
+              <td>
+                <form action="index.php?page=cart&action=update" method="post">
+                  <input type="hidden" name="id" value="<?= (int)$item['product_id'] ?>">
+                  <input type="hidden" name="size" value="<?= htmlspecialchars($item['size']) ?>">
+                  <input type="number" name="quantity" value="<?= (int)$item['quantity'] ?>" min="1" />
+                  <button type="submit">✔</button>
+                </form>
+              </td>
+              <td><?= number_format($einzelpreis, 2, ',', '.') ?> €</td>
+              <td><?= number_format($sum, 2, ',', '.') ?> €</td>
+              <td>
+                <form action="index.php?page=cart&action=remove" method="post" style="display:inline">
+                  <input type="hidden" name="id" value="<?= (int)$item['product_id'] ?>">
                 <img src="<?= htmlspecialchars($item['image_main']) ?>" width="60" />
                 <?= htmlspecialchars($item['name']) ?><br>
                 <small>Größe: <?= htmlspecialchars($item['size']) ?></small><br>

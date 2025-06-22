@@ -14,6 +14,7 @@ $action = $_GET['action'] ?? 'view';
 
 switch ($action) {
     case 'add':
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $expectJson = isset($_SERVER['CONTENT_TYPE']) &&
                 strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false;
@@ -138,7 +139,6 @@ switch ($action) {
                     'quantity' => max(1, (int)$data['quantity'])
                 ]);
                 session_write_close();
-
                 if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
                     header('Content-Type: application/json');
                     echo json_encode(['status' => 'ok']);
@@ -167,6 +167,7 @@ switch ($action) {
         }
         header("Location: index.php?page=cart&action=view");
         exit;
+        break;
 
     case 'update':
         if (!$userId) {
@@ -194,6 +195,7 @@ switch ($action) {
         header('Content-Type: application/json');
         echo json_encode(['count' => countCartItems($userId)]);
         exit;
+        break;
 
     case 'clear':
         session_start();
@@ -203,6 +205,7 @@ switch ($action) {
         }
         header('Location: index.php?page=cart');
         exit;
+        break;
 
     case 'json':
         session_start();
@@ -215,10 +218,8 @@ switch ($action) {
         header('Content-Type: application/json');
         echo json_encode(getCartItems($userId));
         exit;
+        break;
 
-    case 'toggle':
-        session_start();
-        header('Content-Type: application/json');
     case 'toggle':
         session_start();
         header('Content-Type: application/json');
@@ -243,6 +244,7 @@ switch ($action) {
                 exit;
             }
         }
+
 
         try {
             addToCart($userId, [

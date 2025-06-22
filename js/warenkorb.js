@@ -48,6 +48,7 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
   const name = btn?.dataset.name || "Produkt";
   const image = btn?.dataset.image || "img/placeholder.jpg";
 
+
   const gift = document.getElementById("giftWrap")?.checked || false;
   const pin = document.getElementById("pin")?.value.trim();
   const discount = DISCOUNT_CODES[pin] || 0;
@@ -59,7 +60,10 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   })
-    .then((res) => res.json())
+    .then((res) => {
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return res.json();
+    })
     .then((data) => {
       if (data.status === "ok") {
         if (data.in_cart) {
