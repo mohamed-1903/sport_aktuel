@@ -44,7 +44,18 @@ document.addEventListener("click", (e) => {
 });
 
 function toggleCart(iid, btn = null, size = "M", qty = 1) {
-  const payload = { id: iid, size, quantity: qty };
+  const section = btn?.closest(".Eprodukt");
+  let discount = 0;
+  let gift = false;
+
+  if (section) {
+    const idx = section.dataset.productIndex;
+    const pin = section.querySelector(`#pin-${idx}`)?.value.trim();
+    discount = window.DISCOUNT_CODES?.[pin] || 0;
+    gift = section.querySelector(`#giftWrap-${idx}`)?.checked || false;
+  }
+
+  const payload = { id: iid, size, quantity: qty, discount, gift };
 
   fetch("index.php?page=cart&action=add", {
     method: "POST",
