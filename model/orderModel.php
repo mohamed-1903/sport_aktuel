@@ -36,9 +36,6 @@ function getOrdersByUser(int $userId): array {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function clearCart(): void {
-    $_SESSION['cart'] = [];
-}
 
 function getAllOrders(): array {
     global $db;

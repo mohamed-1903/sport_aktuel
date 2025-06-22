@@ -39,7 +39,7 @@ switch ($action) {
         $success = saveOrder($_SESSION['user_id'], $cartItems);
 
         if ($success) {
-            clearCart();
+            clearCart($_SESSION['user_id']);
             header("Location: index.php?page=order&action=success");
             exit;
         } else {
