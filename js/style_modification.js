@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((d) => applyTheme(d.theme || "dark"));
 
   toggleButton.addEventListener("click", () => {
-    fetch("index.php?page=theme&action=toggle", { method: "POST" })
+});
       .then((r) => r.json())
       .then((d) => applyTheme(d.theme));
   });

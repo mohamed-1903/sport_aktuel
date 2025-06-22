@@ -245,10 +245,10 @@ function zeigeWatchRemovePreview({ name, image, productId }) {
     location.href.includes("action=detail");
 
   popup.innerHTML = `
-    <div class="popup-content removed">
+    <div class="popup-content-flex">
       <img src="${image}" alt="${name}" />
-      <div class="popup-text">
-        <strong>${name}</strong><br>
+      <div class="popup-text-info">
+        <strong>${name}</strong>
         <small>💔 wurde aus deiner Merkliste entfernt</small>
         <div class="popup-buttons">
           <button class="undo-btn">↩️ Rückgängig</button>
