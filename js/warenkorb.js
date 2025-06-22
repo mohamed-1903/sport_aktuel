@@ -72,15 +72,6 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
           zeigeCartRemovePreview({ name, image });
         }
         updateCartButtons();
-      if (data.status === "ok" || data.in_cart) {
-        zeigeToast("🛒 Zum Warenkorb hinzugefügt", "#28a745");
-        if (btn) btn.textContent = "✅";
-        if (btn) {
-          const name = btn.dataset.name;
-          const image = btn.dataset.image;
-          const price = parseFloat(btn.dataset.price) || 0;
-          zeigeProduktPreview({ name, image, price, size, qty });
-        }
         updateCartCount();
         loadList();
       } else {
