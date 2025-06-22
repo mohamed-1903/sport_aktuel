@@ -221,6 +221,7 @@ document.addEventListener("click", (e) => {
     // 🔄 UI aktualisieren
     updateCartButtons?.();
     updateCartCount?.((cnt) => zeigeCartBestaetigung?.(cnt));
+    zeigeButtonBestaetigung?.(addToCartBtn);
   }
 });
 function zeigeWatchPreview({ name, image, price }) {

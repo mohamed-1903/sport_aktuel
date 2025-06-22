@@ -20,10 +20,12 @@ document.addEventListener("click", (e) => {
     return;
   }
 
-  const sizeSelect =
-    btn.closest(".Eprodukt")?.querySelector("select.size-dropdown");
-  const quantityInput =
-    btn.closest(".Eprodukt")?.querySelector("input[type=number]");
+  const sizeSelect = btn
+    .closest(".Eprodukt")
+    ?.querySelector("select.size-dropdown");
+  const quantityInput = btn
+    .closest(".Eprodukt")
+    ?.querySelector("input[type=number]");
   const size = sizeSelect ? sizeSelect.value : "M";
   const quantity = parseInt(quantityInput?.value) || 1;
 
@@ -53,7 +55,7 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
     .then((data) => {
       if (data.status === "ok" || data.in_cart) {
         zeigeToast("🛒 Zum Warenkorb hinzugefügt", "#28a745");
-        if (btn) btn.textContent = "✅";
+        if (btn) zeigeButtonBestaetigung(btn);
         if (btn) {
           const name = btn.dataset.name;
           const image = btn.dataset.image;
@@ -122,6 +124,14 @@ function zeigeCartBestaetigung(count) {
   }, 2000);
 }
 
+function zeigeButtonBestaetigung(btn) {
+  if (!btn) return;
+  btn.textContent = "✅";
+  clearTimeout(btn._resetTimer);
+  btn._resetTimer = setTimeout(() => {
+    updateCartButtons();
+  }, 2000);
+}
 // ✅ Warenkorbliste darstellen
 function loadList() {
   fetch("index.php?page=cart&action=json")

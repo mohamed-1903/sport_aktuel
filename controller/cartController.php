@@ -39,7 +39,6 @@ switch ($action) {
             $id = $data['product_id'] ?? $data['id'] ?? null;
             $size = isset($data['size']) ? trim($data['size']) : null;
             $quantity = $data['quantity'] ?? $data['qty'] ?? null;
-
             if ($id !== null && $size !== null && $size !== '' && $quantity !== null) {
                 try {
                     addToCart($userId, [
@@ -158,7 +157,6 @@ switch ($action) {
             ]);
             exit;
         }
-
 
 
         $items = getCartItems($userId);
