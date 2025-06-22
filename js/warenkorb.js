@@ -20,23 +20,23 @@ document.addEventListener("click", (e) => {
     return;
   }
 
-  const sizeSelect = document.getElementById("size");
-  const quantityInput = document.getElementById("quantity");
+  const sizeSelect = btn
+    .closest(".Eprodukt")
+    ?.querySelector("select.size-dropdown");
+  const quantityInput = btn
+    .closest(".Eprodukt")
+    ?.querySelector("input[type=number]");
+  const size = sizeSelect?.value || "M";
+  const quantity = parseInt(quantityInput?.value) || 1;
 
-  let size = "M";
-  let quantity = 1;
-  if (sizeSelect && quantityInput) {
-    size = sizeSelect.value;
-    quantity = parseInt(quantityInput.value);
+  if (!size) {
+    alert("❗ Bitte eine Größe auswählen.");
+    return;
+  }
 
-    if (!size) {
-      alert("❗ Bitte eine Größe auswählen.");
-      return;
-    }
-    if (!quantity || quantity <= 0) {
-      alert("❗ Bitte eine gültige Menge angeben.");
-      return;
-    }
+  if (!quantity || quantity <= 0) {
+    alert("❗ Bitte eine gültige Menge angeben.");
+    return;
   }
 
   toggleCart(iid, btn, size, quantity);
@@ -44,46 +44,33 @@ document.addEventListener("click", (e) => {
 });
 
 function toggleCart(iid, btn = null, size = "M", qty = 1) {
-  const price = parseFloat(btn?.dataset.price) || 0;
-  const name = btn?.dataset.name || "Produkt";
-  const image = btn?.dataset.image || "img/placeholder.jpg";
+  const payload = { id: iid, size, quantity: qty };
 
-  const gift = document.getElementById("giftWrap")?.checked || false;
-  const pin = document.getElementById("pin")?.value.trim();
-  const discount = DISCOUNT_CODES[pin] || 0;
-
-  const payload = { product_id: iid, size, qty, gift, discount };
-
-  fetch("index.php?page=cart&action=toggle", {
+  fetch("index.php?page=cart&action=add", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   })
-    .then((res) => {
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      return res.json();
-    })
+    .then((res) => res.json())
     .then((data) => {
-      if (data.status === "ok") {
-        if (data.in_cart) {
-          if (btn) btn.textContent = "✅";
-          zeigeToast("🛒 Produkt wurde zum Warenkorb hinzugefügt", "#28a745");
+      if (data.status === "ok" || data.in_cart) {
+        zeigeToast("🛒 Zum Warenkorb hinzugefügt", "#28a745");
+        if (btn) btn.textContent = "✅";
+        if (btn) {
+          const name = btn.dataset.name;
+          const image = btn.dataset.image;
+          const price = parseFloat(btn.dataset.price) || 0;
           zeigeProduktPreview({ name, image, price, size, qty });
-        } else {
-          if (btn) btn.textContent = "🛒";
-          zeigeToast("❌ Produkt wurde aus dem Warenkorb entfernt", "#cc0000");
-          zeigeCartRemovePreview({ name, image });
         }
-        updateCartButtons();
         updateCartCount();
         loadList();
       } else {
-        zeigeToast("⚠️ Fehler: " + (data.message || "Unbekannt"), "#cc0000");
+        zeigeToast("⚠️ Fehler: " + (data.error || "Unbekannt"), "#cc0000");
       }
     })
     .catch((err) => {
-      console.error(err);
       zeigeToast("⚠️ Serverfehler beim Hinzufügen", "#cc0000");
+      console.error(err);
     });
 }
 
@@ -97,10 +84,11 @@ function updateCartButtons() {
         const sizeSelect = parent?.querySelector("select.size-dropdown");
         const size = sizeSelect?.value || "M";
 
-        const inCart = items.some(
+        const isInCart = items.some(
           (item) => item.product_id == iid && item.size === size
         );
-        btn.textContent = inCart ? "✅" : "🛒";
+
+        btn.textContent = isInCart ? "✅" : "🛒";
       });
     })
     .catch((err) =>
@@ -119,6 +107,7 @@ function updateCartCount() {
     });
 }
 
+// ✅ Warenkorbliste darstellen
 function loadList() {
   fetch("index.php?page=cart&action=json")
     .then((res) => res.json())
@@ -147,12 +136,7 @@ function loadList() {
       items.forEach((item) => {
         const preis = parseFloat(item.price) || 0;
         const menge = parseInt(item.quantity) || 1;
-        const rabatt = item.discount || 0;
-        const geschenk = item.gift ? 2 : 0;
-
-        const rabattPreis = preis * (1 - rabatt / 100);
-        const einzelpreisMitZuschlag = rabattPreis + geschenk;
-        const gesamt = einzelpreisMitZuschlag * menge;
+        const gesamt = preis * menge;
 
         const tr = document.createElement("tr");
         tr.innerHTML = `
@@ -161,29 +145,18 @@ function loadList() {
               <img src="${item.image_main}" alt="Bild" width="60" />
               <div>
                 <strong>${item.name}</strong><br>
-                <small>Größe: ${item.size}</small><br>
-                ${item.gift ? "<small>🎁 Geschenkverpackung</small><br>" : ""}
-                ${item.discount ? `<small>🎟️ Rabatt: ${rabatt}%</small>` : ""}
+                <small>Größe: ${item.size}</small>
               </div>
             </div>
           </td>
-          <td>
-            <select class="menge-select">
-              ${[...Array(10)]
-                .map(
-                  (_, i) =>
-                    `<option value="${i + 1}" ${
-                      i + 1 === menge ? "selected" : ""
-                    }>${i + 1}</option>`
-                )
-                .join("")}
-            </select>
-          </td>
-          <td>${einzelpreisMitZuschlag.toFixed(2)} €</td>
+          <td>${menge}</td>
+          <td>${preis.toFixed(2)} €</td>
           <td class="summe-cell">${gesamt.toFixed(2)} €</td>
-          <td><button class="remove-btn" data-id="${
-            item.product_id
-          }" data-size="${item.size}">❌</button></td>
+          <td>
+            <button class="remove-btn" data-id="${
+              item.product_id
+            }" data-size="${item.size}">❌</button>
+          </td>
         `;
 
         tbody.appendChild(tr);
@@ -197,51 +170,28 @@ function loadList() {
       nettoEl.textContent = `${netto.toFixed(2)} €`;
       mwstEl.textContent = `${mwst.toFixed(2)} €`;
 
+      // 🗑 EventListener zum Entfernen
       document.querySelectorAll(".remove-btn").forEach((btn) => {
         btn.addEventListener("click", () => {
-          removeFromCart(btn.dataset.id, btn.dataset.size);
-        });
-      });
-
-      document.querySelectorAll(".menge-select").forEach((select) => {
-        select.addEventListener("change", (e) => {
-          const tr = e.target.closest("tr");
-          const id = tr.querySelector(".remove-btn").dataset.id;
-          const size = tr.querySelector(".remove-btn").dataset.size;
-          const quantity = parseInt(e.target.value);
-          updateQuantity(id, size, quantity);
+          const id = btn.dataset.id;
+          const size = btn.dataset.size;
+          removeFromCart(id, size);
         });
       });
     });
 }
-
 function removeFromCart(productId, size) {
   fetch("index.php?page=cart&action=remove", {
     method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
     body: `id=${encodeURIComponent(productId)}&size=${encodeURIComponent(
       size
     )}`,
   })
-    .then(() => {
-      loadList();
-      updateCartButtons();
-      updateCartCount();
-    })
+    .then(() => loadList())
     .catch((err) => console.error("Fehler beim Entfernen:", err));
-}
-
-function updateQuantity(productId, size, quantity) {
-  fetch("index.php?page=cart&action=update", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: `id=${encodeURIComponent(productId)}&size=${encodeURIComponent(
-      size
-    )}&quantity=${encodeURIComponent(quantity)}`,
-  }).then(() => {
-    loadList();
-    updateCartCount();
-  });
 }
 
 function zeigeToast(text, farbe = "#333") {
@@ -293,6 +243,7 @@ function zeigeCartRemovePreview({ name, image }) {
   setTimeout(() => popup.classList.remove("show"), 3000);
 }
 
+// 🧹 Alles löschen
 function clearList() {
   if (confirm("Wirklich den ganzen Warenkorb löschen?")) {
     fetch("index.php?page=cart&action=clear").then(() => {
@@ -303,13 +254,16 @@ function clearList() {
   }
 }
 
+// 💳 Checkout
 function checkout() {
   fetch("check_login.php")
     .then((res) => res.json())
     .then((data) => {
       if (data.loggedIn) {
         alert("✅ Danke für deinen Einkauf! (Checkout in Entwicklung)");
+        // Hier könntest du z. B. save_order.php aufrufen
       } else {
+        // 🔁 Weiterleitung zur Loginseite mit Rücksprung
         window.location.href = "login.php?redirect=warenkorb.php";
       }
     });

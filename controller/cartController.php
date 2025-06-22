@@ -138,7 +138,6 @@ switch ($action) {
         break;
 
     case 'toggle':
-        session_start();
         header('Content-Type: application/json');
         $userId = $_SESSION['user_id'] ?? null;
         if (!$userId) {
@@ -148,9 +147,13 @@ switch ($action) {
 
         $data = json_decode(file_get_contents("php://input"), true);
         if (!isset($data['product_id'], $data['size'], $data['qty'])) {
-            echo json_encode(['status' => 'error', 'message' => 'Ungültige Daten']);
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Fehlende Felder: ' . json_encode($data)
+            ]);
             exit;
         }
+
 
         $items = getCartItems($userId);
         $inCart = false;
