@@ -44,7 +44,7 @@ document.addEventListener("click", (e) => {
 });
 
 function toggleCart(iid, btn = null, size = "M", qty = 1) {
-  const payload = { product_id: iid, size, qty };
+  const payload = { id: iid, size, quantity: qty };
 
   fetch("index.php?page=cart&action=add", {
     method: "POST",
@@ -53,11 +53,17 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
   })
     .then((res) => res.json())
     .then((data) => {
-      if (data.success || data.in_cart) {
+      if (data.status === "ok" || data.in_cart) {
         zeigeToast("🛒 Zum Warenkorb hinzugefügt", "#28a745");
         if (btn) btn.textContent = "✅";
-        updateCartCount(); // neu hinzufügen
-        loadList(); // Liste neu laden
+        if (btn) {
+          const name = btn.dataset.name;
+          const image = btn.dataset.image;
+          const price = parseFloat(btn.dataset.price) || 0;
+          zeigeProduktPreview({ name, image, price, size, qty });
+        }
+        updateCartCount();
+        loadList();
       } else {
         zeigeToast("⚠️ Fehler: " + (data.error || "Unbekannt"), "#cc0000");
       }
