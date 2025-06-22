@@ -72,7 +72,7 @@ $total = 0;
               <td><?= number_format($sum, 2, ',', '.') ?> €</td>
               <td>
                 <form action="index.php?page=cart&action=remove" method="post" style="display:inline">
-                  <input type="hidden" name="id" value="<?= (int)$item['id'] ?>">
+                  <input type="hidden" name="id" value="<?= (int)$item['product_id'] ?>">
                   <input type="hidden" name="size" value="<?= htmlspecialchars($item['size']) ?>">
                   <button type="submit" class="remove-btn">❌</button>
                 </form>
