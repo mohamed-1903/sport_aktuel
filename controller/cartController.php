@@ -48,7 +48,42 @@ switch ($action) {
                 http_response_code(400);
                 echo json_encode(['error' => 'Invalid input']);
             }
+            if (is_array($data) && isset($data['id'], $data['size'], $data['quantity'])) {
+                addToCart($userId, [
+                    'id' => (int)$data['id'],
+                    'size' => trim($data['size']),
+                    'quantity' => max(1, (int)$data['quantity'])
+                ]);
+                session_write_close();
 
+                if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
+                    header('Content-Type: application/json');
+                    echo json_encode(['status' => 'ok']);
+                } else {
+                    header('Location: index.php?page=cart');
+                }
+            } else {
+                http_response_code(400);
+                echo json_encode(['error' => 'Invalid input']);
+            }
+            if (is_array($data) && isset($data['id'], $data['size'], $data['quantity'])) {
+                addToCart($userId, [
+                    'id' => (int)$data['id'],
+                    'size' => trim($data['size']),
+                    'quantity' => max(1, (int)$data['quantity'])
+                ]);
+                session_write_close();
+
+                if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
+                    header('Content-Type: application/json');
+                    echo json_encode(['status' => 'ok']);
+                } else {
+                    header('Location: index.php?page=cart');
+                }
+            } else {
+                http_response_code(400);
+                echo json_encode(['error' => 'Invalid input']);
+            }
             exit;
         }
         break;
