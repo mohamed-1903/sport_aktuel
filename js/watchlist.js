@@ -127,3 +127,4 @@ function clearWatchlist() {
       updateWatchlistCount();
     });
   }
+}
