@@ -13,11 +13,11 @@
   ?>
   <h1 style="text-align:center;">📦 <?= htmlspecialchars($statusTitle) ?></h1>
 
-  <nav style="text-align:center;margin-bottom:1em;">
-    <a href="index.php?page=order&action=admin&status=neu">Neu</a> |
-    <a href="index.php?page=order&action=admin&status=in_bearbeitung">In Bearbeitung</a> |
-    <a href="index.php?page=order&action=admin&status=abgelehnt">Abgelehnt</a> |
-    <a href="index.php?page=order&action=admin&status=abgeschlossen">Abgeschlossen</a>
+  <nav class="order-nav" style="text-align:center;margin-bottom:1em;">
+    <a href="index.php?page=order&action=admin&status=neu" class="<?= $statusFilter === 'neu' ? 'active' : '' ?>">Neu</a> |
+    <a href="index.php?page=order&action=admin&status=in_bearbeitung" class="<?= $statusFilter === 'in_bearbeitung' ? 'active' : '' ?>">In Bearbeitung</a> |
+    <a href="index.php?page=order&action=admin&status=abgelehnt" class="<?= $statusFilter === 'abgelehnt' ? 'active' : '' ?>">Abgelehnt</a> |
+    <a href="index.php?page=order&action=admin&status=abgeschlossen" class="<?= $statusFilter === 'abgeschlossen' ? 'active' : '' ?>">Abgeschlossen</a>
   </nav>
 
   <?php if (empty($orders)): ?>
