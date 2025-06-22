@@ -243,3 +243,5 @@ index.php?page=product&action=detail&id=1,3,5
 
 Der Controller sammelt alle Parameter, lädt die passenden Produkte und übergibt sie an die View, die sie untereinander ausgibt.
 Neben jeder "Produkt x"-Überschrift befindet sich jetzt ein ❌-Button. Damit kannst du einzelne Artikel entfernen. Die Seite lädt danach mit den verbleibenden IDs neu.
+
+Beim Hinzufügen in den Warenkorb muss auf der Detailseite eine Größe gewählt werden. Wird keine Größe ausgewählt, erscheint eine Fehlermeldung und der Artikel wird nicht übernommen.
