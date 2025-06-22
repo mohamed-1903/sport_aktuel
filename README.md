@@ -225,3 +225,20 @@ http://localhost/sportx/index.php?page=admin&action=addProduct
 ---
 
 Wenn du möchtest, kann ich diesen Ablauf visuell als Diagramm darstellen oder dir eine Beispielroute komplett mit Code zeigen. Sag einfach, was du brauchst!
+
+## 🔗 Mehrere Produkte gleichzeitig anzeigen
+
+Die Detailansicht kann nun beliebig viele Produkte erhalten. 
+Rufe die Seite dazu mit mehreren `id`-Parametern auf:
+
+```plaintext
+index.php?page=product&action=detail&id=1&id2=3&id3=5
+```
+
+Du kannst auch Werte kommagetrennt übergeben:
+
+```plaintext
+index.php?page=product&action=detail&id=1,3,5
+```
+
+Der Controller sammelt alle Parameter, lädt die passenden Produkte und übergibt sie an die View, die sie untereinander ausgibt.

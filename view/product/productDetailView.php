@@ -27,7 +27,7 @@
     <!-- 📦 Einzelnes Produkt-Layout -->
     <section class="Eprodukt untereinander" data-product-index="<?= $index ?>">
       <h2 style="text-align:center; margin-bottom: 20px;">
-        <?= count($productsToShow) === 2 ? "🛍️ Produkt " . ($index + 1) : "Produktdetails" ?>
+        <?= count($productsToShow) > 1 ? "🛍️ Produkt " . ($index + 1) : "Produktdetails" ?>
       </h2>
       <div class="produkt-grid">
         <!-- 📸 Bilderbereich -->
@@ -191,8 +191,12 @@
       alert('Produkt nicht gefunden');
       return;
     }
-    const id = <?= (int)$currentId ?>;
-    window.location.href = `index.php?page=product&action=detail&id=${id}&id2=${secondId}`;
+    const existingIds = <?= json_encode(array_column($productsToShow, 'id')) ?>;
+    const allIds = existingIds.concat(secondId);
+    const params = allIds
+      .map((v, i) => `id${i === 0 ? '' : i + 1}=${v}`)
+      .join('&');
+    window.location.href = `index.php?page=product&action=detail&${params}`;
   });
 </script>
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
