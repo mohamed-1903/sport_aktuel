@@ -1802,7 +1802,7 @@ body.light-mode .zoom-close {
   pointer-events: auto;
   transform: translateX(-50%) translateY(0);
 }
-/* === Universelles Popup Styling für Warenkorb & Watchlist === */
+/* === Universelles Popup-Styling für Warenkorb & Watchlist === */
 .cart-preview-popup,
 .watchlist-preview-popup {
   position: fixed;
@@ -1810,61 +1810,86 @@ body.light-mode .zoom-close {
   right: 30px;
   max-width: 320px;
   z-index: 9999;
-  background-color: var(--popup-bg);
-  color: var(--popup-text);
+  background-color: var(--popup-bg); /* Dynamischer Hintergrund */
+  color: var(--popup-text); /* Dynamische Textfarbe */
   border-radius: 12px;
-  padding: 1rem;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  padding: 1.5rem;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25); /* Tiefe Schatten für Wow-Effekt */
   border: 1px solid var(--popup-border);
   display: none;
-  animation: slideFade 0.3s ease-out;
+  animation: slideFade 0.3s ease-out, popIn 0.5s ease-in-out;
   backdrop-filter: blur(10px);
+  transform: scale(0.95); /* Anfangs kleiner */
+  transition: all 0.3s ease-out;
 }
 
 .cart-preview-popup.show,
 .watchlist-preview-popup.show {
   display: block;
+  transform: scale(1); /* Animation zur Normalgröße */
 }
 
 .popup-content-flex {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 15px;
 }
 
 .popup-content-flex img {
-  width: 60px;
-  height: 60px;
-  border-radius: 8px;
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
   object-fit: cover;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease; /* Hover-Effekt */
+}
+
+.popup-content-flex img:hover {
+  transform: scale(1.1); /* Vergrößern bei Hover */
 }
 
 .popup-text-info {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
 }
 
 .popup-text-info strong {
-  font-size: 1rem;
+  font-size: 1.1rem;
+  color: var(--accent-color);
+  font-weight: bold;
 }
 
 .popup-text-info small {
-  font-size: 0.85rem;
-  opacity: 0.8;
+  font-size: 0.9rem;
+  opacity: 0.85;
+  color: var(--text-muted);
 }
 
-/* Sanfte Slide-Fade Animation */
+/* === Animationen === */
+
+/* Sanfte Slide-Fade Animation für das Einblenden */
 @keyframes slideFade {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-20px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Pop-in-Effekt (Hervorheben bei Eintritt) */
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
@@ -1873,49 +1898,107 @@ body.light-mode .zoom-close {
   --popup-bg: #ffffff;
   --popup-text: #222222;
   --popup-border: #dddddd;
+  --popup-button-bg: #f0f0f0;
+  --popup-button-text: #222;
+  --popup-button-hover: #e0e0e0;
+  --popup-button-active: #d1d1d1;
+  --accent-color: #ffd700;
+  --text-muted: #888888;
 }
 
 body.dark {
-  --popup-bg: #1f1f1f;
-  --popup-text: #f0f0f0;
+  --popup-bg: #1f1f1f; /* Dunkler Hintergrund im Darkmode */
+  --popup-text: #f0f0f0; /* Helle Schrift im Darkmode */
   --popup-border: #333333;
+  --popup-button-bg: #333;
+  --popup-button-text: #f0f0f0;
+  --popup-button-hover: #444;
+  --popup-button-active: #555;
 }
+
+/* === Buttons für Popups === */
 .popup-buttons {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 12px;
+  margin-top: 20px;
 }
 
-.popup-buttons a,
-.popup-buttons button {
+.popup-buttons button,
+.popup-buttons a {
   background-color: var(--popup-button-bg);
   color: var(--popup-button-text);
-  padding: 6px 12px;
-  font-size: 0.85rem;
+  padding: 8px 16px;
+  font-size: 0.9rem;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   text-decoration: none;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.popup-buttons a:hover,
-.popup-buttons button:hover {
+.popup-buttons button:hover,
+.popup-buttons a:hover {
+  background-color: var(--popup-button-hover);
+  transform: translateY(-2px);
+}
+
+.popup-buttons button:active,
+.popup-buttons a:active {
+  background-color: var(--popup-button-active);
+  transform: translateY(2px);
+}
+
+.popup-buttons a.btn-popup {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+
+.popup-buttons a.btn-popup:hover {
+  background-color: var(--accent-color);
+}
+
+/* === Darkmode Styles für Popup-Buttons === */
+[data-theme="dark"] .popup-buttons button,
+[data-theme="dark"] .popup-buttons a {
+  background-color: var(--popup-button-bg);
+  color: var(--popup-button-text);
+}
+
+[data-theme="dark"] .popup-buttons button:hover,
+[data-theme="dark"] .popup-buttons a:hover {
   background-color: var(--popup-button-hover);
 }
 
-/* Farben für Light/Dark Mode */
-:root {
-  --popup-button-bg: #f0f0f0;
-  --popup-button-text: #222;
-  --popup-button-hover: #dddddd;
+/* === Fehler und Erfolgshinweise === */
+.error-popup,
+.success-popup {
+  background-color: rgba(255, 0, 0, 0.1); /* Leichte Rottönung */
+  color: #fff;
+  padding: 12px;
+  border-radius: 8px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 10px;
 }
 
-body.dark {
-  --popup-button-bg: #333;
-  --popup-button-text: #f0f0f0;
-  --popup-button-hover: #555;
+.success-popup {
+  background-color: rgba(0, 128, 0, 0.1); /* Leichte Grüntönung */
+}
+
+.error-popup span,
+.success-popup span {
+  font-size: 1.2rem;
+}
+
+/* === Darkmode Anpassung === */
+[data-theme="dark"] .error-popup {
+  background-color: rgba(255, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .success-popup {
+  background-color: rgba(0, 128, 0, 0.3);
 }
 
 .dropdown-konto {

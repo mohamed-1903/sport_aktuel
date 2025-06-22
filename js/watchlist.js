@@ -194,6 +194,11 @@ function zeigeWatchPreview({ name, image, price, productId }) {
   const popup = document.getElementById("watchlist-preview-popup");
   if (!popup) return;
 
+  // Prüfen, ob wir uns auf der Produktdetailseite befinden
+  const isOnProductDetailPageWatch =
+    window.location.href.includes("page=product") &&
+    window.location.href.includes("action=detail");
+
   popup.innerHTML = `
     <div class="popup-content-flex">
       <img src="${image}" alt="${name}" />
@@ -221,17 +226,40 @@ function zeigeWatchPreview({ name, image, price, productId }) {
 }
 
 // 🔔 Popup bei Entfernen aus der Watchlist
-function zeigeWatchRemovePreview({ name, image }) {
+function zeigeWatchRemovePreview({ name, image, productId }) {
   const popup = document.getElementById("watch-popup");
   if (!popup) return;
+
+  const isDetailPage =
+    location.href.includes("page=product") &&
+    location.href.includes("action=detail");
+
   popup.innerHTML = `
     <div class="popup-content removed">
       <img src="${image}" alt="${name}" />
-      <div>
+      <div class="popup-text">
         <strong>${name}</strong><br>
-        <small>💔 entfernt aus der Merkliste</small>
+        <small>💔 wurde aus deiner Merkliste entfernt</small>
+        <div class="popup-buttons">
+          <button class="undo-btn">↩️ Rückgängig</button>
+          ${
+            !isDetailPage
+              ? `<a href="index.php?page=product&action=detail&id=${productId}" class="show-btn">🔍 Anzeigen</a>`
+              : ""
+          }
+        </div>
       </div>
-    </div>`;
+    </div>
+  `;
   popup.classList.add("show");
-  setTimeout(() => popup.classList.remove("show"), 4000);
+
+  // Event: Rückgängig
+  popup.querySelector(".undo-btn").addEventListener("click", () => {
+    toggleWatchlist(productId); // Wieder hinzufügen
+    popup.classList.remove("show");
+  });
+
+  setTimeout(() => {
+    popup.classList.remove("show");
+  }, 5000);
 }
