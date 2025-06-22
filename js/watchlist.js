@@ -182,7 +182,7 @@ function updateWatchlistCount() {
 function syncWatchlistWithSession() {
   const list = JSON.parse(localStorage.getItem("watchlist")) || [];
 
-  fetch("save_watchlist.php", {
+  fetch("index.php?page=watchlist&action=sync", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
