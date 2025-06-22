@@ -31,6 +31,7 @@
         <?php if (count($productsToShow) > 1): ?>
           <button class="remove-product" data-remove-index="<?= $index ?>">❌</button>
         <?php endif; ?>
+
       </h2>
       <div class="produkt-grid">
         <!-- 📸 Bilderbereich -->
