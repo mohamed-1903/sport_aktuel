@@ -53,17 +53,22 @@ switch ($action) {
                     addToCart($userId, [
                         'id' => (int)$data['id'],
                         'size' => trim($data['size']),
-                        'quantity' => max(1, (int)$data['quantity']),
-                        'discount' => isset($data['discount']) ? (int)$data['discount'] : 0,
-                        'gift' => !empty($data['gift'])
-                    ]);
-                } catch (PDOException $e) {
-                    http_response_code(500);
-                    echo json_encode(['error' => 'Datenbankfehler']);
-                    exit;
-                }
-                session_write_close();
+        header("Location: index.php?page=cart&action=view");
+        exit;
+        break;
+        header('Content-Type: application/json');
+        echo json_encode(['count' => countCartItems($userId)]);
+        exit;
+        break;
+        header('Location: index.php?page=cart');
+        exit;
+        break;
+        header('Content-Type: application/json');
+        echo json_encode(getCartItems($userId));
+        exit;
+        break;
 
+        break;
                 if ($expectJson) {
                     echo json_encode(['status' => 'ok']);
                 } else {
