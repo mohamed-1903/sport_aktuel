@@ -2,8 +2,6 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-$theme = $_SESSION['theme'] ?? 'dark';
-$bodyClass = $theme === 'light' ? 'light-mode' : 'dark-mode';
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -15,7 +13,7 @@ $bodyClass = $theme === 'light' ? 'light-mode' : 'dark-mode';
     <link rel="stylesheet" href="css/mystyle.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
-<body class="<?= $bodyClass ?>" data-theme="<?= htmlspecialchars($theme) ?>">
+<body>
 <header>
     <div class="header-bar">
         <a href="index.php" class="logo" title="zur Startseite">&#127942; SportX</a>

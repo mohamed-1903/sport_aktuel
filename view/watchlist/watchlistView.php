@@ -1,10 +1,4 @@
-<?php
-$removed = $_SESSION['watch_removed'] ?? null;
-if ($removed) {
-    unset($_SESSION['watch_removed']);
-}
-include 'view/layout/header.php';
-?>
+<?php include 'view/layout/header.php'; ?>
 
 <div class="produkte">
     <h1>🧡 Deine Merkliste</h1>
@@ -38,16 +32,5 @@ include 'view/layout/header.php';
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
 <script src="js/style_modification.js"></script>
 <script src="js/watchlist.js"></script>
-<?php if ($removed): ?>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    zeigeWatchRemovePreview({
-      name: <?= json_encode($removed['name']) ?>,
-      image: <?= json_encode($removed['image']) ?>,
-      productId: <?= (int)$removed['id'] ?>
-    });
-  });
-</script>
-<?php endif; ?>
 <script src="js/warenkorb.js"></script>
 <?php include 'view/layout/footer.php'; ?>
