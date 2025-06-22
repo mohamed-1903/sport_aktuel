@@ -31,6 +31,20 @@ switch ($action) {
         }
         header("Location: index.php?page=watchlist&action=view");
         exit;
+    case 'sync':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = json_decode(file_get_contents('php://input'), true);
+            if (is_array($data) && isset($data['watchlist']) && is_array($data['watchlist'])) {
+                setWatchlistItems($data['watchlist']);
+                header('Content-Type: application/json');
+                echo json_encode(['status' => 'success']);
+            } else {
+                http_response_code(400);
+                echo json_encode(['status' => 'error', 'message' => 'Invalid input']);
+            }
+            exit;
+        }
+        break;
     case 'view':
     default:
         $watchlistItems = getWatchlistItems();
