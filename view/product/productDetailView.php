@@ -77,6 +77,24 @@
           <label for="quantity-<?= $index ?>">Menge:</label>
           <input type="number" id="quantity-<?= $index ?>" value="1" min="1" class="size-dropdown" />
 
+          <div class="button-rows">
+            <!-- 🎟 Rabattcode -->
+            <label for="pin-<?= $index ?>">Rabatt-PIN eingeben:</label>
+            <input type="text" id="pin-<?= $index ?>" maxlength="5" placeholder="5-stellig" />
+            <p id="rabatt-info-<?= $index ?>"></p>
+
+            <!-- 🎁 Geschenkoption -->
+            <div class="gift-wrap">
+              <label>
+                <input type="checkbox" id="giftWrap-<?= $index ?>" />
+                🎁 Geschenkverpackung (+ 2 €)
+              </label>
+            </div>
+
+            <!-- 🔄 Zurücksetzen -->
+            <button onclick="resetFields(this.closest('.Eprodukt'))">Felder zurücksetzen</button>
+          </div>
+
           <!-- 🧺 Aktionen -->
           <div class="button-reihe" data-iid="<?= (int)$product['id'] ?>">
             <?php
@@ -129,24 +147,6 @@
     <button onclick="zeigePreis()">Berechne Bruttopreis</button>
     <div id="priceResults">
       <p id="bruttoErgebnis"></p>
-    </div>
-
-    <div class="button-rows">
-      <!-- 🎟 Rabattcode -->
-      <label for="pin-<?= $index ?>">Rabatt-PIN eingeben:</label>
-      <input type="text" id="pin-<?= $index ?>" maxlength="5" placeholder="5-stellig" />
-      <p id="rabatt-info-<?= $index ?>"></p>
-
-      <!-- 🎁 Geschenkoption -->
-      <div class="gift-wrap">
-        <label>
-          <input type="checkbox" id="giftWrap-<?= $index ?>" />
-          🎁 Geschenkverpackung (+ 2 €)
-        </label>
-      </div>
-
-      <!-- 🔄 Zurücksetzen -->
-      <button onclick="resetFields()">Felder zurücksetzen</button>
     </div>
   </section>
   <div class="compare-section">
