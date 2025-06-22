@@ -220,7 +220,7 @@ document.addEventListener("click", (e) => {
 
     // 🔄 UI aktualisieren
     updateCartButtons?.();
-    updateCartCount?.();
+    updateCartCount?.((cnt) => zeigeCartBestaetigung?.(cnt));
   }
 });
 function zeigeWatchPreview({ name, image, price }) {

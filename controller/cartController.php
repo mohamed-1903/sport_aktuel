@@ -69,6 +69,7 @@ switch ($action) {
                 }
                 echo json_encode(['error' => $msg]);
             }
+
             exit;
         }
         break;
