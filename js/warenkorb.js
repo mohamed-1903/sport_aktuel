@@ -20,23 +20,23 @@ document.addEventListener("click", (e) => {
     return;
   }
 
-  const sizeSelect = btn
-    .closest(".Eprodukt")
-    ?.querySelector("select.size-dropdown");
-  const quantityInput = btn
-    .closest(".Eprodukt")
-    ?.querySelector("input[type=number]");
-  const size = sizeSelect?.value || "M";
-  const quantity = parseInt(quantityInput?.value) || 1;
+  const sizeSelect = document.getElementById("size");
+  const quantityInput = document.getElementById("quantity");
 
-  if (!size) {
-    alert("❗ Bitte eine Größe auswählen.");
-    return;
-  }
+  let size = "M";
+  let quantity = 1;
+  if (sizeSelect && quantityInput) {
+    size = sizeSelect.value;
+    quantity = parseInt(quantityInput.value);
 
-  if (!quantity || quantity <= 0) {
-    alert("❗ Bitte eine gültige Menge angeben.");
-    return;
+    if (!size) {
+      alert("❗ Bitte eine Größe auswählen.");
+      return;
+    }
+    if (!quantity || quantity <= 0) {
+      alert("❗ Bitte eine gültige Menge angeben.");
+      return;
+    }
   }
 
   toggleCart(iid, btn, size, quantity);
@@ -44,27 +44,46 @@ document.addEventListener("click", (e) => {
 });
 
 function toggleCart(iid, btn = null, size = "M", qty = 1) {
-  const payload = { product_id: iid, size, qty };
+  const price = parseFloat(btn?.dataset.price) || 0;
+  const name = btn?.dataset.name || "Produkt";
+  const image = btn?.dataset.image || "img/placeholder.jpg";
 
-  fetch("index.php?page=cart&action=add", {
+  const gift = document.getElementById("giftWrap")?.checked || false;
+  const pin = document.getElementById("pin")?.value.trim();
+  const discount = DISCOUNT_CODES[pin] || 0;
+
+  const payload = { product_id: iid, size, qty, gift, discount };
+
+  fetch("index.php?page=cart&action=toggle", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   })
-    .then((res) => res.json())
+    .then((res) => {
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return res.json();
+    })
     .then((data) => {
-      if (data.success || data.in_cart) {
-        zeigeToast("🛒 Zum Warenkorb hinzugefügt", "#28a745");
-        if (btn) btn.textContent = "✅";
-        updateCartCount(); // neu hinzufügen
-        loadList(); // Liste neu laden
+      if (data.status === "ok") {
+        if (data.in_cart) {
+          if (btn) btn.textContent = "✅";
+          zeigeToast("🛒 Produkt wurde zum Warenkorb hinzugefügt", "#28a745");
+          zeigeProduktPreview({ name, image, price, size, qty });
+        } else {
+          if (btn) btn.textContent = "🛒";
+          zeigeToast("❌ Produkt wurde aus dem Warenkorb entfernt", "#cc0000");
+          zeigeCartRemovePreview({ name, image });
+        }
+        updateCartButtons();
+        updateCartCount();
+        loadList();
       } else {
-        zeigeToast("⚠️ Fehler: " + (data.error || "Unbekannt"), "#cc0000");
+        zeigeToast("⚠️ Fehler: " + (data.message || "Unbekannt"), "#cc0000");
       }
     })
     .catch((err) => {
-      zeigeToast("⚠️ Serverfehler beim Hinzufügen", "#cc0000");
       console.error(err);
+      zeigeToast("⚠️ Serverfehler beim Hinzufügen", "#cc0000");
     });
 }
 
@@ -78,11 +97,10 @@ function updateCartButtons() {
         const sizeSelect = parent?.querySelector("select.size-dropdown");
         const size = sizeSelect?.value || "M";
 
-        const isInCart = items.some(
+        const inCart = items.some(
           (item) => item.product_id == iid && item.size === size
         );
-
-        btn.textContent = isInCart ? "✅" : "🛒";
+        btn.textContent = inCart ? "✅" : "🛒";
       });
     })
     .catch((err) =>
@@ -101,7 +119,6 @@ function updateCartCount() {
     });
 }
 
-// ✅ Warenkorbliste darstellen
 function loadList() {
   fetch("index.php?page=cart&action=json")
     .then((res) => res.json())
@@ -130,7 +147,12 @@ function loadList() {
       items.forEach((item) => {
         const preis = parseFloat(item.price) || 0;
         const menge = parseInt(item.quantity) || 1;
-        const gesamt = preis * menge;
+        const rabatt = item.discount || 0;
+        const geschenk = item.gift ? 2 : 0;
+
+        const rabattPreis = preis * (1 - rabatt / 100);
+        const einzelpreisMitZuschlag = rabattPreis + geschenk;
+        const gesamt = einzelpreisMitZuschlag * menge;
 
         const tr = document.createElement("tr");
         tr.innerHTML = `
@@ -139,18 +161,27 @@ function loadList() {
               <img src="${item.image_main}" alt="Bild" width="60" />
               <div>
                 <strong>${item.name}</strong><br>
-                <small>Größe: ${item.size}</small>
+                <small>Größe: ${item.size}</small><br>
+                ${item.gift ? "<small>🎁 Geschenkverpackung</small><br>" : ""}
+                ${item.discount ? `<small>🎟️ Rabatt: ${rabatt}%</small>` : ""}
               </div>
             </div>
           </td>
-          <td>${menge}</td>
-          <td>${preis.toFixed(2)} €</td>
-          <td class="summe-cell">${gesamt.toFixed(2)} €</td>
           <td>
-            <button class="remove-btn" data-id="${
-              item.product_id
-            }" data-size="${item.size}">❌</button>
+            <select class="menge-select">
+              ${[...Array(10)]
+                .map(
+                  (_, i) =>
+                    `<option value="${i + 1}" ${
+                      i + 1 === menge ? "selected" : ""
+                    }>${i + 1}</option>`
+                )
+                .join("")}
+            </select>
           </td>
+          <td>${einzelpreisMitZuschlag.toFixed(2)} €</td>
+          <td class="summe-cell">${gesamt.toFixed(2)} €</td>
+          <td><button class="remove-btn" data-id="${item.product_id}" data-size="${item.size}">❌</button></td>
         `;
 
         tbody.appendChild(tr);
@@ -164,28 +195,47 @@ function loadList() {
       nettoEl.textContent = `${netto.toFixed(2)} €`;
       mwstEl.textContent = `${mwst.toFixed(2)} €`;
 
-      // 🗑 EventListener zum Entfernen
       document.querySelectorAll(".remove-btn").forEach((btn) => {
         btn.addEventListener("click", () => {
-          const id = btn.dataset.id;
-          const size = btn.dataset.size;
-          removeFromCart(id, size);
+          removeFromCart(btn.dataset.id, btn.dataset.size);
+        });
+      });
+
+      document.querySelectorAll(".menge-select").forEach((select) => {
+        select.addEventListener("change", (e) => {
+          const tr = e.target.closest("tr");
+          const id = tr.querySelector(".remove-btn").dataset.id;
+          const size = tr.querySelector(".remove-btn").dataset.size;
+          const quantity = parseInt(e.target.value);
+          updateQuantity(id, size, quantity);
         });
       });
     });
 }
+
 function removeFromCart(productId, size) {
   fetch("index.php?page=cart&action=remove", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: `id=${encodeURIComponent(productId)}&size=${encodeURIComponent(
-      size
-    )}`,
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `id=${encodeURIComponent(productId)}&size=${encodeURIComponent(size)}`,
   })
-    .then(() => loadList())
+    .then(() => {
+      loadList();
+      updateCartButtons();
+      updateCartCount();
+    })
     .catch((err) => console.error("Fehler beim Entfernen:", err));
+}
+
+function updateQuantity(productId, size, quantity) {
+  fetch("index.php?page=cart&action=update", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `id=${encodeURIComponent(productId)}&size=${encodeURIComponent(size)}&quantity=${encodeURIComponent(quantity)}`,
+  }).then(() => {
+    loadList();
+    updateCartCount();
+  });
 }
 
 function zeigeToast(text, farbe = "#333") {
@@ -237,7 +287,6 @@ function zeigeCartRemovePreview({ name, image }) {
   setTimeout(() => popup.classList.remove("show"), 3000);
 }
 
-// 🧹 Alles löschen
 function clearList() {
   if (confirm("Wirklich den ganzen Warenkorb löschen?")) {
     fetch("index.php?page=cart&action=clear").then(() => {
@@ -248,16 +297,13 @@ function clearList() {
   }
 }
 
-// 💳 Checkout
 function checkout() {
   fetch("check_login.php")
     .then((res) => res.json())
     .then((data) => {
       if (data.loggedIn) {
         alert("✅ Danke für deinen Einkauf! (Checkout in Entwicklung)");
-        // Hier könntest du z. B. save_order.php aufrufen
       } else {
-        // 🔁 Weiterleitung zur Loginseite mit Rücksprung
         window.location.href = "login.php?redirect=warenkorb.php";
       }
     });

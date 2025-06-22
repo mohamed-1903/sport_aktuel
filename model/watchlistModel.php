@@ -33,3 +33,7 @@ function removeFromWatchlist(int $id): void {
 function clearWatchlist(): void {
     $_SESSION['watchlist'] = [];
 }
+
+function setWatchlistItems(array $items): void {
+    $_SESSION['watchlist'] = $items;
+}

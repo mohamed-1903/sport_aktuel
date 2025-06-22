@@ -15,6 +15,12 @@ $action = $_GET['action'] ?? 'view';
 switch ($action) {
     case 'add':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $expectJson = isset($_SERVER['CONTENT_TYPE']) &&
+                strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false;
+            if ($expectJson) {
+                header('Content-Type: application/json');
+            }
+
             if (!$userId) {
                 http_response_code(403);
                 echo json_encode(['error' => 'Nicht eingeloggt']);
@@ -30,16 +36,28 @@ switch ($action) {
                 $data = $_POST;
             }
 
-            if (is_array($data) && isset($data['id'], $data['size'], $data['quantity'])) {
-                addToCart($userId, [
-                    'id' => (int)$data['id'],
-                    'size' => trim($data['size']),
-                    'quantity' => max(1, (int)$data['quantity'])
-                ]);
+            $id = $data['product_id'] ?? $data['id'] ?? null;
+            $size = $data['size'] ?? null;
+            $quantity = $data['quantity'] ?? $data['qty'] ?? null;
+
+            if ($id !== null && $size !== null && $quantity !== null) {
+                try {
+                    addToCart($userId, [
+                        'id' => (int)$id,
+                        'size' => trim($size),
+                        'quantity' => max(1, (int)$quantity),
+                        'discount' => isset($data['discount']) ? (int)$data['discount'] : 0,
+                        'gift' => !empty($data['gift'])
+                    ]);
+                } catch (PDOException $e) {
+                    http_response_code(500);
+                    echo json_encode(['error' => 'Datenbankfehler']);
+                    exit;
+                }
                 session_write_close();
 
-                if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
-                    http_response_code(200);
+                if ($expectJson) {
+                    echo json_encode(['status' => 'ok']);
                 } else {
                     header('Location: index.php?page=cart');
                 }
@@ -66,6 +84,7 @@ switch ($action) {
         }
         header("Location: index.php?page=cart&action=view");
         exit;
+        break;
 
     case 'update':
         if (!$userId) {
@@ -93,6 +112,7 @@ switch ($action) {
         header('Content-Type: application/json');
         echo json_encode(['count' => countCartItems($userId)]);
         exit;
+        break;
 
     case 'clear':
         session_start();
@@ -102,6 +122,7 @@ switch ($action) {
         }
         header('Location: index.php?page=cart');
         exit;
+        break;
 
     case 'json':
         session_start();
@@ -114,9 +135,11 @@ switch ($action) {
         header('Content-Type: application/json');
         echo json_encode(getCartItems($userId));
         exit;
+        break;
 
     case 'toggle':
         session_start();
+        header('Content-Type: application/json');
         $userId = $_SESSION['user_id'] ?? null;
         if (!$userId) {
             echo json_encode(['status' => 'error', 'message' => 'Nicht eingeloggt']);
@@ -139,13 +162,22 @@ switch ($action) {
             }
         }
 
-        addToCart($userId, [
-            'id' => (int)$data['product_id'],
-            'size' => trim($data['size']),
-            'quantity' => (int)$data['qty']
-        ]);
+        try {
+            addToCart($userId, [
+                'id' => (int)$data['product_id'],
+                'size' => trim($data['size']),
+                'quantity' => (int)$data['qty'],
+                'discount' => isset($data['discount']) ? (int)$data['discount'] : 0,
+                'gift' => !empty($data['gift'])
+            ]);
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(['status' => 'error', 'message' => 'Datenbankfehler']);
+            exit;
+        }
         echo json_encode(['status' => 'ok', 'in_cart' => true]);
         exit;
+        break;
 
 
     case 'view':
