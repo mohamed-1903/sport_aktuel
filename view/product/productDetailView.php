@@ -183,7 +183,7 @@
   </section>
 </main>
 <script>
-  document.getElementById('compareBtn').addEventListener('click', () => {
+  document.getElementById('compareBtn').addEventListener('click', () => {␊
     const input = document.getElementById('compareInput').value.trim();
     const options = document.querySelectorAll('#compareOptions option');
     let secondId = null;
