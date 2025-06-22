@@ -100,27 +100,26 @@ function updateCartCount(callback) {
   fetch("index.php?page=cart&action=count")
     .then((res) => res.json())
     .then((data) => {
-      const cartButton = document.getElementById("cart-button");
-      const count = data.count || 0;
-      if (cartButton) {
-        cartButton.innerHTML = `🛒 (${count})`;
-      }
+      const el = document.getElementById("cart-button");
+      if (el) el.innerHTML = `&#128722; (${data.count || 0})`;
+
       if (typeof callback === "function") {
-        callback(count);
+        callback(data.count || 0);
       }
-    });
+    })
+    .catch((err) => console.error("Warenkorb-Zähler Fehler:", err));
 }
 
 function zeigeCartBestaetigung(count) {
-  const cartButton = document.getElementById("cart-button");
-  if (!cartButton) return;
+  const el = document.getElementById("cart-button");
+  if (!el) return;
 
-  const zielText = `🛒 (${count})`;
-  cartButton.innerHTML = "✅";
+  const original = `&#128722; (${count})`;
+  el.innerHTML = "✅";
 
-  clearTimeout(cartButton._resetTimer);
-  cartButton._resetTimer = setTimeout(() => {
-    cartButton.innerHTML = zielText;
+  clearTimeout(el._resetTimer);
+  el._resetTimer = setTimeout(() => {
+    el.innerHTML = original;
   }, 2000);
 }
 

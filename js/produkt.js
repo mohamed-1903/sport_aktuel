@@ -46,6 +46,23 @@ function setupProduct(section) {
   pinInputEl?.addEventListener("input", () => updateDisplay(section));
 
   updateDisplay(section);
+  const compareBtn = document.getElementById("showCompareForm");
+  if (!compareBtn) return;
+
+  const form = document.getElementById("compareForm");
+  const select = document.getElementById("compareSelect");
+  const submit = document.getElementById("compareSubmit");
+
+  compareBtn.addEventListener("click", () => {
+    form.classList.toggle("hidden");
+  });
+
+  submit.addEventListener("click", () => {
+    const otherId = select.value;
+    if (!otherId) return;
+    const currentId = compareBtn.dataset.currentId;
+    window.location.href = `index.php?page=product&action=detail&id=${currentId}&id2=${otherId}`;
+  });
 }
 
 function changeImage(section, src, index) {
@@ -71,11 +88,25 @@ function toggleDescription(section) {
   const hidden = desc.classList.toggle("hidden");
   if (icon) icon.textContent = hidden ? "+" : "-";
 }
+function getGiftWrapCharge(section) {
+  const idx = section.dataset.productIndex;
+  const checkbox = section.querySelector(`#giftWrap-${idx}`);
+  return checkbox?.checked ? 2 : 0;
+}
 
 function getBasePrice(section) {
   const idx = section.dataset.productIndex;
   const el = section.querySelector(`#basePrice-${idx}`);
   return parseFloat(el?.textContent) || 0;
+}
+function calculateBasePrice(section) {
+  const base = getBasePrice(section); // brutto Basis
+  const giftCharge = getGiftWrapCharge(section);
+  const qty =
+    parseInt(
+      section.querySelector(`#quantity-${section.dataset.productIndex}`).value
+    ) || 1;
+  return (base + giftCharge) * qty;
 }
 
 function calculatePrice(section) {
@@ -114,7 +145,7 @@ function updateDisplay(section) {
     originalPriceEl.style.display = "none";
     discountLabelEl.style.display = "none";
     if (infoEl) {
-      if (document.getElementById("pin").value.trim().length >= 5) {
+      if (section.querySelector(`#pin-${idx}`).value.trim().length >= 5) {
         infoEl.textContent = "❌ Ungültiger PIN-Code.";
         infoEl.style.color = "red";
       } else {
@@ -248,17 +279,23 @@ function moveZoom(section, e) {
 }
 
 // ----- Steuerrechner -----
-function zeigePreis() {
-  const nettoInput = document.getElementById("netto");
-  const ergebnisEl = document.getElementById("bruttoErgebnis");
+function zeigePreis(section) {
+  const idx = section.dataset.productIndex;
+  const nettoInput = section.querySelector(`#netto-${idx}`);
+  const ergebnisEl = section.querySelector(`#bruttoErgebnis-${idx}`);
 
-  const nettoPreis = parseFloat(nettoInput.value);
-  if (!isNaN(nettoPreis)) {
-    const brutto = getTotalPrice(nettoPreis).toFixed(2);
+  const netto = parseFloat(nettoInput?.value);
+  if (!isNaN(netto)) {
+    const brutto = getTotalPrice(netto).toFixed(2);
     ergebnisEl.innerText = `Preis mit 19% Steuer: ${brutto} €`;
   } else {
-    ergebnisEl.innerText = "Bitte einen gültigen Preis eingeben.";
+    ergebnisEl.innerText = "Bitte gültigen Netto-Preis eingeben.";
   }
+}
+
+function getTotalPrice(netto) {
+  const TAX_RATE = 0.19;
+  return netto * (1 + TAX_RATE);
 }
 
 // Animation aus anderen Skripten genutzt
@@ -334,22 +371,3 @@ function resetFinalPriceDisplay(price, section) {
     `#finalPriceValue-${idx}`
   ).textContent = `${price.toFixed(2)}€ inkl. Mwst.`;
 }
-document.addEventListener("DOMContentLoaded", () => {
-  const compareBtn = document.getElementById("showCompareForm");
-  if (!compareBtn) return;
-
-  const form = document.getElementById("compareForm");
-  const select = document.getElementById("compareSelect");
-  const submit = document.getElementById("compareSubmit");
-
-  compareBtn.addEventListener("click", () => {
-    form.classList.toggle("hidden");
-  });
-
-  submit.addEventListener("click", () => {
-    const otherId = select.value;
-    if (!otherId) return;
-    const currentId = compareBtn.dataset.currentId;
-    window.location.href = `index.php?page=product&action=detail&id=${currentId}&id2=${otherId}`;
-  });
-});

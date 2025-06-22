@@ -105,14 +105,18 @@ switch ($action) {
         header("Location: index.php?page=cart&action=view");
         exit;
     case 'count':
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        header('Content-Type: application/json');
+
         $userId = $_SESSION['user_id'] ?? null;
         if (!$userId) {
             echo json_encode(['count' => 0]);
             exit;
         }
 
-        header('Content-Type: application/json');
         echo json_encode(['count' => countCartItems($userId)]);
         exit;
         break;

@@ -28,7 +28,6 @@ function toggleWatchlist(iid, btn = null) {
     .then((data) => {
       if (data.status === "ok") {
         if (btn) btn.textContent = data.in_watchlist ? "❤️" : "🤍";
-        updateWatchlistCount();
         loadWatchlist();
 
         const name = btn?.dataset.name || "Produkt";
@@ -37,13 +36,18 @@ function toggleWatchlist(iid, btn = null) {
 
         if (data.in_watchlist) {
           if (btn) btn.textContent = "❤️";
-          flyToTarget(btn, "#watchlist-button", "❤️"); // Hinzufügen → ❤️
+          flyToTarget(btn, "#watchlist-button", "❤️");
           zeigeWatchPreview({ name, image, price });
+          zeigeWatchButtonBestaetigung(); // zeigt oben im Button nur ❤️
+          setTimeout(() => {
+            updateWatchlistCount(); // aktualisiert danach den Zähler
+          }, 2000);
           zeigeToast("❤️ Produkt wurde zur Merkliste hinzugefügt", "#28a745");
         } else {
           if (btn) btn.textContent = "🤍";
-          flyToTarget(btn, "#watchlist-button", "🤍"); // Entfernen → 🤍
+          flyToTarget(btn, "#watchlist-button", "🤍");
           zeigeWatchRemovePreview({ name, image });
+          updateWatchlistCount(); // sofort aktualisieren bei Entfernen
           zeigeToast("💔 Produkt wurde aus der Merkliste entfernt", "#cc0000");
         }
       } else {
@@ -165,6 +169,20 @@ function clearWatchlist() {
       updateWatchlistCount();
     });
   }
+}
+function zeigeWatchButtonBestaetigung() {
+  const watchBtn = document.getElementById("watchlist-button");
+  if (!watchBtn) return;
+
+  const original = watchBtn.dataset.originalText || watchBtn.innerHTML;
+  watchBtn.dataset.originalText = original;
+
+  watchBtn.innerHTML = "❤️";
+
+  clearTimeout(watchBtn._resetTimer);
+  watchBtn._resetTimer = setTimeout(() => {
+    watchBtn.innerHTML = watchBtn.dataset.originalText;
+  }, 2000);
 }
 
 // 🔔 Popup bei Hinzufügen zur Watchlist
