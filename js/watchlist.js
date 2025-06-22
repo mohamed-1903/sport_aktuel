@@ -1,106 +1,142 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   loadWatchlist();
   updateWatchButtons();
   updateWatchlistCount();
 });
 
-document.addEventListener('click', (e) => {
-  const btn = e.target.closest('.btn-add-to-watch');
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".btn-add-to-watch");
   if (!btn) return;
-  const iid = parseInt(btn.dataset.iid);
+
+  let iid = parseInt(btn.dataset.iid);
+  if (isNaN(iid)) {
+    const parent = btn.closest("[data-iid]");
+    iid = parent ? parseInt(parent.dataset.iid) : NaN;
+  }
   if (isNaN(iid)) return;
+
   toggleWatchlist(iid, btn);
-  flyToTarget(btn, '#watchlist-button');
 });
 
 function toggleWatchlist(iid, btn = null) {
-  fetch('index.php?page=watchlist&action=toggle', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ product_id: iid })
+  fetch("index.php?page=watchlist&action=toggle", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ product_id: iid }),
   })
-    .then(res => res.json())
-    .then(data => {
-      if (data.status === 'ok') {
-        if (btn) btn.textContent = data.in_watchlist ? '❤️' : '🤍';
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.status === "ok") {
+        if (btn) btn.textContent = data.in_watchlist ? "❤️" : "🤍";
         updateWatchlistCount();
         loadWatchlist();
+
+        const name = btn?.dataset.name || "Produkt";
+        const image = btn?.dataset.image || "img/placeholder.jpg";
+        const price = parseFloat(btn?.dataset.price) || 0;
+
+        if (data.in_watchlist) {
+          if (btn) btn.textContent = "❤️";
+          flyToTarget(btn, "#watchlist-button", "❤️"); // Hinzufügen → ❤️
+          zeigeWatchPreview({ name, image, price });
+          zeigeToast("❤️ Produkt wurde zur Merkliste hinzugefügt", "#28a745");
+        } else {
+          if (btn) btn.textContent = "🤍";
+          flyToTarget(btn, "#watchlist-button", "🤍"); // Entfernen → 🤍
+          zeigeWatchRemovePreview({ name, image });
+          zeigeToast("💔 Produkt wurde aus der Merkliste entfernt", "#cc0000");
+        }
       } else {
-        zeigeToast('Fehler bei der Merkliste', '#cc0000');
+        zeigeToast("Fehler bei der Merkliste", "#cc0000");
       }
     })
-    .catch(err => console.error('Watchlist Toggle Error', err));
+    .catch((err) => console.error("Watchlist Toggle Error", err));
 }
 
 function toggleWatchlistBulk(ids = []) {
   if (!Array.isArray(ids) || ids.length === 0) return;
-  fetch('index.php?page=watchlist&action=toggleBulk', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ product_ids: ids })
+  fetch("index.php?page=watchlist&action=toggleBulk", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ product_ids: ids }),
   })
-    .then(res => res.json())
-    .then(data => {
-      if (data.status === 'ok') {
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.status === "ok") {
         updateWatchlistCount();
         updateWatchButtons();
         loadWatchlist();
+        zeigeToast("🔁 Merkliste aktualisiert", "#28a745");
       } else {
-        zeigeToast('Fehler bei der Merkliste', '#cc0000');
+        zeigeToast("Fehler bei der Merkliste", "#cc0000");
       }
     })
-    .catch(err => console.error('Watchlist Bulk Error', err));
+    .catch((err) => console.error("Watchlist Bulk Error", err));
 }
 
 function updateWatchButtons() {
-  fetch('index.php?page=watchlist&action=json')
-    .then(res => res.json())
-    .then(items => {
-      document.querySelectorAll('.btn-add-to-watch').forEach(btn => {
-        const iid = parseInt(btn.dataset.iid);
-        if (isNaN(iid)) return;
-        const isIn = items.some(it => it.product_id == iid);
-        btn.textContent = isIn ? '❤️' : '🤍';
+  fetch("index.php?page=watchlist&action=json")
+    .then((res) => res.json())
+    .then((items) => {
+      document.querySelectorAll(".btn-add-to-watch").forEach((btn) => {
+        let iid = parseInt(btn.dataset.iid);
+        if (isNaN(iid)) {
+          const parent = btn.closest("[data-iid]");
+          iid = parent ? parseInt(parent.dataset.iid) : NaN;
+        }
+        if (!isNaN(iid)) {
+          const isIn = items.some((it) => it.product_id == iid);
+          btn.textContent = isIn ? "❤️" : "🤍";
+        }
       });
     });
 }
 
 function updateWatchlistCount() {
-  fetch('index.php?page=watchlist&action=count')
-    .then(res => res.json())
-    .then(data => {
-      const el = document.getElementById('watchlist-button');
+  fetch("index.php?page=watchlist&action=count")
+    .then((res) => res.json())
+    .then((data) => {
+      const el = document.getElementById("watchlist-button");
       if (el) el.innerHTML = `&#10084; (${data.count || 0})`;
     });
 }
 
 function loadWatchlist() {
-  const container = document.getElementById('watchlist-container');
+  const container = document.getElementById("watchlist-container");
   if (!container) return;
 
-  fetch('index.php?page=watchlist&action=json')
-    .then(res => res.json())
-    .then(items => {
-      container.innerHTML = '';
+  fetch("index.php?page=watchlist&action=json")
+    .then((res) => res.json())
+    .then((items) => {
+      container.innerHTML = "";
       if (items.length === 0) {
-        container.innerHTML = "<p style='color: gray;'>🤍 Noch keine Produkte auf deiner Merkliste.</p>";
+        container.innerHTML =
+          "<p style='color: gray;'>🤍 Noch keine Produkte auf deiner Merkliste.</p>";
         return;
       }
-      items.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'watchlist-card';
+      items.forEach((item) => {
+        const card = document.createElement("div");
+        card.className = "watchlist-card";
+        card.setAttribute("data-iid", item.product_id);
         card.innerHTML = `
-          <div class="image-wrapper"><img src="${item.image_main}" alt="${item.name}"></div>
+          <div class="image-wrapper"><img src="${item.image_main}" alt="${
+          item.name
+        }"></div>
           <div class="produkt-info">
             <h3>${item.name}</h3>
             <p>${parseFloat(item.price).toFixed(2)} €</p>
-            <button class="remove-watch" data-id="${item.product_id}">🗑️ Entfernen</button>
-            <a href="index.php?page=product&action=detail&id=${item.product_id}"><button>🔍 Anzeigen</button></a>
+            <button class="remove-watch" data-id="${
+              item.product_id
+            }">🗑️ Entfernen</button>
+            <a href="index.php?page=product&action=detail&id=${
+              item.product_id
+            }"><button>🔍 Anzeigen</button></a>
           </div>`;
         container.appendChild(card);
       });
-      container.querySelectorAll('.remove-watch').forEach(btn => {
-        btn.addEventListener('click', () => {
+
+      container.querySelectorAll(".remove-watch").forEach((btn) => {
+        btn.addEventListener("click", () => {
           removeFromWatchlist(btn.dataset.id);
         });
       });
@@ -108,10 +144,10 @@ function loadWatchlist() {
 }
 
 function removeFromWatchlist(id) {
-  fetch('index.php?page=watchlist&action=remove', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `id=${encodeURIComponent(id)}`
+  fetch("index.php?page=watchlist&action=remove", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `id=${encodeURIComponent(id)}`,
   }).then(() => {
     loadWatchlist();
     updateWatchButtons();
@@ -120,11 +156,47 @@ function removeFromWatchlist(id) {
 }
 
 function clearWatchlist() {
-  if (confirm('Willst du wirklich alle Produkte aus der Merkliste entfernen?')) {
-    fetch('index.php?page=watchlist&action=clear').then(() => {
+  if (
+    confirm("Willst du wirklich alle Produkte aus der Merkliste entfernen?")
+  ) {
+    fetch("index.php?page=watchlist&action=clear").then(() => {
       loadWatchlist();
       updateWatchButtons();
       updateWatchlistCount();
     });
   }
+}
+
+// 🔔 Popup bei Hinzufügen zur Watchlist
+function zeigeWatchPreview({ name, image, price }) {
+  const popup = document.getElementById("watchlist-preview-popup");
+  if (!popup) return;
+  popup.innerHTML = `
+    <img src="${image}" alt="${name}">
+    <div style="overflow: hidden;">
+      <strong>${name}</strong>
+      <small>Preis: ${price.toFixed(2)} €</small>
+      <small>❤️ Zur Merkliste hinzugefügt</small>
+    </div>`;
+  popup.style.display = "block";
+  clearTimeout(popup._hideTimer);
+  popup._hideTimer = setTimeout(() => {
+    popup.style.display = "none";
+  }, 4000);
+}
+
+// 🔔 Popup bei Entfernen aus der Watchlist
+function zeigeWatchRemovePreview({ name, image }) {
+  const popup = document.getElementById("watch-popup");
+  if (!popup) return;
+  popup.innerHTML = `
+    <div class="popup-content removed">
+      <img src="${image}" alt="${name}" />
+      <div>
+        <strong>${name}</strong><br>
+        <small>💔 entfernt aus der Merkliste</small>
+      </div>
+    </div>`;
+  popup.classList.add("show");
+  setTimeout(() => popup.classList.remove("show"), 4000);
 }
