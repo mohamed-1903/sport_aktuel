@@ -2,6 +2,8 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+$theme = $_SESSION['theme'] ?? 'dark';
+$bodyClass = $theme === 'light' ? 'light-mode' : 'dark-mode';
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -13,7 +15,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <link rel="stylesheet" href="css/mystyle.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="<?= $bodyClass ?>" data-theme="<?= htmlspecialchars($theme) ?>">
 <header>
     <div class="header-bar">
         <a href="index.php" class="logo" title="zur Startseite">&#127942; SportX</a>
@@ -58,6 +60,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <div id="toast-popup" class="toast-popup"></div>
     <div id="cart-preview-popup" class="cart-preview-popup"></div>
     <div id="watchlist-preview-popup" class="watchlist-preview-popup"></div>
+    <div id="watch-popup" class="watchlist-preview-popup"></div>
     <nav>
         <ul class="nav-menu">
             <li class="dropdown">
