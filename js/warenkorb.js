@@ -20,16 +20,14 @@ document.addEventListener("click", (e) => {
     return;
   }
 
-  const sizeSelect = btn
-    .closest(".Eprodukt")
-    ?.querySelector("select.size-dropdown");
-  const quantityInput = btn
-    .closest(".Eprodukt")
-    ?.querySelector("input[type=number]");
-  const size = sizeSelect?.value || "M";
+  const sizeSelect =
+    btn.closest(".Eprodukt")?.querySelector("select.size-dropdown");
+  const quantityInput =
+    btn.closest(".Eprodukt")?.querySelector("input[type=number]");
+  const size = sizeSelect ? sizeSelect.value : "M";
   const quantity = parseInt(quantityInput?.value) || 1;
 
-  if (!size) {
+  if (sizeSelect && !size) {
     alert("❗ Bitte eine Größe auswählen.");
     return;
   }

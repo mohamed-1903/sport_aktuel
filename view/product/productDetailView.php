@@ -28,6 +28,10 @@
     <section class="Eprodukt untereinander" data-product-index="<?= $index ?>">
       <h2 style="text-align:center; margin-bottom: 20px;">
         <?= count($productsToShow) > 1 ? "🛍️ Produkt " . ($index + 1) : "Produktdetails" ?>
+        <?php if (count($productsToShow) > 1): ?>
+          <button class="remove-product" data-remove-index="<?= $index ?>">❌</button>
+        <?php endif; ?>
+
       </h2>
       <div class="produkt-grid">
         <!-- 📸 Bilderbereich -->
@@ -197,6 +201,22 @@
       .map((v, i) => `id${i === 0 ? '' : i + 1}=${v}`)
       .join('&');
     window.location.href = `index.php?page=product&action=detail&${params}`;
+  });
+
+  document.querySelectorAll('.remove-product').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.removeIndex, 10);
+      const ids = <?= json_encode(array_column($productsToShow, 'id')) ?>;
+      ids.splice(idx, 1);
+      if (ids.length === 0) {
+        window.location.href = 'index.php?page=product&action=list';
+        return;
+      }
+      const params = ids
+        .map((v, i) => `id${i === 0 ? '' : i + 1}=${v}`)
+        .join('&');
+      window.location.href = `index.php?page=product&action=detail&${params}`;
+    });
   });
 </script>
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
