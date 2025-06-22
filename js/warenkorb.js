@@ -62,8 +62,7 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
           const price = parseFloat(btn.dataset.price) || 0;
           zeigeProduktPreview({ name, image, price, size, qty });
         }
-          updateCartCount();
-        }
+        updateCartCount();
         loadList();
       } else {
         zeigeToast("⚠️ Fehler: " + (data.error || "Unbekannt"), "#cc0000");
