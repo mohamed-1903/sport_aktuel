@@ -48,12 +48,11 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
   const name = btn?.dataset.name || "Produkt";
   const image = btn?.dataset.image || "img/placeholder.jpg";
 
-
   const gift = document.getElementById("giftWrap")?.checked || false;
   const pin = document.getElementById("pin")?.value.trim();
   const discount = DISCOUNT_CODES[pin] || 0;
 
-  const payload = { id: iid, size, quantity: qty };
+  const payload = { product_id: iid, size, qty, gift, discount };
 
   fetch("index.php?page=cart&action=toggle", {
     method: "POST",
@@ -182,7 +181,9 @@ function loadList() {
           </td>
           <td>${einzelpreisMitZuschlag.toFixed(2)} €</td>
           <td class="summe-cell">${gesamt.toFixed(2)} €</td>
-          <td><button class="remove-btn" data-id="${item.product_id}" data-size="${item.size}">❌</button></td>
+          <td><button class="remove-btn" data-id="${
+            item.product_id
+          }" data-size="${item.size}">❌</button></td>
         `;
 
         tbody.appendChild(tr);
@@ -218,7 +219,9 @@ function removeFromCart(productId, size) {
   fetch("index.php?page=cart&action=remove", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: `id=${encodeURIComponent(productId)}&size=${encodeURIComponent(size)}`,
+    body: `id=${encodeURIComponent(productId)}&size=${encodeURIComponent(
+      size
+    )}`,
   })
     .then(() => {
       loadList();
@@ -232,7 +235,9 @@ function updateQuantity(productId, size, quantity) {
   fetch("index.php?page=cart&action=update", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: `id=${encodeURIComponent(productId)}&size=${encodeURIComponent(size)}&quantity=${encodeURIComponent(quantity)}`,
+    body: `id=${encodeURIComponent(productId)}&size=${encodeURIComponent(
+      size
+    )}&quantity=${encodeURIComponent(quantity)}`,
   }).then(() => {
     loadList();
     updateCartCount();
