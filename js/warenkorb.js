@@ -75,25 +75,9 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
 }
 
 function updateCartButtons() {
-  fetch("index.php?page=cart&action=json")
-    .then((res) => res.json())
-    .then((items) => {
-      document.querySelectorAll(".btn-add-to-cart").forEach((btn) => {
-        const iid = parseInt(btn.dataset.iid);
-        const parent = btn.closest(".Eprodukt") || btn.closest("[data-iid]");
-        const sizeSelect = parent?.querySelector("select.size-dropdown");
-        const size = sizeSelect?.value || "M";
-
-        const isInCart = items.some(
-          (item) => item.product_id == iid && item.size === size
-        );
-
-        btn.textContent = isInCart ? "✅" : "🛒";
-      });
-    })
-    .catch((err) =>
-      console.error("Fehler beim Aktualisieren der Cart-Buttons:", err)
-    );
+  document.querySelectorAll(".btn-add-to-cart").forEach((btn) => {
+    btn.textContent = "🛒";
+  });
 }
 
 function updateCartCount(callback) {
@@ -126,10 +110,11 @@ function zeigeCartBestaetigung(count) {
 
 function zeigeButtonBestaetigung(btn) {
   if (!btn) return;
+  const original = btn.textContent;
   btn.textContent = "✅";
   clearTimeout(btn._resetTimer);
   btn._resetTimer = setTimeout(() => {
-    updateCartButtons();
+    btn.textContent = original;
   }, 2000);
 }
 // ✅ Warenkorbliste darstellen
