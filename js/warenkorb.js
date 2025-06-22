@@ -193,9 +193,7 @@ function loadList() {
           <td>${preis.toFixed(2)} €</td>
           <td class="summe-cell">${gesamt.toFixed(2)} €</td>
           <td>
-            <button class="remove-btn" data-id="${
-              item.product_id
-            }" data-size="${item.size}">❌</button>
+            <button class="remove-btn" data-id="${item.product_id}" data-size="${item.size}" data-name="${item.name}" data-image="${item.image_main}">❌</button>
           </td>
         `;
 
@@ -215,12 +213,14 @@ function loadList() {
         btn.addEventListener("click", () => {
           const id = btn.dataset.id;
           const size = btn.dataset.size;
-          removeFromCart(id, size);
+          const name = btn.dataset.name;
+          const image = btn.dataset.image;
+          removeFromCart(id, size, { name, image });
         });
       });
     });
 }
-function removeFromCart(productId, size) {
+function removeFromCart(productId, size, previewData = null) {
   fetch("index.php?page=cart&action=remove", {
     method: "POST",
     headers: {
@@ -230,7 +230,11 @@ function removeFromCart(productId, size) {
       size
     )}`,
   })
-    .then(() => loadList())
+    .then(() => {
+      if (previewData) zeigeCartRemovePreview(previewData);
+      loadList();
+      updateCartCount();
+    })
     .catch((err) => console.error("Fehler beim Entfernen:", err));
 }
 
