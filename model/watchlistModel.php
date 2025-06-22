@@ -1,39 +1,113 @@
 <?php
 // model/watchlistModel.php
+require_once 'model/db.php';
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-function addToWatchlist(array $item): void {
-    if (!isset($_SESSION['watchlist'])) {
-        $_SESSION['watchlist'] = [];
+function ensureWatchlistSchema(): void {
+    global $db;
+    static $done = false;
+    if ($done) {
+        return;
     }
+    $db->exec("CREATE TABLE IF NOT EXISTS watchlists (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+    )");
+    $db->exec("CREATE TABLE IF NOT EXISTS watchlist_items (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        watchlist_id INT,
+        product_id INT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (watchlist_id) REFERENCES watchlists (id) ON DELETE CASCADE,
+        FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE
+    )");
+    $done = true;
+}
 
-    foreach ($_SESSION['watchlist'] as $existing) {
-        if ($existing['id'] === $item['id']) {
-            return; // bereits vorhanden
-        }
+function getWatchlistId(int $userId, bool $create = false): ?int {
+    ensureWatchlistSchema();
+    global $db;
+    $stmt = $db->prepare('SELECT id FROM watchlists WHERE user_id = ? LIMIT 1');
+    $stmt->execute([$userId]);
+    $id = $stmt->fetchColumn();
+    if (!$id && $create) {
+        $ins = $db->prepare('INSERT INTO watchlists (user_id) VALUES (?)');
+        $ins->execute([$userId]);
+        return (int)$db->lastInsertId();
     }
-
-    $_SESSION['watchlist'][] = $item;
+    return $id ? (int)$id : null;
 }
 
-function getWatchlistItems(): array {
-    return $_SESSION['watchlist'] ?? [];
+function ensureWatchlist(int $userId): int {
+    return getWatchlistId($userId, true);
 }
 
-function removeFromWatchlist(int $id): void {
-    if (!isset($_SESSION['watchlist'])) return;
-    $_SESSION['watchlist'] = array_filter($_SESSION['watchlist'], function ($item) use ($id) {
-        return $item['id'] !== $id;
-    });
+function addToWatchlist(int $userId, int $productId): void {
+    global $db;
+    $listId = ensureWatchlist($userId);
+    $stmt = $db->prepare('SELECT id FROM watchlist_items WHERE watchlist_id = ? AND product_id = ?');
+    $stmt->execute([$listId, $productId]);
+    if ($stmt->fetch()) {
+        return;
+    }
+    $insert = $db->prepare('INSERT INTO watchlist_items (watchlist_id, product_id) VALUES (?, ?)');
+    $insert->execute([$listId, $productId]);
 }
 
-function clearWatchlist(): void {
-    $_SESSION['watchlist'] = [];
+function getWatchlistItems(int $userId): array {
+    global $db;
+    $stmt = $db->prepare(
+        'SELECT wi.product_id, p.name, p.price, p.image_main
+         FROM watchlist_items wi
+         JOIN watchlists w ON wi.watchlist_id = w.id
+         JOIN products p ON wi.product_id = p.id
+         WHERE w.user_id = ?'
+    );
+    $stmt->execute([$userId]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function setWatchlistItems(array $items): void {
-    $_SESSION['watchlist'] = $items;
+function removeFromWatchlist(int $userId, int $productId): void {
+    global $db;
+    $listId = getWatchlistId($userId);
+    if (!$listId) {
+        return;
+    }
+    $stmt = $db->prepare('DELETE FROM watchlist_items WHERE watchlist_id = ? AND product_id = ?');
+    $stmt->execute([$listId, $productId]);
+}
+
+function clearWatchlist(int $userId): void {
+    global $db;
+    $listId = getWatchlistId($userId);
+    if (!$listId) {
+        return;
+    }
+    $db->prepare('DELETE FROM watchlist_items WHERE watchlist_id = ?')->execute([$listId]);
+}
+
+function countWatchlistItems(int $userId): int {
+    global $db;
+    $stmt = $db->prepare(
+        'SELECT COUNT(*)
+         FROM watchlist_items wi
+         JOIN watchlists w ON wi.watchlist_id = w.id
+         WHERE w.user_id = ?'
+    );
+    $stmt->execute([$userId]);
+    return (int)$stmt->fetchColumn();
+}
+
+function isInWatchlist(int $userId, int $productId): bool {
+    global $db;
+    $stmt = $db->prepare(
+        'SELECT 1
+         FROM watchlist_items wi
+         JOIN watchlists w ON wi.watchlist_id = w.id
+         WHERE w.user_id = ? AND wi.product_id = ?
+         LIMIT 1'
+    );
+    $stmt->execute([$userId, $productId]);
+    return (bool)$stmt->fetchColumn();
 }

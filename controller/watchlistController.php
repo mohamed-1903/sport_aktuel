@@ -1,53 +1,88 @@
 <?php
 // controller/watchlistController.php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 require_once 'model/watchlistModel.php';
 
+$userId = $_SESSION['user_id'] ?? null;
 $action = $_GET['action'] ?? 'view';
 
 switch ($action) {
     case 'add':
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $data = json_decode(file_get_contents('php://input'), true);
-            if (is_array($data) && isset($data['id'], $data['name'], $data['price'], $data['image'])) {
-                addToWatchlist([
-                    'id' => (int)$data['id'],
-                    'name' => trim($data['name']),
-                    'price' => (float)$data['price'],
-                    'image' => trim($data['image'])
-                ]);
-                http_response_code(200);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $userId) {
+            $data = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+            $id = $data['id'] ?? $data['product_id'] ?? null;
+            if ($id !== null) {
+                addToWatchlist($userId, (int)$id);
+                header('Content-Type: application/json');
+                echo json_encode(['status' => 'ok']);
             } else {
                 http_response_code(400);
-                echo json_encode(['error' => 'Invalid input']);
+                echo json_encode(['status' => 'error']);
             }
             exit;
         }
         break;
     case 'remove':
-        $id = $_GET['id'] ?? null;
-        if ($id !== null) {
-            removeFromWatchlist((int)$id);
+        $id = $_POST['id'] ?? ($_GET['id'] ?? null);
+        if ($userId && $id !== null) {
+            removeFromWatchlist($userId, (int)$id);
         }
-        header("Location: index.php?page=watchlist&action=view");
+        header('Location: index.php?page=watchlist&action=view');
         exit;
-    case 'sync':
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $data = json_decode(file_get_contents('php://input'), true);
-            if (is_array($data) && isset($data['watchlist']) && is_array($data['watchlist'])) {
-                setWatchlistItems($data['watchlist']);
-                header('Content-Type: application/json');
-                echo json_encode(['status' => 'success']);
-            } else {
-                http_response_code(400);
-                echo json_encode(['status' => 'error', 'message' => 'Invalid input']);
-            }
+    case 'toggle':
+        header('Content-Type: application/json');
+        if (!$userId) {
+            http_response_code(403);
+            echo json_encode(['status' => 'error', 'message' => 'Nicht eingeloggt']);
             exit;
         }
-        break;
+        $data = json_decode(file_get_contents('php://input'), true);
+        $id = $data['product_id'] ?? null;
+        if ($id === null) {
+            http_response_code(400);
+            echo json_encode(['status' => 'error', 'message' => 'Fehlende ID']);
+            exit;
+        }
+        if (isInWatchlist($userId, (int)$id)) {
+            removeFromWatchlist($userId, (int)$id);
+            echo json_encode(['status' => 'ok', 'in_watchlist' => false]);
+        } else {
+            addToWatchlist($userId, (int)$id);
+            echo json_encode(['status' => 'ok', 'in_watchlist' => true]);
+        }
+        exit;
+    case 'json':
+        header('Content-Type: application/json');
+        if (!$userId) {
+            echo json_encode([]);
+            exit;
+        }
+        echo json_encode(getWatchlistItems($userId));
+        exit;
+    case 'count':
+        header('Content-Type: application/json');
+        if (!$userId) {
+            echo json_encode(['count' => 0]);
+            exit;
+        }
+        echo json_encode(['count' => countWatchlistItems($userId)]);
+        exit;
+    case 'clear':
+        if ($userId) {
+            clearWatchlist($userId);
+        }
+        header('Location: index.php?page=watchlist&action=view');
+        exit;
     case 'view':
     default:
-        $watchlistItems = getWatchlistItems();
+        if (!$userId) {
+            header('Location: index.php?page=auth&action=login&redirect=watchlist');
+            exit;
+        }
+        $watchlistItems = getWatchlistItems($userId);
         require 'view/watchlist/watchlistView.php';
         break;
 }

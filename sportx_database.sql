@@ -76,6 +76,24 @@ CREATE TABLE cart_items (
     FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE
 );
 
+-- Watchlists
+CREATE TABLE IF NOT EXISTS watchlists (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+);
+
+-- Watchlist-Items
+CREATE TABLE IF NOT EXISTS watchlist_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    watchlist_id INT,
+    product_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (watchlist_id) REFERENCES watchlists (id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE
+);
+
 -- Bestellungen
 CREATE TABLE orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
