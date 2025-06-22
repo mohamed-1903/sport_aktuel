@@ -111,3 +111,25 @@ function isInWatchlist(int $userId, int $productId): bool {
     $stmt->execute([$userId, $productId]);
     return (bool)$stmt->fetchColumn();
 }
+
+function setWatchlistItems(int $userId, array $productIds): void {
+    clearWatchlist($userId);
+    foreach ($productIds as $pid) {
+        addToWatchlist($userId, (int)$pid);
+    }
+}
+
+function toggleWatchlistBulk(int $userId, array $productIds): array {
+    $results = [];
+    foreach ($productIds as $pid) {
+        $pid = (int)$pid;
+        if (isInWatchlist($userId, $pid)) {
+            removeFromWatchlist($userId, $pid);
+            $results[] = ['id' => $pid, 'in_watchlist' => false];
+        } else {
+            addToWatchlist($userId, $pid);
+            $results[] = ['id' => $pid, 'in_watchlist' => true];
+        }
+    }
+    return $results;
+}

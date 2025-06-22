@@ -252,3 +252,8 @@ Nach einem erfolgreichen Hinzufügen zeigt der Warenkorb-Button oben kurz ein �
 Die Merkliste funktioniert nun wie der Warenkorb.
 Die Tabellen `watchlists` und `watchlist_items` müssen im Datenbankschema enthalten sein.
 Importiere dazu die aktuelle `sportx_database.sql` oder lasse das System die Tabellen automatisch beim ersten Aufruf anlegen.
+Um mehrere Produkte gleichzeitig zur Merkliste hinzuzufügen oder daraus zu entfernen, sende eine POST-Anfrage an `index.php?page=watchlist&action=toggleBulk` mit einem JSON-Array der Produkt-IDs:
+
+```json
+{ "product_ids": [1, 2, 3] }
+```

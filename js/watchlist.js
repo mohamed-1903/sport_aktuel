@@ -32,6 +32,26 @@ function toggleWatchlist(iid, btn = null) {
     .catch(err => console.error('Watchlist Toggle Error', err));
 }
 
+function toggleWatchlistBulk(ids = []) {
+  if (!Array.isArray(ids) || ids.length === 0) return;
+  fetch('index.php?page=watchlist&action=toggleBulk', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ product_ids: ids })
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === 'ok') {
+        updateWatchlistCount();
+        updateWatchButtons();
+        loadWatchlist();
+      } else {
+        zeigeToast('Fehler bei der Merkliste', '#cc0000');
+      }
+    })
+    .catch(err => console.error('Watchlist Bulk Error', err));
+}
+
 function updateWatchButtons() {
   fetch('index.php?page=watchlist&action=json')
     .then(res => res.json())
