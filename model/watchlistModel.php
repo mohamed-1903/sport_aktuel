@@ -1,7 +1,6 @@
 <?php
 // model/watchlistModel.php
 require_once 'model/db.php';
-
 function ensureWatchlistSchema(): void {
     global $db;
     static $done = false;

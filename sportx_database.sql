@@ -77,7 +77,7 @@ CREATE TABLE cart_items (
 );
 
 -- Watchlists
-CREATE TABLE IF NOT EXISTS watchlists (
+CREATE TABLE watchlists (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -85,7 +85,8 @@ CREATE TABLE IF NOT EXISTS watchlists (
 );
 
 -- Watchlist-Items
-CREATE TABLE IF NOT EXISTS watchlist_items (
+
+CREATE TABLE watchlist_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
     watchlist_id INT,
     product_id INT,

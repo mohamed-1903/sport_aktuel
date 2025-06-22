@@ -581,6 +581,12 @@ a {
   text-decoration: none;
 }
 
+/* Hervorhebung der aktiven Statusansicht in der Bestellverwaltung */
+.order-nav a.active {
+  font-weight: bold;
+  border-bottom: 2px solid var(--accent-color);
+}
+
 .nav-menu > li > a {
   color: var(--text-color);
   padding: 10px 20px;
