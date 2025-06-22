@@ -3,8 +3,6 @@
 require_once 'model/orderModel.php';
 require_once 'model/cartModel.php';
 
-session_start();
-
 $action = $_GET['action'] ?? 'checkout';
 
 if (in_array($action, ['admin', 'updateStatus'])) {
