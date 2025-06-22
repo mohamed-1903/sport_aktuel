@@ -6,42 +6,38 @@ $action = $_GET['action'] ?? 'list';
 
 switch ($action) {
     case 'detail':
-        // Ermöglicht alternative Parameter wie iid1/iid2 für Links à la
-        // item.php?iid1=1234&iid2=2222
-        $id = $_GET['id'] ?? $_GET['iid'] ?? $_GET['iid1'] ?? null;
-        $id2 = $_GET['id2'] ?? $_GET['iid2'] ?? null;
+        // Alle Parameter, die mit "id" oder "iid" beginnen, einsammeln
+        $ids = [];
+        foreach ($_GET as $key => $value) {
+            if (preg_match('/^id(\d*)$/', $key) || preg_match('/^iid(\d*)$/', $key)) {
+                $values = is_array($value) ? $value : explode(',', $value);
+                foreach ($values as $val) {
+                    if (is_numeric($val)) {
+                        $ids[] = (int)$val;
+                    }
+                }
+            }
+        }
+        $ids = array_values(array_unique($ids));
 
-        if (!$id && !$id2) {
-            echo "Parameter 'id' oder 'id2' fehlen!";
+        if (empty($ids)) {
+            echo "Parameter 'id' fehlt!";
             exit;
         }
 
         $productsToShow = [];
-        $allProducts = [];
+        foreach ($ids as $pid) {
+            $product = getProductById($pid);
+            if ($product) {
+                $product['iid'] = $product['id'];
+                $product['priceValue'] = $product['price'];
+                $productsToShow[] = $product;
+            }
+        }
 
-        if ($id && !$id2) {
-            $product = getProductById($id);
-            if (!$product) {
-                echo "Produkt nicht gefunden.";
-                exit;
-            }
-            $product['iid'] = $product['id'];
-            $product['priceValue'] = $product['price'];
-            $productsToShow[] = $product;
-            // Produktliste für Vergleichsdialog laden
-            $allProducts = getAllProducts();
-        } elseif ($id && $id2) {
-            $p1 = getProductById($id);
-            $p2 = getProductById($id2);
-            if (!$p1 || !$p2) {
-                echo "Eines oder beide Produkte nicht gefunden.";
-                exit;
-            }
-            foreach ([$p1, $p2] as &$p) {
-                $p['iid'] = $p['id'];
-                $p['priceValue'] = $p['price'];
-            }
-            $productsToShow = [$p1, $p2];
+        if (empty($productsToShow)) {
+            echo "Kein Produkt gefunden.";
+            exit;
         }
 
         $allProducts = getAllProducts();
