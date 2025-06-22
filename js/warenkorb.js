@@ -53,7 +53,7 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
     .then((data) => {
       if (data.status === "ok" || data.in_cart) {
         zeigeToast("🛒 Zum Warenkorb hinzugefügt", "#28a745");
-        if (btn) btn.textContent = "✅";
+        if (btn) zeigeButtonBestaetigung(btn);
         if (btn) {
           const name = btn.dataset.name;
           const image = btn.dataset.image;
@@ -119,6 +119,15 @@ function zeigeCartBestaetigung(count) {
   clearTimeout(cartButton._resetTimer);
   cartButton._resetTimer = setTimeout(() => {
     cartButton.innerHTML = zielText;
+  }, 2000);
+}
+
+function zeigeButtonBestaetigung(btn) {
+  if (!btn) return;
+  btn.textContent = "✅";
+  clearTimeout(btn._resetTimer);
+  btn._resetTimer = setTimeout(() => {
+    updateCartButtons();
   }, 2000);
 }
 

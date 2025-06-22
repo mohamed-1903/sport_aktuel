@@ -220,7 +220,7 @@ http://localhost/sportx/index.php?page=admin&action=addProduct
 - Controller: `returnController.php`
 - Model: `returnModel.php`
 - Views: `view/return/returnFormView.php`, `view/return/returnSuccessView.php`
-- Aufrufbeispiel: `index.php?page=return&action=form&order_id=123`
+Nach einem erfolgreichen Hinzufügen zeigt der Warenkorb-Button oben kurz ein ✅ (zwei Sekunden) und wechselt danach wieder zur normalen Anzeige mit der Anzahl der Artikel. Auch der gedrückte "In den Warenkorb"-Button zeigt für diesen Zeitraum ein ✅.
 
 ---
 
