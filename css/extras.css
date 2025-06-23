@@ -670,10 +670,10 @@ body.light-mode .zoom-close {
 }
 /* === Universelles Popup-Styling für Warenkorb & Watchlist === */
 .popup-stack-container {
-  position: fixed;
-  top: 100px;
-  right: 30px;
-  display: flex;
+  width: 400px;
+  height: 180px; /* größer wie früher */
+  width: 400px;
+  height: 180px;
   flex-direction: column;
   gap: 16px;
   z-index: 9999;
