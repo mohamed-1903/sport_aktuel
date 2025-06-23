@@ -57,7 +57,21 @@ function toggleWatchlist(iid, btn = null) {
         } else {
           if (btn) btn.textContent = "🤍";
           flyToTarget(btn, "#watchlist-button", "🤍");
-          zeigeWatchRemovePreview({ name, image, productId: iid });
+          zeigeGestapeltesPopup({
+            name,
+            image,
+            message: "Von der Merkliste entfernt",
+            productId: iid,
+            icon: "💔",
+            buttons: `<button class="undo-btn">↩️ Rückgängig</button>` +
+              (isOnProductDetailPageWatch ? "" : ` <a href="index.php?page=product&action=detail&id=${iid}">🔍 Anzeigen</a>`),
+            onInit: (popup) => {
+              popup.querySelector(".undo-btn").addEventListener("click", () => {
+                toggleWatchlist(iid);
+                popup.remove();
+              });
+            },
+          });
           updateWatchlistCount(); // sofort aktualisieren bei Entfernen
           zeigeToast("💔 Produkt wurde aus der Merkliste entfernt", "#cc0000");
         }
@@ -173,10 +187,19 @@ function removeFromWatchlist(id, info = {}) {
     updateWatchButtons();
     updateWatchlistCount();
     if (info.name && info.image) {
-      zeigeWatchRemovePreview({
+      zeigeGestapeltesPopup({
         name: info.name,
         image: info.image,
+        message: "Von der Merkliste entfernt",
         productId: id,
+        icon: "💔",
+        buttons: `<button class="undo-btn">↩️ Rückgängig</button> <a href="index.php?page=product&action=detail&id=${id}">🔍 Anzeigen</a>`,
+        onInit: (popup) => {
+          popup.querySelector(".undo-btn").addEventListener("click", () => {
+            toggleWatchlist(id);
+            popup.remove();
+          });
+        },
       });
     }
   });
