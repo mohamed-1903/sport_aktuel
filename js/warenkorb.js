@@ -92,11 +92,13 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
             icon: "🛒",
             buttons,
             onInit: (popup) => {
-              const rm = popup.querySelector(".remove-cart-btn");
+
+              const rm = popup.querySelector('.remove-cart-btn');
               if (rm) {
-                rm.addEventListener("click", () => {
+                rm.addEventListener('click', () => {
                   removeFromCart(iid, size, { name, image, productId: iid });
-                  popup.classList.add("fade-out");
+                  popup.classList.add('fade-out');
+
                   setTimeout(() => popup.remove(), 400);
                 });
               }
