@@ -1820,7 +1820,7 @@ body.light-mode .zoom-close {
   opacity: 1;
   display: block;
 }
-popup-stack-container .watchlist-preview-popup,
+.popup-stack-container .watchlist-preview-popup,
 .popup-stack-container .cart-preview-popup {
   position: relative;
   top: auto;
