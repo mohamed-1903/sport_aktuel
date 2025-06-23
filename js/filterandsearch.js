@@ -153,19 +153,16 @@ function autocompleteSuche() {
   );
 
   if (treffer.length > 0) {
-    const match = treffer.find((p) =>
-      (p.name || "").toLowerCase().startsWith(wert)
+    const match = treffer.find((el) =>
+      el.querySelector("h3")?.innerText.toLowerCase().startsWith(wert)
     );
-    shadow.value = match?.name || "";
+    shadow.value = match?.querySelector("h3")?.innerText || "";
 
     // Alle Treffer anzeigen, nicht nur eine begrenzte Anzahl
-    treffer.forEach((p) => {
-      const name = p.name;
-      const price =
-        typeof p.priceValue !== "undefined"
-          ? parseFloat(p.priceValue).toFixed(2) + " €"
-          : p.price || "Preis?";
-      const img = p.imageMain || "";
+    treffer.forEach((el) => {
+      const name = el.querySelector("h3")?.innerText;
+      const price = parseFloat(el.dataset.preis)?.toFixed(2) + " €" || "Preis?";
+      const img = el.querySelector("img")?.src || "";
 
       const li = document.createElement("li");
       li.innerHTML = `
