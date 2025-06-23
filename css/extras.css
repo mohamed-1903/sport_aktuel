@@ -695,7 +695,7 @@ body.light-mode .zoom-close {
   position: relative;
   top: auto;
   right: auto;
-  width: 360px;
+  width: 400px;
   background-color: var(--popup-bg);
   color: var(--popup-text);
   border-radius: 12px;
@@ -708,7 +708,7 @@ body.light-mode .zoom-close {
   transition: all 0.3s ease-out;
   opacity: 1;
   pointer-events: auto;
-  height: 160px; /* etwas größer, bleibt dennoch fix */
+  height: 180px; /* größer wie früher */
   display: flex;
   align-items: center;
   justify-content: start;
@@ -725,8 +725,8 @@ body.light-mode .zoom-close {
   position: fixed;
   top: 100px;
   right: 30px;
-  width: 360px;
-  height: 160px;
+  width: 400px;
+  height: 180px;
   z-index: 9999;
   background-color: var(--popup-bg); /* Dynamischer Hintergrund */
   color: var(--popup-text); /* Dynamische Textfarbe */
