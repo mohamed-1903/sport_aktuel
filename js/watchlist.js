@@ -42,12 +42,31 @@ function toggleWatchlist(iid, btn = null) {
           if (btn) btn.textContent = "❤️";
           flyToTarget(btn, "#watchlist-button", "❤️");
           // Gestapeltes Popup statt Einzel-Popup
+          const buttons = `
+            ${
+              !isOnProductDetailPageWatch
+                ? `<a href="index.php?page=product&action=detail&id=${iid}" class="show-btn">🔍 Anzeigen</a>`
+                : ""
+            }
+            <button class="remove-watch-btn" data-id="${iid}">🗑 Entfernen</button>
+            <a href="index.php?page=watchlist&action=view">Merkliste</a>`;
           zeigeGestapeltesPopup({
             name,
             image,
             message: "Zur Merkliste hinzugefügt",
             productId: iid,
             icon: "❤️",
+            buttons,
+            onInit: (popup) => {
+              const rm = popup.querySelector('.remove-watch-btn');
+              if (rm) {
+                rm.addEventListener('click', () => {
+                  removeFromWatchlist(iid, { name, image, productId: iid });
+                  popup.classList.add('fade-out');
+                  setTimeout(() => popup.remove(), 400);
+                });
+              }
+            },
           });
           zeigeWatchButtonBestaetigung(); // zeigt oben im Button nur ❤️
           setTimeout(() => {
@@ -157,6 +176,7 @@ function loadWatchlist() {
           removeFromWatchlist(btn.dataset.id, {
             name: btn.dataset.name,
             image: btn.dataset.image,
+            productId: btn.dataset.id,
           });
         });
       });
@@ -176,7 +196,7 @@ function removeFromWatchlist(id, info = {}) {
       zeigeWatchRemovePreview({
         name: info.name,
         image: info.image,
-        productId: id,
+        productId: info.productId || id,
       });
     }
   });
@@ -257,6 +277,7 @@ function zeigeWatchRemovePreview({ name, image, productId }) {
     icon: "💔",
     buttons: `
       <button class="undo-btn">↩️ Rückgängig</button>
+      <a href="index.php?page=watchlist&action=view">Merkliste</a>
       ${
         !isDetailPage
           ? `<a href="index.php?page=product&action=detail&id=${productId}" class="show-btn">🔍 Anzeigen</a>`
