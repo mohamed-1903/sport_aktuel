@@ -62,7 +62,7 @@ if (session_status() === PHP_SESSION_NONE) {
         <div id="cart-popup" class="cart-preview-popup"></div>
         <div id="watchlist-preview-popup" class="watchlist-preview-popup"></div>
         <div id="watch-popup" class="watchlist-preview-popup"></div>
-        <div id="popup-stack" class="popup-stack-container"></div>
+<div id="popup-stack" class="popup-stack-container"></div>
 
         <nav>
             <ul class="nav-menu">

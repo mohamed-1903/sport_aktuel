@@ -244,42 +244,35 @@ function zeigeWatchPreview({ name, image, price, productId }) {
   }, 4000);
 }
 
-// 🔔 Popup bei Entfernen aus der Watchlist
 function zeigeWatchRemovePreview({ name, image, productId }) {
-  const popup = document.getElementById("watch-popup");
-  if (!popup) return;
-
   const isDetailPage =
     location.href.includes("page=product") &&
     location.href.includes("action=detail");
 
-  popup.innerHTML = `
-  <div class="popup-content-flex">
-    <img src="${image}" alt="${name}" />
-    <div class="popup-text-info">
-      <strong>${name}</strong>
-      <small>💔 wurde aus deiner Merkliste entfernt</small>
-      <div class="popup-buttons">
-        <button class="undo-btn">↩️ Rückgängig</button>
-        ${
-          !isDetailPage
-            ? `<a href="index.php?page=product&action=detail&id=${productId}" class="show-btn">🔍 Anzeigen</a>`
-            : ""
-        }
-      </div>
-    </div>
-  </div>
-`;
-
-  popup.classList.add("show");
-
-  // Event: Rückgängig
-  popup.querySelector(".undo-btn").addEventListener("click", () => {
-    toggleWatchlist(productId); // Wieder hinzufügen
-    popup.classList.remove("show");
+  zeigeGestapeltesPopup({
+    name,
+    image,
+    message: "Von der Merkliste entfernt",
+    productId,
+    icon: "💔",
+    buttons: `
+      <button class="undo-btn">↩️ Rückgängig</button>
+      ${
+        !isDetailPage
+          ? `<a href="index.php?page=product&action=detail&id=${productId}" class="show-btn">🔍 Anzeigen</a>`
+          : ""
+      }
+    `,
+    onInit: (popup) => {
+      const undoBtn = popup.querySelector(".undo-btn");
+      if (undoBtn) {
+        undoBtn.addEventListener("click", () => {
+          toggleWatchlist(productId); // Wieder hinzufügen
+          popup.classList.add("fade-out");
+          setTimeout(() => popup.remove(), 400);
+        });
+      }
+    },
   });
-
-  setTimeout(() => {
-    popup.classList.remove("show");
-  }, 5000);
 }
+
