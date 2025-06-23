@@ -307,11 +307,6 @@ function zeigeGestapeltesPopup({
         <small>${icon} ${message}</small>
         <div class="popup-buttons">
           ${buttons}
-          ${
-            productId
-              ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
-              : ""
-          }
         </div>
       </div>
     </div>
