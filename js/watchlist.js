@@ -22,7 +22,7 @@ document.addEventListener("click", (e) => {
   toggleWatchlist(iid, btn);
 });
 
-function toggleWatchlist(iid, btn = null) {
+function toggleWatchlist(iid, btn = null, info = {}) {
   fetch("index.php?page=watchlist&action=toggle", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -34,13 +34,15 @@ function toggleWatchlist(iid, btn = null) {
         if (btn) btn.textContent = data.in_watchlist ? "❤️" : "🤍";
         loadWatchlist();
 
-        const name = btn?.dataset.name || "Produkt";
-        const image = btn?.dataset.image || "img/placeholder.jpg";
-        const price = parseFloat(btn?.dataset.price) || 0;
+        const name = btn?.dataset.name || info.name || "Produkt";
+        const image = btn?.dataset.image || info.image || "img/placeholder.jpg";
+        const price = parseFloat(btn?.dataset.price || info.price) || 0;
 
         if (data.in_watchlist) {
           if (btn) btn.textContent = "❤️";
-          flyToTarget(btn, "#watchlist-button", "❤️");
+          if (btn instanceof Element) {
+            flyToTarget(btn, "#watchlist-button", "❤️");
+          }
           // Gestapeltes Popup statt Einzel-Popup
           const buttons = `
             ${
@@ -61,10 +63,12 @@ function toggleWatchlist(iid, btn = null) {
               const rm = popup.querySelector('.remove-watch-btn');
               if (rm) {
                 rm.addEventListener('click', () => {
-                  removeFromWatchlist(iid, { name, image, productId: iid });
+                  removeFromWatchlist(iid, { name, image, price, productId: iid });
                   popup.classList.add('fade-out');
-
-                  setTimeout(() => popup.remove(), 400);
+          if (btn instanceof Element) {
+            flyToTarget(btn, "#watchlist-button", "🤍");
+          }
+          zeigeWatchRemovePreview({ name, image, productId: iid, price });
                 });
               }
             },
@@ -138,8 +142,10 @@ function updateWatchlistCount() {
 
 function loadWatchlist() {
   const container = document.getElementById("watchlist-container");
-  if (!container) return;
+        }" data-price="${parseFloat(item.price)}">🗑️ Entfernen</button>
 
+            price: btn.dataset.price,
+        price: info.price,
   fetch("index.php?page=watchlist&action=json")
     .then((res) => res.json())
     .then((items) => {
@@ -239,8 +245,8 @@ function zeigeWatchPreview({ name, image, price, productId }) {
     window.location.href.includes("page=product") &&
     window.location.href.includes("action=detail");
 
-  popup.innerHTML = `
-    <div class="popup-content-flex">
+function zeigeWatchRemovePreview({ name, image, productId, price = 0 }) {
+          toggleWatchlist(productId, null, { name, image, price });
       <img src="${image}" alt="${name}" />
       <div class="popup-text-info">
         <strong>${name}</strong>
