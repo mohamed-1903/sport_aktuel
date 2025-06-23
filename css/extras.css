@@ -715,6 +715,7 @@ body.light-mode .zoom-close {
   overflow: hidden; /* verhindert Größenänderungen bei langem Inhalt */
   flex-shrink: 0;
 }
+
 .fade-out {
   opacity: 0;
   transform: translateY(-10px);
@@ -731,6 +732,7 @@ body.light-mode .zoom-close {
   background-color: var(--popup-bg); /* Dynamischer Hintergrund */
   color: var(--popup-text); /* Dynamische Textfarbe */
   border-radius: 12px;
+
   padding: 1.5rem;
   box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25); /* Tiefe Schatten für Wow-Effekt */
   border: 1px solid var(--popup-border);
@@ -778,6 +780,13 @@ body.light-mode .zoom-close {
   white-space: normal;
   overflow: visible;
   text-overflow: initial;
+}
+
+.popup-text-info strong,
+.popup-text-info small {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .popup-text-info strong {
@@ -850,6 +859,7 @@ body.light-mode .zoom-close {
   margin-top: 20px;
 }
 
+
 .popup-buttons button,
 .popup-buttons a {
   background-color: var(--popup-button-bg);
@@ -883,6 +893,7 @@ body.light-mode .zoom-close {
   flex: 1 1 auto;
   text-align: center;
 }
+
 
 .popup-buttons .btn-popup:hover {
   opacity: 0.9;
