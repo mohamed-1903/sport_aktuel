@@ -715,13 +715,12 @@ body.light-mode .zoom-close {
   overflow: hidden; /* verhindert Größenänderungen bei langem Inhalt */
   flex-shrink: 0;
 }
-
 .fade-out {
   opacity: 0;
   transform: translateY(-10px);
   transition: opacity 0.4s, transform 0.4s;
 }
-.cart-preview-popup,
+.cart-preview-popup,Add commentMore actions
 .watchlist-preview-popup {
   position: fixed;
   top: 100px;
@@ -873,8 +872,6 @@ body.light-mode .zoom-close {
   margin-top: 20px;
 }
 
-
-
 .popup-buttons button,
 .popup-buttons a {
   background-color: var(--popup-button-bg);
@@ -908,9 +905,6 @@ body.light-mode .zoom-close {
   flex: 1 1 auto;
   text-align: center;
 }
-
-
-
 
 .popup-buttons .btn-popup:hover {
   opacity: 0.9;
