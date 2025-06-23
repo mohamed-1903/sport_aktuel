@@ -791,6 +791,13 @@ body.light-mode .zoom-close {
 
 .popup-text-info strong,
 .popup-text-info small {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: initial;
+}
+
+.popup-text-info strong,
+.popup-text-info small {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -901,6 +908,7 @@ body.light-mode .zoom-close {
   flex: 1 1 auto;
   text-align: center;
 }
+
 
 
 
