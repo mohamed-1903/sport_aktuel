@@ -274,7 +274,7 @@ function zeigeGestapeltesPopup({
   if (!stack) return;
 
   const popup = document.createElement("div");
-  popup.className = "popup-instance watchlist-preview-popup";
+  popup.className = "popup-instance";
 
   popup.innerHTML = `
     <div class="popup-content-flex">
