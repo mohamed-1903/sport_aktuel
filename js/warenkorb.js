@@ -268,6 +268,8 @@ function zeigeGestapeltesPopup({
   message,
   productId = null,
   icon = "🔔",
+  buttons = "",
+  onInit = null,
   timeout = 4000,
 }) {
   const stack = document.getElementById("popup-stack");
@@ -276,25 +278,33 @@ function zeigeGestapeltesPopup({
   const popup = document.createElement("div");
   popup.className = "popup-instance";
 
+  const btnHTML =
+    buttons ||
+    (productId
+      ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
+      : "");
+
   popup.innerHTML = `
     <div class="popup-content-flex">
       <img src="${image}" alt="${name}" />
       <div class="popup-text-info">
         <strong>${name}</strong>
         <small>${icon} ${message}</small>
-        <div class="popup-buttons">
-          ${
-            productId
-              ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
-              : ""
-          }
-        </div>
+        <div class="popup-buttons">${btnHTML}</div>
       </div>
     </div>
   `;
 
   // Neue Popups oben einfügen, damit ältere nach unten wandern
   stack.prepend(popup);
+
+  if (typeof onInit === "function") {
+    try {
+      onInit(popup);
+    } catch (err) {
+      console.error("Popup onInit error", err);
+    }
+  }
 
   setTimeout(() => {
     popup.classList.add("fade-out");
