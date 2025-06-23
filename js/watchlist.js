@@ -41,16 +41,16 @@ function toggleWatchlist(iid, btn = null) {
         if (data.in_watchlist) {
           if (btn) btn.textContent = "❤️";
           flyToTarget(btn, "#watchlist-button", "❤️");
-
+          const showBtn = !isOnProductDetailPageWatch
+            ? `<a href="index.php?page=product&action=detail&id=${iid}">🔍 Anzeigen</a>`
+            : "";
           const buttons = `
-            ${
-              !isOnProductDetailPageWatch
-                ? `<a href="index.php?page=product&action=detail&id=${iid}" class="btn-popup">Anzeigen</a>`
-                : ""
-            }
-            <button class="watch-remove-btn btn-popup">Entfernen</button>
-            <a href="index.php?page=watchlist&action=view" class="btn-popup">Merkliste</a>
+            ${showBtn}
+            <button class="remove-btn">🗑️ Entfernen</button>
+            <a href="index.php?page=watchlist&action=view">Merkliste</a>
+            <button class="undo-btn">↩️ Rückgängig</button>
           `;
+          // Gestapeltes Popup statt Einzel-Popup
 
           zeigeGestapeltesPopup({
             name,
@@ -59,10 +59,19 @@ function toggleWatchlist(iid, btn = null) {
             icon: "❤️",
             buttons,
             onInit: (popup) => {
-              const removeBtn = popup.querySelector(".watch-remove-btn");
+              const removeBtn = popup.querySelector(".remove-btn");
               if (removeBtn) {
                 removeBtn.addEventListener("click", () => {
-                  toggleWatchlist(iid, btn);
+                  toggleWatchlist(iid);
+                  popup.classList.add("fade-out");
+                  setTimeout(() => popup.remove(), 400);
+                });
+              }
+              const undoBtn = popup.querySelector(".undo-btn");
+              if (undoBtn) {
+                undoBtn.addEventListener("click", () => {
+                  toggleWatchlist(iid);
+
                   popup.classList.add("fade-out");
                   setTimeout(() => popup.remove(), 400);
                 });
@@ -275,8 +284,9 @@ function zeigeWatchRemovePreview({ name, image, productId }) {
     message: "Von der Merkliste entfernt",
     icon: "💔",
     buttons: `
-      <button class="undo-btn btn-popup">Rückgängig</button>
-      <a href="index.php?page=watchlist&action=view" class="btn-popup">Merkliste</a>
+      <button class="undo-btn">↩️ Rückgängig</button>
+      <a href="index.php?page=watchlist&action=view">Merkliste</a>
+
       ${
         !isDetailPage
           ? `<a href="index.php?page=product&action=detail&id=${productId}" class="btn-popup">Anzeigen</a>`

@@ -75,15 +75,14 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
           const name = btn.dataset.name;
           const image = btn.dataset.image;
           const price = parseFloat(btn.dataset.price) || 0;
-
+          // Gestapeltes Popup anzeigen
+          const showBtn = !isOnProductDetailPageCart
+            ? `<a href="index.php?page=product&action=detail&id=${iid}">🔍 Anzeigen</a>`
+            : "";
           const buttons = `
-            ${
-              !isOnProductDetailPageCart
-                ? `<a href="index.php?page=product&action=detail&id=${iid}" class="btn-popup">Anzeigen</a>`
-                : ""
-            }
-            <button class="cart-remove-btn btn-popup">Entfernen</button>
-            <a href="index.php?page=cart&action=view" class="btn-popup">In den Warenkorb</a>
+            ${showBtn}
+            <button class="remove-btn">🗑️ Entfernen</button>
+            <a href="index.php?page=cart&action=view">🛒 Warenkorb</a>
           `;
 
           zeigeGestapeltesPopup({
@@ -94,9 +93,10 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
             icon: "🛒",
             buttons,
             onInit: (popup) => {
-              const removeBtn = popup.querySelector(".cart-remove-btn");
-              if (removeBtn) {
-                removeBtn.addEventListener("click", () => {
+              const rm = popup.querySelector(".remove-btn");
+              if (rm) {
+                rm.addEventListener("click", () => {
+
                   removeFromCart(iid, size, { name, image });
                   popup.classList.add("fade-out");
                   setTimeout(() => popup.remove(), 400);
@@ -289,6 +289,8 @@ function zeigeGestapeltesPopup({
   message,
   productId = null,
   icon = "🔔",
+  buttons = "",
+  onInit = null,
   timeout = 4000,
   buttons = "",
   onInit = null,
@@ -299,20 +301,20 @@ function zeigeGestapeltesPopup({
   const popup = document.createElement("div");
   popup.className = "popup-instance";
 
+  const btnHTML =
+    buttons ||
+    (productId
+      ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
+      : "");
+
   popup.innerHTML = `
     <div class="popup-content-flex">
       <img src="${image}" alt="${name}" />
       <div class="popup-text-info">
         <strong>${name}</strong>
         <small>${icon} ${message}</small>
-        <div class="popup-buttons">
-          ${buttons}
-          ${
-            productId
-              ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
-              : ""
-          }
-        </div>
+        <div class="popup-buttons">${btnHTML}</div>
+
       </div>
     </div>
   `;
@@ -321,11 +323,12 @@ function zeigeGestapeltesPopup({
   stack.prepend(popup);
 
   if (typeof onInit === "function") {
-    onInit(popup);
-  }
+    try {
+      onInit(popup);
+    } catch (err) {
+      console.error("Popup onInit error", err);
+    }
 
-  if (typeof onInit === "function") {
-    onInit(popup);
   }
 
   setTimeout(() => {
