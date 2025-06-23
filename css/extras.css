@@ -682,6 +682,11 @@ body.light-mode .zoom-close {
   max-height: calc(100vh - 120px);
   overflow-y: auto;
   overflow-x: hidden;
+  scrollbar-width: none; /* Firefox */
+}
+
+.popup-stack-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .popup-stack-container .popup-instance {
