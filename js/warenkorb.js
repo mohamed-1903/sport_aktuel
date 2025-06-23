@@ -193,7 +193,11 @@ function loadList() {
           <td>${preis.toFixed(2)} €</td>
           <td class="summe-cell">${gesamt.toFixed(2)} €</td>
           <td>
-            <button class="remove-btn" data-id="${item.product_id}" data-size="${item.size}" data-name="${item.name}" data-image="${item.image_main}">❌</button>
+            <button class="remove-btn" data-id="${
+              item.product_id
+            }" data-size="${item.size}" data-name="${item.name}" data-image="${
+          item.image_main
+        }">❌</button>
           </td>
         `;
 
@@ -251,6 +255,45 @@ function zeigeToast(text, farbe = "#333") {
     el.classList.remove("show");
   }, 2500);
 }
+function zeigeGestapeltesPopup({
+  name,
+  image,
+  message,
+  productId = null,
+  icon = "🔔",
+  timeout = 4000,
+}) {
+  const stack = document.getElementById("popup-stack");
+  if (!stack) return;
+
+  const popup = document.createElement("div");
+  popup.className = "popup-instance watchlist-preview-popup";
+
+  popup.innerHTML = `
+    <div class="popup-content-flex">
+      <img src="${image}" alt="${name}" />
+      <div class="popup-text-info">
+        <strong>${name}</strong>
+        <small>${icon} ${message}</small>
+        <div class="popup-buttons">
+          ${
+            productId
+              ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
+              : ""
+          }
+        </div>
+      </div>
+    </div>
+  `;
+
+  stack.appendChild(popup);
+
+  setTimeout(() => {
+    popup.classList.add("fade-out");
+    setTimeout(() => popup.remove(), 400);
+  }, timeout);
+}
+
 function zeigeProduktPreview({ name, image, price, productId }) {
   const popup = document.getElementById("cart-preview-popup");
   if (!popup) return;

@@ -135,7 +135,9 @@ function loadWatchlist() {
             <p>${parseFloat(item.price).toFixed(2)} €</p>
             <button class="remove-watch" data-id="${
               item.product_id
-            }" data-name="${item.name}" data-image="${item.image_main}">🗑️ Entfernen</button>
+            }" data-name="${item.name}" data-image="${
+          item.image_main
+        }">🗑️ Entfernen</button>
             <a href="index.php?page=product&action=detail&id=${
               item.product_id
             }"><button>🔍 Anzeigen</button></a>
@@ -245,22 +247,23 @@ function zeigeWatchRemovePreview({ name, image, productId }) {
     location.href.includes("action=detail");
 
   popup.innerHTML = `
-    <div class="popup-content removed">
-      <img src="${image}" alt="${name}" />
-      <div class="popup-text">
-        <strong>${name}</strong><br>
-        <small>💔 wurde aus deiner Merkliste entfernt</small>
-        <div class="popup-buttons">
-          <button class="undo-btn">↩️ Rückgängig</button>
-          ${
-            !isDetailPage
-              ? `<a href="index.php?page=product&action=detail&id=${productId}" class="show-btn">🔍 Anzeigen</a>`
-              : ""
-          }
-        </div>
+  <div class="popup-content-flex">
+    <img src="${image}" alt="${name}" />
+    <div class="popup-text-info">
+      <strong>${name}</strong>
+      <small>💔 wurde aus deiner Merkliste entfernt</small>
+      <div class="popup-buttons">
+        <button class="undo-btn">↩️ Rückgängig</button>
+        ${
+          !isDetailPage
+            ? `<a href="index.php?page=product&action=detail&id=${productId}" class="show-btn">🔍 Anzeigen</a>`
+            : ""
+        }
       </div>
     </div>
-  `;
+  </div>
+`;
+
   popup.classList.add("show");
 
   // Event: Rückgängig

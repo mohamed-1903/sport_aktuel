@@ -1803,6 +1803,35 @@ body.light-mode .zoom-close {
   transform: translateX(-50%) translateY(0);
 }
 /* === Universelles Popup-Styling für Warenkorb & Watchlist === */
+.popup-stack-container {
+  position: fixed;
+  top: 100px;
+  right: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 9999;
+  align-items: flex-end;
+}
+
+.popup-stack-container .popup-instance {
+  animation: slideFade 0.3s ease-out, popIn 0.5s ease-in-out;
+  transform: scale(1);
+  opacity: 1;
+  display: block;
+}
+.popup-stack-container .watchlist-preview-popup,
+.popup-stack-container .cart-preview-popup {
+  animation: slideFade 0.3s ease-out, popIn 0.5s ease-in-out;
+  transform: scale(1);
+  opacity: 1;
+  display: block;
+}
+.fade-out {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.4s, transform 0.4s;
+}
 .cart-preview-popup,
 .watchlist-preview-popup {
   position: fixed;
