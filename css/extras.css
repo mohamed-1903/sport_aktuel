@@ -707,6 +707,9 @@ body.light-mode .zoom-close {
   display: flex;
   align-items: center;
   justify-content: start;
+
+  /* verhindern, dass Popups bei wenig Platz schrumpfen */
+  flex-shrink: 0;
 }
 .fade-out {
   opacity: 0;
