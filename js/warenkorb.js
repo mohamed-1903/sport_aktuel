@@ -76,12 +76,31 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
           const image = btn.dataset.image;
           const price = parseFloat(btn.dataset.price) || 0;
           // Gestapeltes Popup anzeigen
+          const buttons = `
+            ${
+              !isOnProductDetailPageCart
+                ? `<a href="index.php?page=product&action=detail&id=${iid}" class="show-btn">🔍 Anzeigen</a>`
+                : ""
+            }
+            <button class="remove-cart-btn" data-id="${iid}" data-size="${size}">🗑 Entfernen</button>
+            <a href="index.php?page=cart&action=view">Zum Warenkorb</a>`;
           zeigeGestapeltesPopup({
             name,
             image,
             message: `In den Warenkorb gelegt (${size}, ${qty}x)`,
             productId: iid,
             icon: "🛒",
+            buttons,
+            onInit: (popup) => {
+              const rm = popup.querySelector('.remove-cart-btn');
+              if (rm) {
+                rm.addEventListener('click', () => {
+                  removeFromCart(iid, size, { name, image, productId: iid });
+                  popup.classList.add('fade-out');
+                  setTimeout(() => popup.remove(), 400);
+                });
+              }
+            },
           });
         }
         updateCartCount((cnt) => zeigeCartBestaetigung(cnt));
@@ -226,7 +245,7 @@ function loadList() {
           const size = btn.dataset.size;
           const name = btn.dataset.name;
           const image = btn.dataset.image;
-          removeFromCart(id, size, { name, image });
+          removeFromCart(id, size, { name, image, productId: id });
         });
       });
     });
@@ -242,7 +261,13 @@ function removeFromCart(productId, size, previewData = null) {
     )}`,
   })
     .then(() => {
-      if (previewData) zeigeCartRemovePreview(previewData);
+      if (previewData) {
+        zeigeCartRemovePreview({
+          name: previewData.name,
+          image: previewData.image,
+          productId: previewData.productId || productId,
+        });
+      }
       loadList();
       updateCartCount();
     })
@@ -269,6 +294,8 @@ function zeigeGestapeltesPopup({
   productId = null,
   icon = "🔔",
   timeout = 4000,
+  buttons = "",
+  onInit = null,
 }) {
   const stack = document.getElementById("popup-stack");
   if (!stack) return;
@@ -284,9 +311,10 @@ function zeigeGestapeltesPopup({
         <small>${icon} ${message}</small>
         <div class="popup-buttons">
           ${
-            productId
+            buttons ||
+            (productId
               ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
-              : ""
+              : "")
           }
         </div>
       </div>
@@ -295,6 +323,10 @@ function zeigeGestapeltesPopup({
 
   // Neue Popups oben einfügen, damit ältere nach unten wandern
   stack.prepend(popup);
+
+  if (typeof onInit === "function") {
+    onInit(popup);
+  }
 
   setTimeout(() => {
     popup.classList.add("fade-out");
@@ -332,20 +364,26 @@ function zeigeProduktPreview({ name, image, price, productId }) {
   }, 4000);
 }
 
-function zeigeCartRemovePreview({ name, image }) {
-  const popup = document.getElementById("cart-popup");
-  if (!popup) return;
-  popup.innerHTML = `
-    <div class="popup-content removed">
-      <img src="${image}" alt="${name}" />
-      <div>
-        <strong>${name}</strong><br>
-        <small>❌ entfernt aus dem Warenkorb</small>
-      </div>
-    </div>
-  `;
-  popup.classList.add("show");
-  setTimeout(() => popup.classList.remove("show"), 3000);
+function zeigeCartRemovePreview({ name, image, productId }) {
+  const isDetailPage =
+    location.href.includes("page=product") &&
+    location.href.includes("action=detail");
+
+  zeigeGestapeltesPopup({
+    name,
+    image,
+    message: "Aus dem Warenkorb entfernt",
+    productId,
+    icon: "❌",
+    buttons: `
+      <a href="index.php?page=cart&action=view">Warenkorb</a>
+      ${
+        !isDetailPage
+          ? `<a href="index.php?page=product&action=detail&id=${productId}" class="show-btn">🔍 Anzeigen</a>`
+          : ""
+      }
+    `,
+  });
 }
 
 // 🧹 Alles löschen
