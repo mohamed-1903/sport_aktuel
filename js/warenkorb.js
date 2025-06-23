@@ -92,11 +92,13 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
             icon: "🛒",
             buttons,
             onInit: (popup) => {
+
               const rm = popup.querySelector('.remove-cart-btn');
               if (rm) {
                 rm.addEventListener('click', () => {
                   removeFromCart(iid, size, { name, image, productId: iid });
                   popup.classList.add('fade-out');
+
                   setTimeout(() => popup.remove(), 400);
                 });
               }
@@ -113,28 +115,6 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
       zeigeToast("⚠️ Serverfehler beim Hinzufügen", "#cc0000");
       console.error(err);
     });
-}
-
-function updateCartButtons() {
-  fetch("index.php?page=cart&action=json")
-    .then((res) => res.json())
-    .then((items) => {
-      document.querySelectorAll(".btn-add-to-cart").forEach((btn) => {
-        const iid = parseInt(btn.dataset.iid);
-        const parent = btn.closest(".Eprodukt") || btn.closest("[data-iid]");
-        const sizeSelect = parent?.querySelector("select.size-dropdown");
-        const size = sizeSelect?.value || "M";
-
-        const isInCart = items.some(
-          (item) => item.product_id == iid && item.size === size
-        );
-
-        btn.textContent = isInCart ? "✅" : "🛒";
-      });
-    })
-    .catch((err) =>
-      console.error("Fehler beim Aktualisieren der Cart-Buttons:", err)
-    );
 }
 
 function updateCartCount(callback) {

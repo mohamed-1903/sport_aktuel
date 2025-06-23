@@ -63,6 +63,7 @@ function toggleWatchlist(iid, btn = null) {
                 rm.addEventListener('click', () => {
                   removeFromWatchlist(iid, { name, image, productId: iid });
                   popup.classList.add('fade-out');
+
                   setTimeout(() => popup.remove(), 400);
                 });
               }
@@ -278,6 +279,7 @@ function zeigeWatchRemovePreview({ name, image, productId }) {
     buttons: `
       <button class="undo-btn">↩️ Rückgängig</button>
       <a href="index.php?page=watchlist&action=view">Merkliste</a>
+
       ${
         !isDetailPage
           ? `<a href="index.php?page=product&action=detail&id=${productId}" class="show-btn">🔍 Anzeigen</a>`
