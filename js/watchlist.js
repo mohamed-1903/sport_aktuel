@@ -41,13 +41,33 @@ function toggleWatchlist(iid, btn = null) {
         if (data.in_watchlist) {
           if (btn) btn.textContent = "❤️";
           flyToTarget(btn, "#watchlist-button", "❤️");
-          // Gestapeltes Popup statt Einzel-Popup
+
+          const buttons = `
+            ${
+              !isOnProductDetailPageWatch
+                ? `<a href="index.php?page=product&action=detail&id=${iid}" class="btn-popup">Anzeigen</a>`
+                : ""
+            }
+            <button class="watch-remove-btn btn-popup">Entfernen</button>
+            <a href="index.php?page=watchlist&action=view" class="btn-popup">Merkliste</a>
+          `;
+
           zeigeGestapeltesPopup({
             name,
             image,
             message: "Zur Merkliste hinzugefügt",
-            productId: iid,
             icon: "❤️",
+            buttons,
+            onInit: (popup) => {
+              const removeBtn = popup.querySelector(".watch-remove-btn");
+              if (removeBtn) {
+                removeBtn.addEventListener("click", () => {
+                  toggleWatchlist(iid, btn);
+                  popup.classList.add("fade-out");
+                  setTimeout(() => popup.remove(), 400);
+                });
+              }
+            },
           });
           zeigeWatchButtonBestaetigung(); // zeigt oben im Button nur ❤️
           setTimeout(() => {
@@ -144,10 +164,10 @@ function loadWatchlist() {
               item.product_id
             }" data-name="${item.name}" data-image="${
           item.image_main
-        }">🗑️ Entfernen</button>
+        }">Entfernen</button>
             <a href="index.php?page=product&action=detail&id=${
               item.product_id
-            }"><button>🔍 Anzeigen</button></a>
+            }"><button>Anzeigen</button></a>
           </div>`;
         container.appendChild(card);
       });
@@ -229,7 +249,7 @@ function zeigeWatchPreview({ name, image, price, productId }) {
           <a href="index.php?page=watchlist&action=view">Merkliste</a>
           ${
             !isOnProductDetailPageWatch
-              ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
+              ? `<a href="index.php?page=product&action=detail&id=${productId}">Anzeigen</a>`
               : ""
           }
         </div>
@@ -253,13 +273,13 @@ function zeigeWatchRemovePreview({ name, image, productId }) {
     name,
     image,
     message: "Von der Merkliste entfernt",
-    productId,
     icon: "💔",
     buttons: `
-      <button class="undo-btn">↩️ Rückgängig</button>
+      <button class="undo-btn btn-popup">Rückgängig</button>
+      <a href="index.php?page=watchlist&action=view" class="btn-popup">Merkliste</a>
       ${
         !isDetailPage
-          ? `<a href="index.php?page=product&action=detail&id=${productId}" class="show-btn">🔍 Anzeigen</a>`
+          ? `<a href="index.php?page=product&action=detail&id=${productId}" class="btn-popup">Anzeigen</a>`
           : ""
       }
     `,
