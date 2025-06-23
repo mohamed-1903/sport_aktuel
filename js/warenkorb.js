@@ -361,7 +361,7 @@ function zeigeCartRemovePreview({ name, image, productId, size, qty }) {
     productId,
     icon: "❌",
     buttons: `
-      <button class="undo-btn">↩️ Rückgängig</button>
+      <button class="undo-btn" data-id="${productId}" data-size="${size}" data-qty="${qty}">↩️ Rückgängig</button>
       ${
         !isDetailPage
           ? '<a href="index.php?page=cart&action=view">Warenkorb anzeigen</a>'
@@ -371,8 +371,11 @@ function zeigeCartRemovePreview({ name, image, productId, size, qty }) {
     onInit: (popup) => {
       const undoBtn = popup.querySelector(".undo-btn");
       if (undoBtn) {
+        const id = undoBtn.dataset.id;
+        const s = undoBtn.dataset.size;
+        const q = parseInt(undoBtn.dataset.qty) || 1;
         undoBtn.addEventListener("click", () => {
-          toggleCart(productId, null, size, qty);
+          toggleCart(id, null, s, q);
           popup.classList.add("fade-out");
           setTimeout(() => popup.remove(), 400);
         });
