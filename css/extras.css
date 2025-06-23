@@ -835,6 +835,7 @@ body.light-mode .zoom-close {
   margin-top: 20px;
 }
 
+
 .popup-buttons button,
 .popup-buttons a {
   background: var(--popup-button-bg);
@@ -852,6 +853,7 @@ body.light-mode .zoom-close {
 
 .popup-buttons button:hover,
 .popup-buttons a:hover {
+
   background: var(--popup-button-hover);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -859,6 +861,7 @@ body.light-mode .zoom-close {
 
 .popup-buttons button:active,
 .popup-buttons a:active {
+
   background-color: var(--popup-button-active);
   transform: translateY(2px);
 }
@@ -878,13 +881,13 @@ body.light-mode .zoom-close {
 /* === Darkmode Styles für Popup-Buttons === */
 [data-theme="dark"] .popup-buttons button,
 [data-theme="dark"] .popup-buttons a {
-  background-color: var(--popup-button-bg);
-  color: var(--popup-button-text);
+  background-color: var(--accent-color);
+  color: #000;
 }
 
 [data-theme="dark"] .popup-buttons button:hover,
 [data-theme="dark"] .popup-buttons a:hover {
-  background-color: var(--popup-button-hover);
+  background-color: #b08b00;
 }
 
 /* === Fehler und Erfolgshinweise === */

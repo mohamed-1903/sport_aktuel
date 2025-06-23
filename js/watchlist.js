@@ -22,7 +22,7 @@ document.addEventListener("click", (e) => {
   toggleWatchlist(iid, btn);
 });
 
-function toggleWatchlist(iid, btn = null) {
+function toggleWatchlist(iid, btn = null, info = {}) {
   fetch("index.php?page=watchlist&action=toggle", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -34,13 +34,15 @@ function toggleWatchlist(iid, btn = null) {
         if (btn) btn.textContent = data.in_watchlist ? "❤️" : "🤍";
         loadWatchlist();
 
-        const name = btn?.dataset.name || "Produkt";
-        const image = btn?.dataset.image || "img/placeholder.jpg";
-        const price = parseFloat(btn?.dataset.price) || 0;
+        const name = btn?.dataset.name || info.name || "Produkt";
+        const image = btn?.dataset.image || info.image || "img/placeholder.jpg";
+        const price = parseFloat(btn?.dataset.price || info.price) || 0;
 
         if (data.in_watchlist) {
           if (btn) btn.textContent = "❤️";
-          flyToTarget(btn, "#watchlist-button", "❤️");
+          if (btn instanceof Element) {
+            flyToTarget(btn, "#watchlist-button", "❤️");
+          }
           // Gestapeltes Popup statt Einzel-Popup
           const buttons = `
             ${
@@ -61,7 +63,7 @@ function toggleWatchlist(iid, btn = null) {
               const rm = popup.querySelector('.remove-watch-btn');
               if (rm) {
                 rm.addEventListener('click', () => {
-                  removeFromWatchlist(iid, { name, image, productId: iid });
+                  removeFromWatchlist(iid, { name, image, price, productId: iid });
                   popup.classList.add('fade-out');
 
                   setTimeout(() => popup.remove(), 400);
@@ -76,8 +78,10 @@ function toggleWatchlist(iid, btn = null) {
           zeigeToast("❤️ Produkt wurde zur Merkliste hinzugefügt", "#28a745");
         } else {
           if (btn) btn.textContent = "🤍";
-          flyToTarget(btn, "#watchlist-button", "🤍");
-          zeigeWatchRemovePreview({ name, image, productId: iid });
+          if (btn instanceof Element) {
+            flyToTarget(btn, "#watchlist-button", "🤍");
+          }
+          zeigeWatchRemovePreview({ name, image, productId: iid, price });
           updateWatchlistCount(); // sofort aktualisieren bei Entfernen
           zeigeToast("💔 Produkt wurde aus der Merkliste entfernt", "#cc0000");
         }
@@ -164,7 +168,7 @@ function loadWatchlist() {
               item.product_id
             }" data-name="${item.name}" data-image="${
           item.image_main
-        }">🗑️ Entfernen</button>
+        }" data-price="${parseFloat(item.price)}">🗑️ Entfernen</button>
             <a href="index.php?page=product&action=detail&id=${
               item.product_id
             }"><button>🔍 Anzeigen</button></a>
@@ -177,6 +181,8 @@ function loadWatchlist() {
           removeFromWatchlist(btn.dataset.id, {
             name: btn.dataset.name,
             image: btn.dataset.image,
+            price: btn.dataset.price,
+
             productId: btn.dataset.id,
           });
         });
@@ -197,6 +203,8 @@ function removeFromWatchlist(id, info = {}) {
       zeigeWatchRemovePreview({
         name: info.name,
         image: info.image,
+        price: info.price,
+
         productId: info.productId || id,
       });
     }
@@ -265,7 +273,7 @@ function zeigeWatchPreview({ name, image, price, productId }) {
   }, 4000);
 }
 
-function zeigeWatchRemovePreview({ name, image, productId }) {
+function zeigeWatchRemovePreview({ name, image, productId, price = 0 }) {
   const isDetailPage =
     location.href.includes("page=product") &&
     location.href.includes("action=detail");
@@ -290,7 +298,7 @@ function zeigeWatchRemovePreview({ name, image, productId }) {
       const undoBtn = popup.querySelector(".undo-btn");
       if (undoBtn) {
         undoBtn.addEventListener("click", () => {
-          toggleWatchlist(productId); // Wieder hinzufügen
+          toggleWatchlist(productId, null, { name, image, price });
           popup.classList.add("fade-out");
           setTimeout(() => popup.remove(), 400);
         });
