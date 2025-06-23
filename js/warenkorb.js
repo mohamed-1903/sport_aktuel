@@ -286,7 +286,8 @@ function zeigeGestapeltesPopup({
     </div>
   `;
 
-  stack.appendChild(popup);
+  // Neue Popups oben einfügen, damit ältere nach unten wandern
+  stack.prepend(popup);
 
   setTimeout(() => {
     popup.classList.add("fade-out");
