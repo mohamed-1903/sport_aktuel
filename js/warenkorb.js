@@ -311,6 +311,7 @@ function zeigeGestapeltesPopup({
     onInit(popup);
   }
 
+
   setTimeout(() => {
     popup.classList.add("fade-out");
     setTimeout(() => popup.remove(), 400);

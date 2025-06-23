@@ -1834,6 +1834,7 @@ body.light-mode .zoom-close {
   display: block;
   pointer-events: auto;
 }
+
 .fade-out {
   opacity: 0;
   transform: translateY(-10px);
