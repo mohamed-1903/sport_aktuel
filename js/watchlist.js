@@ -42,12 +42,47 @@ function toggleWatchlist(iid, btn = null) {
           if (btn) btn.textContent = "❤️";
           flyToTarget(btn, "#watchlist-button", "❤️");
           // Gestapeltes Popup statt Einzel-Popup
+          const btnData = `data-id="${iid}" data-name="${name}" data-image="${image}"`;
+          const buttons = `
+            ${
+              !isOnProductDetailPageWatch
+                ? `<a href="index.php?page=product&action=detail&id=${iid}" class="btn-popup">Anzeigen</a>`
+                : ""
+            }
+            <button class="popup-remove-watch btn-popup" type="button" ${btnData}>Entfernen</button>
+            <a href="index.php?page=watchlist&action=view" class="btn-popup">Merkliste anzeigen</a>
+            <button class="popup-undo-watch btn-popup" type="button" ${btnData}>Rückgängig</button>
+          `;
           zeigeGestapeltesPopup({
             name,
             image,
             message: "Zur Merkliste hinzugefügt",
             productId: iid,
             icon: "❤️",
+            buttons,
+            onInit: (popup) => {
+              const removeBtn = popup.querySelector(".popup-remove-watch");
+              if (removeBtn) {
+                const id = removeBtn.dataset.id;
+                const n = removeBtn.dataset.name;
+                const img = removeBtn.dataset.image;
+                removeBtn.addEventListener("click", () => {
+                  toggleWatchlist(id);
+                  zeigeWatchRemovePreview({ name: n, image: img, productId: id });
+                  popup.classList.add("fade-out");
+                  setTimeout(() => popup.remove(), 400);
+                });
+              }
+              const undoBtn = popup.querySelector(".popup-undo-watch");
+              if (undoBtn) {
+                const id = undoBtn.dataset.id;
+                undoBtn.addEventListener("click", () => {
+                  toggleWatchlist(id); // Entfernt wieder
+                  popup.classList.add("fade-out");
+                  setTimeout(() => popup.remove(), 400);
+                });
+              }
+            },
           });
           zeigeWatchButtonBestaetigung(); // zeigt oben im Button nur ❤️
           setTimeout(() => {
@@ -256,18 +291,14 @@ function zeigeWatchRemovePreview({ name, image, productId }) {
     productId,
     icon: "💔",
     buttons: `
-      <button class="undo-btn">↩️ Rückgängig</button>
-      ${
-        !isDetailPage
-          ? `<a href="index.php?page=product&action=detail&id=${productId}" class="show-btn">🔍 Anzeigen</a>`
-          : ""
-      }
+      <button class="undo-btn btn-popup" type="button" data-id="${productId}">↩️ Rückgängig</button>
     `,
     onInit: (popup) => {
       const undoBtn = popup.querySelector(".undo-btn");
       if (undoBtn) {
+        const id = undoBtn.dataset.id;
         undoBtn.addEventListener("click", () => {
-          toggleWatchlist(productId); // Wieder hinzufügen
+          toggleWatchlist(id); // Wieder hinzufügen
           popup.classList.add("fade-out");
           setTimeout(() => popup.remove(), 400);
         });
