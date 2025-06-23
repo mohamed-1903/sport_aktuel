@@ -60,9 +60,8 @@ kommentier jede zeile mit einer klärung und warum genau so
 │       └── productStoryView.php
 │
 ├── css/
-│   ├── core.css
-│   ├── product.css
-│   └── extras.css
+│   ├── mystyle.css
+│   └── animations.css
 │
 ├── js/
 │   ├── validation.js
