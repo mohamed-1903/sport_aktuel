@@ -82,6 +82,9 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
             message: `In den Warenkorb gelegt (${size}, ${qty}x)`,
             productId: iid,
             icon: "🛒",
+            buttons: !isOnProductDetailPageCart
+              ? '<a href="index.php?page=cart&action=view">Warenkorb anzeigen</a>'
+              : "",
           });
         }
         updateCartCount((cnt) => zeigeCartBestaetigung(cnt));
@@ -204,7 +207,7 @@ function loadList() {
               item.product_id
             }" data-size="${item.size}" data-name="${item.name}" data-image="${
           item.image_main
-        }">❌</button>
+        }" data-qty="${menge}">❌</button>
           </td>
         `;
 
@@ -226,12 +229,13 @@ function loadList() {
           const size = btn.dataset.size;
           const name = btn.dataset.name;
           const image = btn.dataset.image;
-          removeFromCart(id, size, { name, image });
+          const qty = parseInt(btn.dataset.qty) || 1;
+          removeFromCart(id, size, qty, { name, image });
         });
       });
     });
 }
-function removeFromCart(productId, size, previewData = null) {
+function removeFromCart(productId, size, qty = 1, previewData = null) {
   fetch("index.php?page=cart&action=remove", {
     method: "POST",
     headers: {
@@ -242,7 +246,13 @@ function removeFromCart(productId, size, previewData = null) {
     )}`,
   })
     .then(() => {
-      if (previewData) zeigeCartRemovePreview(previewData);
+      if (previewData)
+        zeigeCartRemovePreview({
+          ...previewData,
+          productId,
+          size,
+          qty,
+        });
       loadList();
       updateCartCount();
     })
@@ -269,6 +279,8 @@ function zeigeGestapeltesPopup({
   productId = null,
   icon = "🔔",
   timeout = 4000,
+  buttons = "",
+  onInit = null,
 }) {
   const stack = document.getElementById("popup-stack");
   if (!stack) return;
@@ -283,6 +295,7 @@ function zeigeGestapeltesPopup({
         <strong>${name}</strong>
         <small>${icon} ${message}</small>
         <div class="popup-buttons">
+          ${buttons}
           ${
             productId
               ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
@@ -295,6 +308,10 @@ function zeigeGestapeltesPopup({
 
   // Neue Popups oben einfügen, damit ältere nach unten wandern
   stack.prepend(popup);
+
+  if (typeof onInit === "function") {
+    onInit(popup);
+  }
 
   setTimeout(() => {
     popup.classList.add("fade-out");
@@ -332,20 +349,39 @@ function zeigeProduktPreview({ name, image, price, productId }) {
   }, 4000);
 }
 
-function zeigeCartRemovePreview({ name, image }) {
-  const popup = document.getElementById("cart-popup");
-  if (!popup) return;
-  popup.innerHTML = `
-    <div class="popup-content removed">
-      <img src="${image}" alt="${name}" />
-      <div>
-        <strong>${name}</strong><br>
-        <small>❌ entfernt aus dem Warenkorb</small>
-      </div>
-    </div>
-  `;
-  popup.classList.add("show");
-  setTimeout(() => popup.classList.remove("show"), 3000);
+function zeigeCartRemovePreview({ name, image, productId, size, qty }) {
+  const isDetailPage =
+    location.href.includes("page=product") &&
+    location.href.includes("action=detail");
+
+  zeigeGestapeltesPopup({
+    name,
+    image,
+    message: "Aus dem Warenkorb entfernt",
+    productId,
+    icon: "❌",
+    buttons: `
+      <button class="undo-btn btn-popup" type="button" data-id="${productId}" data-size="${size}" data-qty="${qty}">↩️ Rückgängig</button>
+      ${
+        !isDetailPage
+          ? '<a href="index.php?page=cart&action=view" class="btn-popup">Warenkorb anzeigen</a>'
+          : ''
+      }
+    `,
+    onInit: (popup) => {
+      const undoBtn = popup.querySelector(".undo-btn");
+      if (undoBtn) {
+        const id = undoBtn.dataset.id;
+        const s = undoBtn.dataset.size;
+        const q = parseInt(undoBtn.dataset.qty) || 1;
+        undoBtn.addEventListener("click", () => {
+          toggleCart(id, null, s, q);
+          popup.classList.add("fade-out");
+          setTimeout(() => popup.remove(), 400);
+        });
+      }
+    },
+  });
 }
 
 // 🧹 Alles löschen

@@ -48,6 +48,9 @@ function toggleWatchlist(iid, btn = null) {
             message: "Zur Merkliste hinzugefügt",
             productId: iid,
             icon: "❤️",
+            buttons: !isOnProductDetailPageWatch
+              ? '<a href="index.php?page=watchlist&action=view">Merkliste anzeigen</a>'
+              : "",
           });
           zeigeWatchButtonBestaetigung(); // zeigt oben im Button nur ❤️
           setTimeout(() => {
@@ -256,18 +259,14 @@ function zeigeWatchRemovePreview({ name, image, productId }) {
     productId,
     icon: "💔",
     buttons: `
-      <button class="undo-btn">↩️ Rückgängig</button>
-      ${
-        !isDetailPage
-          ? `<a href="index.php?page=product&action=detail&id=${productId}" class="show-btn">🔍 Anzeigen</a>`
-          : ""
-      }
+      <button class="undo-btn btn-popup" type="button" data-id="${productId}">↩️ Rückgängig</button>
     `,
     onInit: (popup) => {
       const undoBtn = popup.querySelector(".undo-btn");
       if (undoBtn) {
+        const id = undoBtn.dataset.id;
         undoBtn.addEventListener("click", () => {
-          toggleWatchlist(productId); // Wieder hinzufügen
+          toggleWatchlist(id); // Wieder hinzufügen
           popup.classList.add("fade-out");
           setTimeout(() => popup.remove(), 400);
         });
