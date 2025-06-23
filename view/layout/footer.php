@@ -61,3 +61,8 @@
     <p>&copy; 2025 SportX. Alle Rechte vorbehalten.</p>
   </div>
 </footer>
+<script src="js/style_modification.js"></script>
+<script src="js/filterandsearch.js"></script>
+<script src="js/produkt.js"></script>
+<script src="js/watchlist.js"></script>
+<script src="js/warenkorb.js"></script>
