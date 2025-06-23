@@ -1,11 +1,10 @@
-<footer>
+<footer class="site-footer">
     <div class="footer-container">
         <div class="footer-links">
             <a href="index.php?page=static&action=about">Über uns</a>
             <a href="index.php?page=static&action=kontakt">Kontakt</a>
-  <a href="index.php?page=static&action=impressum">Impressum</a>
-<a href="index.php?page=static&action=datenschutz">Datenschutz</a>
-
+            <a href="index.php?page=static&action=impressum">Impressum</a>
+            <a href="index.php?page=static&action=datenschutz">Datenschutz</a>
         </div>
 
         <div class="footer-socials">
