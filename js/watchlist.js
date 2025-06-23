@@ -42,12 +42,31 @@ function toggleWatchlist(iid, btn = null) {
           if (btn) btn.textContent = "❤️";
           flyToTarget(btn, "#watchlist-button", "❤️");
           // Gestapeltes Popup statt Einzel-Popup
+          const buttons = `
+            ${
+              !isOnProductDetailPageWatch
+                ? `<a href="index.php?page=product&action=detail&id=${iid}" class="show-btn">🔍 Anzeigen</a>`
+                : ""
+            }
+            <button class="remove-watch-btn" data-id="${iid}">🗑 Entfernen</button>
+            <a href="index.php?page=watchlist&action=view">Merkliste</a>`;
           zeigeGestapeltesPopup({
             name,
             image,
             message: "Zur Merkliste hinzugefügt",
             productId: iid,
             icon: "❤️",
+            buttons,
+            onInit: (popup) => {
+              const rm = popup.querySelector('.remove-watch-btn');
+              if (rm) {
+                rm.addEventListener('click', () => {
+                  removeFromWatchlist(iid, { name, image });
+                  popup.classList.add('fade-out');
+                  setTimeout(() => popup.remove(), 400);
+                });
+              }
+            },
           });
           zeigeWatchButtonBestaetigung(); // zeigt oben im Button nur ❤️
           setTimeout(() => {
