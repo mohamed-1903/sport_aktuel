@@ -80,9 +80,18 @@ document.addEventListener("DOMContentLoaded", () => {
       autocompleteSuche();
     });
 
-    input.addEventListener("keydown", (e) =>
-      handleTastaturNavigation(e, liste, input, shadow)
-    );
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && fokusIndex === -1) {
+        e.preventDefault();
+        const query = input.value.trim();
+        if (query.length > 1) {
+          const url = `index.php?page=product&action=search&query=${encodeURIComponent(query)}`;
+          window.location.href = url;
+        }
+      } else {
+        handleTastaturNavigation(e, liste, input, shadow);
+      }
+    });
   }
 
   document.addEventListener("click", (e) => {
@@ -92,7 +101,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  fetch("produkte.json")
+  // Produktdaten aus JSON-Datei laden
+  // Pfad relativ zum Projektstamm
+  fetch("data/products.json")
     .then((res) => res.json())
     .then((data) => {
       alleProdukte = data.products || [];
@@ -155,7 +166,8 @@ function autocompleteSuche() {
     );
     shadow.value = match?.querySelector("h3")?.innerText || "";
 
-    treffer.slice(0, 5).forEach((el) => {
+    // Alle Treffer anzeigen, nicht nur eine begrenzte Anzahl
+    treffer.forEach((el) => {
       const name = el.querySelector("h3")?.innerText;
       const price = parseFloat(el.dataset.preis)?.toFixed(2) + " €" || "Preis?";
       const img = el.querySelector("img")?.src || "";

@@ -45,6 +45,27 @@ switch ($action) {
 
         require 'view/product/productDetailView.php';
         break;
+    case 'search':
+        $query = $_GET['query'] ?? '';
+        $all = getAllProducts();
+        $results = [];
+        if ($query) {
+            $q = mb_strtolower($query);
+            foreach ($all as $p) {
+                $hay = mb_strtolower(($p['name'] ?? '') . ' ' . ($p['marke'] ?? '') . ' ' .
+                    ($p['farbe'] ?? '') . ' ' . ($p['geschlecht'] ?? '') . ' ' .
+                    ($p['category'] ?? '') . ' ' . ($p['subcategory'] ?? '')); 
+                if (strpos($hay, $q) !== false) {
+                    $p['iid'] = $p['id'];
+                    $p['priceValue'] = $p['price'];
+                    $results[] = $p;
+                }
+            }
+        }
+        $searchQuery = $query;
+        $searchResults = $results;
+        require 'view/product/searchResultsView.php';
+        break;
     case 'list':
     default:
         $category = $_GET['category'] ?? '';
