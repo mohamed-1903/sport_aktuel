@@ -51,11 +51,11 @@ function toggleWatchlist(iid, btn = null) {
             <button class="undo-btn">↩️ Rückgängig</button>
           `;
           // Gestapeltes Popup statt Einzel-Popup
+
           zeigeGestapeltesPopup({
             name,
             image,
             message: "Zur Merkliste hinzugefügt",
-            productId: iid,
             icon: "❤️",
             buttons,
             onInit: (popup) => {
@@ -71,6 +71,7 @@ function toggleWatchlist(iid, btn = null) {
               if (undoBtn) {
                 undoBtn.addEventListener("click", () => {
                   toggleWatchlist(iid);
+
                   popup.classList.add("fade-out");
                   setTimeout(() => popup.remove(), 400);
                 });
@@ -172,10 +173,10 @@ function loadWatchlist() {
               item.product_id
             }" data-name="${item.name}" data-image="${
           item.image_main
-        }">🗑️ Entfernen</button>
+        }">Entfernen</button>
             <a href="index.php?page=product&action=detail&id=${
               item.product_id
-            }"><button>🔍 Anzeigen</button></a>
+            }"><button>Anzeigen</button></a>
           </div>`;
         container.appendChild(card);
       });
@@ -257,7 +258,7 @@ function zeigeWatchPreview({ name, image, price, productId }) {
           <a href="index.php?page=watchlist&action=view">Merkliste</a>
           ${
             !isOnProductDetailPageWatch
-              ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
+              ? `<a href="index.php?page=product&action=detail&id=${productId}">Anzeigen</a>`
               : ""
           }
         </div>
@@ -281,14 +282,14 @@ function zeigeWatchRemovePreview({ name, image, productId }) {
     name,
     image,
     message: "Von der Merkliste entfernt",
-    productId,
     icon: "💔",
     buttons: `
       <button class="undo-btn">↩️ Rückgängig</button>
       <a href="index.php?page=watchlist&action=view">Merkliste</a>
+
       ${
         !isDetailPage
-          ? `<a href="index.php?page=product&action=detail&id=${productId}" class="show-btn">🔍 Anzeigen</a>`
+          ? `<a href="index.php?page=product&action=detail&id=${productId}" class="btn-popup">Anzeigen</a>`
           : ""
       }
     `,

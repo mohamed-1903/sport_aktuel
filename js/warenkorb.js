@@ -84,6 +84,7 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
             <button class="remove-btn">🗑️ Entfernen</button>
             <a href="index.php?page=cart&action=view">🛒 Warenkorb</a>
           `;
+
           zeigeGestapeltesPopup({
             name,
             image,
@@ -95,6 +96,7 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
               const rm = popup.querySelector(".remove-btn");
               if (rm) {
                 rm.addEventListener("click", () => {
+
                   removeFromCart(iid, size, { name, image });
                   popup.classList.add("fade-out");
                   setTimeout(() => popup.remove(), 400);
@@ -290,6 +292,8 @@ function zeigeGestapeltesPopup({
   buttons = "",
   onInit = null,
   timeout = 4000,
+  buttons = "",
+  onInit = null,
 }) {
   const stack = document.getElementById("popup-stack");
   if (!stack) return;
@@ -310,6 +314,7 @@ function zeigeGestapeltesPopup({
         <strong>${name}</strong>
         <small>${icon} ${message}</small>
         <div class="popup-buttons">${btnHTML}</div>
+
       </div>
     </div>
   `;
@@ -323,6 +328,7 @@ function zeigeGestapeltesPopup({
     } catch (err) {
       console.error("Popup onInit error", err);
     }
+
   }
 
   setTimeout(() => {
@@ -343,10 +349,10 @@ function zeigeProduktPreview({ name, image, price, productId }) {
         <small>🛒 In den Warenkorb gelegt</small>
         <small>${price.toFixed(2)} €</small>
         <div class="popup-buttons">
-          <a href="index.php?page=cart&action=view">Zum Warenkorb</a>
+          <a href="index.php?page=cart&action=view">In den Warenkorb</a>
           ${
             !isOnProductDetailPageCart
-              ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
+              ? `<a href="index.php?page=product&action=detail&id=${productId}">Anzeigen</a>`
               : ""
           }
         </div>
