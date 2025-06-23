@@ -671,31 +671,7 @@ body.light-mode .zoom-close {
 /* === Universelles Popup-Styling für Warenkorb & Watchlist === */
   scrollbar-gutter: stable; /* prevent layout shift */
   scroll-behavior: smooth; /* smooth manual scrolling */
-.popup-stack-container {
-  position: fixed;
-  top: 100px;
-  right: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  z-index: 9999;
-  align-items: flex-end;
-  pointer-events: auto;
-  max-height: calc(100vh - 120px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  scrollbar-width: none; /* Firefox */
-}
-
-.popup-stack-container::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
-}
-
-.popup-stack-container .popup-instance {
-  position: relative;
-  top: auto;
-  right: auto;
-  max-width: 320px;
+  width: 320px;
   background-color: var(--popup-bg);
   color: var(--popup-text);
   border-radius: 12px;
@@ -706,6 +682,38 @@ body.light-mode .zoom-close {
   backdrop-filter: blur(10px);
   transform: scale(1);
   transition: all 0.3s ease-out;
+  opacity: 1;
+  pointer-events: auto;
+  height: 140px; /* feste Höhe für alle Popups */
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  overflow: hidden; /* verhindert Größenänderungen bei langem Inhalt */
+  flex-shrink: 0;
+.cart-preview-popup,
+.watchlist-preview-popup {
+  position: fixed;
+  top: 100px;
+  right: 30px;
+  width: 320px;
+  height: 140px;
+  z-index: 9999;
+  background-color: var(--popup-bg); /* Dynamischer Hintergrund */
+  color: var(--popup-text); /* Dynamische Textfarbe */
+  border-radius: 12px;
+.popup-text-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.popup-text-info strong,
+.popup-text-info small {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
   opacity: 1;
   display: block;
   pointer-events: auto;
