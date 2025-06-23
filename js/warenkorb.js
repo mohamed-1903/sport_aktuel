@@ -90,7 +90,6 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
             name,
             image,
             message: `In den Warenkorb gelegt (${size}, ${qty}x)`,
-            productId: iid,
             icon: "🛒",
             buttons,
             onInit: (popup) => {
@@ -287,7 +286,6 @@ function zeigeGestapeltesPopup({
   name,
   image,
   message,
-  productId = null,
   icon = "🔔",
   timeout = 4000,
   buttons = "",
@@ -307,11 +305,6 @@ function zeigeGestapeltesPopup({
         <small>${icon} ${message}</small>
         <div class="popup-buttons">
           ${buttons}
-          ${
-            productId
-              ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
-              : ""
-          }
         </div>
       </div>
     </div>
