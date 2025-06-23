@@ -77,13 +77,13 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
           const price = parseFloat(btn.dataset.price) || 0;
 
           const buttons = `
-            <button class="cart-remove-btn btn-popup">❌ Entfernen</button>
-            <a href="index.php?page=cart&action=view" class="btn-popup">🛒 Warenkorb</a>
             ${
               !isOnProductDetailPageCart
-                ? `<a href="index.php?page=product&action=detail&id=${iid}" class="btn-popup">🔍 Anzeigen</a>`
+                ? `<a href="index.php?page=product&action=detail&id=${iid}" class="btn-popup">Anzeigen</a>`
                 : ""
             }
+            <button class="cart-remove-btn btn-popup">Entfernen</button>
+            <a href="index.php?page=cart&action=view" class="btn-popup">In den Warenkorb</a>
           `;
 
           zeigeGestapeltesPopup({
@@ -324,6 +324,10 @@ function zeigeGestapeltesPopup({
     onInit(popup);
   }
 
+  if (typeof onInit === "function") {
+    onInit(popup);
+  }
+
   setTimeout(() => {
     popup.classList.add("fade-out");
     setTimeout(() => popup.remove(), 400);
@@ -342,10 +346,10 @@ function zeigeProduktPreview({ name, image, price, productId }) {
         <small>🛒 In den Warenkorb gelegt</small>
         <small>${price.toFixed(2)} €</small>
         <div class="popup-buttons">
-          <a href="index.php?page=cart&action=view">Zum Warenkorb</a>
+          <a href="index.php?page=cart&action=view">In den Warenkorb</a>
           ${
             !isOnProductDetailPageCart
-              ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
+              ? `<a href="index.php?page=product&action=detail&id=${productId}">Anzeigen</a>`
               : ""
           }
         </div>
