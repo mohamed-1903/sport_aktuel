@@ -92,11 +92,11 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
             icon: "🛒",
             buttons,
             onInit: (popup) => {
-              const rm = popup.querySelector('.remove-cart-btn');
+              const rm = popup.querySelector(".remove-cart-btn");
               if (rm) {
-                rm.addEventListener('click', () => {
-                  removeFromCart(iid, size, { name, image });
-                  popup.classList.add('fade-out');
+                rm.addEventListener("click", () => {
+                  removeFromCart(iid, size, { name, image, productId: iid });
+                  popup.classList.add("fade-out");
                   setTimeout(() => popup.remove(), 400);
                 });
               }
@@ -113,28 +113,6 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
       zeigeToast("⚠️ Serverfehler beim Hinzufügen", "#cc0000");
       console.error(err);
     });
-}
-
-function updateCartButtons() {
-  fetch("index.php?page=cart&action=json")
-    .then((res) => res.json())
-    .then((items) => {
-      document.querySelectorAll(".btn-add-to-cart").forEach((btn) => {
-        const iid = parseInt(btn.dataset.iid);
-        const parent = btn.closest(".Eprodukt") || btn.closest("[data-iid]");
-        const sizeSelect = parent?.querySelector("select.size-dropdown");
-        const size = sizeSelect?.value || "M";
-
-        const isInCart = items.some(
-          (item) => item.product_id == iid && item.size === size
-        );
-
-        btn.textContent = isInCart ? "✅" : "🛒";
-      });
-    })
-    .catch((err) =>
-      console.error("Fehler beim Aktualisieren der Cart-Buttons:", err)
-    );
 }
 
 function updateCartCount(callback) {
@@ -245,7 +223,7 @@ function loadList() {
           const size = btn.dataset.size;
           const name = btn.dataset.name;
           const image = btn.dataset.image;
-          removeFromCart(id, size, { name, image });
+          removeFromCart(id, size, { name, image, productId: id });
         });
       });
     });
@@ -261,7 +239,13 @@ function removeFromCart(productId, size, previewData = null) {
     )}`,
   })
     .then(() => {
-      if (previewData) zeigeCartRemovePreview(previewData);
+      if (previewData) {
+        zeigeCartRemovePreview({
+          name: previewData.name,
+          image: previewData.image,
+          productId: previewData.productId || productId,
+        });
+      }
       loadList();
       updateCartCount();
     })
@@ -358,20 +342,26 @@ function zeigeProduktPreview({ name, image, price, productId }) {
   }, 4000);
 }
 
-function zeigeCartRemovePreview({ name, image }) {
-  const popup = document.getElementById("cart-popup");
-  if (!popup) return;
-  popup.innerHTML = `
-    <div class="popup-content removed">
-      <img src="${image}" alt="${name}" />
-      <div>
-        <strong>${name}</strong><br>
-        <small>❌ entfernt aus dem Warenkorb</small>
-      </div>
-    </div>
-  `;
-  popup.classList.add("show");
-  setTimeout(() => popup.classList.remove("show"), 3000);
+function zeigeCartRemovePreview({ name, image, productId }) {
+  const isDetailPage =
+    location.href.includes("page=product") &&
+    location.href.includes("action=detail");
+
+  zeigeGestapeltesPopup({
+    name,
+    image,
+    message: "Aus dem Warenkorb entfernt",
+    productId,
+    icon: "❌",
+    buttons: `
+      <a href="index.php?page=cart&action=view">Warenkorb</a>
+      ${
+        !isDetailPage
+          ? `<a href="index.php?page=product&action=detail&id=${productId}" class="show-btn">🔍 Anzeigen</a>`
+          : ""
+      }
+    `,
+  });
 }
 
 // 🧹 Alles löschen
