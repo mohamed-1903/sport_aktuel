@@ -74,7 +74,5 @@
     rBtn.disabled = !isValid;
   }));
 </script>
-<script src="js/style_modification.js"></script>
-<script src="js/filterandsearch.js"></script>
-<script src="js/produkt.js"></script>
 <?php include 'view/layout/footer.php'; ?>
+

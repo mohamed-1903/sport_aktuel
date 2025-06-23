@@ -153,16 +153,19 @@ function autocompleteSuche() {
   );
 
   if (treffer.length > 0) {
-    const match = treffer.find((el) =>
-      el.querySelector("h3")?.innerText.toLowerCase().startsWith(wert)
+    const match = treffer.find((p) =>
+      (p.name || "").toLowerCase().startsWith(wert)
     );
-    shadow.value = match?.querySelector("h3")?.innerText || "";
+    shadow.value = match?.name || "";
 
     // Alle Treffer anzeigen, nicht nur eine begrenzte Anzahl
-    treffer.forEach((el) => {
-      const name = el.querySelector("h3")?.innerText;
-      const price = parseFloat(el.dataset.preis)?.toFixed(2) + " €" || "Preis?";
-      const img = el.querySelector("img")?.src || "";
+    treffer.forEach((p) => {
+      const name = p.name;
+      const price =
+        typeof p.priceValue !== "undefined"
+          ? parseFloat(p.priceValue).toFixed(2) + " €"
+          : p.price || "Preis?";
+      const img = p.imageMain || "";
 
       const li = document.createElement("li");
       li.innerHTML = `
@@ -178,6 +181,7 @@ function autocompleteSuche() {
         )}`;
         window.location.href = url;
       });
+
 
       liste.appendChild(li);
     });
