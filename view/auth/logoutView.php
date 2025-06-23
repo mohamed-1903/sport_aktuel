@@ -10,7 +10,5 @@
 </main>
 
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
-<script src="/sportx/js/style_modification.js"></script>
-<script src="/sportx/js/filterandsearch.js"></script>
-<script src="/sportx/js/produkt.js"></script>
 <?php include 'view/layout/footer.php'; ?>
+

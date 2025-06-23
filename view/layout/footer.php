@@ -66,3 +66,4 @@
 <script src="js/produkt.js"></script>
 <script src="js/watchlist.js"></script>
 <script src="js/warenkorb.js"></script>
+

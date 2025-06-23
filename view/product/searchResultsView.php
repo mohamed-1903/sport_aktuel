@@ -51,9 +51,5 @@
   </section>
 </main>
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
-<script src="js/style_modification.js"></script>
-<script src="js/filterandsearch.js"></script>
-<script src="js/produkt.js"></script>
-<script src="js/watchlist.js"></script>
-<script src="js/warenkorb.js"></script>
 <?php include 'view/layout/footer.php'; ?>
+

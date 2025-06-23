@@ -56,6 +56,4 @@ $topProdukte = array_slice($topProdukte, 0, 4);
 </section>
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
 <?php include 'view/layout/footer.php'; ?>
-<script src="js/style_modification.js"></script>
-<script src="js/filterandsearch.js"></script>
-<script src="js/produkt.js"></script>
+
