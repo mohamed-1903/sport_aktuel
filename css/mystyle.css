@@ -1820,8 +1820,11 @@ body.light-mode .zoom-close {
   opacity: 1;
   display: block;
 }
-.popup-stack-container .watchlist-preview-popup,
+popup-stack-container .watchlist-preview-popup,
 .popup-stack-container .cart-preview-popup {
+  position: relative;
+  top: auto;
+  right: auto;
   animation: slideFade 0.3s ease-out, popIn 0.5s ease-in-out;
   transform: scale(1);
   opacity: 1;
