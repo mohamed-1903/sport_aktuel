@@ -669,6 +669,8 @@ body.light-mode .zoom-close {
   transform: translateX(-50%) translateY(0);
 }
 /* === Universelles Popup-Styling für Warenkorb & Watchlist === */
+  scrollbar-gutter: stable; /* prevent layout shift */
+  scroll-behavior: smooth; /* smooth manual scrolling */
 .popup-stack-container {
   position: fixed;
   top: 100px;
