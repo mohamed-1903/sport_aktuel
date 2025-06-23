@@ -675,6 +675,9 @@ body.light-mode .zoom-close {
   right: 30px;
   display: flex;
   flex-direction: column;
+  /* Wenn sich viele Popups ansammeln, soll man scrollen können */
+  max-height: 90vh;
+  overflow-y: auto;
   gap: 16px;
   z-index: 9999;
   align-items: flex-end;
