@@ -75,7 +75,14 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
           const name = btn.dataset.name;
           const image = btn.dataset.image;
           const price = parseFloat(btn.dataset.price) || 0;
-          zeigeProduktPreview({ name, image, price, size, qty });
+          // Gestapeltes Popup anzeigen
+          zeigeGestapeltesPopup({
+            name,
+            image,
+            message: `In den Warenkorb gelegt (${size}, ${qty}x)`,
+            productId: iid,
+            icon: "🛒",
+          });
         }
         updateCartCount((cnt) => zeigeCartBestaetigung(cnt));
         loadList();
@@ -267,7 +274,7 @@ function zeigeGestapeltesPopup({
   if (!stack) return;
 
   const popup = document.createElement("div");
-  popup.className = "popup-instance watchlist-preview-popup";
+  popup.className = "popup-instance";
 
   popup.innerHTML = `
     <div class="popup-content-flex">
@@ -286,7 +293,8 @@ function zeigeGestapeltesPopup({
     </div>
   `;
 
-  stack.appendChild(popup);
+  // Neue Popups oben einfügen, damit ältere nach unten wandern
+  stack.prepend(popup);
 
   setTimeout(() => {
     popup.classList.add("fade-out");
