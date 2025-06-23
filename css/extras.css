@@ -695,7 +695,7 @@ body.light-mode .zoom-close {
   position: relative;
   top: auto;
   right: auto;
-  width: 320px;
+  width: 360px;
   background-color: var(--popup-bg);
   color: var(--popup-text);
   border-radius: 12px;
@@ -708,7 +708,7 @@ body.light-mode .zoom-close {
   transition: all 0.3s ease-out;
   opacity: 1;
   pointer-events: auto;
-  height: 140px; /* feste Höhe für alle Popups */
+  height: 160px; /* etwas größer, bleibt dennoch fix */
   display: flex;
   align-items: center;
   justify-content: start;
@@ -725,8 +725,8 @@ body.light-mode .zoom-close {
   position: fixed;
   top: 100px;
   right: 30px;
-  width: 320px;
-  height: 140px;
+  width: 360px;
+  height: 160px;
   z-index: 9999;
   background-color: var(--popup-bg); /* Dynamischer Hintergrund */
   color: var(--popup-text); /* Dynamische Textfarbe */
@@ -775,9 +775,9 @@ body.light-mode .zoom-close {
 
 .popup-text-info strong,
 .popup-text-info small {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: initial;
 }
 
 .popup-text-info strong {
