@@ -182,6 +182,7 @@ function autocompleteSuche() {
         window.location.href = url;
       });
 
+
       liste.appendChild(li);
     });
     liste.style.display = "block";
