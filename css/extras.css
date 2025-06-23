@@ -678,24 +678,14 @@ body.light-mode .zoom-close {
   gap: 16px;
   z-index: 9999;
   align-items: flex-end;
-  pointer-events: auto;
-  max-height: calc(100vh - 120px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  scrollbar-width: none; /* Firefox */
-  scrollbar-gutter: stable; /* prevent layout shift */
-  scroll-behavior: smooth; /* smooth manual scrolling */
-}
-
-.popup-stack-container::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  pointer-events: none;
 }
 
 .popup-stack-container .popup-instance {
   position: relative;
   top: auto;
   right: auto;
-  width: 400px;
+  width: 320px;
   background-color: var(--popup-bg);
   color: var(--popup-text);
   border-radius: 12px;
@@ -708,7 +698,7 @@ body.light-mode .zoom-close {
   transition: all 0.3s ease-out;
   opacity: 1;
   pointer-events: auto;
-  height: 180px; /* größer wie früher */
+  height: 140px;
   display: flex;
   align-items: center;
   justify-content: start;
@@ -725,8 +715,8 @@ body.light-mode .zoom-close {
   position: fixed;
   top: 100px;
   right: 30px;
-  width: 400px;
-  height: 180px;
+  width: 320px;
+  height: 140px;
   z-index: 9999;
   background-color: var(--popup-bg); /* Dynamischer Hintergrund */
   color: var(--popup-text); /* Dynamische Textfarbe */
@@ -772,6 +762,13 @@ body.light-mode .zoom-close {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.popup-text-info strong,
+.popup-text-info small {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: initial;
 }
 
 .popup-text-info strong,
@@ -905,6 +902,9 @@ body.light-mode .zoom-close {
   flex: 1 1 auto;
   text-align: center;
 }
+
+
+
 
 .popup-buttons .btn-popup:hover {
   opacity: 0.9;
