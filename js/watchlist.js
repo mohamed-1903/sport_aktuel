@@ -56,7 +56,6 @@ function toggleWatchlist(iid, btn = null) {
             name,
             image,
             message: "Zur Merkliste hinzugefügt",
-            productId: iid,
             icon: "❤️",
             buttons,
             onInit: (popup) => {
@@ -274,7 +273,6 @@ function zeigeWatchRemovePreview({ name, image, productId }) {
     name,
     image,
     message: "Von der Merkliste entfernt",
-    productId,
     icon: "💔",
     buttons: `
       <button class="undo-btn btn-popup">↩️ Rückgängig</button>
