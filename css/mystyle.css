@@ -1990,13 +1990,15 @@ body.light-mode .zoom-close {
   transform: translateY(2px);
 }
 
-.popup-buttons a.btn-popup {
+.popup-buttons .btn-popup {
   background-color: var(--accent-color);
-  color: #fff;
+  color: #000;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
-.popup-buttons a.btn-popup:hover {
-  background-color: var(--accent-color);
+.popup-buttons .btn-popup:hover {
+  opacity: 0.9;
 }
 
 /* === Darkmode Styles für Popup-Buttons === */

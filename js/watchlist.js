@@ -279,4 +279,3 @@ function zeigeWatchRemovePreview({ name, image, productId }) {
     },
   });
 }
-

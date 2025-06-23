@@ -403,9 +403,12 @@ function checkout() {
       if (data.loggedIn) {
         alert("✅ Danke für deinen Einkauf! (Checkout in Entwicklung)");
         // Hier könntest du z. B. save_order.php aufrufen
-      } else {
-        // 🔁 Weiterleitung zur Loginseite mit Rücksprung
-        window.location.href = "login.php?redirect=warenkorb.php";
+            } else {
+              // 🔁 Weiterleitung zur Loginseite mit Rücksprung
+              window.location.href = "login.php?redirect=warenkorb.php";
+            }
+          })
+          .catch((err) => {
+            console.error("Fehler beim Checkout:", err);
+          });
       }
-    });
-}
