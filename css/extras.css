@@ -678,17 +678,7 @@ body.light-mode .zoom-close {
   gap: 16px;
   z-index: 9999;
   align-items: flex-end;
-  pointer-events: auto;
-  max-height: calc(100vh - 120px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  scrollbar-width: none; /* Firefox */
-  scrollbar-gutter: stable; /* prevent layout shift */
-  scroll-behavior: smooth; /* smooth manual scrolling */
-}
-
-.popup-stack-container::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  pointer-events: none;
 }
 
 .popup-stack-container .popup-instance {
