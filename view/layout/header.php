@@ -12,6 +12,8 @@ if (session_status() === PHP_SESSION_NONE) {
     <title>SportX</title>
     <link rel="icon" type="image/png" href="img/logo.png">
     <link rel="stylesheet" href="css/core.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/product.css">
     <link rel="stylesheet" href="css/extras.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">

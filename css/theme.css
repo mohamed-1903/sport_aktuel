@@ -1,0 +1,112 @@
+:root {
+  --bg-color: #111;
+  --text-color: #fff;
+  --accent-color: #ffd700;
+  --card-bg: #222;
+}
+
+body.light-mode {
+  --bg-color: #eaeaea; /* Hell, aber nicht weiß */
+  --text-color: #1a1a1a; /* Fast-Schwarz für gute Lesbarkeit */
+  --accent-color: #caa000; /* Etwas dunkleres Gold */
+  --card-bg: #ffffff; /* Saubere Boxfarbe */
+}
+body.light-mode .search-container input {
+  border: 2px solid #000 !important;
+}
+
+/* Im Light-Mode Herz-Button (2. Button) und Theme-Toggle schwarz machen */
+body.light-mode .action-buttons button:nth-child(2),
+body.light-mode #theme-toggle {
+  color: #fff !important;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header,
+footer,
+nav,
+.produkt,
+.Eprodukt,
+.dropdown-menu,
+.form-wrapper {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+/* Hervorhebung der aktiven Statusansicht in der Bestellverwaltung */
+.order-nav a.active {
+  font-weight: bold;
+  border-bottom: 2px solid var(--accent-color);
+}
+
+.nav-menu > li > a {
+  color: var(--text-color);
+  padding: 10px 20px;
+  display: block;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-menu > li > a:hover,
+.dropdown-menu li a:hover {
+  background-color: var(--accent-color);
+  color: #000;
+}
+body.light-mode .dropdown-menu {
+  background-color: #fff; /* Schwarzer Hintergrund */
+}
+
+body.light-mode .dropdown-menu li a {
+  background-color: #fff; /* Schwarz auch für einzelne Links */
+  color: #000; /* Weiße Schrift */
+}
+body.light-mode .dropdown-menu li a:hover {
+  background-color: #caa000;
+  color: #000;
+body.light-mode .form-wrapper input {
+  background-color: #f8f8f8;
+  color: #000;
+  border-color: #ccc;
+}
+body.light-mode .form-wrapper label {
+  color: var(--text-color);
+}
+body.light-mode .form-wrapper button {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+body.light-mode .action-buttons button {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+body.light-mode .form-wrapper input.valid {
+  border-color: #28a745; /* Helles Grün für Light Mode */
+  box-shadow: 0 0 5px #28a74580; /* Optionaler Leuchteffekt */
+}
+
+body.light-mode .form-wrapper input.invalid {
+  border-color: #dc3545; /* Helles Rot für Light Mode */
+  box-shadow: 0 0 5px #dc354580; /* Optionaler Leuchteffekt */
+}
+
+body.light-mode .form-wrapper h1 {
+  color: #e6c200; /* Dunkleres Grau für bessere Lesbarkeit im Light Mode */
+}
+body.light-mode .form-wrapper button:disabled {
+  background-color: #e0e0e0;
+  color: #888;
+  cursor: not-allowed;
+  border: 1px solid #dacfcf;
+}

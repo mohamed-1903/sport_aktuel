@@ -1,0 +1,86 @@
+header {
+  background-color: #000;
+  padding: 20px;
+  position: relative;
+}
+
+.header-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 10px 0;
+}
+
+.logo {
+  justify-self: start;
+  font-size: 36px;
+  font-weight: 800;
+  color: #ffd700;
+}
+
+/* 🟡 Wrapper für Suche + Autocomplete */
+.search-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  justify-self: center;
+  border-radius: 25px;
+  background-color: var(--card-bg);
+  border: 2px solid transparent;
+}
+
+/* 🔍 Eingabefeld (oben) */
+.search-wrapper input#produktsuche {
+  width: 100%;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  outline: none;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  position: relative;
+  z-index: 2;
+  height: 44px;
+  box-sizing: border-box;
+}
+
+/* 💡 Schattenfeld (hinten) */
+.search-wrapper input#autocomplete-shadow {
+  width: 100%;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+  height: 44px;
+  box-sizing: border-box;
+  font-family: inherit;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ☀️ Light-Mode Anpassung */
+body.light-mode .search-wrapper input#autocomplete-shadow {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+body.light-mode .search-wrapper input#produktsuche {
+  border: 2px solid #e6c200;
+  background-color: #fff;
+  color: #000;
+}
+body:not(.light-mode) .search-wrapper {
+  border: 2px solid #ffd700; /* nur im Darkmode */
+}
+/* 🔽 Vorschlagsliste */

@@ -61,6 +61,8 @@ kommentier jede zeile mit einer klärung und warum genau so
 │
 ├── css/
 │   ├── core.css
+│   ├── header.css
+│   ├── theme.css
 │   ├── product.css
 │   └── extras.css
 │
