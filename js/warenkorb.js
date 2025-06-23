@@ -305,6 +305,12 @@ function zeigeGestapeltesPopup({
         <small>${icon} ${message}</small>
         <div class="popup-buttons">
           ${buttons}
+
+          ${
+            productId
+              ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
+              : ""
+          }
         </div>
       </div>
     </div>
@@ -312,6 +318,11 @@ function zeigeGestapeltesPopup({
 
   // Neue Popups oben einfügen, damit ältere nach unten wandern
   stack.prepend(popup);
+  stack.scrollTop = 0; // always show newest popup
+
+  if (typeof onInit === "function") {
+    onInit(popup);
+  }
 
   if (typeof onInit === "function") {
     onInit(popup);
