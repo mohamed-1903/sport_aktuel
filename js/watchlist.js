@@ -260,11 +260,6 @@ function zeigeWatchRemovePreview({ name, image, productId }) {
     icon: "💔",
     buttons: `
       <button class="undo-btn btn-popup" type="button" data-id="${productId}">↩️ Rückgängig</button>
-      ${
-        !isDetailPage
-          ? `<a href="index.php?page=watchlist&action=view" class="btn-popup">Merkliste anzeigen</a>`
-          : ""
-      }
     `,
     onInit: (popup) => {
       const undoBtn = popup.querySelector(".undo-btn");
