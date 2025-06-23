@@ -48,6 +48,9 @@ function toggleWatchlist(iid, btn = null) {
             message: "Zur Merkliste hinzugefügt",
             productId: iid,
             icon: "❤️",
+            buttons: !isOnProductDetailPageWatch
+              ? '<a href="index.php?page=watchlist&action=view">Merkliste anzeigen</a>'
+              : "",
           });
           zeigeWatchButtonBestaetigung(); // zeigt oben im Button nur ❤️
           setTimeout(() => {
@@ -259,7 +262,7 @@ function zeigeWatchRemovePreview({ name, image, productId }) {
       <button class="undo-btn">↩️ Rückgängig</button>
       ${
         !isDetailPage
-          ? `<a href="index.php?page=product&action=detail&id=${productId}" class="show-btn">🔍 Anzeigen</a>`
+          ? `<a href="index.php?page=watchlist&action=view">Merkliste anzeigen</a>`
           : ""
       }
     `,
