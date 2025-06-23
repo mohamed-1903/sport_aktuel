@@ -669,6 +669,8 @@ body.light-mode .zoom-close {
   transform: translateX(-50%) translateY(0);
 }
 /* === Universelles Popup-Styling für Warenkorb & Watchlist === */
+  scrollbar-gutter: stable; /* prevent layout shift */
+  scroll-behavior: smooth; /* smooth manual scrolling */
 .popup-stack-container {
   position: fixed;
   top: 100px;
@@ -682,6 +684,11 @@ body.light-mode .zoom-close {
   max-height: calc(100vh - 120px);
   overflow-y: auto;
   overflow-x: hidden;
+  scrollbar-width: none; /* Firefox */
+}
+
+.popup-stack-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .popup-stack-container .popup-instance {
@@ -829,6 +836,7 @@ body.light-mode .zoom-close {
 /* === Buttons für Popups === */
 .popup-buttons {
   display: flex;
+  flex-wrap: wrap; /* allow wrapping so buttons don't overflow */
   justify-content: flex-end;
   gap: 12px;
   margin-top: 20px;
@@ -864,6 +872,8 @@ body.light-mode .zoom-close {
   color: #000;
   font-weight: 600;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  flex: 1 1 auto;
+  text-align: center;
 }
 
 .popup-buttons .btn-popup:hover {
