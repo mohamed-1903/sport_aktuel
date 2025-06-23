@@ -75,13 +75,34 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
           const name = btn.dataset.name;
           const image = btn.dataset.image;
           const price = parseFloat(btn.dataset.price) || 0;
-          // Gestapeltes Popup anzeigen
+
+          const buttons = `
+            <button class="cart-remove-btn btn-popup">❌ Entfernen</button>
+            <a href="index.php?page=cart&action=view" class="btn-popup">🛒 Warenkorb</a>
+            ${
+              !isOnProductDetailPageCart
+                ? `<a href="index.php?page=product&action=detail&id=${iid}" class="btn-popup">🔍 Anzeigen</a>`
+                : ""
+            }
+          `;
+
           zeigeGestapeltesPopup({
             name,
             image,
             message: `In den Warenkorb gelegt (${size}, ${qty}x)`,
             productId: iid,
             icon: "🛒",
+            buttons,
+            onInit: (popup) => {
+              const removeBtn = popup.querySelector(".cart-remove-btn");
+              if (removeBtn) {
+                removeBtn.addEventListener("click", () => {
+                  removeFromCart(iid, size, { name, image });
+                  popup.classList.add("fade-out");
+                  setTimeout(() => popup.remove(), 400);
+                });
+              }
+            },
           });
         }
         updateCartCount((cnt) => zeigeCartBestaetigung(cnt));
@@ -269,6 +290,8 @@ function zeigeGestapeltesPopup({
   productId = null,
   icon = "🔔",
   timeout = 4000,
+  buttons = "",
+  onInit = null,
 }) {
   const stack = document.getElementById("popup-stack");
   if (!stack) return;
@@ -296,6 +319,10 @@ function zeigeGestapeltesPopup({
 
   // Neue Popups oben einfügen, damit ältere nach unten wandern
   stack.prepend(popup);
+
+  if (typeof onInit === "function") {
+    onInit(popup);
+  }
 
   setTimeout(() => {
     popup.classList.add("fade-out");

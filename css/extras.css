@@ -678,7 +678,10 @@ body.light-mode .zoom-close {
   gap: 16px;
   z-index: 9999;
   align-items: flex-end;
-  pointer-events: none;
+  pointer-events: auto;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .popup-stack-container .popup-instance {
