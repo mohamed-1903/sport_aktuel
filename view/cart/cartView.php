@@ -83,7 +83,11 @@ $total = 0;
                 <form action="index.php?page=cart&action=remove" method="post" style="display:inline">
                   <input type="hidden" name="id" value="<?= (int)$item['product_id'] ?>">
                   <input type="hidden" name="size" value="<?= htmlspecialchars($item['size']) ?>">
-                  <button type="submit" class="remove-btn">❌</button>
+                  <button type="submit" class="remove-btn"
+                          data-id="<?= (int)$item['product_id'] ?>"
+                          data-size="<?= htmlspecialchars($item['size']) ?>"
+                          data-name="<?= htmlspecialchars($item['name']) ?>"
+                          data-image="<?= htmlspecialchars($item['image_main']) ?>">❌</button>
                 </form>
               </td>
             </tr>

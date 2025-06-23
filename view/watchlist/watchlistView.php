@@ -16,7 +16,10 @@
                         <p><?= number_format($item['price'], 2, ',', '.') ?> €</p>
                         <form action="index.php?page=watchlist&action=remove" method="post" style="display:inline;">
                             <input type="hidden" name="id" value="<?= (int)$item['product_id'] ?>">
-                            <button type="submit">🗑️ Entfernen</button>
+                            <button type="submit" class="remove-watch"
+                                    data-id="<?= (int)$item['product_id'] ?>"
+                                    data-name="<?= htmlspecialchars($item['name']) ?>"
+                                    data-image="<?= htmlspecialchars($item['image_main']) ?>">🗑️ Entfernen</button>
                         </form>
                         <a href="index.php?page=product&action=detail&id=<?= (int)$item['product_id'] ?>"><button>🔍 Anzeigen</button></a>
                     </div>
