@@ -683,6 +683,8 @@ body.light-mode .zoom-close {
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: none; /* Firefox */
+  scrollbar-gutter: stable; /* prevent layout shift */
+  scroll-behavior: smooth; /* smooth manual scrolling */
 }
 
 .popup-stack-container::-webkit-scrollbar {
