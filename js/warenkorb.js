@@ -242,7 +242,15 @@ function removeFromCart(productId, size, previewData = null) {
     )}`,
   })
     .then(() => {
-      if (previewData) zeigeCartRemovePreview(previewData);
+      if (previewData) {
+        zeigeGestapeltesPopup({
+          name: previewData.name,
+          image: previewData.image,
+          message: "Aus dem Warenkorb entfernt",
+          productId: productId,
+          icon: "❌",
+        });
+      }
       loadList();
       updateCartCount();
     })
@@ -269,6 +277,8 @@ function zeigeGestapeltesPopup({
   productId = null,
   icon = "🔔",
   timeout = 4000,
+  buttons = null,
+  onInit = null,
 }) {
   const stack = document.getElementById("popup-stack");
   if (!stack) return;
@@ -276,25 +286,30 @@ function zeigeGestapeltesPopup({
   const popup = document.createElement("div");
   popup.className = "popup-instance";
 
+  const buttonMarkup =
+    buttons !== null
+      ? buttons
+      : productId
+      ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
+      : "";
+
   popup.innerHTML = `
     <div class="popup-content-flex">
       <img src="${image}" alt="${name}" />
       <div class="popup-text-info">
         <strong>${name}</strong>
         <small>${icon} ${message}</small>
-        <div class="popup-buttons">
-          ${
-            productId
-              ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
-              : ""
-          }
-        </div>
+        <div class="popup-buttons">${buttonMarkup}</div>
       </div>
     </div>
   `;
 
   // Neue Popups oben einfügen, damit ältere nach unten wandern
   stack.prepend(popup);
+
+  if (typeof onInit === "function") {
+    onInit(popup);
+  }
 
   setTimeout(() => {
     popup.classList.add("fade-out");
