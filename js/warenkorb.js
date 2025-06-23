@@ -76,15 +76,39 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
           const image = btn.dataset.image;
           const price = parseFloat(btn.dataset.price) || 0;
           // Gestapeltes Popup anzeigen
+          const btnData =
+            `data-id="${iid}" data-size="${size}" data-qty="${qty}" data-name="${name}" data-image="${image}"`;
+          const buttons = `
+            ${
+              !isOnProductDetailPageCart
+                ? `<a href="index.php?page=product&action=detail&id=${iid}" class="btn-popup">Anzeigen</a>`
+                : ""
+            }
+            <button class="popup-remove-cart btn-popup" type="button" ${btnData}>Entfernen</button>
+            <a href="index.php?page=cart&action=view" class="btn-popup">In den Warenkorb</a>
+          `;
           zeigeGestapeltesPopup({
             name,
             image,
             message: `In den Warenkorb gelegt (${size}, ${qty}x)`,
             productId: iid,
             icon: "🛒",
-            buttons: !isOnProductDetailPageCart
-              ? '<a href="index.php?page=cart&action=view">Warenkorb anzeigen</a>'
-              : "",
+            buttons,
+            onInit: (popup) => {
+              const removeBtn = popup.querySelector(".popup-remove-cart");
+              if (removeBtn) {
+                const id = removeBtn.dataset.id;
+                const s = removeBtn.dataset.size;
+                const q = parseInt(removeBtn.dataset.qty) || 1;
+                const n = removeBtn.dataset.name;
+                const img = removeBtn.dataset.image;
+                removeBtn.addEventListener("click", () => {
+                  removeFromCart(id, s, q, { name: n, image: img });
+                  popup.classList.add("fade-out");
+                  setTimeout(() => popup.remove(), 400);
+                });
+              }
+            },
           });
         }
         updateCartCount((cnt) => zeigeCartBestaetigung(cnt));
