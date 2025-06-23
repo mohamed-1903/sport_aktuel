@@ -41,7 +41,14 @@ function toggleWatchlist(iid, btn = null) {
         if (data.in_watchlist) {
           if (btn) btn.textContent = "❤️";
           flyToTarget(btn, "#watchlist-button", "❤️");
-          zeigeWatchPreview({ name, image, price });
+          // Gestapeltes Popup statt Einzel-Popup
+          zeigeGestapeltesPopup({
+            name,
+            image,
+            message: "Zur Merkliste hinzugefügt",
+            productId: iid,
+            icon: "❤️",
+          });
           zeigeWatchButtonBestaetigung(); // zeigt oben im Button nur ❤️
           setTimeout(() => {
             updateWatchlistCount(); // aktualisiert danach den Zähler
