@@ -76,12 +76,31 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
           const image = btn.dataset.image;
           const price = parseFloat(btn.dataset.price) || 0;
           // Gestapeltes Popup anzeigen
+          const showBtn = !isOnProductDetailPageCart
+            ? `<a href="index.php?page=product&action=detail&id=${iid}">🔍 Anzeigen</a>`
+            : "";
+          const buttons = `
+            ${showBtn}
+            <button class="remove-btn">🗑️ Entfernen</button>
+            <a href="index.php?page=cart&action=view">🛒 Warenkorb</a>
+          `;
           zeigeGestapeltesPopup({
             name,
             image,
             message: `In den Warenkorb gelegt (${size}, ${qty}x)`,
             productId: iid,
             icon: "🛒",
+            buttons,
+            onInit: (popup) => {
+              const rm = popup.querySelector(".remove-btn");
+              if (rm) {
+                rm.addEventListener("click", () => {
+                  removeFromCart(iid, size, { name, image });
+                  popup.classList.add("fade-out");
+                  setTimeout(() => popup.remove(), 400);
+                });
+              }
+            },
           });
         }
         updateCartCount((cnt) => zeigeCartBestaetigung(cnt));

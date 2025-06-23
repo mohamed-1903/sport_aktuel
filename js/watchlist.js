@@ -41,6 +41,15 @@ function toggleWatchlist(iid, btn = null) {
         if (data.in_watchlist) {
           if (btn) btn.textContent = "❤️";
           flyToTarget(btn, "#watchlist-button", "❤️");
+          const showBtn = !isOnProductDetailPageWatch
+            ? `<a href="index.php?page=product&action=detail&id=${iid}">🔍 Anzeigen</a>`
+            : "";
+          const buttons = `
+            ${showBtn}
+            <button class="remove-btn">🗑️ Entfernen</button>
+            <a href="index.php?page=watchlist&action=view">Merkliste</a>
+            <button class="undo-btn">↩️ Rückgängig</button>
+          `;
           // Gestapeltes Popup statt Einzel-Popup
           zeigeGestapeltesPopup({
             name,
@@ -48,6 +57,25 @@ function toggleWatchlist(iid, btn = null) {
             message: "Zur Merkliste hinzugefügt",
             productId: iid,
             icon: "❤️",
+            buttons,
+            onInit: (popup) => {
+              const removeBtn = popup.querySelector(".remove-btn");
+              if (removeBtn) {
+                removeBtn.addEventListener("click", () => {
+                  toggleWatchlist(iid);
+                  popup.classList.add("fade-out");
+                  setTimeout(() => popup.remove(), 400);
+                });
+              }
+              const undoBtn = popup.querySelector(".undo-btn");
+              if (undoBtn) {
+                undoBtn.addEventListener("click", () => {
+                  toggleWatchlist(iid);
+                  popup.classList.add("fade-out");
+                  setTimeout(() => popup.remove(), 400);
+                });
+              }
+            },
           });
           zeigeWatchButtonBestaetigung(); // zeigt oben im Button nur ❤️
           setTimeout(() => {
@@ -257,6 +285,7 @@ function zeigeWatchRemovePreview({ name, image, productId }) {
     icon: "💔",
     buttons: `
       <button class="undo-btn">↩️ Rückgängig</button>
+      <a href="index.php?page=watchlist&action=view">Merkliste</a>
       ${
         !isDetailPage
           ? `<a href="index.php?page=product&action=detail&id=${productId}" class="show-btn">🔍 Anzeigen</a>`
