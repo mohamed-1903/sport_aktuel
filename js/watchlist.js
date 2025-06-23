@@ -65,6 +65,7 @@ function toggleWatchlist(iid, btn = null, info = {}) {
                 rm.addEventListener('click', () => {
                   removeFromWatchlist(iid, { name, image, price, productId: iid });
                   popup.classList.add('fade-out');
+
                   setTimeout(() => popup.remove(), 400);
                 });
               }
@@ -181,6 +182,7 @@ function loadWatchlist() {
             name: btn.dataset.name,
             image: btn.dataset.image,
             price: btn.dataset.price,
+
             productId: btn.dataset.id,
           });
         });
@@ -202,6 +204,7 @@ function removeFromWatchlist(id, info = {}) {
         name: info.name,
         image: info.image,
         price: info.price,
+
         productId: info.productId || id,
       });
     }
@@ -284,6 +287,7 @@ function zeigeWatchRemovePreview({ name, image, productId, price = 0 }) {
     buttons: `
       <button class="undo-btn">↩️ Rückgängig</button>
       <a href="index.php?page=watchlist&action=view">Merkliste</a>
+
       ${
         !isDetailPage
           ? `<a href="index.php?page=product&action=detail&id=${productId}" class="show-btn">🔍 Anzeigen</a>`

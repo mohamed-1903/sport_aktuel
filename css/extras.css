@@ -838,26 +838,32 @@ body.light-mode .zoom-close {
 
 .popup-buttons button,
 .popup-buttons a {
-  background-color: var(--accent-color);
-  color: #000;
-  padding: 10px 20px;
+  background: var(--popup-button-bg);
+  color: var(--popup-button-text);
+  padding: 8px 16px;
   font-size: 0.9rem;
-  font-weight: bold;
   border: none;
-  border-radius: 25px;
+  border-radius: 8px;
   cursor: pointer;
   text-decoration: none;
-  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease, transform 0.2s ease,
+    box-shadow 0.3s ease;
 }
 
 .popup-buttons button:hover,
 .popup-buttons a:hover {
-  background-color: #e6c200;
+
+  background: var(--popup-button-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .popup-buttons button:active,
 .popup-buttons a:active {
-  background-color: #d1b600;
+
+  background-color: var(--popup-button-active);
+  transform: translateY(2px);
 }
 
 .popup-buttons .btn-popup {
