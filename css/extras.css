@@ -669,6 +669,27 @@ body.light-mode .zoom-close {
   transform: translateX(-50%) translateY(0);
 }
 /* === Universelles Popup-Styling für Warenkorb & Watchlist === */
+.popup-stack-container {
+  position: fixed;
+  top: 100px;
+  right: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 9999;
+  align-items: flex-end;
+  pointer-events: auto;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none; /* Firefox */
+  scrollbar-gutter: stable; /* prevent layout shift */
+  scroll-behavior: smooth; /* smooth manual scrolling */
+}
+
+.popup-stack-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
   scrollbar-gutter: stable; /* prevent layout shift */
   scroll-behavior: smooth; /* smooth manual scrolling */
 .popup-stack-container {
@@ -695,7 +716,7 @@ body.light-mode .zoom-close {
   position: relative;
   top: auto;
   right: auto;
-  max-width: 320px;
+  width: 320px;
   background-color: var(--popup-bg);
   color: var(--popup-text);
   border-radius: 12px;
@@ -707,13 +728,13 @@ body.light-mode .zoom-close {
   transform: scale(1);
   transition: all 0.3s ease-out;
   opacity: 1;
-  display: block;
   pointer-events: auto;
-  width: 320px; /* 👈 oder jede gewünschte feste Breite */
-  min-height: 110px; /* 👈 feste Höhe für Einheitlichkeit */
+  height: 140px; /* feste Höhe für alle Popups */
   display: flex;
   align-items: center;
   justify-content: start;
+  overflow: hidden; /* verhindert Größenänderungen bei langem Inhalt */
+  flex-shrink: 0;
 }
 .fade-out {
   opacity: 0;
@@ -725,7 +746,8 @@ body.light-mode .zoom-close {
   position: fixed;
   top: 100px;
   right: 30px;
-  max-width: 320px;
+  width: 320px;
+  height: 140px;
   z-index: 9999;
   background-color: var(--popup-bg); /* Dynamischer Hintergrund */
   color: var(--popup-text); /* Dynamische Textfarbe */
@@ -770,6 +792,13 @@ body.light-mode .zoom-close {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.popup-text-info strong,
+.popup-text-info small {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .popup-text-info strong {
