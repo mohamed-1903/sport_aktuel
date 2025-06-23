@@ -695,7 +695,7 @@ body.light-mode .zoom-close {
   position: relative;
   top: auto;
   right: auto;
-  width: 360px;
+  width: 400px;
   background-color: var(--popup-bg);
   color: var(--popup-text);
   border-radius: 12px;
@@ -708,7 +708,7 @@ body.light-mode .zoom-close {
   transition: all 0.3s ease-out;
   opacity: 1;
   pointer-events: auto;
-  height: 160px; /* etwas größer, bleibt dennoch fix */
+  height: 180px; /* größer wie früher */
   display: flex;
   align-items: center;
   justify-content: start;
@@ -726,8 +726,8 @@ body.light-mode .zoom-close {
   position: fixed;
   top: 100px;
   right: 30px;
-  width: 360px;
-  height: 160px;
+  width: 400px;
+  height: 180px;
   z-index: 9999;
   background-color: var(--popup-bg); /* Dynamischer Hintergrund */
   color: var(--popup-text); /* Dynamische Textfarbe */
@@ -773,6 +773,13 @@ body.light-mode .zoom-close {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.popup-text-info strong,
+.popup-text-info small {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: initial;
 }
 
 .popup-text-info strong,
@@ -860,6 +867,7 @@ body.light-mode .zoom-close {
 }
 
 
+
 .popup-buttons button,
 .popup-buttons a {
   background-color: var(--popup-button-bg);
@@ -893,6 +901,7 @@ body.light-mode .zoom-close {
   flex: 1 1 auto;
   text-align: center;
 }
+
 
 
 .popup-buttons .btn-popup:hover {
