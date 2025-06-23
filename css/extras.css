@@ -690,33 +690,12 @@ body.light-mode .zoom-close {
 .popup-stack-container::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
-  scrollbar-gutter: stable; /* prevent layout shift */
-  scroll-behavior: smooth; /* smooth manual scrolling */
-.popup-stack-container {
-  position: fixed;
-  top: 100px;
-  right: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  z-index: 9999;
-  align-items: flex-end;
-  pointer-events: auto;
-  max-height: calc(100vh - 120px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  scrollbar-width: none; /* Firefox */
-}
-
-.popup-stack-container::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
-}
 
 .popup-stack-container .popup-instance {
   position: relative;
   top: auto;
   right: auto;
-  width: 320px;
+  width: 360px;
   background-color: var(--popup-bg);
   color: var(--popup-text);
   border-radius: 12px;
@@ -729,13 +708,14 @@ body.light-mode .zoom-close {
   transition: all 0.3s ease-out;
   opacity: 1;
   pointer-events: auto;
-  height: 140px; /* feste Höhe für alle Popups */
+  height: 160px; /* etwas größer, bleibt dennoch fix */
   display: flex;
   align-items: center;
   justify-content: start;
   overflow: hidden; /* verhindert Größenänderungen bei langem Inhalt */
   flex-shrink: 0;
 }
+
 .fade-out {
   opacity: 0;
   transform: translateY(-10px);
@@ -746,12 +726,13 @@ body.light-mode .zoom-close {
   position: fixed;
   top: 100px;
   right: 30px;
-  width: 320px;
-  height: 140px;
+  width: 360px;
+  height: 160px;
   z-index: 9999;
   background-color: var(--popup-bg); /* Dynamischer Hintergrund */
   color: var(--popup-text); /* Dynamische Textfarbe */
   border-radius: 12px;
+
   padding: 1.5rem;
   box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25); /* Tiefe Schatten für Wow-Effekt */
   border: 1px solid var(--popup-border);
@@ -792,6 +773,13 @@ body.light-mode .zoom-close {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.popup-text-info strong,
+.popup-text-info small {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: initial;
 }
 
 .popup-text-info strong,
@@ -871,6 +859,7 @@ body.light-mode .zoom-close {
   margin-top: 20px;
 }
 
+
 .popup-buttons button,
 .popup-buttons a {
   background-color: var(--popup-button-bg);
@@ -904,6 +893,7 @@ body.light-mode .zoom-close {
   flex: 1 1 auto;
   text-align: center;
 }
+
 
 .popup-buttons .btn-popup:hover {
   opacity: 0.9;
