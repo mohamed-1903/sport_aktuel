@@ -5,6 +5,22 @@ require_once 'model/userModel.php';
 $action = $_GET['action'] ?? 'login';
 
 switch ($action) {
+    case 'check':
+        header('Content-Type: application/json');
+        $username = $_GET['username'] ?? '';
+        $email = $_GET['email'] ?? '';
+
+        if ($username !== '') {
+            $exists = getUserByUsername($username) ? true : false;
+            echo json_encode(['exists' => $exists, 'field' => 'username']);
+        } elseif ($email !== '') {
+            $exists = getUserByEmail($email) ? true : false;
+            echo json_encode(['exists' => $exists, 'field' => 'email']);
+        } else {
+            echo json_encode(['error' => 'no-field']);
+        }
+        exit;
+
     case 'register':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'] ?? '';

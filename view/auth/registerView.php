@@ -64,15 +64,52 @@
     small.textContent = isValid ? "" : message;
   }
 
+  function validateEmail(input) {
+    const value = input.value.trim();
+    const valid = /\S+@\S+\.\S+/.test(value);
+    setValidation(input, valid, "Bitte eine gültige E-Mail eingeben.");
+    return valid;
+  }
+
+  async function checkAvailability(field, value) {
+    const params = new URLSearchParams();
+    params.set(field, value);
+    const res = await fetch(`index.php?page=auth&action=check&${params.toString()}`);
+    const data = await res.json();
+    return data.exists;
+  }
+
+  async function validateUsernameAsync() {
+    const patternValid = validateUsername(rUser);
+    if (!patternValid) return false;
+    const taken = await checkAvailability('username', rUser.value);
+    setValidation(rUser, !taken, taken ? 'Benutzername bereits vergeben.' : '');
+    return !taken;
+  }
+
+  async function validateEmailAsync() {
+    const formatValid = validateEmail(rEmail);
+    if (!formatValid) return false;
+    const taken = await checkAvailability('email', rEmail.value);
+    setValidation(rEmail, !taken, taken ? 'E-Mail bereits vergeben.' : '');
+    return !taken;
+  }
+
   const rUser = document.getElementById("registerUsername");
+  const rEmail = document.getElementById("registerEmail");
   const rPass = document.getElementById("registerPassword");
   const rConf = document.getElementById("registerConfirmPassword");
   const rBtn = document.getElementById("registerBtn");
 
-  [rUser, rPass, rConf].forEach(input => input.addEventListener("input", () => {
-    const isValid = validateUsername(rUser) && validatePassword(rPass) && validateConfirmPassword(rPass, rConf);
-    rBtn.disabled = !isValid;
-  }));
+  async function updateButton() {
+    const okUser = await validateUsernameAsync();
+    const okEmail = await validateEmailAsync();
+    const okPass = validatePassword(rPass);
+    const okConf = validateConfirmPassword(rPass, rConf);
+    rBtn.disabled = !(okUser && okEmail && okPass && okConf);
+  }
+
+  [rUser, rEmail, rPass, rConf].forEach(input => input.addEventListener("input", updateButton));
 </script>
 <?php include 'view/layout/footer.php'; ?>
 
