@@ -54,6 +54,11 @@
         <option value="Unisex">Unisex</option>
       </select>
       <button type="button" class="reset-filter" onclick="resetFilter()">Zurücksetzen</button>
+      <select id="sort-select" onchange="sortProducts(this.value)">
+        <option value="asc">Preis ▲</option>
+        <option value="desc">Preis ▼</option>
+      </select>
+      <button type="button" class="layout-toggle" onclick="toggleLayout()">Layout wechseln</button>
     </section>
 
     <section class="einzelprodukt-grid" id="produktContainer">
