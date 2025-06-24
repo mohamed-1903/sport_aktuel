@@ -31,6 +31,7 @@ const TEAM_PLAYERS = {
 const CUSTOMIZATION_FEE = 10; // € pro Trikot
 window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
 
+
 // Initialisierung pro Produktcontainer
 document.addEventListener("DOMContentLoaded", () => {
   document
@@ -470,4 +471,5 @@ function setupCustomization(section) {
   });
 
   updatePreview();
+
 }

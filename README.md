@@ -270,5 +270,6 @@ Personalisierung kostet pauschal 10 €. Beim Eingeben von Name oder Nummer wi
 der Preis automatisch angepasst und eine kleine Vorschau zeigt den Text auf dem
 Trikotbild an.
 
+
 ## 🍪 Cookies
 Dieses Projekt verwendet ein technisches Cookie, um die Zustimmung zur Cookie-Nutzung zu speichern.
