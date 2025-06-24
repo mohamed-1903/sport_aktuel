@@ -247,7 +247,7 @@ Neben jeder "Produkt x"-Überschrift befindet sich jetzt ein ❌-Button. Damit k
 
 Beim Hinzufügen in den Warenkorb muss auf der Detailseite eine Größe gewählt werden. Wird keine Größe ausgewählt, erscheint eine Fehlermeldung und der Artikel wird nicht übernommen.
 Nach einem erfolgreichen Hinzufügen zeigt der Warenkorb-Button oben kurz ein ✅ (zwei Sekunden) und wechselt danach wieder zur normalen Anzeige mit der Anzahl der Artikel.
-
+Rückteil des Trikots an.
 ## ❤️ Serverseitige Merkliste
 
 Die Merkliste funktioniert nun wie der Warenkorb.

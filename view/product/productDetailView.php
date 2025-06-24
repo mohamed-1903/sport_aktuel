@@ -15,7 +15,8 @@
       </div>
     </div>
   </div>
-  <?php
+    $images = $product['images'] ?? [$imageMain];
+    $backImage = $images[1] ?? $imageMain;
   require_once 'model/ratingModel.php';
   foreach ($productsToShow as $index => $product):
     // 🧩 Produktdaten extrahieren mit Fallbacks
@@ -61,7 +62,7 @@
                 <?= number_format((float)$product['priceValue'], 2, ',', '.') ?>€
               </del>
             <?php else: ?>
-              <span class="preis">Preis nicht verfügbar</span>
+                <img src="<?= htmlspecialchars($backImage) ?>" alt="Rückenansicht" />
             <?php endif; ?>
             <span id="discountLabel-<?= $index ?>" class="rabatt" style="display:none;">-20%</span>
           </p>
