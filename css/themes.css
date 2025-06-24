@@ -3,10 +3,10 @@ body.light-mode .action-buttons button {
 }
 
 body.light-mode nav {
-  background-color: #fff;
+  background-color: var(--card-bg);
 }
 
 body.light-mode .dropdown-menu a:hover {
-  background-color: #caa000;
+  background-color: var(--accent-color);
   color: #000;
 }
