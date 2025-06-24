@@ -1,7 +1,8 @@
 header {
-  background-color: #000;
+  background-color: var(--card-bg);
   padding: 20px;
   position: relative;
+  transition: background-color 0.3s ease;
 }
 
 .header-bar {
