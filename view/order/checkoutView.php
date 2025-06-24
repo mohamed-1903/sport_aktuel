@@ -32,7 +32,19 @@
     </tbody>
   </table>
 
+  <?php
+    $rabattBetrag = 0;
+    if (!empty($discountPercent)) {
+      $rabattBetrag = $summe * ($discountPercent / 100);
+    }
+    $endbetrag = $summe - $rabattBetrag;
+  ?>
+
   <h3 style="margin-top: 1em;">🧾 Gesamtbetrag: <?= number_format($summe, 2, ',', '.') ?> €</h3>
+  <?php if (!empty($discountPercent)): ?>
+    <p style="color: green;">🎉 Rabatt (<?= (int)$discountPercent ?>%): -<?= number_format($rabattBetrag, 2, ',', '.') ?> €</p>
+    <h3>Neuer Betrag: <?= number_format($endbetrag, 2, ',', '.') ?> €</h3>
+  <?php endif; ?>
 
   <form action="index.php?page=order&action=submit" method="post" style="margin-top: 2em;">
     <button type="submit" class="btn-checkout">Jetzt bestellen</button>
