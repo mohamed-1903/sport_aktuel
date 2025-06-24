@@ -85,9 +85,10 @@ header {
 }
 
 /* ☀️ Light-Mode Anpassung */
+body.light-mode .search-wrapper input#autocomplete-shadow {
   color: rgba(0, 0, 0, 0.3);
 }
-
+body.light-mode .search-wrapper {
   border: 2px solid #e6c200;
   background-color: #fff;
   color: #000;
@@ -508,7 +509,6 @@ footer a {
 footer a:hover {
   text-decoration: underline;
 }
-
 :root {
   --bg-color: #111;
   --text-color: #fff;
@@ -516,15 +516,19 @@ footer a:hover {
   --card-bg: #222;
 }
 
+body.light-mode {
   --bg-color: #eaeaea; /* Hell, aber nicht weiß */
   --text-color: #1a1a1a; /* Fast-Schwarz für gute Lesbarkeit */
   --accent-color: #caa000; /* Etwas dunkleres Gold */
   --card-bg: #ffffff; /* Saubere Boxfarbe */
 }
+body.light-mode .search-wrapper {
   border: 2px solid #000 !important;
 }
 
 /* Im Light-Mode Herz-Button (2. Button) und Theme-Toggle schwarz machen */
+body.light-mode .action-buttons button.heart,
+body.light-mode .theme-toggle {
   color: #fff !important;
 }
 
@@ -566,17 +570,17 @@ a {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.nav-menu > li > a:hover,
-.dropdown-menu li a:hover {
-  background-color: var(--accent-color);
-  color: #000;
-}
-  background-color: #fff; /* Schwarzer Hintergrund */
+body.light-mode nav {
+  background-color: #fff; /* Weißer Hintergrund */
 }
 
-  background-color: #fff; /* Schwarz auch für einzelne Links */
-  color: #000; /* Weiße Schrift */
+body.light-mode nav a,
+body.light-mode .dropdown-menu li a {
+  background-color: #fff; /* Weiß auch für einzelne Links */
+  color: #000; /* Schwarze Schrift */
 }
+body.light-mode .dropdown-menu li a.active {
+body.light-mode .dropdown-menu li a.active {
   background-color: #caa000;
   color: #000;
   border-radius: 5px;
@@ -679,15 +683,6 @@ body.form-page {
   color: #999;
   cursor: not-allowed;
 }
-
-/* ========================================
-   ✅ RESPONSIVES DESIGN FÜR MOBILE GERÄTE
-   ======================================== */
-
-/* Für Tablets und kleinere Laptops */
-
-/* Für Smartphones */
-
 div {
   display: flex;
   flex-direction: column;
@@ -696,30 +691,39 @@ div {
   text-align: center;
   margin: 0 auto;
 }
+
+/* Light mode overrides for form-wrapper and inputs */
+body.light-mode .form-wrapper {
   background-color: #f8f8f8;
   color: #000;
   border-color: #ccc;
 }
+body.light-mode .form-wrapper label {
   color: var(--text-color);
 }
+body.light-mode .form-wrapper button {
   background-color: var(--accent-color);
   color: #fff;
 }
+body.light-mode .form-wrapper button:disabled {
   color: var(--accent-color);
   border-color: var(--accent-color);
 }
+body.light-mode .form-wrapper input.valid {
   border-color: #28a745; /* Helles Grün für Light Mode */
   box-shadow: 0 0 5px #28a74580; /* Optionaler Leuchteffekt */
 }
-
+body.light-mode .form-wrapper input.invalid {
   border-color: #dc3545; /* Helles Rot für Light Mode */
   box-shadow: 0 0 5px #dc354580; /* Optionaler Leuchteffekt */
 }
-
+body.light-mode .form-wrapper .success-message {
   color: #e6c200; /* Dunkleres Grau für bessere Lesbarkeit im Light Mode */
 }
+body.light-mode .form-wrapper button:disabled {
   background-color: #e0e0e0;
   color: #888;
   cursor: not-allowed;
   border: 1px solid #dacfcf;
 }
+
