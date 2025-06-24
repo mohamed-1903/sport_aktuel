@@ -1,0 +1,64 @@
+.mobile-header {
+  background-color: #d1151d;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-family: Arial, sans-serif;
+}
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 1.6rem;
+}
+
+.logo {
+  height: 32px;
+  margin: 0 auto;
+}
+
+.icon-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.icon-group button {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 1.4rem;
+}
+
+.search-container {
+  margin-top: 0.5rem;
+}
+
+.search-container input {
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  border: none;
+  border-radius: 4px;
+}
+
+@media (width >= 600px) {
+  .nav-bar {
+    justify-content: center;
+  }
+
+  .menu-btn {
+    position: absolute;
+    left: 0;
+  }
+
+  .icon-group {
+    position: absolute;
+    right: 0;
+  }
+}
