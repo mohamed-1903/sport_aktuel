@@ -59,6 +59,7 @@
         <option value="desc">Preis ▼</option>
       </select>
       <button type="button" class="layout-toggle" onclick="toggleLayout()">Layout wechseln</button>
+
     </section>
 
     <section class="einzelprodukt-grid" id="produktContainer">
