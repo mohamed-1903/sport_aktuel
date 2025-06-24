@@ -60,6 +60,12 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
   }
 
   const payload = { id: iid, size, quantity: qty, discount, gift };
+  if (section) {
+    const nameInput = section.querySelector('.custom-name');
+    const numberInput = section.querySelector('.custom-number');
+    if (nameInput) payload.custom_name = nameInput.value.trim();
+    if (numberInput) payload.custom_number = numberInput.value.trim();
+  }
 
   fetch("index.php?page=cart&action=add", {
     method: "POST",
