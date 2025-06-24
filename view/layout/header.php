@@ -11,6 +11,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SportX</title>
     <link rel="icon" type="image/png" href="img/logo.png">
+
     <?php
     $projectRoot = str_replace(
         DIRECTORY_SEPARATOR,
