@@ -59,4 +59,41 @@ switch ($action) {
             exit;
         }
         break;
+
+    case 'admin':
+        if (empty($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
+            header("Location: index.php?page=auth&action=login&unauthorized=1");
+            exit;
+        }
+
+        $allowedStatuses = ['neu', 'in_bearbeitung', 'abgelehnt', 'abgeschlossen', 'storniert'];
+        $statusFilter = $_GET['status'] ?? 'neu';
+        if (!in_array($statusFilter, $allowedStatuses, true)) {
+            $statusFilter = 'neu';
+        }
+
+        $orders = getOrdersByStatus($statusFilter);
+        require 'view/admin/manageOrdersView.php';
+        break;
+
+    case 'updateStatus':
+        if (empty($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
+            header("Location: index.php?page=auth&action=login&unauthorized=1");
+            exit;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $orderId = (int)($_POST['order_id'] ?? 0);
+            $status = $_POST['status'] ?? '';
+            $allowed = ['neu', 'in_bearbeitung', 'abgelehnt', 'abgeschlossen', 'storniert'];
+
+            if ($orderId && in_array($status, $allowed, true)) {
+                updateOrderStatus($orderId, $status);
+            }
+
+            $redirect = $_POST['redirect'] ?? 'neu';
+            header("Location: index.php?page=order&action=admin&status=" . urlencode($redirect));
+            exit;
+        }
+        break;
 }
