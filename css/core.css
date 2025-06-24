@@ -536,9 +536,8 @@ body.light-mode .search-container input {
 }
 
 /* Im Light-Mode Herz-Button (2. Button) und Theme-Toggle schwarz machen */
-body.light-mode .action-buttons button:nth-child(2),
-body.light-mode #theme-toggle {
-  color: #fff !important;
+body.light-mode .action-buttons button {
+  color: #caa000 !important;
 }
 
 body {
