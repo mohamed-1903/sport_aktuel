@@ -105,6 +105,13 @@ document.addEventListener("DOMContentLoaded", () => {
       ladeProdukte(containerId, urls);
     });
   }
+
+  const prodContainer = document.getElementById("produktContainer");
+  const savedLayout = localStorage.getItem("productLayout");
+  if (prodContainer && savedLayout === "list") {
+    prodContainer.classList.add("einzelprodukt-list");
+    prodContainer.classList.remove("einzelprodukt-grid");
+  }
 });
 
 // 🔽 PRODUKTE LADEN
@@ -242,4 +249,35 @@ window.resetFilter = function () {
   if (typeof produktSuche === "function") {
     produktSuche();
   }
+};
+
+// Sortiert die angezeigten Produkte nach Preis
+window.sortProducts = function (order) {
+  const container = document.getElementById("produktContainer");
+  if (!container) return;
+  const items = Array.from(container.querySelectorAll(".einzelprodukt"));
+
+  items.sort((a, b) => {
+    const pa = parseFloat(a.dataset.preis) || 0;
+    const pb = parseFloat(b.dataset.preis) || 0;
+    return order === "asc" ? pa - pb : pb - pa;
+  });
+
+  items.forEach((el) => container.appendChild(el));
+};
+
+// Wechselt zwischen Listen- und Grid-Layout für die Produktübersicht
+window.toggleLayout = function () {
+  const container = document.getElementById("produktContainer");
+  if (!container) return;
+
+  const useList = !container.classList.contains("einzelprodukt-list");
+  if (useList) {
+    container.classList.add("einzelprodukt-list");
+    container.classList.remove("einzelprodukt-grid");
+  } else {
+    container.classList.add("einzelprodukt-grid");
+    container.classList.remove("einzelprodukt-list");
+  }
+  localStorage.setItem("productLayout", useList ? "list" : "grid");
 };
