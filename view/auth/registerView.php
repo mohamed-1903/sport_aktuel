@@ -37,7 +37,7 @@
 
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
 <script>
-  function validateUsername(input) {
+  function validateUsernameFormat(input) {
     const value = input.value;
     const valid = value.length >= 5 && /[a-z]/.test(value) && /[A-Z]/.test(value);
     setValidation(input, valid, "Mind. 5 Zeichen, Groß- & Kleinbuchstaben erforderlich.");
@@ -65,14 +65,48 @@
   }
 
   const rUser = document.getElementById("registerUsername");
+  const rEmail = document.getElementById("registerEmail");
   const rPass = document.getElementById("registerPassword");
   const rConf = document.getElementById("registerConfirmPassword");
   const rBtn = document.getElementById("registerBtn");
 
-  [rUser, rPass, rConf].forEach(input => input.addEventListener("input", () => {
-    const isValid = validateUsername(rUser) && validatePassword(rPass) && validateConfirmPassword(rPass, rConf);
-    rBtn.disabled = !isValid;
-  }));
+  async function checkTaken(field, value) {
+    const res = await fetch('index.php?page=auth&action=check', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ [field]: value })
+    });
+    const data = await res.json();
+    return data[field + 'Taken'];
+  }
+
+  async function validateUsername(input) {
+    if (!validateUsernameFormat(input)) return false;
+    const taken = await checkTaken('username', input.value);
+    setValidation(input, !taken, 'Benutzername bereits vergeben.');
+    return !taken;
+  }
+
+  async function validateEmail(input) {
+    const value = input.value;
+    if (value.length === 0) {
+      setValidation(input, false, '');
+      return false;
+    }
+    const taken = await checkTaken('email', value);
+    setValidation(input, !taken, 'E-Mail bereits vergeben.');
+    return !taken;
+  }
+
+  async function checkForm() {
+    const uValid = await validateUsername(rUser);
+    const eValid = await validateEmail(rEmail);
+    const pValid = validatePassword(rPass);
+    const cValid = validateConfirmPassword(rPass, rConf);
+    rBtn.disabled = !(uValid && eValid && pValid && cValid);
+  }
+
+  [rUser, rEmail, rPass, rConf].forEach(input => input.addEventListener('input', checkForm));
 </script>
 <?php include 'view/layout/footer.php'; ?>
 
