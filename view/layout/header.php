@@ -11,18 +11,34 @@ if (session_status() === PHP_SESSION_NONE) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SportX</title>
     <link rel="icon" type="image/png" href="img/logo.png">
-    <link rel="stylesheet" href="css/variables.css">
+
+    <?php
+    $projectRoot = str_replace(
+        DIRECTORY_SEPARATOR,
+        '/',
+        realpath(__DIR__ . '/../..')
+    );
+    $docRoot = rtrim(str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']), '/');
+    $basePath = rtrim(str_replace($docRoot, '', $projectRoot), '/') . '/';
+    ?>
+    <base href="<?= htmlspecialchars($basePath, ENT_QUOTES) ?>">
     <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/typography.css">
-    <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/form.css">
-    <link rel="stylesheet" href="css/product.css">
-    <link rel="stylesheet" href="css/modal.css">
-    <link rel="stylesheet" href="css/themes.css">
-    <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/cookie.css">
+    <link rel="stylesheet" href="css/core.css">
+    <link rel="stylesheet" href="css/extras.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/form.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/mobile_nav.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/product.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/typography.css">
+    <link rel="stylesheet" href="css/variables.css">
+
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 
@@ -74,7 +90,7 @@ if (session_status() === PHP_SESSION_NONE) {
         <div id="cart-popup" class="cart-preview-popup"></div>
         <div id="watchlist-preview-popup" class="watchlist-preview-popup"></div>
         <div id="watch-popup" class="watchlist-preview-popup"></div>
-<div id="popup-stack" class="popup-stack-container"></div>
+        <div id="popup-stack" class="popup-stack-container"></div>
 
         <nav>
             <ul class="nav-menu">

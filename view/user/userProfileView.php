@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_id'])) {
   exit;
 }
 
-include 'view/layout/header.php';
+include __DIR__ . '/../layout/header.php';
 ?>
 
 <main class="form-wrapper" style="text-align: center; padding: 3em 1em;">
@@ -28,5 +28,5 @@ include 'view/layout/header.php';
 </main>
 
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
-<?php include 'view/layout/footer.php'; ?>
+<?php include __DIR__ . '/../layout/footer.php'; ?>
 
