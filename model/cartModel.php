@@ -162,6 +162,7 @@ function getCartItems(int $userId): array
     $stmt = $db->prepare($query);
     $stmt->execute([$userId]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 }
 
 function removeFromCart(int $userId, int $productId, string $size): void

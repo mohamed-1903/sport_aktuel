@@ -50,8 +50,8 @@ switch ($action) {
                         'custom_name' => $data['custom_name'] ?? null,
                         'custom_number' => $data['custom_number'] ?? null,
                         'custom_fee' => isset($data['custom_fee']) ? (float)$data['custom_fee'] : 0
-
                     ]);
+
                 } catch (PDOException $e) {
                     http_response_code(500);
                     echo json_encode(['error' => 'Datenbankfehler']);
@@ -176,7 +176,6 @@ switch ($action) {
                 ($item['custom_name'] ?? null) == ($data['custom_name'] ?? null) &&
                 ($item['custom_number'] ?? null) == ($data['custom_number'] ?? null) &&
                 ((float)($item['custom_fee'] ?? 0)) == (float)($data['custom_fee'] ?? 0)
-
             ) {
                 removeFromCart($userId, $data['product_id'], $data['size']);
                 echo json_encode(['status' => 'ok', 'in_cart' => false]);
@@ -194,8 +193,8 @@ switch ($action) {
                 'custom_name' => $data['custom_name'] ?? null,
                 'custom_number' => $data['custom_number'] ?? null,
                 'custom_fee' => isset($data['custom_fee']) ? (float)$data['custom_fee'] : 0
-
             ]);
+
         } catch (PDOException $e) {
             http_response_code(500);
             echo json_encode(['status' => 'error', 'message' => 'Datenbankfehler']);
