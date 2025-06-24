@@ -88,15 +88,17 @@ switch ($action) {
             $category = $map[$subcategory] ?? '';
         }
 
-        if (!$category) {
-            echo "<h2>⚠️ Keine Kategorie angegeben.</h2>";
-            exit;
+        // Wenn keine Kategorie angegeben ist oder explizit "Alle Produkte" gewählt
+        // wurde, sollen alle Produkte angezeigt werden.
+        $allCategories = !$category || strcasecmp($category, 'Alle Produkte') === 0;
+        if ($allCategories) {
+            $category = 'Alle Produkte';
         }
 
         $products = getAllProducts();
 
-        $filteredProducts = array_filter($products, function ($p) use ($category, $subcategory, $saleOnly) {
-            $matchCat = strcasecmp($p['category'], $category) === 0;
+        $filteredProducts = array_filter($products, function ($p) use ($category, $subcategory, $saleOnly, $allCategories) {
+            $matchCat = $allCategories || strcasecmp($p['category'], $category) === 0;
             $matchSub = !$subcategory || strcasecmp($p['subcategory'], $subcategory) === 0;
             $matchSale = !$saleOnly || (!empty($p['discount']) && $p['discount'] > 0);
             return $matchCat && $matchSub && $matchSale;

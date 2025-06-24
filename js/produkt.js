@@ -5,6 +5,59 @@ const DISCOUNT_CODES = {
   "00000": 5,
 };
 
+const TEAM_PLAYERS = {
+  Bayern: {
+    9: "Harry Kane",
+    25: "Thomas Müller",
+    11: "Kingsley Coman",
+  },
+  Dortmund: {
+    9: "Sebastian Haller",
+    22: "Jude Bellingham",
+    11: "Marco Reus",
+  },
+  "Real Madrid": {
+    7: "Vinicius Jr.",
+    10: "Luka Modric",
+    8: "Toni Kroos",
+  },
+  "Manchester City": {
+    9: "Erling Haaland",
+    17: "Kevin De Bruyne",
+    20: "Bernardo Silva",
+  },
+};
+
+const CUSTOMIZATION_FEE = 10; // € pro Trikot
+window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
+
+const TEAM_PLAYERS = {
+  Bayern: {
+    9: "Harry Kane",
+    25: "Thomas Müller",
+    11: "Kingsley Coman",
+  },
+  Dortmund: {
+    9: "Sebastian Haller",
+    22: "Jude Bellingham",
+    11: "Marco Reus",
+  },
+  "Real Madrid": {
+    7: "Vinicius Jr.",
+    10: "Luka Modric",
+    8: "Toni Kroos",
+  },
+  "Manchester City": {
+    9: "Erling Haaland",
+    17: "Kevin De Bruyne",
+    20: "Bernardo Silva",
+  },
+};
+
+const CUSTOMIZATION_FEE = 10; // € pro Trikot
+window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
+
+
 // Initialisierung pro Produktcontainer
 document.addEventListener("DOMContentLoaded", () => {
   document
@@ -41,6 +94,10 @@ function setupProduct(section) {
   qtyInput.addEventListener("input", () => updateDisplay(section));
   const giftWrapEl = section.querySelector(`#giftWrap-${idx}`);
   const pinInputEl = section.querySelector(`#pin-${idx}`);
+
+  setupCustomization(section);
+
+  setupCustomization(section);
 
   giftWrapEl?.addEventListener("change", () => updateDisplay(section));
   pinInputEl?.addEventListener("input", () => updateDisplay(section));
@@ -94,6 +151,18 @@ function getGiftWrapCharge(section) {
   return checkbox?.checked ? 2 : 0;
 }
 
+function getCustomizationFee(section) {
+  const nameInput = section.querySelector('.custom-name');
+  const numberInput = section.querySelector('.custom-number');
+  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
+}
+
+function getCustomizationFee(section) {
+  const nameInput = section.querySelector('.custom-name');
+  const numberInput = section.querySelector('.custom-number');
+  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
+}
+
 function getBasePrice(section) {
   const idx = section.dataset.productIndex;
   const el = section.querySelector(`#basePrice-${idx}`);
@@ -114,9 +183,11 @@ function calculatePrice(section) {
   const qty = parseInt(section.querySelector(`#quantity-${idx}`).value) || 1;
   const gift = section.querySelector(`#giftWrap-${idx}`)?.checked;
   const pin = section.querySelector(`#pin-${idx}`)?.value.trim() || "";
+  const customFee = getCustomizationFee(section);
 
-  let subtotal = getBasePrice(section) * qty;
+  let subtotal = (getBasePrice(section) + customFee) * qty;
   if (gift) subtotal += 2;
+
 
   const discountPercent = DISCOUNT_CODES[pin] || 0;
   const discounted = subtotal * (1 - discountPercent / 100);
@@ -410,3 +481,70 @@ document.addEventListener("keydown", (e) => {
     closeRatingModal();
   }
 });
+function resetFinalPriceDisplay(price, section) {
+  const idx = section.dataset.productIndex;
+  section.querySelector(`#original-price-${idx}`).style.display = "none";
+  section.querySelector(`#discountLabel-${idx}`).style.display = "none";
+  section.querySelector(
+    `#finalPriceValue-${idx}`
+  ).textContent = `${price.toFixed(2)}€ inkl. Mwst.`;
+}
+
+function setupCustomization(section) {
+  const name = section.querySelector('.product-name')?.textContent || '';
+  const teamKey = Object.keys(TEAM_PLAYERS).find((k) =>
+    name.toLowerCase().includes(k.toLowerCase())
+  );
+  const playerSelect = section.querySelector('.player-select');
+  const nameInput = section.querySelector('.custom-name');
+  const numberInput = section.querySelector('.custom-number');
+  const preview = section.querySelector('.jersey-preview');
+  const nameOverlay = preview?.querySelector('.overlay-name');
+  const numberOverlay = preview?.querySelector('.overlay-number');
+
+  if (!playerSelect) return;
+
+  if (teamKey) {
+    const roster = TEAM_PLAYERS[teamKey];
+    const optEmpty = document.createElement('option');
+    optEmpty.value = '';
+    optEmpty.textContent = '-- Eigener Name --';
+    playerSelect.appendChild(optEmpty);
+
+    Object.entries(roster).forEach(([num, player]) => {
+      const opt = document.createElement('option');
+      opt.value = num;
+      opt.textContent = `${player} (${num})`;
+      playerSelect.appendChild(opt);
+    });
+
+    playerSelect.addEventListener('change', () => {
+      const num = playerSelect.value;
+      if (num) {
+        numberInput.value = num;
+        nameInput.value = roster[num];
+      } else {
+        numberInput.value = '';
+        nameInput.value = '';
+      }
+      updateDisplay(section);
+      updatePreview();
+    });
+  }
+
+  function updatePreview() {
+    if (nameOverlay) nameOverlay.textContent = nameInput.value.trim();
+    if (numberOverlay) numberOverlay.textContent = numberInput.value.trim();
+  }
+
+  nameInput.addEventListener('input', () => {
+    updateDisplay(section);
+    updatePreview();
+  });
+  numberInput.addEventListener('input', () => {
+    updateDisplay(section);
+    updatePreview();
+  });
+
+  updatePreview();
+}
