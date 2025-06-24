@@ -12,7 +12,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <title>SportX</title>
     <link rel="icon" type="image/png" href="img/logo.png">
     <?php
-    $projectRoot = str_replace(\
+    $projectRoot = str_replace(
         DIRECTORY_SEPARATOR,
         '/',
         realpath(__DIR__ . '/../..')
