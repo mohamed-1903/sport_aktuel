@@ -29,10 +29,10 @@
     </div>
   </div>
   <?php
-  require_once 'model/ratingModel.php';
-  foreach ($productsToShow as $index => $product):
-
-    // 🧩 Produktdaten extrahieren mit Fallbacks
+            <?php foreach ($images as $imgIndex => $img): ?>
+              <img src="<?= htmlspecialchars($img) ?>" />
+            <?php endforeach; ?>
+          </div>
     $name = $product['name'] ?? 'Produktname nicht verfügbar';
     $price = isset($product['priceValue']) && is_numeric($product['priceValue']) ? $product['priceValue'] : 0;
     $imageMain = $product['image_main'] ?? ($product['imagepath'] ?? 'img/placeholder.jpg');
