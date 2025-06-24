@@ -24,6 +24,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 <body>
     <header>
+        <button id="burger-menu" class="burger-menu" aria-label="Menü">&#9776;</button>
         <div class="header-bar">
             <a href="index.php" class="logo" title="zur Startseite">&#127942; SportX</a>
             <div class="search-wrapper">

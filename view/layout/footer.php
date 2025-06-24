@@ -71,4 +71,5 @@
 <script src="js/produkt.js"></script>
 <script src="js/watchlist.js"></script>
 <script src="js/warenkorb.js"></script>
+<script src="js/burger_menu.js"></script>
 
