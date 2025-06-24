@@ -1,0 +1,12 @@
+body.light-mode .action-buttons button {
+  color: #fff;
+}
+
+body.light-mode nav {
+  background-color: #fff;
+}
+
+body.light-mode .dropdown-menu a:hover {
+  background-color: #caa000;
+  color: #000;
+}

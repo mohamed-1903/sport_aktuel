@@ -1,12 +1,14 @@
 <link rel="stylesheet" href="css/footer.css">
-<link rel="stylesheet" href="css/core.css">
-<link rel="stylesheet" href="css/extras.css">
-<link rel="stylesheet" href="css/watchlist.css">
-<link rel="stylesheet" href="css/cart.css">
-<link rel="stylesheet" href="css/darkmode.css">
-<link rel="stylesheet" href="css/lightmode.css">
-<link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/typography.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/form.css">
 <link rel="stylesheet" href="css/product.css">
+<link rel="stylesheet" href="css/modal.css">
+<link rel="stylesheet" href="css/themes.css">
+<link rel="stylesheet" href="css/responsive.css">
 
 
 <footer>
