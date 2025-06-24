@@ -1122,3 +1122,30 @@ body:not(.light-mode) .error {
 .compare-section button:hover {
   background: #e6c200;
 }
+
+/* Listenansicht für Produktübersicht */
+.einzelprodukt-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.einzelprodukt-list .einzelprodukt {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.einzelprodukt-list .produkt-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.einzelprodukt-list .produkt-info {
+  text-align: left;
+}
+
+.einzelprodukt-list .button-row {
+  margin-left: auto;
+}
