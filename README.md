@@ -268,8 +268,7 @@ Spielers werden Name und Nummer automatisch ausgefüllt. Die Angaben werden im
 Warenkorb gespeichert und dort zusammen mit Größe und Menge angezeigt. Eine
 Personalisierung kostet pauschal 10 €. Beim Eingeben von Name oder Nummer wird
 der Preis automatisch angepasst und eine kleine Vorschau zeigt den Text auf dem
-Trikotbild an.
-
+Rückteil des Trikots an.
 
 ## 🍪 Cookies
 Dieses Projekt verwendet ein technisches Cookie, um die Zustimmung zur Cookie-Nutzung zu speichern.
