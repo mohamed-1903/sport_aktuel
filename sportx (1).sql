@@ -59,6 +59,7 @@ CREATE TABLE `cart_items` (
   `custom_name` varchar(50) DEFAULT NULL,
   `custom_number` varchar(10) DEFAULT NULL,
   `custom_fee` decimal(6,2) DEFAULT 0
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
