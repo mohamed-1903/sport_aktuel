@@ -6,7 +6,7 @@
 }
 
 body {
-  font-family: "Montserrat", sans-serif;
+  font-family: Montserrat, sans-serif;
   background-color: #111;
   color: #fff;
   line-height: 1.6;
@@ -74,7 +74,7 @@ header {
   left: 0;
   z-index: 1;
   background-color: transparent;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgb(255 255 255 / 30%);
   pointer-events: none;
   height: 44px;
   box-sizing: border-box;
@@ -85,16 +85,10 @@ header {
 }
 
 /* ☀️ Light-Mode Anpassung */
-  color: rgba(0, 0, 0, 0.3);
-}
-
-  border: 2px solid #e6c200;
-  background-color: #fff;
-  color: #000;
-}
 body:not(.light-mode) .search-wrapper {
   border: 2px solid #ffd700; /* nur im Darkmode */
 }
+
 /* 🔽 Vorschlagsliste */
 .autocomplete-liste {
   position: absolute;
@@ -109,7 +103,7 @@ body:not(.light-mode) .search-wrapper {
   list-style: none;
   padding: 0;
   margin: 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 20%);
   display: none;
   border-radius: 8px;
 }
@@ -140,12 +134,13 @@ body:not(.light-mode) .search-wrapper {
   object-fit: cover;
   border-radius: 6px;
 }
+
 #autocomplete-shadow {
-  position: absolute;
-  color: rgba(255, 255, 255, 0.3); /* sichtbar im Hintergrund */
+  color: rgb(255 255 255 / 30%); /* sichtbar im Hintergrund */
   position: absolute;
   z-index: 1;
 }
+
 #produktsuche {
   position: relative;
   z-index: 2;
@@ -161,7 +156,7 @@ body:not(.light-mode) .search-wrapper {
   pointer-events: none;
   font-size: 15px;
   text-align: left;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgb(255 255 255 / 5%);
 }
 
 .keine-treffer-icon {
@@ -176,9 +171,9 @@ body:not(.light-mode) .search-wrapper {
     4,
     1fr
   ); /* Erstellt 4 gleich große Spalten für die 4 Buttons */
+
   gap: 10px; /* Fügt einen Abstand von 10px zwischen den Buttons hinzu */
-  justify-items: center; /* Zentriert die Buttons horizontal innerhalb ihrer jeweiligen Zelle */
-  align-items: center; /* Zentriert die Buttons vertikal innerhalb ihrer Zelle */
+  place-items: center center; /* Zentriert die Buttons horizontal innerhalb ihrer jeweiligen Zelle */ /* Zentriert die Buttons vertikal innerhalb ihrer Zelle */
 }
 
 .action-buttons button {
@@ -295,6 +290,7 @@ nav {
 .cta:hover {
   background-color: #e6c200;
 }
+
 .cta-button {
   background-color: #e6c200;
   color: #000;
@@ -343,6 +339,7 @@ nav {
   gap: 30px;
   margin-top: 40px;
 }
+
 .Eprodukt.untereinander {
   margin-bottom: 30px;
   padding-bottom: 40px;
@@ -356,7 +353,6 @@ nav {
 }
 
 .einzelprodukt {
-  background-color: #222;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -369,6 +365,7 @@ nav {
   width: 100%;
   height: 100%; /* ✨ wichtig für gleichmäßige Höhe */
 }
+
 .einzelprodukt h3 {
   font-size: 16px;
   min-height: 3.4em;
@@ -387,6 +384,7 @@ nav {
   object-fit: contain;
   margin-bottom: 10px;
 }
+
 .produkt {
   display: flex;
   flex-direction: column;
@@ -434,10 +432,11 @@ nav {
 .produkt button:hover {
   background-color: #e6c200;
 }
+
 .produkt,
 .dropdown-menu {
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 5%);
 }
 
 .Eprodukt {
@@ -485,10 +484,11 @@ nav {
 .Eprodukt button:hover {
   background-color: #e6c200;
 }
+
 .Eprodukt,
 .dropdown-menu {
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 5%);
 }
 
 footer {
@@ -519,19 +519,17 @@ footer a:hover {
   --bg-color: #eaeaea; /* Hell, aber nicht weiß */
   --text-color: #1a1a1a; /* Fast-Schwarz für gute Lesbarkeit */
   --accent-color: #caa000; /* Etwas dunkleres Gold */
-  --card-bg: #ffffff; /* Saubere Boxfarbe */
-}
+  --card-bg: #fff; /* Saubere Boxfarbe */
+
   border: 2px solid #000 !important;
-}
 
 /* Im Light-Mode Herz-Button (2. Button) und Theme-Toggle schwarz machen */
   color: #fff !important;
-}
 
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
-  font-family: "Montserrat", sans-serif;
+  font-family: Montserrat, sans-serif;
   margin: 0;
   padding: 0;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -570,23 +568,15 @@ a {
 .dropdown-menu li a:hover {
   background-color: var(--accent-color);
   color: #000;
-}
-  background-color: #fff; /* Schwarzer Hintergrund */
-}
-
-  background-color: #fff; /* Schwarz auch für einzelne Links */
-  color: #000; /* Weiße Schrift */
-}
-  background-color: #caa000;
-  color: #000;
+} /* Schwarzer Hintergrund */ /* Schwarz auch für einzelne Links */ /* Weiße Schrift */
   border-radius: 5px;
-}
 
 /* Nur für Seiten mit Formularen (z. B. Registrierung, Login, Profil) */
 body.form-page {
   background-color: #121212;
   color: #f0f0f0;
 }
+
 .form-wrapper {
   background-color: #1a1a1a;
   color: #f0f0f0;
@@ -594,7 +584,7 @@ body.form-page {
   border-radius: 12px;
   max-width: 550px;
   margin: 50px auto;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 25px rgb(0 0 0 / 30%);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   transition: background-color 0.3s ease;
 }
@@ -696,30 +686,26 @@ div {
   text-align: center;
   margin: 0 auto;
 }
-  background-color: #f8f8f8;
-  color: #000;
-  border-color: #ccc;
-}
-  color: var(--text-color);
-}
-  background-color: var(--accent-color);
-  color: #fff;
-}
-  color: var(--accent-color);
-  border-color: var(--accent-color);
-}
-  border-color: #28a745; /* Helles Grün für Light Mode */
-  box-shadow: 0 0 5px #28a74580; /* Optionaler Leuchteffekt */
-}
+
+  border-color: var(--accent-color); /* Helles Grün für Light Mode */ /* Optionaler Leuchteffekt */
 
   border-color: #dc3545; /* Helles Rot für Light Mode */
-  box-shadow: 0 0 5px #dc354580; /* Optionaler Leuchteffekt */
-}
-
-  color: #e6c200; /* Dunkleres Grau für bessere Lesbarkeit im Light Mode */
-}
+  box-shadow: 0 0 5px #dc354580; /* Optionaler Leuchteffekt */ /* Dunkleres Grau für bessere Lesbarkeit im Light Mode */
   background-color: #e0e0e0;
-  color: #888;
-  cursor: not-allowed;
-  border: 1px solid #dacfcf;
+  cursor: not-allowed
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
 }

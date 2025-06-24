@@ -1,17 +1,18 @@
 .pulse-highlight {
   animation: pulse-effect 1s ease-out;
 }
+
 /* Watchlist-Container als Grid */
 #watchlist-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 10px;
   padding: 40px 20px;
-  align-items: stretch;
+  place-items: stretch center;
   width: 100%;
-  justify-content: stretch;
-  justify-items: center; /* Alle Karten gleich hoch */
+  justify-content: stretch; /* Alle Karten gleich hoch */
 }
+
 /* Karte: voller Stretch + gleich hohe Layoutstruktur */
 .watchlist-card {
   width: 100%;
@@ -23,7 +24,7 @@
   padding: 20px;
   background-color: var(--card-bg);
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 25%);
   transition: transform 0.3s ease;
 }
 
@@ -75,6 +76,7 @@
 .watchlist-card a button:hover {
   background-color: #e6c200;
 }
+
 /* ⭕ Zentrierung der gesamten Merkliste-Seite */
 .watchlist-wrapper {
   max-width: 1200px;
@@ -82,11 +84,13 @@
   padding: 40px 20px;
   text-align: center;
 }
+
 /* 🧼 Button unten zentrieren */
 .watchlist-controls {
   text-align: center;
   margin-top: 30px;
 }
+
 /* ✨ Stil für 'Alle löschen' Button */
 .btn-delete-all {
   background-color: var(--accent-color);

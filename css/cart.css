@@ -10,14 +10,16 @@
 }
 
 /* ============================= */
+
 /* 🛒 Linke Seite: Produktliste  */
+
 /* ============================= */
 
 .cart-main {
   background-color: var(--card-bg);
   border-radius: 12px;
   padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 20%);
 }
 
 .cart-main h2 {
@@ -70,14 +72,16 @@
 }
 
 /* ============================== */
+
 /* ✅ Rechte Seite: Zusammenfassung */
+
 /* ============================== */
 
 .cart-summary {
   background-color: var(--card-bg);
   padding: 24px;
   border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 30%);
   color: var(--text-color);
   position: sticky;
   top: 100px;
