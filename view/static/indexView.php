@@ -1,5 +1,5 @@
 
-<?php include 'view/layout/header.php'; ?>
+<?php include __DIR__ . '/../layout/header.php'; ?>
 <section class="welcome">
     <img src="img/logo.png" alt="SportX Logo" class="welcome-logo">
     <h1>Willkommen bei SportX!</h1>
@@ -55,5 +55,5 @@ $topProdukte = array_slice($topProdukte, 0, 4);
     </div>
 </section>
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
-<?php include 'view/layout/footer.php'; ?>
+<?php include __DIR__ . '/../layout/footer.php'; ?>
 

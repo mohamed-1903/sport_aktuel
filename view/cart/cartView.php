@@ -17,7 +17,7 @@ if (!isset($_SESSION['user_id'])) {
   exit;
 }
 
-include 'view/layout/header.php';
+include __DIR__ . '/../layout/header.php';
 $cartItems = getCartItems($_SESSION['user_id']);
 $total = 0;
 ?>
@@ -114,4 +114,4 @@ $total = 0;
 </main>
 
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
-<?php include 'view/layout/footer.php'; ?>
+<?php include __DIR__ . '/../layout/footer.php'; ?>

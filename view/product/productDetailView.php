@@ -1,4 +1,4 @@
-<?php include 'view/layout/header.php'; ?>
+<?php include __DIR__ . '/../layout/header.php'; ?>
 
 <main class="produkte">
   <!-- 🔍 Zoom Modal -->
@@ -220,5 +220,5 @@
 </script>
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
 
-<?php include 'view/layout/footer.php'; ?>
+<?php include __DIR__ . '/../layout/footer.php'; ?>
 

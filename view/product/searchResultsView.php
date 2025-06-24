@@ -1,4 +1,4 @@
-<?php include 'view/layout/header.php'; ?>
+<?php include __DIR__ . '/../layout/header.php'; ?>
 
 <main class="main-content">
   <h1>Suchergebnisse für "<?= htmlspecialchars($searchQuery) ?>"</h1>
@@ -57,4 +57,4 @@
 <script src="js/produkt.js"></script>
 <script src="js/watchlist.js"></script>
 <script src="js/warenkorb.js"></script>
-<?php include 'view/layout/footer.php'; ?>
+<?php include __DIR__ . '/../layout/footer.php'; ?>
