@@ -261,14 +261,16 @@ Um mehrere Produkte gleichzeitig zur Merkliste hinzuzufügen oder daraus zu entf
 
 ## 🎽 Personalisierte Trikots
 
-Bei Produkten der Unterkategorie "Trikots" kannst du jetzt einen Namen und eine
-Rückennummer angeben. Wenn der Produktname eine bekannte Mannschaft enthält,
-wird außerdem eine Auswahlliste mit Spielern angezeigt. Durch die Auswahl eines
-Spielers werden Name und Nummer automatisch ausgefüllt. Die Angaben werden im
-Warenkorb gespeichert und dort zusammen mit Größe und Menge angezeigt. Eine
-Personalisierung kostet pauschal 10 €. Beim Eingeben von Name oder Nummer wird
-der Preis automatisch angepasst und eine kleine Vorschau zeigt den Text auf dem
-Rückteil des Trikots an.
+Bei Produkten der Unterkategorie "Trikots" kannst du per Knopfdruck eine
+Individuelle Beschriftung aktivieren. Nach Klick auf **Individualisieren**
+erscheint rechts neben den Standardoptionen eine Spalte, in der Name und Nummer
+eingetragen werden können. Je nach Team wird der komplette Kader aus einer
+`data/rosters.json` Datei geladen, sodass du einen Spieler auswählen kannst und
+sein Name sowie seine Rückennummer automatisch übernommen werden. Die Angaben
+werden im Warenkorb gespeichert und eine Preisliste zeigt Grundpreis,
+Personalisierungsgebühr und Rabatt übersichtlich an. Eine Personalisierung kostet
+pauschal 10 €. Beim Eingeben von Name oder Nummer aktualisiert sich die Vorschau
+auf dem Rücken des Trikots und der Endpreis passt sich entsprechend an.
 
 ## 🍪 Cookies
 Dieses Projekt verwendet ein technisches Cookie, um die Zustimmung zur Cookie-Nutzung zu speichern.

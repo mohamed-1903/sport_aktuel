@@ -326,5 +326,32 @@ button {
 .jersey-preview .overlay-number {
   bottom: 15%;
   font-size: 20px;
+}
+
+.btn-show-custom {
+  margin-top: 10px;
+  background-color: #ffd700;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.options-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.option-custom.hidden {
+  display: none;
+}
+
+.price-breakdown ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 10px;
+  font-size: 14px;
 
 }

@@ -56,6 +56,7 @@ function addToCart(int $userId, array $item): void
     $cartId = ensureCart($userId);
 
     // Prüfen ob Eintrag schon existiert
+
     if (customizationSupported()) {
         $stmt = $db->prepare("SELECT id, quantity FROM cart_items WHERE cart_id = ? AND product_id = ? AND size = ? AND custom_name <=> ? AND custom_number <=> ? AND custom_fee = ?");
         $stmt->execute([
@@ -133,6 +134,7 @@ function addToCart(int $userId, array $item): void
 function getCartItems(int $userId): array
 {
     global $db;
+
 
     $select = [
         'ci.id AS cart_item_id',

@@ -38,6 +38,7 @@
     $imageMain = $product['image_main'] ?? ($product['imagepath'] ?? 'img/placeholder.jpg');
     $images = $product['images'] ?? [$imageMain];
     $backImage = $images[1] ?? $imageMain;
+
     $description = $product['description'] ?? 'Keine Beschreibung verfügbar';
     $sizes = $product['sizes'] ?? range(38, 46);
   ?>
@@ -82,52 +83,60 @@
           </p>
 
 
-          <!-- 👕 Größenauswahl -->
-          <label for="size-<?= $index ?>">Größe:</label>
-          <select id="size-<?= $index ?>" class="size-dropdown">
-            <option value="" disabled selected>-- Bitte auswählen --</option>
-            <?php foreach ($sizes as $size): ?>
-              <option value="<?= $size ?>"><?= $size ?></option>
-            <?php endforeach; ?>
-          </select>
+          <button type="button" class="btn-show-custom" id="customBtn-<?= $index ?>">Individualisieren</button>
+          <div class="options-wrapper">
+            <div class="option-basic">
+              <!-- 👕 Größenauswahl -->
+              <label for="size-<?= $index ?>">Größe:</label>
+              <select id="size-<?= $index ?>" class="size-dropdown">
+                <option value="" disabled selected>-- Bitte auswählen --</option>
+                <?php foreach ($sizes as $size): ?>
+                  <option value="<?= $size ?>"><?= $size ?></option>
+                <?php endforeach; ?>
+              </select>
 
-          <!-- 🔢 Mengenauswahl -->
-          <label for="quantity-<?= $index ?>">Menge:</label>
-          <input type="number" id="quantity-<?= $index ?>" value="1" min="1" class="size-dropdown" />
+              <!-- 🔢 Mengenauswahl -->
+              <label for="quantity-<?= $index ?>">Menge:</label>
+              <input type="number" id="quantity-<?= $index ?>" value="1" min="1" class="size-dropdown" />
 
-          <?php if (stripos($product['subcategory'] ?? '', 'Trikots') !== false): ?>
-            <div class="customization">
-              <label for="player-<?= $index ?>">Spieler wählen:</label>
-              <select id="player-<?= $index ?>" class="size-dropdown player-select"></select>
-              <label for="customName-<?= $index ?>">Name:</label>
-              <input type="text" id="customName-<?= $index ?>" class="size-dropdown custom-name" maxlength="20" />
-              <label for="customNumber-<?= $index ?>">Nummer:</label>
-              <input type="number" id="customNumber-<?= $index ?>" class="size-dropdown custom-number" min="0" max="99" />
-              <div class="jersey-preview" id="jerseyPreview-<?= $index ?>">
-                <img src="<?= htmlspecialchars($backImage) ?>" alt="Rückenansicht" />
-                <div class="overlay-name"></div>
-                <div class="overlay-number"></div>
+              <div class="button-rows">
+                <!-- 🎟 Rabattcode -->
+                <label for="pin-<?= $index ?>">Rabatt-PIN eingeben:</label>
+                <input type="text" id="pin-<?= $index ?>" maxlength="5" placeholder="5-stellig" />
+                <p id="rabatt-info-<?= $index ?>"></p>
+
+                <!-- 🎁 Geschenkoption -->
+                <div class="gift-wrap">
+                  <label>
+                    <input type="checkbox" id="giftWrap-<?= $index ?>" />
+                    🎁 Geschenkverpackung (+ 2 €)
+                  </label>
+                </div>
+
+                <!-- 🔄 Zurücksetzen -->
+                <button onclick="resetFields(this.closest('.Eprodukt'))">Felder zurücksetzen</button>
               </div>
             </div>
-          <?php endif; ?>
 
-          <div class="button-rows">
-            <!-- 🎟 Rabattcode -->
-            <label for="pin-<?= $index ?>">Rabatt-PIN eingeben:</label>
-            <input type="text" id="pin-<?= $index ?>" maxlength="5" placeholder="5-stellig" />
-            <p id="rabatt-info-<?= $index ?>"></p>
-
-            <!-- 🎁 Geschenkoption -->
-            <div class="gift-wrap">
-              <label>
-                <input type="checkbox" id="giftWrap-<?= $index ?>" />
-                🎁 Geschenkverpackung (+ 2 €)
-              </label>
+            <?php if (stripos($product['subcategory'] ?? '', 'Trikots') !== false): ?>
+            <div class="option-custom hidden" id="customSection-<?= $index ?>">
+              <div class="customization">
+                <label for="player-<?= $index ?>">Spieler wählen:</label>
+                <select id="player-<?= $index ?>" class="size-dropdown player-select"></select>
+                <label for="customName-<?= $index ?>">Name:</label>
+                <input type="text" id="customName-<?= $index ?>" class="size-dropdown custom-name" maxlength="20" />
+                <label for="customNumber-<?= $index ?>">Nummer:</label>
+                <input type="number" id="customNumber-<?= $index ?>" class="size-dropdown custom-number" min="0" max="99" />
+                <div class="jersey-preview" id="jerseyPreview-<?= $index ?>">
+                  <img src="<?= htmlspecialchars($backImage) ?>" alt="Rückenansicht" />
+                  <div class="overlay-name"></div>
+                  <div class="overlay-number"></div>
+                </div>
+              </div>
             </div>
-
-            <!-- 🔄 Zurücksetzen -->
-            <button onclick="resetFields(this.closest('.Eprodukt'))">Felder zurücksetzen</button>
+            <?php endif; ?>
           </div>
+          <div class="price-breakdown"></div>
 
           <!-- 🧺 Aktionen -->
 
