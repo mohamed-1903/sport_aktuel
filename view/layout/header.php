@@ -11,6 +11,16 @@ if (session_status() === PHP_SESSION_NONE) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SportX</title>
     <link rel="icon" type="image/png" href="img/logo.png">
+    <?php
+    $projectRoot = str_replace(\
+        DIRECTORY_SEPARATOR,
+        '/',
+        realpath(__DIR__ . '/../..')
+    );
+    $docRoot = rtrim(str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']), '/');
+    $basePath = rtrim(str_replace($docRoot, '', $projectRoot), '/') . '/';
+    ?>
+    <base href="<?= htmlspecialchars($basePath, ENT_QUOTES) ?>">
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/layout.css">
