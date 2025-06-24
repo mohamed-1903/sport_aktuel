@@ -1,6 +1,6 @@
 
 <?php
-include 'view/layout/header.php';
+include __DIR__ . '/../layout/header.php';
 
 // Fehlermeldung aus der vorherigen Sitzung anzeigen
 if (!empty($_SESSION['login_error'])) {
@@ -70,5 +70,5 @@ if (!empty($_SESSION['login_error'])) {
     loginBtn.disabled = !valid;
   }));
 </script>
-<?php include 'view/layout/footer.php'; ?>
+<?php include __DIR__ . '/../layout/footer.php'; ?>
 

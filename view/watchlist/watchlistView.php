@@ -1,4 +1,4 @@
-<?php include 'view/layout/header.php'; ?>
+<?php include __DIR__ . '/../layout/header.php'; ?>
 
 <div class="produkte">
     <h1>🧡 Deine Merkliste</h1>
@@ -30,5 +30,5 @@
 </div>
 
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
-<?php include 'view/layout/footer.php'; ?>
+<?php include __DIR__ . '/../layout/footer.php'; ?>
 

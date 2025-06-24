@@ -1,4 +1,4 @@
-<?php include 'view/layout/header.php'; ?>
+<?php include __DIR__ . '/../layout/header.php'; ?>
 
 <main class="form-wrapper" style="text-align: center; padding: 3em 1em;">
   <h1>🛠️ Admin-Dashboard</h1>
@@ -19,5 +19,5 @@
 </main>
 
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
-<?php include 'view/layout/footer.php'; ?>
+<?php include __DIR__ . '/../layout/footer.php'; ?>
 
