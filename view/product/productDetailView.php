@@ -18,6 +18,7 @@
   <?php
   require_once 'model/ratingModel.php';
   foreach ($productsToShow as $index => $product):
+
     // 🧩 Produktdaten extrahieren mit Fallbacks
     $name = $product['name'] ?? 'Produktname nicht verfügbar';
     $price = isset($product['priceValue']) && is_numeric($product['priceValue']) ? $product['priceValue'] : 0;
@@ -49,7 +50,8 @@
 
         <!-- 🛒 Produktdetails & Optionen -->
         <div>
-          <h1><?= htmlspecialchars($name) ?></h1>
+          <h1 class="product-name"><?= htmlspecialchars($name) ?></h1>
+
           <p id="original-price-<?= $index ?>" class="price-old" style="display: none;"></p>
           <p id="final-price-<?= $index ?>">
             <?php if (isset($product['priceValue']) && is_numeric($product['priceValue'])): ?>
@@ -79,6 +81,22 @@
           <label for="quantity-<?= $index ?>">Menge:</label>
           <input type="number" id="quantity-<?= $index ?>" value="1" min="1" class="size-dropdown" />
 
+          <?php if (stripos($product['subcategory'] ?? '', 'Trikots') !== false): ?>
+            <div class="customization">
+              <label for="player-<?= $index ?>">Spieler wählen:</label>
+              <select id="player-<?= $index ?>" class="size-dropdown player-select"></select>
+              <label for="customName-<?= $index ?>">Name:</label>
+              <input type="text" id="customName-<?= $index ?>" class="size-dropdown custom-name" maxlength="20" />
+              <label for="customNumber-<?= $index ?>">Nummer:</label>
+              <input type="number" id="customNumber-<?= $index ?>" class="size-dropdown custom-number" min="0" max="99" />
+              <div class="jersey-preview" id="jerseyPreview-<?= $index ?>">
+                <img src="<?= htmlspecialchars($imageMain) ?>" alt="Preview" />
+                <div class="overlay-name"></div>
+                <div class="overlay-number"></div>
+              </div>
+            </div>
+          <?php endif; ?>
+
           <div class="button-rows">
             <!-- 🎟 Rabattcode -->
             <label for="pin-<?= $index ?>">Rabatt-PIN eingeben:</label>
@@ -98,6 +116,7 @@
           </div>
 
           <!-- 🧺 Aktionen -->
+
           <div class="button-reihe" data-iid="<?= (int)$product['id'] ?>">
             <?php
             $iid = isset($product['iid']) ? (int)$product['iid'] : 0;
@@ -142,6 +161,7 @@
     </section>
   <?php endforeach; ?>
 
+
   <!-- 💰 Steuerberechnung + Rabattcode -->
   <section class="preis-container">
     <label for="netto">Preis ohne Steuern (€):</label>
@@ -163,11 +183,6 @@
     </datalist>
     <button id="compareBtn">Produkt vergleichen</button>
   </div>
-  <!-- 🧾 Dynamische Sammelliste / Warenkorb -->
-  <section id="sammelliste">
-    <h2>🗂️ Dein Warenkorb</h2>
-    <ul id="sammelliste-items"></ul>
-  </section>
 
   <!-- 🧠 Ähnliche Produkte statisch -->
   <section class="produkte">
@@ -232,6 +247,7 @@
   </div>
 </div>
 <script>
+
   document.getElementById('compareBtn').addEventListener('click', () => {
     const input = document.getElementById('compareInput').value.trim();
     const options = document.querySelectorAll('#compareOptions option');
