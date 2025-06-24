@@ -48,12 +48,14 @@ function registerUser(string $username, string $email, string $password): array 
 }
 function deleteUserById(int $id): bool {
     global $db;
+
+    // Löschen nur erlauben, wenn der Benutzer keine Bestellungen hat
+    if (userHasOrders($id)) {
+        return false;
+    }
+
     $stmt = $db->prepare("DELETE FROM users WHERE id = ?");
     return $stmt->execute([$id]);
-    if (userHasOrders($userId)) {
-    return false; // oder: Fehlermeldung „Benutzer hat noch offene Bestellungen.“
-}
-
 }
 function getAllUsers(): array {
     global $db;
