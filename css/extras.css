@@ -1117,6 +1117,12 @@ body:not(.light-mode) .error {
   padding: 5px;
   border-radius: 5px;
   border: 1px solid #555;
+  flex-direction: row; /* Buttons neben Bild und Text */
+  height: auto;
+  flex: 1;
+  display: flex;
+  gap: 10px;
+  align-items: center;
   background: var(--card-bg);
   color: var(--text-color);
 }
