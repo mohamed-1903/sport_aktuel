@@ -725,7 +725,9 @@ body.form-page {
   }
 
   .action-buttons {
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    justify-content: center;
+    gap: 10px;
   }
 
   .nav-menu {
