@@ -15,17 +15,35 @@
 .rating-stars label:hover ~ label {
   color: gold;
 }
+.reviews {
+  margin-top: 2rem;
+  border-top: 1px solid #ccc;
+  padding-top: 1rem;
+}
+.reviews h3 {
+  margin-bottom: 0.5rem;
+}
 .review {
-  border-bottom: 1px solid #ddd;
-  padding: 10px 0;
+  background: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+
 }
 .review img {
   max-width: 150px;
   display: block;
   margin-top: 5px;
 }
+.review-form {
+  margin-top: 1rem;
+}
 .review-form textarea {
   width: 100%;
   min-height: 80px;
   margin: 5px 0;
+}
+.review-form button {
+  margin-top: 5px;
 }

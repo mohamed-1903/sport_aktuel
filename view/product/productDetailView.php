@@ -151,6 +151,7 @@
         </div>
       </div>
     </section>
+
   <?php
     $ratings = getRatingsForProduct((int)$product['id']);
     $avgRating = getAverageRating((int)$product['id']);
@@ -234,6 +235,47 @@
       <?php endfor; ?>
     </div>
   </section>
+<?php foreach ($productsToShow as $index => $product):
+    $ratings = getRatingsForProduct((int)$product['id']);
+    $avgRating = getAverageRating((int)$product['id']);
+?>
+<section class="reviews">
+  <h3>Kundenbewertungen zu <?= htmlspecialchars($product['name']) ?></h3>
+  <?php if ($avgRating): ?>
+    <p>Durchschnittliche Bewertung: <?= number_format($avgRating, 1) ?>/5</p>
+  <?php endif; ?>
+  <?php foreach ($ratings as $r): ?>
+    <div class="review">
+      <strong><?= htmlspecialchars($r['username']) ?></strong>
+      <span class="rating-stars" style="pointer-events:none;">
+        <?php for ($s = 5; $s >= 1; $s--): ?>
+          <label><?= $s <= $r['stars'] ? '★' : '☆' ?></label>
+        <?php endfor; ?>
+      </span>
+      <p><?= nl2br(htmlspecialchars($r['comment'])) ?></p>
+      <?php if (!empty($r['image_path'])): ?>
+        <img src="<?= htmlspecialchars($r['image_path']) ?>" alt="Bild zur Bewertung">
+      <?php endif; ?>
+    </div>
+  <?php endforeach; ?>
+  <?php if (isset($_SESSION['user_id'])): ?>
+    <form class="review-form" action="index.php?page=community&action=addRating" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="product_id" value="<?= (int)$product['id'] ?>">
+      <div class="rating-stars">
+        <?php for ($s = 5; $s >= 1; $s--): ?>
+          <input type="radio" id="star<?= $s ?>-bottom-<?= $index ?>" name="stars" value="<?= $s ?>"<?= $s==5 ? ' checked' : '' ?>>
+          <label for="star<?= $s ?>-bottom-<?= $index ?>">★</label>
+        <?php endfor; ?>
+      </div>
+      <textarea name="comment" required placeholder="Deine Meinung..."></textarea>
+      <input type="file" name="image" accept="image/*">
+      <button type="submit">Bewerten</button>
+    </form>
+  <?php else: ?>
+    <p><a href="index.php?page=auth&action=login">Anmelden</a>, um eine Bewertung zu schreiben.</p>
+  <?php endif; ?>
+</section>
+<?php endforeach; ?>
 </main>
 <script>
   document.getElementById('compareBtn').addEventListener('click', () => {
