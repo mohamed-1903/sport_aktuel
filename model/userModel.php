@@ -10,6 +10,15 @@ function getUserByEmail(string $email): ?array {
     return $user ?: null;
 }
 
+// Neuen Benutzer anhand des Benutzernamens ermitteln
+function getUserByUsername(string $username): ?array {
+    global $db;
+    $stmt = $db->prepare("SELECT * FROM users WHERE username = ? LIMIT 1");
+    $stmt->execute([$username]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $user ?: null;
+}
+
 function loginUser(string $email, string $password): ?array {
     $user = getUserByEmail($email);
     if ($user && password_verify($password, $user['password_hash'])) {
@@ -21,14 +30,21 @@ function loginUser(string $email, string $password): ?array {
     return null;
 }
 
-function registerUser(string $username, string $email, string $password): bool {
+function registerUser(string $username, string $email, string $password): array {
     global $db;
-    if (getUserByEmail($email)) {
-        return false; // Benutzer existiert bereits
+
+    if (getUserByUsername($username)) {
+        return ['success' => false, 'error' => 'Benutzername bereits vergeben.'];
     }
+
+    if (getUserByEmail($email)) {
+        return ['success' => false, 'error' => 'E-Mail bereits vergeben.'];
+    }
+
     $hash = password_hash($password, PASSWORD_DEFAULT);
     $stmt = $db->prepare("INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)");
-    return $stmt->execute([$username, $email, $hash]);
+    $success = $stmt->execute([$username, $email, $hash]);
+    return ['success' => $success];
 }
 function deleteUserById(int $id): bool {
     global $db;

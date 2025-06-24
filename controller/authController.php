@@ -11,13 +11,13 @@ switch ($action) {
             $email = $_POST['email'] ?? '';
             $password = $_POST['password'] ?? '';
 
-            $success = registerUser($username, $email, $password);
+            $result = registerUser($username, $email, $password);
 
-            if ($success) {
+            if ($result['success']) {
                 header("Location: index.php?page=auth&action=login&registered=1");
                 exit;
             } else {
-                $error = "Registrierung fehlgeschlagen. Benutzer existiert vielleicht schon.";
+                $error = $result['error'] ?? 'Registrierung fehlgeschlagen.';
             }
         }
         require 'view/auth/registerView.php';
