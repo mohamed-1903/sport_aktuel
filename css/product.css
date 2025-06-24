@@ -295,3 +295,36 @@ button {
   margin-top: 10px;
   align-items: center;
 }
+
+.jersey-preview {
+  position: relative;
+  width: 150px;
+  margin-top: 10px;
+}
+
+.jersey-preview img {
+  width: 100%;
+  display: block;
+}
+
+.jersey-preview .overlay-name,
+.jersey-preview .overlay-number {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-weight: bold;
+  text-shadow: 0 0 5px #000;
+  pointer-events: none;
+}
+
+.jersey-preview .overlay-name {
+  bottom: 35%;
+  font-size: 16px;
+}
+
+.jersey-preview .overlay-number {
+  bottom: 15%;
+  font-size: 20px;
+
+}

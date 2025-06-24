@@ -50,6 +50,7 @@
         <!-- 🛒 Produktdetails & Optionen -->
         <div>
           <h1 class="product-name"><?= htmlspecialchars($name) ?></h1>
+
           <p id="original-price-<?= $index ?>" class="price-old" style="display: none;"></p>
           <p id="final-price-<?= $index ?>">
             <?php if (isset($product['priceValue']) && is_numeric($product['priceValue'])): ?>
@@ -87,6 +88,11 @@
               <input type="text" id="customName-<?= $index ?>" class="size-dropdown custom-name" maxlength="20" />
               <label for="customNumber-<?= $index ?>">Nummer:</label>
               <input type="number" id="customNumber-<?= $index ?>" class="size-dropdown custom-number" min="0" max="99" />
+              <div class="jersey-preview" id="jerseyPreview-<?= $index ?>">
+                <img src="<?= htmlspecialchars($imageMain) ?>" alt="Preview" />
+                <div class="overlay-name"></div>
+                <div class="overlay-number"></div>
+              </div>
             </div>
           <?php endif; ?>
 
@@ -109,6 +115,7 @@
           </div>
 
           <!-- 🧺 Aktionen -->
+
           <div class="button-reihe" data-iid="<?= (int)$product['id'] ?>">
             <?php
             $iid = isset($product['iid']) ? (int)$product['iid'] : 0;
