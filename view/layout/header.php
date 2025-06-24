@@ -109,4 +109,5 @@ if (session_status() === PHP_SESSION_NONE) {
                 </li>
             </ul>
         </nav>
+        <div id="nav-overlay" class="nav-overlay"></div>
     </header>
