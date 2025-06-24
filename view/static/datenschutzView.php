@@ -1,4 +1,4 @@
-<?php include 'view/layout/header.php'; ?>
+<?php include __DIR__ . '/../layout/header.php'; ?>
 
 <main class="content">
     <h2>Datenschutzerklärung</h2>
@@ -35,4 +35,4 @@
     </p>
 </main>
 
-<?php include 'view/layout/footer.php'; ?>
+<?php include __DIR__ . '/../layout/footer.php'; ?>

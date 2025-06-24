@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 require_once 'model/orderModel.php';
 $orders = getOrdersByUser($_SESSION['user_id']);
 
-include 'view/layout/header.php';
+include __DIR__ . '/../layout/header.php';
 ?>
 
 
@@ -92,4 +92,4 @@ include 'view/layout/header.php';
 </section>
 
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
-<?php include 'view/layout/footer.php'; ?>
+<?php include __DIR__ . '/../layout/footer.php'; ?>

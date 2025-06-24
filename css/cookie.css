@@ -11,6 +11,7 @@
     var(--cookie-bg-end)
   );
   color: var(--cookie-text-color);
+
   padding: 1rem 1.5rem;
   display: none;
   justify-content: space-between;
@@ -27,6 +28,7 @@
     var(--cookie-button-start),
     var(--cookie-button-end)
   );
+
   color: #fff;
   border: none;
   padding: 0.4rem 1rem;
@@ -42,6 +44,7 @@
     var(--cookie-button-end),
     var(--cookie-button-start)
   );
+
 }
 
 @keyframes slide-up {
@@ -53,4 +56,16 @@
     transform: translate(-50%, 0);
     opacity: 1;
   }
+
+
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #333;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
 }
