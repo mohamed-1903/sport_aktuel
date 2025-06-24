@@ -259,5 +259,13 @@ Um mehrere Produkte gleichzeitig zur Merkliste hinzuzufügen oder daraus zu entf
 { "product_ids": [1, 2, 3] }
 ```
 
+## 🎽 Personalisierte Trikots
+
+Bei Produkten der Unterkategorie "Trikots" kannst du jetzt einen Namen und eine
+Rückennummer angeben. Wenn der Produktname eine bekannte Mannschaft enthält,
+wird außerdem eine Auswahlliste mit Spielern angezeigt. Durch die Auswahl eines
+Spielers werden Name und Nummer automatisch ausgefüllt. Die Angaben werden im
+Warenkorb gespeichert und dort zusammen mit Größe und Menge angezeigt.
+
 ## 🍪 Cookies
 Dieses Projekt verwendet ein technisches Cookie, um die Zustimmung zur Cookie-Nutzung zu speichern.

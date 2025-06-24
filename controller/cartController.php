@@ -46,7 +46,9 @@ switch ($action) {
                         'size' => trim($size),
                         'quantity' => max(1, (int)$quantity),
                         'discount' => isset($data['discount']) ? (int)$data['discount'] : 0,
-                        'gift' => !empty($data['gift'])
+                        'gift' => !empty($data['gift']),
+                        'custom_name' => $data['custom_name'] ?? null,
+                        'custom_number' => $data['custom_number'] ?? null
                     ]);
                 } catch (PDOException $e) {
                     http_response_code(500);
@@ -166,7 +168,12 @@ switch ($action) {
         $items = getCartItems($userId);
         $inCart = false;
         foreach ($items as $item) {
-            if ($item['product_id'] == $data['product_id'] && $item['size'] == $data['size']) {
+            if (
+                $item['product_id'] == $data['product_id'] &&
+                $item['size'] == $data['size'] &&
+                ($item['custom_name'] ?? null) == ($data['custom_name'] ?? null) &&
+                ($item['custom_number'] ?? null) == ($data['custom_number'] ?? null)
+            ) {
                 removeFromCart($userId, $data['product_id'], $data['size']);
                 echo json_encode(['status' => 'ok', 'in_cart' => false]);
                 exit;
@@ -179,7 +186,9 @@ switch ($action) {
                 'size' => trim($data['size']),
                 'quantity' => (int)$data['qty'],
                 'discount' => isset($data['discount']) ? (int)$data['discount'] : 0,
-                'gift' => !empty($data['gift'])
+                'gift' => !empty($data['gift']),
+                'custom_name' => $data['custom_name'] ?? null,
+                'custom_number' => $data['custom_number'] ?? null
             ]);
         } catch (PDOException $e) {
             http_response_code(500);

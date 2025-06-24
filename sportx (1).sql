@@ -55,17 +55,19 @@ CREATE TABLE `cart_items` (
   `size` varchar(10) DEFAULT NULL,
   `quantity` int(11) DEFAULT 1,
   `discount` int(11) DEFAULT 0,
-  `gift` tinyint(1) DEFAULT 0
+  `gift` tinyint(1) DEFAULT 0,
+  `custom_name` varchar(50) DEFAULT NULL,
+  `custom_number` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Daten für Tabelle `cart_items`
 --
 
-INSERT INTO `cart_items` (`id`, `cart_id`, `product_id`, `size`, `quantity`, `discount`, `gift`) VALUES
-(101, 3, 1, '42', 5, 0, 0),
-(102, 3, 6, 'M', 1, 0, 0),
-(113, 2, 1, 'M', 1, 0, 0);
+INSERT INTO `cart_items` (`id`, `cart_id`, `product_id`, `size`, `quantity`, `discount`, `gift`, `custom_name`, `custom_number`) VALUES
+(101, 3, 1, '42', 5, 0, 0, NULL, NULL),
+(102, 3, 6, 'M', 1, 0, 0, NULL, NULL),
+(113, 2, 1, 'M', 1, 0, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 

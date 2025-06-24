@@ -49,7 +49,7 @@
 
         <!-- 🛒 Produktdetails & Optionen -->
         <div>
-          <h1><?= htmlspecialchars($name) ?></h1>
+          <h1 class="product-name"><?= htmlspecialchars($name) ?></h1>
           <p id="original-price-<?= $index ?>" class="price-old" style="display: none;"></p>
           <p id="final-price-<?= $index ?>">
             <?php if (isset($product['priceValue']) && is_numeric($product['priceValue'])): ?>
@@ -78,6 +78,17 @@
           <!-- 🔢 Mengenauswahl -->
           <label for="quantity-<?= $index ?>">Menge:</label>
           <input type="number" id="quantity-<?= $index ?>" value="1" min="1" class="size-dropdown" />
+
+          <?php if (stripos($product['subcategory'] ?? '', 'Trikots') !== false): ?>
+            <div class="customization">
+              <label for="player-<?= $index ?>">Spieler wählen:</label>
+              <select id="player-<?= $index ?>" class="size-dropdown player-select"></select>
+              <label for="customName-<?= $index ?>">Name:</label>
+              <input type="text" id="customName-<?= $index ?>" class="size-dropdown custom-name" maxlength="20" />
+              <label for="customNumber-<?= $index ?>">Nummer:</label>
+              <input type="number" id="customNumber-<?= $index ?>" class="size-dropdown custom-number" min="0" max="99" />
+            </div>
+          <?php endif; ?>
 
           <div class="button-rows">
             <!-- 🎟 Rabattcode -->
