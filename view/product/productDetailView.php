@@ -1,4 +1,17 @@
 <?php include __DIR__ . '/../layout/header.php'; ?>
+<?php if (!empty($_SESSION['message'])): ?>
+  <div class="toast-popup show" id="toastMessage">
+    <?= htmlspecialchars($_SESSION['message']) ?>
+  </div>
+  <script>
+    const toast = document.getElementById('toastMessage');
+    if (toast) {
+      toast.classList.add('show');
+      setTimeout(() => { toast.classList.remove('show'); }, 3000);
+    }
+  </script>
+  <?php unset($_SESSION['message']); ?>
+<?php endif; ?>
 
 <main class="produkte">
   <!-- 🔍 Zoom Modal -->
@@ -15,7 +28,9 @@
       </div>
     </div>
   </div>
-  <?php foreach ($productsToShow as $index => $product):
+  <?php
+  require_once 'model/ratingModel.php';
+  foreach ($productsToShow as $index => $product):
     // 🧩 Produktdaten extrahieren mit Fallbacks
     $name = $product['name'] ?? 'Produktname nicht verfügbar';
     $price = isset($product['priceValue']) && is_numeric($product['priceValue']) ? $product['priceValue'] : 0;
@@ -181,7 +196,55 @@
       <?php endfor; ?>
     </div>
   </section>
+<?php foreach ($productsToShow as $index => $product):
+    $ratings = getRatingsForProduct((int)$product['id']);
+    $avgRating = getAverageRating((int)$product['id']);
+?>
+<section class="reviews">
+  <h3>Kundenbewertungen zu <?= htmlspecialchars($product['name']) ?></h3>
+  <?php if ($avgRating): ?>
+    <p>Durchschnittliche Bewertung: <?= number_format($avgRating, 1) ?>/5</p>
+  <?php endif; ?>
+  <?php foreach ($ratings as $r): ?>
+    <div class="review">
+      <strong><?= htmlspecialchars($r['username']) ?></strong>
+      <span class="rating-stars" style="pointer-events:none;">
+        <?php for ($s = 5; $s >= 1; $s--): ?>
+          <label><?= $s <= $r['stars'] ? '★' : '☆' ?></label>
+        <?php endfor; ?>
+      </span>
+      <p><?= nl2br(htmlspecialchars($r['comment'])) ?></p>
+      <?php if (!empty($r['image_path'])): ?>
+        <img src="<?= htmlspecialchars($r['image_path']) ?>" alt="Bild zur Bewertung">
+      <?php endif; ?>
+    </div>
+  <?php endforeach; ?>
+  <?php if (isset($_SESSION['user_id'])): ?>
+    <button type="button" class="open-review-modal btn-review" data-product-id="<?= (int)$product['id'] ?>">Bewertung schreiben</button>
+  <?php else: ?>
+    <p><a href="index.php?page=auth&action=login">Anmelden</a>, um eine Bewertung zu schreiben.</p>
+  <?php endif; ?>
+</section>
+<?php endforeach; ?>
 </main>
+<div id="ratingModal" class="review-modal hidden">
+  <div class="review-modal-content">
+    <h2>Bewertung abgeben</h2>
+    <button type="button" class="review-close" onclick="closeRatingModal()">&times;</button>
+    <form id="ratingForm" class="review-form" action="index.php?page=community&action=addRating" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="product_id" id="ratingProductId" value="">
+      <div class="rating-stars">
+        <?php for ($s = 5; $s >= 1; $s--): ?>
+          <input type="radio" id="modal-star<?= $s ?>" name="stars" value="<?= $s ?>"<?= $s==5 ? ' checked' : '' ?>>
+          <label for="modal-star<?= $s ?>">★</label>
+        <?php endfor; ?>
+      </div>
+      <textarea name="comment" required placeholder="Deine Meinung..."></textarea>
+      <input type="file" name="image" accept="image/*">
+      <button type="submit">Bewerten</button>
+    </form>
+  </div>
+</div>
 <script>
   document.getElementById('compareBtn').addEventListener('click', () => {
     const input = document.getElementById('compareInput').value.trim();
