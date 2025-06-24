@@ -114,6 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
     prodContainer.classList.remove("einzelprodukt-grid");
   }
   updateLayoutToggle(savedLayout === "list" ? "list" : "grid");
+
 });
 
 // 🔽 PRODUKTE LADEN
