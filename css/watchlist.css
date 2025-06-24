@@ -1,0 +1,105 @@
+.pulse-highlight {
+  animation: pulse-effect 1s ease-out;
+}
+/* Watchlist-Container als Grid */
+#watchlist-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 10px;
+  padding: 40px 20px;
+  align-items: stretch;
+  width: 100%;
+  justify-content: stretch;
+  justify-items: center; /* Alle Karten gleich hoch */
+}
+/* Karte: voller Stretch + gleich hohe Layoutstruktur */
+.watchlist-card {
+  width: 100%;
+  max-width: 400px; /* 🔧 feste Maximalbreite je Karte */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: var(--card-bg);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease;
+}
+
+.watchlist-card:hover {
+  transform: translateY(-5px);
+}
+
+.watchlist-card img {
+  max-width: 100%;
+  max-height: 180px;
+  object-fit: contain;
+  margin-bottom: 15px;
+  border-radius: 10px;
+}
+
+.watchlist-card h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: var(--accent-color);
+}
+
+.watchlist-card p {
+  font-size: 15px;
+  color: #ccc;
+  margin-bottom: 12px;
+}
+
+/* Button-Wrapper am Ende der Karte fixieren */
+.watchlist-card .button-group {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.watchlist-card button,
+.watchlist-card a button {
+  background-color: var(--accent-color);
+  color: #000;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.watchlist-card button:hover,
+.watchlist-card a button:hover {
+  background-color: #e6c200;
+}
+/* ⭕ Zentrierung der gesamten Merkliste-Seite */
+.watchlist-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  text-align: center;
+}
+/* 🧼 Button unten zentrieren */
+.watchlist-controls {
+  text-align: center;
+  margin-top: 30px;
+}
+/* ✨ Stil für 'Alle löschen' Button */
+.btn-delete-all {
+  background-color: var(--accent-color);
+  color: #000;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-delete-all:hover {
+  background-color: #e6c200;
+}

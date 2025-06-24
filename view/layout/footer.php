@@ -1,6 +1,11 @@
 <link rel="stylesheet" href="css/footer.css">
 <link rel="stylesheet" href="css/core.css">
 <link rel="stylesheet" href="css/extras.css">
+<link rel="stylesheet" href="css/watchlist.css">
+<link rel="stylesheet" href="css/cart.css">
+<link rel="stylesheet" href="css/darkmode.css">
+<link rel="stylesheet" href="css/lightmode.css">
+<link rel="stylesheet" href="css/responsive.css">
 <link rel="stylesheet" href="css/product.css">
 
 

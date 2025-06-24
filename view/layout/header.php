@@ -14,6 +14,11 @@ if (session_status() === PHP_SESSION_NONE) {
     <link rel="stylesheet" href="css/core.css">
     <link rel="stylesheet" href="css/product.css">
     <link rel="stylesheet" href="css/extras.css">
+    <link rel="stylesheet" href="css/watchlist.css">
+    <link rel="stylesheet" href="css/cart.css">
+    <link rel="stylesheet" href="css/darkmode.css">
+    <link rel="stylesheet" href="css/lightmode.css">
+    <link rel="stylesheet" href="css/responsive.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 
