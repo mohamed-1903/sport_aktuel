@@ -33,13 +33,19 @@
   gap: 0.5rem;
   margin-bottom: 1rem;
 }
-.filterbar select {
+.filterbar select,
+.filterbar button {
   border: 1px solid #555;
   border-radius: 6px;
   background-color: var(--card-bg);
   color: var(--text-color);
   font-size: 16px;
   padding: 10px;
+  cursor: pointer;
+}
+.filterbar button:hover {
+  background-color: var(--accent-color);
+  color: #000;
 }
 
 .einzelprodukt-grid {
@@ -1141,6 +1147,12 @@ body:not(.light-mode) .error {
   align-items: center;
   gap: 20px;
 }
+
+.einzelprodukt-list .image-wrapper img {
+  width: 120px;
+  height: auto;
+}
+
 
 .einzelprodukt-list .produkt-info {
   text-align: left;

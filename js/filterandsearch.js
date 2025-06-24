@@ -19,7 +19,8 @@ window.applyFilter = function () {
       (!filterWerte.geschlecht || p.geschlecht === filterWerte.geschlecht) &&
       preis <= filterWerte.maxPreis;
 
-    produkt.style.display = sichtbar ? "block" : "none";
+    // leeres Display lässt die ursprüngliche Flex-Darstellung erhalten
+    produkt.style.display = sichtbar ? "" : "none";
   });
 };
 
