@@ -287,3 +287,11 @@ button {
   transform: scale(1.2);
   vertical-align: middle;
 }
+
+.customization {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+  align-items: center;
+}

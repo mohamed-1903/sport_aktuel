@@ -49,7 +49,7 @@
 
         <!-- 🛒 Produktdetails & Optionen -->
         <div>
-          <h1><?= htmlspecialchars($name) ?></h1>
+          <h1 class="product-name"><?= htmlspecialchars($name) ?></h1>
           <p id="original-price-<?= $index ?>" class="price-old" style="display: none;"></p>
           <p id="final-price-<?= $index ?>">
             <?php if (isset($product['priceValue']) && is_numeric($product['priceValue'])): ?>
@@ -78,6 +78,17 @@
           <!-- 🔢 Mengenauswahl -->
           <label for="quantity-<?= $index ?>">Menge:</label>
           <input type="number" id="quantity-<?= $index ?>" value="1" min="1" class="size-dropdown" />
+
+          <?php if (stripos($product['subcategory'] ?? '', 'Trikots') !== false): ?>
+            <div class="customization">
+              <label for="player-<?= $index ?>">Spieler wählen:</label>
+              <select id="player-<?= $index ?>" class="size-dropdown player-select"></select>
+              <label for="customName-<?= $index ?>">Name:</label>
+              <input type="text" id="customName-<?= $index ?>" class="size-dropdown custom-name" maxlength="20" />
+              <label for="customNumber-<?= $index ?>">Nummer:</label>
+              <input type="number" id="customNumber-<?= $index ?>" class="size-dropdown custom-number" min="0" max="99" />
+            </div>
+          <?php endif; ?>
 
           <div class="button-rows">
             <!-- 🎟 Rabattcode -->
@@ -139,6 +150,47 @@
           </div>
         </div>
       </div>
+    </section>
+
+  <?php
+    $ratings = getRatingsForProduct((int)$product['id']);
+    $avgRating = getAverageRating((int)$product['id']);
+  ?>
+    <section class="reviews">
+      <h3>Kundenbewertungen</h3>
+      <?php if ($avgRating): ?>
+        <p>Durchschnittliche Bewertung: <?= number_format($avgRating, 1) ?>/5</p>
+      <?php endif; ?>
+      <?php foreach ($ratings as $r): ?>
+        <div class="review">
+          <strong><?= htmlspecialchars($r['username']) ?></strong>
+          <span class="rating-stars" style="pointer-events:none;">
+            <?php for ($s=5; $s>=1; $s--): ?>
+              <label><?= $s <= $r['stars'] ? '★' : '☆' ?></label>
+            <?php endfor; ?>
+          </span>
+          <p><?= nl2br(htmlspecialchars($r['comment'])) ?></p>
+          <?php if (!empty($r['image_path'])): ?>
+            <img src="<?= htmlspecialchars($r['image_path']) ?>" alt="Bild zur Bewertung">
+          <?php endif; ?>
+        </div>
+      <?php endforeach; ?>
+      <?php if (isset($_SESSION['user_id'])): ?>
+        <form class="review-form" action="index.php?page=community&action=addRating" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="product_id" value="<?= (int)$product['id'] ?>">
+          <div class="rating-stars">
+            <?php for ($s=5; $s>=1; $s--): ?>
+              <input type="radio" id="star<?= $s ?>-<?= $index ?>" name="stars" value="<?= $s ?>"<?= $s==5?' checked':'' ?>>
+              <label for="star<?= $s ?>-<?= $index ?>">★</label>
+            <?php endfor; ?>
+          </div>
+          <textarea name="comment" required placeholder="Deine Meinung..."></textarea>
+          <input type="file" name="image" accept="image/*">
+          <button type="submit">Bewerten</button>
+        </form>
+      <?php else: ?>
+        <p><a href="index.php?page=auth&action=login">Anmelden</a>, um eine Bewertung zu schreiben.</p>
+      <?php endif; ?>
     </section>
   <?php endforeach; ?>
 

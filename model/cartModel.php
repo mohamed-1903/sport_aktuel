@@ -34,8 +34,8 @@ function addToCart(int $userId, array $item): void
     $cartId = ensureCart($userId);
 
     // Prüfen ob Eintrag schon existiert
-    $stmt = $db->prepare("SELECT id, quantity FROM cart_items WHERE cart_id = ? AND product_id = ? AND size = ?");
-    $stmt->execute([$cartId, $item['id'], $item['size']]);
+    $stmt = $db->prepare("SELECT id, quantity FROM cart_items WHERE cart_id = ? AND product_id = ? AND size = ? AND custom_name <=> ? AND custom_number <=> ?");
+    $stmt->execute([$cartId, $item['id'], $item['size'], $item['custom_name'] ?? null, $item['custom_number'] ?? null]);
     $existing = $stmt->fetch();
 
     $gift = !empty($item['gift']) ? 1 : 0;
@@ -43,11 +43,11 @@ function addToCart(int $userId, array $item): void
 
     if ($existing) {
         $newQty = $existing['quantity'] + $item['quantity'];
-        $update = $db->prepare("UPDATE cart_items SET quantity = ?, discount = ?, gift = ? WHERE id = ?");
-        $update->execute([$newQty, $discount, $gift, $existing['id']]);
+        $update = $db->prepare("UPDATE cart_items SET quantity = ?, discount = ?, gift = ?, custom_name = ?, custom_number = ? WHERE id = ?");
+        $update->execute([$newQty, $discount, $gift, $item['custom_name'] ?? null, $item['custom_number'] ?? null, $existing['id']]);
     } else {
-        $insert = $db->prepare("INSERT INTO cart_items (cart_id, product_id, size, quantity, discount, gift) VALUES (?, ?, ?, ?, ?, ?)");
-        $insert->execute([$cartId, $item['id'], $item['size'], $item['quantity'], $discount, $gift]);
+        $insert = $db->prepare("INSERT INTO cart_items (cart_id, product_id, size, quantity, discount, gift, custom_name, custom_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $insert->execute([$cartId, $item['id'], $item['size'], $item['quantity'], $discount, $gift, $item['custom_name'] ?? null, $item['custom_number'] ?? null]);
     }
 }
 
@@ -62,6 +62,8 @@ function getCartItems(int $userId): array
                 ci.quantity,
                 ci.discount,
                 ci.gift,
+                ci.custom_name,
+                ci.custom_number,
                 p.name,
                 p.price,
                 p.image_main
