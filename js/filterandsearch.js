@@ -113,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
     prodContainer.classList.add("einzelprodukt-list");
     prodContainer.classList.remove("einzelprodukt-grid");
   }
+  updateLayoutToggle(savedLayout === "list" ? "list" : "grid");
 });
 
 // 🔽 PRODUKTE LADEN
@@ -280,5 +281,18 @@ window.toggleLayout = function () {
     container.classList.add("einzelprodukt-grid");
     container.classList.remove("einzelprodukt-list");
   }
-  localStorage.setItem("productLayout", useList ? "list" : "grid");
+
+  const layout = useList ? "list" : "grid";
+  localStorage.setItem("productLayout", layout);
+  updateLayoutToggle(layout);
 };
+
+function updateLayoutToggle(layout) {
+  const btn = document.querySelector(".layout-toggle");
+  if (!btn) return;
+  if (layout === "list") {
+    btn.textContent = "🔳 Grid anzeigen";
+  } else {
+    btn.textContent = "☰ Liste anzeigen";
+  }
+}

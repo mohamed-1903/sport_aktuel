@@ -58,7 +58,7 @@
         <option value="asc">Preis ▲</option>
         <option value="desc">Preis ▼</option>
       </select>
-      <button type="button" class="layout-toggle" onclick="toggleLayout()">Layout wechseln</button>
+      <button type="button" class="layout-toggle" onclick="toggleLayout()">☰ Liste anzeigen</button>
     </section>
 
     <section class="einzelprodukt-grid" id="produktContainer">
