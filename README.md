@@ -258,3 +258,6 @@ Um mehrere Produkte gleichzeitig zur Merkliste hinzuzufügen oder daraus zu entf
 ```json
 { "product_ids": [1, 2, 3] }
 ```
+
+## 🍪 Cookies
+Dieses Projekt verwendet ein technisches Cookie, um die Zustimmung zur Cookie-Nutzung zu speichern.

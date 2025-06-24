@@ -22,6 +22,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/themes.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/cookie.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 
