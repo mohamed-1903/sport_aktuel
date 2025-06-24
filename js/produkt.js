@@ -414,62 +414,35 @@ function resetFinalPriceDisplay(price, section) {
   ).textContent = `${price.toFixed(2)}€ inkl. Mwst.`;
 }
 
-function setupCustomization(section) {
-  const name = section.querySelector('.product-name')?.textContent || '';
-  const teamKey = Object.keys(TEAM_PLAYERS).find((k) =>
-    name.toLowerCase().includes(k.toLowerCase())
-  );
-  const playerSelect = section.querySelector('.player-select');
-  const nameInput = section.querySelector('.custom-name');
-  const numberInput = section.querySelector('.custom-number');
-  const preview = section.querySelector('.jersey-preview');
-  const nameOverlay = preview?.querySelector('.overlay-name');
-  const numberOverlay = preview?.querySelector('.overlay-number');
-
-  if (!playerSelect) return;
-
-  if (teamKey) {
-    const roster = TEAM_PLAYERS[teamKey];
-    const optEmpty = document.createElement('option');
-    optEmpty.value = '';
-    optEmpty.textContent = '-- Eigener Name --';
-    playerSelect.appendChild(optEmpty);
-
-    Object.entries(roster).forEach(([num, player]) => {
-      const opt = document.createElement('option');
-      opt.value = num;
-      opt.textContent = `${player} (${num})`;
-      playerSelect.appendChild(opt);
-    });
-
-    playerSelect.addEventListener('change', () => {
-      const num = playerSelect.value;
-      if (num) {
-        numberInput.value = num;
-        nameInput.value = roster[num];
-      } else {
-        numberInput.value = '';
-        nameInput.value = '';
-      }
-      updateDisplay(section);
-      updatePreview();
-    });
-  }
-
-  function updatePreview() {
-    if (nameOverlay) nameOverlay.textContent = nameInput.value.trim();
-    if (numberOverlay) numberOverlay.textContent = numberInput.value.trim();
-  }
-
-  nameInput.addEventListener('input', () => {
-    updateDisplay(section);
-    updatePreview();
-  });
-  numberInput.addEventListener('input', () => {
-    updateDisplay(section);
-    updatePreview();
-  });
-
-  updatePreview();
-
+// ----- Bewertungsmodal -----
+function openRatingModal(productId) {
+  document.getElementById("ratingProductId").value = productId;
+  document.getElementById("ratingModal").classList.remove("hidden");
+  document.body.classList.add("modal-open");
 }
+
+function closeRatingModal() {
+  document.body.classList.remove("modal-open");
+  document.getElementById("ratingModal").classList.add("hidden");
+}
+
+document.querySelectorAll(".open-review-modal").forEach((btn) => {
+  btn.addEventListener("click", () => openRatingModal(btn.dataset.productId));
+});
+
+const ratingModalEl = document.getElementById("ratingModal");
+if (ratingModalEl) {
+  ratingModalEl.addEventListener("click", (e) => {
+    const content = ratingModalEl.querySelector(".review-modal-content");
+    if (content && !content.contains(e.target)) {
+      closeRatingModal();
+    }
+  });
+}
+
+document.addEventListener("keydown", (e) => {
+  const modal = document.getElementById("ratingModal");
+  if (modal && !modal.classList.contains("hidden") && e.key === "Escape") {
+    closeRatingModal();
+  }
+});

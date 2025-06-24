@@ -18,6 +18,7 @@
   <?php
   require_once 'model/ratingModel.php';
   foreach ($productsToShow as $index => $product):
+
     // 🧩 Produktdaten extrahieren mit Fallbacks
     $name = $product['name'] ?? 'Produktname nicht verfügbar';
     $price = isset($product['priceValue']) && is_numeric($product['priceValue']) ? $product['priceValue'] : 0;
@@ -158,12 +159,8 @@
         </div>
       </div>
     </section>
-
-  <?php
-    $ratings = getRatingsForProduct((int)$product['id']);
-    $avgRating = getAverageRating((int)$product['id']);
-  ?>
   <?php endforeach; ?>
+
 
   <!-- 💰 Steuerberechnung + Rabattcode -->
   <section class="preis-container">
@@ -225,25 +222,32 @@
     </div>
   <?php endforeach; ?>
   <?php if (isset($_SESSION['user_id'])): ?>
-    <form class="review-form" action="index.php?page=community&action=addRating" method="post" enctype="multipart/form-data">
-      <input type="hidden" name="product_id" value="<?= (int)$product['id'] ?>">
-      <div class="rating-stars">
-        <?php for ($s = 5; $s >= 1; $s--): ?>
-          <input type="radio" id="star<?= $s ?>-bottom-<?= $index ?>" name="stars" value="<?= $s ?>"<?= $s==5 ? ' checked' : '' ?>>
-          <label for="star<?= $s ?>-bottom-<?= $index ?>">★</label>
-        <?php endfor; ?>
-      </div>
-      <textarea name="comment" required placeholder="Deine Meinung..."></textarea>
-      <input type="file" name="image" accept="image/*">
-      <button type="submit">Bewerten</button>
-    </form>
+    <button type="button" class="open-review-modal" data-product-id="<?= (int)$product['id'] ?>">Bewertung schreiben</button>
   <?php else: ?>
     <p><a href="index.php?page=auth&action=login">Anmelden</a>, um eine Bewertung zu schreiben.</p>
   <?php endif; ?>
 </section>
 <?php endforeach; ?>
 </main>
+<div id="ratingModal" class="review-modal hidden">
+  <div class="review-modal-content">
+    <button type="button" class="review-close" onclick="closeRatingModal()">&times;</button>
+    <form id="ratingForm" class="review-form" action="index.php?page=community&action=addRating" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="product_id" id="ratingProductId" value="">
+      <div class="rating-stars">
+        <?php for ($s = 5; $s >= 1; $s--): ?>
+          <input type="radio" id="modal-star<?= $s ?>" name="stars" value="<?= $s ?>"<?= $s==5 ? ' checked' : '' ?>>
+          <label for="modal-star<?= $s ?>">★</label>
+        <?php endfor; ?>
+      </div>
+      <textarea name="comment" required placeholder="Deine Meinung..."></textarea>
+      <input type="file" name="image" accept="image/*">
+      <button type="submit">Bewerten</button>
+    </form>
+  </div>
+</div>
 <script>
+
   document.getElementById('compareBtn').addEventListener('click', () => {
     const input = document.getElementById('compareInput').value.trim();
     const options = document.querySelectorAll('#compareOptions option');
