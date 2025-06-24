@@ -449,6 +449,47 @@ function resetFinalPriceDisplay(price, section) {
   ).textContent = `${price.toFixed(2)}€ inkl. Mwst.`;
 }
 
+// ----- Bewertungsmodal -----
+function openRatingModal(productId) {
+  document.getElementById("ratingProductId").value = productId;
+  document.getElementById("ratingModal").classList.remove("hidden");
+  document.body.classList.add("modal-open");
+}
+
+function closeRatingModal() {
+  document.body.classList.remove("modal-open");
+  document.getElementById("ratingModal").classList.add("hidden");
+}
+
+document.querySelectorAll(".open-review-modal").forEach((btn) => {
+  btn.addEventListener("click", () => openRatingModal(btn.dataset.productId));
+});
+
+const ratingModalEl = document.getElementById("ratingModal");
+if (ratingModalEl) {
+  ratingModalEl.addEventListener("click", (e) => {
+    const content = ratingModalEl.querySelector(".review-modal-content");
+    if (content && !content.contains(e.target)) {
+      closeRatingModal();
+    }
+  });
+}
+
+document.addEventListener("keydown", (e) => {
+  const modal = document.getElementById("ratingModal");
+  if (modal && !modal.classList.contains("hidden") && e.key === "Escape") {
+    closeRatingModal();
+  }
+});
+function resetFinalPriceDisplay(price, section) {
+  const idx = section.dataset.productIndex;
+  section.querySelector(`#original-price-${idx}`).style.display = "none";
+  section.querySelector(`#discountLabel-${idx}`).style.display = "none";
+  section.querySelector(
+    `#finalPriceValue-${idx}`
+  ).textContent = `${price.toFixed(2)}€ inkl. Mwst.`;
+}
+
 function setupCustomization(section) {
   const name = section.querySelector('.product-name')?.textContent || '';
   const teamKey = Object.keys(TEAM_PLAYERS).find((k) =>
@@ -507,4 +548,3 @@ function setupCustomization(section) {
 
   updatePreview();
 }
-
