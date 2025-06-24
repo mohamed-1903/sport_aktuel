@@ -7,13 +7,12 @@
     const toast = document.getElementById('toastMessage');
     if (toast) {
       toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 3000);
+      setTimeout(() => { toast.classList.remove('show'); }, 3000);
     }
   </script>
   <?php unset($_SESSION['message']); ?>
 <?php endif; ?>
+
 
 <main class="produkte">
   <!-- 🔍 Zoom Modal -->
@@ -60,7 +59,7 @@
           </div>
           <div class="additional-images">
             <?php foreach ($images as $imgIndex => $img): ?>
-              <img src="<?= htmlspecialchars($img) ?>" onclick="changeImage('<?= htmlspecialchars($img) ?>', <?= $imgIndex ?>)" />
+              <img src="<?= htmlspecialchars($img) ?>" />
             <?php endforeach; ?>
           </div>
         </div>
@@ -223,6 +222,7 @@
       <?php endfor; ?>
     </div>
   </section>
+
   <?php foreach ($productsToShow as $index => $product):
     $ratings = getRatingsForProduct((int)$product['id']);
     $avgRating = getAverageRating((int)$product['id']);
