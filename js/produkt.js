@@ -31,6 +31,32 @@ const TEAM_PLAYERS = {
 const CUSTOMIZATION_FEE = 10; // € pro Trikot
 window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
 
+const TEAM_PLAYERS = {
+  Bayern: {
+    9: "Harry Kane",
+    25: "Thomas Müller",
+    11: "Kingsley Coman",
+  },
+  Dortmund: {
+    9: "Sebastian Haller",
+    22: "Jude Bellingham",
+    11: "Marco Reus",
+  },
+  "Real Madrid": {
+    7: "Vinicius Jr.",
+    10: "Luka Modric",
+    8: "Toni Kroos",
+  },
+  "Manchester City": {
+    9: "Erling Haaland",
+    17: "Kevin De Bruyne",
+    20: "Bernardo Silva",
+  },
+};
+
+const CUSTOMIZATION_FEE = 10; // € pro Trikot
+window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
+
 
 // Initialisierung pro Produktcontainer
 document.addEventListener("DOMContentLoaded", () => {
@@ -68,6 +94,8 @@ function setupProduct(section) {
   qtyInput.addEventListener("input", () => updateDisplay(section));
   const giftWrapEl = section.querySelector(`#giftWrap-${idx}`);
   const pinInputEl = section.querySelector(`#pin-${idx}`);
+
+  setupCustomization(section);
 
   setupCustomization(section);
 
@@ -129,6 +157,12 @@ function getCustomizationFee(section) {
   return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
 }
 
+function getCustomizationFee(section) {
+  const nameInput = section.querySelector('.custom-name');
+  const numberInput = section.querySelector('.custom-number');
+  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
+}
+
 function getBasePrice(section) {
   const idx = section.dataset.productIndex;
   const el = section.querySelector(`#basePrice-${idx}`);
@@ -153,6 +187,7 @@ function calculatePrice(section) {
 
   let subtotal = (getBasePrice(section) + customFee) * qty;
   if (gift) subtotal += 2;
+
 
   const discountPercent = DISCOUNT_CODES[pin] || 0;
   const discounted = subtotal * (1 - discountPercent / 100);
@@ -414,35 +449,62 @@ function resetFinalPriceDisplay(price, section) {
   ).textContent = `${price.toFixed(2)}€ inkl. Mwst.`;
 }
 
-// ----- Bewertungsmodal -----
-function openRatingModal(productId) {
-  document.getElementById("ratingProductId").value = productId;
-  document.getElementById("ratingModal").classList.remove("hidden");
-  document.body.classList.add("modal-open");
-}
+function setupCustomization(section) {
+  const name = section.querySelector('.product-name')?.textContent || '';
+  const teamKey = Object.keys(TEAM_PLAYERS).find((k) =>
+    name.toLowerCase().includes(k.toLowerCase())
+  );
+  const playerSelect = section.querySelector('.player-select');
+  const nameInput = section.querySelector('.custom-name');
+  const numberInput = section.querySelector('.custom-number');
+  const preview = section.querySelector('.jersey-preview');
+  const nameOverlay = preview?.querySelector('.overlay-name');
+  const numberOverlay = preview?.querySelector('.overlay-number');
 
-function closeRatingModal() {
-  document.body.classList.remove("modal-open");
-  document.getElementById("ratingModal").classList.add("hidden");
-}
+  if (!playerSelect) return;
 
-document.querySelectorAll(".open-review-modal").forEach((btn) => {
-  btn.addEventListener("click", () => openRatingModal(btn.dataset.productId));
-});
+  if (teamKey) {
+    const roster = TEAM_PLAYERS[teamKey];
+    const optEmpty = document.createElement('option');
+    optEmpty.value = '';
+    optEmpty.textContent = '-- Eigener Name --';
+    playerSelect.appendChild(optEmpty);
 
-const ratingModalEl = document.getElementById("ratingModal");
-if (ratingModalEl) {
-  ratingModalEl.addEventListener("click", (e) => {
-    const content = ratingModalEl.querySelector(".review-modal-content");
-    if (content && !content.contains(e.target)) {
-      closeRatingModal();
-    }
-  });
-}
+    Object.entries(roster).forEach(([num, player]) => {
+      const opt = document.createElement('option');
+      opt.value = num;
+      opt.textContent = `${player} (${num})`;
+      playerSelect.appendChild(opt);
+    });
 
-document.addEventListener("keydown", (e) => {
-  const modal = document.getElementById("ratingModal");
-  if (modal && !modal.classList.contains("hidden") && e.key === "Escape") {
-    closeRatingModal();
+    playerSelect.addEventListener('change', () => {
+      const num = playerSelect.value;
+      if (num) {
+        numberInput.value = num;
+        nameInput.value = roster[num];
+      } else {
+        numberInput.value = '';
+        nameInput.value = '';
+      }
+      updateDisplay(section);
+      updatePreview();
+    });
   }
-});
+
+  function updatePreview() {
+    if (nameOverlay) nameOverlay.textContent = nameInput.value.trim();
+    if (numberOverlay) numberOverlay.textContent = numberInput.value.trim();
+  }
+
+  nameInput.addEventListener('input', () => {
+    updateDisplay(section);
+    updatePreview();
+  });
+  numberInput.addEventListener('input', () => {
+    updateDisplay(section);
+    updatePreview();
+  });
+
+  updatePreview();
+}
+

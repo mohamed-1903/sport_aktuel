@@ -24,6 +24,7 @@
     $price = isset($product['priceValue']) && is_numeric($product['priceValue']) ? $product['priceValue'] : 0;
     $imageMain = $product['image_main'] ?? ($product['imagepath'] ?? 'img/placeholder.jpg');
     $images = $product['images'] ?? [$imageMain];
+    $backImage = $images[1] ?? $imageMain;
     $description = $product['description'] ?? 'Keine Beschreibung verfügbar';
     $sizes = $product['sizes'] ?? range(38, 46);
   ?>
@@ -90,7 +91,7 @@
               <label for="customNumber-<?= $index ?>">Nummer:</label>
               <input type="number" id="customNumber-<?= $index ?>" class="size-dropdown custom-number" min="0" max="99" />
               <div class="jersey-preview" id="jerseyPreview-<?= $index ?>">
-                <img src="<?= htmlspecialchars($imageMain) ?>" alt="Preview" />
+                <img src="<?= htmlspecialchars($backImage) ?>" alt="Rückenansicht" />
                 <div class="overlay-name"></div>
                 <div class="overlay-number"></div>
               </div>
