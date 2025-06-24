@@ -1,6 +1,5 @@
 // ✅ Dark-/Light-Mode Toggle
 (() => {
-  const savedTheme = localStorage.getItem("theme") || "dark";
 
   const applyTheme = (theme) => {
     document.body.classList.toggle("light-mode", theme === "light");
@@ -22,6 +21,13 @@
       localStorage.setItem("theme", newTheme);
       toggleButton.textContent = newTheme === "light" ? "🌙" : "☀️";
     });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initToggle);
+    initToggle();
+})();
+});
   };
 
   if (document.readyState === "loading") {
