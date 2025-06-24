@@ -195,7 +195,9 @@ function loadList() {
               </div>
             </div>
           </td>
-          <td>${menge}</td>
+          <td>
+            <input type="number" class="qty-input" data-id="${item.product_id}" data-size="${item.size}" value="${menge}" min="1" />
+          </td>
           <td>${preis.toFixed(2)} €</td>
           <td class="summe-cell">${gesamt.toFixed(2)} €</td>
           <td>
@@ -228,6 +230,20 @@ function loadList() {
           removeFromCart(id, size, { name, image, productId: id });
         });
       });
+
+      // 🆙 Menge ändern
+      document.querySelectorAll(".qty-input").forEach((input) => {
+        input.addEventListener("change", () => {
+          const id = input.dataset.id;
+          const size = input.dataset.size;
+          let qty = parseInt(input.value);
+          if (!qty || qty < 1) {
+            qty = 1;
+            input.value = 1;
+          }
+          updateCartQuantity(id, size, qty);
+        });
+      });
     });
 }
 function removeFromCart(productId, size, previewData = null) {
@@ -252,6 +268,21 @@ function removeFromCart(productId, size, previewData = null) {
       updateCartCount();
     })
     .catch((err) => console.error("Fehler beim Entfernen:", err));
+}
+
+function updateCartQuantity(productId, size, quantity) {
+  fetch("index.php?page=cart&action=update", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: `id=${encodeURIComponent(productId)}&size=${encodeURIComponent(size)}&quantity=${encodeURIComponent(quantity)}`,
+  })
+    .then(() => {
+      loadList();
+      updateCartCount();
+    })
+    .catch((err) => console.error("Fehler beim Aktualisieren:", err));
 }
 
 function zeigeToast(text, farbe = "#333") {

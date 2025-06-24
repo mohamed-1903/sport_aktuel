@@ -97,12 +97,12 @@ $total = 0;
     <h3>Zusammenfassung</h3>
     <?php $netto = $total / 1.19;
     $mwst = $total - $netto; ?>
-    <p>Zwischensumme: <span><?= number_format($total, 2, ',', '.') ?> €</span></p>
+    <p>Zwischensumme: <span id="zwischensumme"><?= number_format($total, 2, ',', '.') ?> €</span></p>
     <p>Versandkosten: <span>0,00 €</span></p>
     <hr>
-    <p>Gesamtnettosumme: <span><?= number_format($netto, 2, ',', '.') ?> €</span></p>
-    <p>zzgl. 19% MwSt.: <span><?= number_format($mwst, 2, ',', '.') ?> €</span></p>
-    <p><strong>Gesamtsumme: <span><?= number_format($total, 2, ',', '.') ?> €</span></strong></p>
+    <p>Gesamtnettosumme: <span id="nettosumme"><?= number_format($netto, 2, ',', '.') ?> €</span></p>
+    <p>zzgl. 19% MwSt.: <span id="mwstbetrag"><?= number_format($mwst, 2, ',', '.') ?> €</span></p>
+    <p><strong>Gesamtsumme: <span id="gesamtsumme"><?= number_format($total, 2, ',', '.') ?> €</span></strong></p>
 
     <input type="text" placeholder="Gutscheincode eingeben (optional)" class="gutschein-input" />
     <a href="index.php?page=order&action=checkout">
