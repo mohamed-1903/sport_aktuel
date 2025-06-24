@@ -1,4 +1,13 @@
-<?php include 'view/layout/header.php'; ?>
+
+<?php
+include 'view/layout/header.php';
+
+// Fehlermeldung aus der vorherigen Sitzung anzeigen
+if (!empty($_SESSION['login_error'])) {
+    $error = $_SESSION['login_error'];
+    unset($_SESSION['login_error']);
+}
+?>
 
 
 <div class="form-wrapper">
