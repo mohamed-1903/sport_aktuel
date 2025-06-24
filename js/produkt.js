@@ -31,6 +31,33 @@ const TEAM_PLAYERS = {
 const CUSTOMIZATION_FEE = 10; // € pro Trikot
 window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
 
+const TEAM_PLAYERS = {
+  Bayern: {
+    9: "Harry Kane",
+    25: "Thomas Müller",
+    11: "Kingsley Coman",
+  },
+  Dortmund: {
+    9: "Sebastian Haller",
+    22: "Jude Bellingham",
+    11: "Marco Reus",
+  },
+  "Real Madrid": {
+    7: "Vinicius Jr.",
+    10: "Luka Modric",
+    8: "Toni Kroos",
+  },
+  "Manchester City": {
+    9: "Erling Haaland",
+    17: "Kevin De Bruyne",
+    20: "Bernardo Silva",
+  },
+};
+
+const CUSTOMIZATION_FEE = 10; // € pro Trikot
+window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
+
+
 // Initialisierung pro Produktcontainer
 document.addEventListener("DOMContentLoaded", () => {
   document
@@ -67,6 +94,8 @@ function setupProduct(section) {
   qtyInput.addEventListener("input", () => updateDisplay(section));
   const giftWrapEl = section.querySelector(`#giftWrap-${idx}`);
   const pinInputEl = section.querySelector(`#pin-${idx}`);
+
+  setupCustomization(section);
 
   setupCustomization(section);
 
@@ -128,6 +157,12 @@ function getCustomizationFee(section) {
   return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
 }
 
+function getCustomizationFee(section) {
+  const nameInput = section.querySelector('.custom-name');
+  const numberInput = section.querySelector('.custom-number');
+  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
+}
+
 function getBasePrice(section) {
   const idx = section.dataset.productIndex;
   const el = section.querySelector(`#basePrice-${idx}`);
@@ -152,6 +187,7 @@ function calculatePrice(section) {
 
   let subtotal = (getBasePrice(section) + customFee) * qty;
   if (gift) subtotal += 2;
+
 
   const discountPercent = DISCOUNT_CODES[pin] || 0;
   const discounted = subtotal * (1 - discountPercent / 100);
@@ -471,3 +507,4 @@ function setupCustomization(section) {
 
   updatePreview();
 }
+

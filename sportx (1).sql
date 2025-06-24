@@ -59,6 +59,7 @@ CREATE TABLE `cart_items` (
   `custom_name` varchar(50) DEFAULT NULL,
   `custom_number` varchar(10) DEFAULT NULL,
   `custom_fee` decimal(6,2) DEFAULT 0
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -69,6 +70,7 @@ INSERT INTO `cart_items` (`id`, `cart_id`, `product_id`, `size`, `quantity`, `di
 (101, 3, 1, '42', 5, 0, 0, NULL, NULL, 0),
 (102, 3, 6, 'M', 1, 0, 0, NULL, NULL, 0),
 (113, 2, 1, 'M', 1, 0, 0, NULL, NULL, 0);
+
 
 -- --------------------------------------------------------
 
