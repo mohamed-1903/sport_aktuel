@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="css/components.css">
 <link rel="stylesheet" href="css/form.css">
 <link rel="stylesheet" href="css/product.css">
+<link rel="stylesheet" href="css/extras.css">
 <link rel="stylesheet" href="css/modal.css">
 <link rel="stylesheet" href="css/themes.css">
 <link rel="stylesheet" href="css/responsive.css">
