@@ -5,6 +5,11 @@ const DISCOUNT_CODES = {
   "00000": 5,
 };
 
+let TEAM_ROSTERS = {};
+
+const CUSTOMIZATION_FEE = 10; // € pro Trikot
+window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
+
 const TEAM_PLAYERS = {
   Bayern: {
     9: "Harry Kane",
@@ -60,9 +65,17 @@ window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
 
 // Initialisierung pro Produktcontainer
 document.addEventListener("DOMContentLoaded", () => {
-  document
-    .querySelectorAll("[data-product-index]")
-    .forEach((section) => setupProduct(section));
+  fetch('data/rosters.json')
+    .then((r) => r.json())
+    .then((data) => {
+      TEAM_ROSTERS = data;
+    })
+    .catch(() => {})
+    .finally(() => {
+      document
+        .querySelectorAll('[data-product-index]')
+        .forEach((section) => setupProduct(section));
+    });
 });
 
 function setupProduct(section) {
@@ -74,6 +87,8 @@ function setupProduct(section) {
   const toggleInfo = section.querySelector(`#toggle-info-${idx}`);
   const desc = section.querySelector(`#description-full-${idx}`);
   const zoomContainer = section.querySelector(`#zoomContainer-${idx}`);
+  const customBtn = section.querySelector(`#customBtn-${idx}`);
+  const customSection = section.querySelector(`#customSection-${idx}`);
 
   section._zoomData = { currentIndex: 0 };
 
@@ -94,6 +109,14 @@ function setupProduct(section) {
   qtyInput.addEventListener("input", () => updateDisplay(section));
   const giftWrapEl = section.querySelector(`#giftWrap-${idx}`);
   const pinInputEl = section.querySelector(`#pin-${idx}`);
+
+  if (customBtn && customSection) {
+    customBtn.addEventListener('click', () => {
+      customSection.classList.toggle('hidden');
+    });
+  }
+
+  setupCustomization(section);
 
   setupCustomization(section);
 
@@ -163,6 +186,12 @@ function getCustomizationFee(section) {
   return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
 }
 
+function getCustomizationFee(section) {
+  const nameInput = section.querySelector('.custom-name');
+  const numberInput = section.querySelector('.custom-number');
+  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
+}
+
 function getBasePrice(section) {
   const idx = section.dataset.productIndex;
   const el = section.querySelector(`#basePrice-${idx}`);
@@ -187,6 +216,7 @@ function calculatePrice(section) {
 
   let subtotal = (getBasePrice(section) + customFee) * qty;
   if (gift) subtotal += 2;
+
 
 
   const discountPercent = DISCOUNT_CODES[pin] || 0;
@@ -225,6 +255,22 @@ function updateDisplay(section) {
     }
   }
   finalValueEl.textContent = `${final.toFixed(2)}€ inkl. Mwst.`;
+
+  const list = section.querySelector('.price-breakdown');
+  if (list) {
+    const gift = getGiftWrapCharge(section);
+    const custom = getCustomizationFee(section);
+    const qty = parseInt(section.querySelector(`#quantity-${idx}`).value) || 1;
+    const pin = section.querySelector(`#pin-${idx}`)?.value.trim();
+    const discountAmount = ((getBasePrice(section) + custom + gift) * qty) * (discount / 100);
+    list.innerHTML = `<ul>
+        <li>Grundpreis: ${getBasePrice(section).toFixed(2)} €</li>
+        ${custom ? `<li>Personalisierung: ${custom.toFixed(2)} €</li>` : ''}
+        ${gift ? `<li>Geschenkverpackung: ${gift.toFixed(2)} €</li>` : ''}
+        ${discount ? `<li>Rabatt: -${discountAmount.toFixed(2)} € (${discount}%)</li>` : ''}
+        <li><strong>Endpreis: ${final.toFixed(2)} €</strong></li>
+      </ul>`;
+  }
 }
 
 // ---- Zoom Handling ----
@@ -440,6 +486,7 @@ function resetFields(section) {
 
   updateDisplay(section);
 }
+
 function resetFinalPriceDisplay(price, section) {
   const idx = section.dataset.productIndex;
   section.querySelector(`#original-price-${idx}`).style.display = "none";

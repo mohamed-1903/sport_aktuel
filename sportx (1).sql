@@ -71,7 +71,6 @@ INSERT INTO `cart_items` (`id`, `cart_id`, `product_id`, `size`, `quantity`, `di
 (102, 3, 6, 'M', 1, 0, 0, NULL, NULL, 0),
 (113, 2, 1, 'M', 1, 0, 0, NULL, NULL, 0);
 
-
 -- --------------------------------------------------------
 
 --
