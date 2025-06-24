@@ -1,4 +1,4 @@
-/* Mohamed: ab hier */
+/* Mohamed: ab hier*/
 .main-container {
   display: flex;
   gap: 2rem;
@@ -22,7 +22,7 @@
   gap: 1.5rem; /* mehr vertikaler Abstand zwischen Elementen */
   padding: 2rem 2rem 3rem; /* großzügigerer Innenabstand (oben, seitlich, unten) */
   border-radius: 12px; /* für Kartenstil – optional */
-  box-shadow: 0 2px 8px rgb(0 0 0 / 5%); /* subtile Tiefe */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* subtile Tiefe */
   min-height: 100vh; /* sorgt für volle Höhe bei leerem Inhalt */
   box-sizing: border-box; /* Padding zählt zur Gesamtbreite */
 }
@@ -33,7 +33,6 @@
   gap: 0.5rem;
   margin-bottom: 1rem;
 }
-
 .filterbar select {
   border: 1px solid #555;
   border-radius: 6px;
@@ -62,7 +61,7 @@
   top: 1rem; /* Abstand von oben */
   align-self: flex-start; /* Wichtiger Fix bei flex layouts */
   height: fit-content; /* Verhindert Stretching */
-  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   z-index: 10;
 }
 
@@ -72,7 +71,6 @@
   border-bottom: 2px solid bl;
   padding-bottom: 0.5rem;
 }
-
 .sidebar ul {
   list-style: none;
 }
@@ -88,12 +86,10 @@
   font-size: 0.95rem;
   color: #aaa;
 }
-
 /* Hauptinhalt */
 .content {
   flex: 1;
 }
-
 .rabatt {
   background-color: #e60023;
   color: #fff;
@@ -124,7 +120,6 @@
   background-color: var(--accent-color);
   color: #000;
 }
-
 .pagination button.active {
   background-color: var(--accent-color);
   color: #000;
@@ -143,7 +138,7 @@
   font-size: 18px;
   cursor: pointer;
   display: none;
-  box-shadow: 0 4px 8px rgb(0 0 0 / 30%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   transition: opacity 0.3s, transform 0.3s;
 }
 
@@ -151,14 +146,13 @@
   transform: scale(1.1);
   background-color: #e6c200;
 }
-
 .zoom-modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgb(0 0 0 / 96%);
+  background: rgba(0, 0, 0, 0.96);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -187,11 +181,12 @@
 
 .zoom-controls {
   display: flex;
-  flex-flow: row wrap;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 12px;
   margin-top: 20px;
+  flex-wrap: wrap;
   z-index: 1;
 }
 
@@ -226,7 +221,6 @@
 .hidden {
   display: none;
 }
-
 .zoom-modal-content {
   animation: fadeIn 0.3s ease;
 }
@@ -242,10 +236,22 @@
   object-fit: contain;
   transform-origin: center center;
   transition: transform 0.3s ease;
-} /* optional für Text/Farben im Modal */
+}
+body.light-mode .zoom-modal {
+  background-color: rgba(255, 255, 255, 0.95);
+}
 
+body.light-mode .zoom-modal-content {
+  color: #000; /* optional für Text/Farben im Modal */
+}
+
+body.light-mode .zoom-controls button {
   background: #e6c200;
-
+  color: #fff;
+}
+body.light-mode .zoom-close {
+  color: #000;
+}
 .zoom-modal-zoom-container {
   width: 90vw;
   height: 70vh;
@@ -261,7 +267,6 @@
     opacity: 0;
     transform: scale(0.9);
   }
-
   to {
     opacity: 1;
     transform: scale(1);
@@ -273,7 +278,6 @@
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
   }
-
   100% {
     transform: var(--fly-transform) translate(-50%, -50%) scale(0.5);
     opacity: 0.5;
@@ -285,12 +289,14 @@
   z-index: 9999;
   pointer-events: none;
   animation: flyToTargetAnim 2.5s ease-in-out forwards;
+  font-size: 24px;
   color: inherit; /* übernimmt Farbe vom Original */
   background: transparent; /* ❌ kein weißer Hintergrund */
   border-radius: 50%; /* nur falls dein Button rund ist */
   padding: 0; /* ❌ kein innerer Rand */
   box-shadow: none; /* ❌ kein Schatten (oder dezent, falls gewünscht) */
   line-height: 1;
+  width: auto;
   height: auto;
   font-size: 24px; /* ggf. 32px je nach Button */
   width: 32px;
@@ -299,24 +305,126 @@
   align-items: center;
   justify-content: center;
 }
-
 @keyframes pulse-effect {
   0% {
-    box-shadow: 0 0 0 rgb(0 0 0 / 0%);
+    box-shadow: 0 0 0px rgba(0, 0, 0, 0);
     background-color: inherit;
   }
-
   50% {
-    box-shadow: 0 0 12px rgb(255 200 0 / 100%);
-    background-color: rgb(255 200 0 / 20%);
+    box-shadow: 0 0 12px rgba(255, 200, 0, 1);
+    background-color: rgba(255, 200, 0, 0.2);
   }
-
   100% {
-    box-shadow: 0 0 0 rgb(0 0 0 / 0%);
+    box-shadow: 0 0 0px rgba(0, 0, 0, 0);
     background-color: inherit;
   }
 }
 
+.pulse-highlight {
+  animation: pulse-effect 1s ease-out;
+}
+/* Watchlist-Container als Grid */
+#watchlist-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 10px;
+  padding: 40px 20px;
+  align-items: stretch;
+  width: 100%;
+  justify-content: stretch;
+  justify-items: center; /* Alle Karten gleich hoch */
+}
+/* Karte: voller Stretch + gleich hohe Layoutstruktur */
+.watchlist-card {
+  width: 100%;
+  max-width: 400px; /* 🔧 feste Maximalbreite je Karte */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: var(--card-bg);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease;
+}
+
+.watchlist-card:hover {
+  transform: translateY(-5px);
+}
+
+.watchlist-card img {
+  max-width: 100%;
+  max-height: 180px;
+  object-fit: contain;
+  margin-bottom: 15px;
+  border-radius: 10px;
+}
+
+.watchlist-card h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: var(--accent-color);
+}
+
+.watchlist-card p {
+  font-size: 15px;
+  color: #ccc;
+  margin-bottom: 12px;
+}
+
+/* Button-Wrapper am Ende der Karte fixieren */
+.watchlist-card .button-group {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.watchlist-card button,
+.watchlist-card a button {
+  background-color: var(--accent-color);
+  color: #000;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.watchlist-card button:hover,
+.watchlist-card a button:hover {
+  background-color: #e6c200;
+}
+/* ⭕ Zentrierung der gesamten Merkliste-Seite */
+.watchlist-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  text-align: center;
+}
+/* 🧼 Button unten zentrieren */
+.watchlist-controls {
+  text-align: center;
+  margin-top: 30px;
+}
+/* ✨ Stil für 'Alle löschen' Button */
+.btn-delete-all {
+  background-color: var(--accent-color);
+  color: #000;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-delete-all:hover {
+  background-color: #e6c200;
+}
 
 /* 🧨 Animation für Entfernen */
 .fade-out {
@@ -324,7 +432,193 @@
   transform: scale(0.95);
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
+/* === 🧾 Warenkorb Layout Grid (Modern) === */
+.cart-wrapper {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: flex-start;
+}
 
+/* ============================= */
+/* 🛒 Linke Seite: Produktliste  */
+/* ============================= */
+
+.cart-main {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.cart-main h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: var(--accent-color);
+  text-align: center;
+}
+
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cart-table thead {
+  background-color: var(--card-bg); /* ✅ dynamisch */
+  color: var(--text-color);
+}
+
+.cart-table th,
+.cart-table td {
+  padding: 16px;
+  text-align: center;
+  border-bottom: 1px solid #444;
+  font-size: 16px;
+}
+
+.cart-table td:first-child {
+  text-align: left;
+}
+
+.cart-table td img {
+  width: 60px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* Entfernen-Button */
+.remove-btn {
+  background-color: transparent;
+  color: #ff4b5c;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  color: red;
+}
+
+/* ============================== */
+/* ✅ Rechte Seite: Zusammenfassung */
+/* ============================== */
+
+.cart-summary {
+  background-color: var(--card-bg);
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  color: var(--text-color);
+  position: sticky;
+  top: 100px;
+}
+
+.cart-summary h3 {
+  font-size: 22px;
+  margin-bottom: 16px;
+  color: var(--accent-color);
+}
+
+.cart-summary p {
+  font-size: 16px;
+  margin: 8px 0;
+}
+
+.cart-summary hr {
+  border: none;
+  height: 1px;
+  background-color: #444;
+  margin: 15px 0;
+}
+
+.cart-summary .gutschein-input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--text-color);
+  font-size: 15px;
+  background: var(--card-bg);
+  color: var(--text-color);
+  margin-bottom: 16px;
+}
+
+/* === Buttons */
+.cart-summary .btn-checkout {
+  width: 100%;
+  background-color: #28a745;
+  color: white;
+  font-weight: bold;
+  padding: 12px;
+  font-size: 16px;
+  margin-bottom: 12px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cart-summary .btn-checkout:hover {
+  background-color: #218838;
+}
+
+.cart-summary .btn-amazon {
+  background: linear-gradient(to right, #f8e081, #f7ca00);
+  color: #000;
+  border: none;
+  padding: 12px;
+  border-radius: 25px;
+  font-weight: bold;
+  width: 100%;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.cart-summary .btn-paypal {
+  background-color: #ffc439;
+  color: #003087;
+  border: none;
+  padding: 12px;
+  border-radius: 25px;
+  font-weight: bold;
+  width: 100%;
+  cursor: pointer;
+}
+
+.cart-summary .btn-amazon:hover,
+.cart-summary .btn-paypal:hover {
+  opacity: 0.9;
+}
+
+/* 📱 Responsiv */
+@media (max-width: 900px) {
+  .cart-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .cart-summary {
+    position: static;
+    margin-top: 40px;
+  }
+}
+.btn-zurueck-startseite {
+  background-color: var(--accent-color);
+  color: #000;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-zurueck-startseite:hover {
+  background-color: #e6c200;
+}
 #scrollTopBtn {
   position: fixed;
   bottom: 30px;
@@ -337,9 +631,10 @@
   height: 48px;
   border-radius: 50%;
   font-size: 24px;
-  font-weight: bold; /* wird per JS sichtbar */
+  font-weight: bold;
+  display: none; /* wird per JS sichtbar */
   cursor: pointer;
-  box-shadow: 0 4px 8px rgb(0 0 0 / 25%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -350,7 +645,6 @@
   background-color: #e6c200;
   transform: scale(1.1);
 }
-
 .toast-popup {
   position: fixed;
   bottom: 30px;
@@ -366,7 +660,7 @@
   pointer-events: none;
   transition: opacity 0.4s ease, transform 0.4s ease;
   max-width: 90%;
-  box-shadow: 0 6px 20px rgb(0 0 0 / 25%);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 
 .toast-popup.show {
@@ -374,7 +668,6 @@
   pointer-events: auto;
   transform: translateX(-50%) translateY(0);
 }
-
 /* === Universelles Popup-Styling für Warenkorb & Watchlist === */
 .popup-stack-container {
   position: fixed;
@@ -382,10 +675,6 @@
   right: 30px;
   display: flex;
   flex-direction: column;
-
-  /* Wenn sich viele Popups ansammeln, soll man scrollen können */
-  max-height: 90vh;
-  overflow-y: auto;
   gap: 16px;
   z-index: 9999;
   align-items: flex-end;
@@ -401,30 +690,26 @@
   color: var(--popup-text);
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: var(--popup-shadow);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25);
   border: 1px solid var(--popup-border);
   animation: slideFade 0.3s ease-out, popIn 0.5s ease-in-out;
-  backdrop-filter: blur(var(--popup-blur)) saturate(160%);
+  backdrop-filter: blur(10px);
   transform: scale(1);
   transition: all 0.3s ease-out;
   opacity: 1;
+  display: block;
   pointer-events: auto;
   width: 320px; /* 👈 oder jede gewünschte feste Breite */
   min-height: 110px; /* 👈 feste Höhe für Einheitlichkeit */
   display: flex;
   align-items: center;
   justify-content: start;
-
-  /* verhindern, dass Popups bei wenig Platz schrumpfen */
-  flex-shrink: 0;
 }
-
 .fade-out {
   opacity: 0;
   transform: translateY(-10px);
   transition: opacity 0.4s, transform 0.4s;
 }
-
 .cart-preview-popup,
 .watchlist-preview-popup {
   position: fixed;
@@ -436,11 +721,11 @@
   color: var(--popup-text); /* Dynamische Textfarbe */
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: var(--popup-shadow); /* Tiefe Schatten für Wow-Effekt */
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25); /* Tiefe Schatten für Wow-Effekt */
   border: 1px solid var(--popup-border);
   display: none;
   animation: slideFade 0.3s ease-out, popIn 0.5s ease-in-out;
-  backdrop-filter: blur(var(--popup-blur)) saturate(160%);
+  backdrop-filter: blur(10px);
   transform: scale(0.95); /* Anfangs kleiner */
   transition: all 0.3s ease-out;
 }
@@ -462,7 +747,7 @@
   height: 80px;
   border-radius: 12px;
   object-fit: cover;
-  box-shadow: 0 8px 16px rgb(0 0 0 / 15%);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   transition: transform 0.3s ease; /* Hover-Effekt */
 }
 
@@ -497,7 +782,6 @@
     opacity: 0;
     transform: translateY(-20px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -510,7 +794,6 @@
     opacity: 0;
     transform: scale(0.8);
   }
-
   to {
     opacity: 1;
     transform: scale(1);
@@ -519,19 +802,113 @@
 
 /* === Light/Dark Mode Variablen === */
 :root {
-  --popup-bg: rgb(255 255 255 / 90%);
-  --popup-text: #222;
-  --popup-border: rgb(0 0 0 / 10%);
-  --popup-shadow: 0 12px 32px rgb(0 0 0 / 25%);
-  --popup-blur: 12px;
-  --popup-button-bg: #fdfdfd;
+  --popup-bg: #ffffff;
+  --popup-text: #222222;
+  --popup-border: #dddddd;
+  --popup-button-bg: #f0f0f0;
   --popup-button-text: #222;
-  --popup-button-hover: #eee;
+  --popup-button-hover: #e0e0e0;
   --popup-button-active: #d1d1d1;
   --accent-color: #ffd700;
-  --text-muted: #888;
+  --text-muted: #888888;
 }
 
+[data-theme="dark"] {
+  --popup-bg: #1f1f1f; /* Dunkler Hintergrund im Darkmode */
+  --popup-text: #f0f0f0; /* Helle Schrift im Darkmode */
+  --popup-border: #333333;
+  --popup-button-bg: #333;
+  --popup-button-text: #f0f0f0;
+  --popup-button-hover: #444;
+  --popup-button-active: #555;
+}
+
+/* === Buttons für Popups === */
+.popup-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.popup-buttons button,
+.popup-buttons a {
+  background-color: var(--popup-button-bg);
+  color: var(--popup-button-text);
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.popup-buttons button:hover,
+.popup-buttons a:hover {
+  background-color: var(--popup-button-hover);
+  transform: translateY(-2px);
+}
+
+.popup-buttons button:active,
+.popup-buttons a:active {
+  background-color: var(--popup-button-active);
+  transform: translateY(2px);
+}
+
+.popup-buttons .btn-popup {
+  background-color: var(--accent-color);
+  color: #000;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.popup-buttons .btn-popup:hover {
+  opacity: 0.9;
+}
+
+/* === Darkmode Styles für Popup-Buttons === */
+[data-theme="dark"] .popup-buttons button,
+[data-theme="dark"] .popup-buttons a {
+  background-color: var(--popup-button-bg);
+  color: var(--popup-button-text);
+}
+
+[data-theme="dark"] .popup-buttons button:hover,
+[data-theme="dark"] .popup-buttons a:hover {
+  background-color: var(--popup-button-hover);
+}
+
+/* === Fehler und Erfolgshinweise === */
+.error-popup,
+.success-popup {
+  background-color: rgba(255, 0, 0, 0.1); /* Leichte Rottönung */
+  color: #fff;
+  padding: 12px;
+  border-radius: 8px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.success-popup {
+  background-color: rgba(0, 128, 0, 0.1); /* Leichte Grüntönung */
+}
+
+.error-popup span,
+.success-popup span {
+  font-size: 1.2rem;
+}
+
+/* === Darkmode Anpassung === */
+[data-theme="dark"] .error-popup {
+  background-color: rgba(255, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .success-popup {
+  background-color: rgba(0, 128, 0, 0.3);
+}
 
 .dropdown-konto {
   position: relative;
@@ -557,7 +934,7 @@
   padding: 1em;
   min-width: 180px;
   z-index: 1000;
-  box-shadow: 0 2px 6px rgb(0 0 0 / 10%);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .dropdown-konto:hover .konto-popup {
@@ -580,7 +957,6 @@
   border-radius: 4px;
   margin-bottom: 0.5em;
 }
-
 .message {
   padding: 0.8em 1.2em;
   margin: 1em auto;
@@ -601,8 +977,15 @@
   color: #721c24;
 }
 
+body:not(.light-mode) .success {
+  background-color: #225c3d;
+  color: #c2f0d1;
+}
+
+body:not(.light-mode) .error {
   background-color: #712b31;
   color: #f8d7da;
+}
 
 .welcome {
   display: flex;
@@ -614,23 +997,19 @@
   color: #fff;
   padding: 120px 20px;
 }
-
 .welcome-logo {
   width: 120px;
   height: auto;
   margin-bottom: 20px;
 }
-
 .welcome h1 {
   font-size: 56px;
   margin-bottom: 10px;
 }
-
 .welcome p {
   font-size: 24px;
   margin-bottom: 30px;
 }
-
 .beliebte {
   display: flex;
   flex-direction: column;
@@ -640,7 +1019,6 @@
   color: #fff;
   padding: 80px 20px;
 }
-
 .beliebte h2 {
   font-size: 48px;
   margin-bottom: 20px;
