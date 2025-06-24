@@ -1,4 +1,4 @@
-/* Mohamed: ab hier*/
+/* Mohamed: ab hier */
 .main-container {
   display: flex;
   gap: 2rem;
@@ -22,7 +22,7 @@
   gap: 1.5rem; /* mehr vertikaler Abstand zwischen Elementen */
   padding: 2rem 2rem 3rem; /* großzügigerer Innenabstand (oben, seitlich, unten) */
   border-radius: 12px; /* für Kartenstil – optional */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* subtile Tiefe */
+  box-shadow: 0 2px 8px rgb(0 0 0 / 5%); /* subtile Tiefe */
   min-height: 100vh; /* sorgt für volle Höhe bei leerem Inhalt */
   box-sizing: border-box; /* Padding zählt zur Gesamtbreite */
 }
@@ -33,6 +33,7 @@
   gap: 0.5rem;
   margin-bottom: 1rem;
 }
+
 .filterbar select {
   border: 1px solid #555;
   border-radius: 6px;
@@ -61,7 +62,7 @@
   top: 1rem; /* Abstand von oben */
   align-self: flex-start; /* Wichtiger Fix bei flex layouts */
   height: fit-content; /* Verhindert Stretching */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
   z-index: 10;
 }
 
@@ -71,6 +72,7 @@
   border-bottom: 2px solid bl;
   padding-bottom: 0.5rem;
 }
+
 .sidebar ul {
   list-style: none;
 }
@@ -86,10 +88,12 @@
   font-size: 0.95rem;
   color: #aaa;
 }
+
 /* Hauptinhalt */
 .content {
   flex: 1;
 }
+
 .rabatt {
   background-color: #e60023;
   color: #fff;
@@ -120,6 +124,7 @@
   background-color: var(--accent-color);
   color: #000;
 }
+
 .pagination button.active {
   background-color: var(--accent-color);
   color: #000;
@@ -138,7 +143,7 @@
   font-size: 18px;
   cursor: pointer;
   display: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 30%);
   transition: opacity 0.3s, transform 0.3s;
 }
 
@@ -146,13 +151,14 @@
   transform: scale(1.1);
   background-color: #e6c200;
 }
+
 .zoom-modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.96);
+  background: rgb(0 0 0 / 96%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -181,12 +187,11 @@
 
 .zoom-controls {
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
   justify-content: center;
   align-items: center;
   gap: 12px;
   margin-top: 20px;
-  flex-wrap: wrap;
   z-index: 1;
 }
 
@@ -221,6 +226,7 @@
 .hidden {
   display: none;
 }
+
 .zoom-modal-content {
   animation: fadeIn 0.3s ease;
 }
@@ -236,18 +242,10 @@
   object-fit: contain;
   transform-origin: center center;
   transition: transform 0.3s ease;
-}
-  background-color: rgba(255, 255, 255, 0.95);
-}
-
-  color: #000; /* optional für Text/Farben im Modal */
-}
+} /* optional für Text/Farben im Modal */
 
   background: #e6c200;
-  color: #fff;
-}
-  color: #000;
-}
+
 .zoom-modal-zoom-container {
   width: 90vw;
   height: 70vh;
@@ -263,6 +261,7 @@
     opacity: 0;
     transform: scale(0.9);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -274,6 +273,7 @@
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
   }
+
   100% {
     transform: var(--fly-transform) translate(-50%, -50%) scale(0.5);
     opacity: 0.5;
@@ -285,14 +285,12 @@
   z-index: 9999;
   pointer-events: none;
   animation: flyToTargetAnim 2.5s ease-in-out forwards;
-  font-size: 24px;
   color: inherit; /* übernimmt Farbe vom Original */
   background: transparent; /* ❌ kein weißer Hintergrund */
   border-radius: 50%; /* nur falls dein Button rund ist */
   padding: 0; /* ❌ kein innerer Rand */
   box-shadow: none; /* ❌ kein Schatten (oder dezent, falls gewünscht) */
   line-height: 1;
-  width: auto;
   height: auto;
   font-size: 24px; /* ggf. 32px je nach Button */
   width: 32px;
@@ -301,17 +299,20 @@
   align-items: center;
   justify-content: center;
 }
+
 @keyframes pulse-effect {
   0% {
-    box-shadow: 0 0 0px rgba(0, 0, 0, 0);
+    box-shadow: 0 0 0 rgb(0 0 0 / 0%);
     background-color: inherit;
   }
+
   50% {
-    box-shadow: 0 0 12px rgba(255, 200, 0, 1);
-    background-color: rgba(255, 200, 0, 0.2);
+    box-shadow: 0 0 12px rgb(255 200 0 / 100%);
+    background-color: rgb(255 200 0 / 20%);
   }
+
   100% {
-    box-shadow: 0 0 0px rgba(0, 0, 0, 0);
+    box-shadow: 0 0 0 rgb(0 0 0 / 0%);
     background-color: inherit;
   }
 }
@@ -323,8 +324,7 @@
   transform: scale(0.95);
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
-  background-color: #e6c200;
-}
+
 #scrollTopBtn {
   position: fixed;
   bottom: 30px;
@@ -337,10 +337,9 @@
   height: 48px;
   border-radius: 50%;
   font-size: 24px;
-  font-weight: bold;
-  display: none; /* wird per JS sichtbar */
+  font-weight: bold; /* wird per JS sichtbar */
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 25%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -351,6 +350,7 @@
   background-color: #e6c200;
   transform: scale(1.1);
 }
+
 .toast-popup {
   position: fixed;
   bottom: 30px;
@@ -366,7 +366,7 @@
   pointer-events: none;
   transition: opacity 0.4s ease, transform 0.4s ease;
   max-width: 90%;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 20px rgb(0 0 0 / 25%);
 }
 
 .toast-popup.show {
@@ -374,6 +374,7 @@
   pointer-events: auto;
   transform: translateX(-50%) translateY(0);
 }
+
 /* === Universelles Popup-Styling für Warenkorb & Watchlist === */
 .popup-stack-container {
   position: fixed;
@@ -381,6 +382,7 @@
   right: 30px;
   display: flex;
   flex-direction: column;
+
   /* Wenn sich viele Popups ansammeln, soll man scrollen können */
   max-height: 90vh;
   overflow-y: auto;
@@ -406,7 +408,6 @@
   transform: scale(1);
   transition: all 0.3s ease-out;
   opacity: 1;
-  display: block;
   pointer-events: auto;
   width: 320px; /* 👈 oder jede gewünschte feste Breite */
   min-height: 110px; /* 👈 feste Höhe für Einheitlichkeit */
@@ -417,11 +418,13 @@
   /* verhindern, dass Popups bei wenig Platz schrumpfen */
   flex-shrink: 0;
 }
+
 .fade-out {
   opacity: 0;
   transform: translateY(-10px);
   transition: opacity 0.4s, transform 0.4s;
 }
+
 .cart-preview-popup,
 .watchlist-preview-popup {
   position: fixed;
@@ -459,7 +462,7 @@
   height: 80px;
   border-radius: 12px;
   object-fit: cover;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 16px rgb(0 0 0 / 15%);
   transition: transform 0.3s ease; /* Hover-Effekt */
 }
 
@@ -494,6 +497,7 @@
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -506,6 +510,7 @@
     opacity: 0;
     transform: scale(0.8);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -514,17 +519,17 @@
 
 /* === Light/Dark Mode Variablen === */
 :root {
-  --popup-bg: rgba(255, 255, 255, 0.9);
-  --popup-text: #222222;
-  --popup-border: rgba(0, 0, 0, 0.1);
-  --popup-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  --popup-bg: rgb(255 255 255 / 90%);
+  --popup-text: #222;
+  --popup-border: rgb(0 0 0 / 10%);
+  --popup-shadow: 0 12px 32px rgb(0 0 0 / 25%);
   --popup-blur: 12px;
   --popup-button-bg: #fdfdfd;
   --popup-button-text: #222;
   --popup-button-hover: #eee;
   --popup-button-active: #d1d1d1;
   --accent-color: #ffd700;
-  --text-muted: #888888;
+  --text-muted: #888;
 }
 
 
@@ -552,7 +557,7 @@
   padding: 1em;
   min-width: 180px;
   z-index: 1000;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 10%);
 }
 
 .dropdown-konto:hover .konto-popup {
@@ -575,6 +580,7 @@
   border-radius: 4px;
   margin-bottom: 0.5em;
 }
+
 .message {
   padding: 0.8em 1.2em;
   margin: 1em auto;
@@ -597,7 +603,6 @@
 
   background-color: #712b31;
   color: #f8d7da;
-}
 
 .welcome {
   display: flex;
@@ -609,19 +614,23 @@
   color: #fff;
   padding: 120px 20px;
 }
+
 .welcome-logo {
   width: 120px;
   height: auto;
   margin-bottom: 20px;
 }
+
 .welcome h1 {
   font-size: 56px;
   margin-bottom: 10px;
 }
+
 .welcome p {
   font-size: 24px;
   margin-bottom: 30px;
 }
+
 .beliebte {
   display: flex;
   flex-direction: column;
@@ -631,6 +640,7 @@
   color: #fff;
   padding: 80px 20px;
 }
+
 .beliebte h2 {
   font-size: 48px;
   margin-bottom: 20px;
@@ -719,5 +729,4 @@
 
 .compare-section button:hover {
   background: #e6c200;
-}
 }

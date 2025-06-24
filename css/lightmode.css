@@ -1,5 +1,5 @@
 body.light-mode .search-wrapper input#autocomplete-shadow {
-  color: rgba(0, 0, 0, 0.3);
+  color: rgb(0 0 0 / 30%);
 }
 
 body.light-mode .search-wrapper input#produktsuche {
@@ -12,7 +12,7 @@ body.light-mode {
   --bg-color: #eaeaea;
   --text-color: #1a1a1a;
   --accent-color: #caa000;
-  --card-bg: #ffffff;
+  --card-bg: #fff;
 }
 
 body.light-mode .search-container input {
@@ -80,7 +80,7 @@ body.light-mode .form-wrapper button:disabled {
 }
 
 body.light-mode .zoom-modal {
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgb(255 255 255 / 95%);
 }
 
 body.light-mode .zoom-modal-content {
