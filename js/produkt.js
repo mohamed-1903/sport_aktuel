@@ -5,37 +5,24 @@ const DISCOUNT_CODES = {
   "00000": 5,
 };
 
-const TEAM_PLAYERS = {
-  Bayern: {
-    9: "Harry Kane",
-    25: "Thomas Müller",
-    11: "Kingsley Coman",
-  },
-  Dortmund: {
-    9: "Sebastian Haller",
-    22: "Jude Bellingham",
-    11: "Marco Reus",
-  },
-  "Real Madrid": {
-    7: "Vinicius Jr.",
-    10: "Luka Modric",
-    8: "Toni Kroos",
-  },
-  "Manchester City": {
-    9: "Erling Haaland",
-    17: "Kevin De Bruyne",
-    20: "Bernardo Silva",
-  },
-};
+let TEAM_ROSTERS = {};
 
 const CUSTOMIZATION_FEE = 10; // € pro Trikot
 window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
 
 // Initialisierung pro Produktcontainer
 document.addEventListener("DOMContentLoaded", () => {
-  document
-    .querySelectorAll("[data-product-index]")
-    .forEach((section) => setupProduct(section));
+  fetch('data/rosters.json')
+    .then((r) => r.json())
+    .then((data) => {
+      TEAM_ROSTERS = data;
+    })
+    .catch(() => {})
+    .finally(() => {
+      document
+        .querySelectorAll('[data-product-index]')
+        .forEach((section) => setupProduct(section));
+    });
 });
 
 function setupProduct(section) {
@@ -47,6 +34,8 @@ function setupProduct(section) {
   const toggleInfo = section.querySelector(`#toggle-info-${idx}`);
   const desc = section.querySelector(`#description-full-${idx}`);
   const zoomContainer = section.querySelector(`#zoomContainer-${idx}`);
+  const customBtn = section.querySelector(`#customBtn-${idx}`);
+  const customSection = section.querySelector(`#customSection-${idx}`);
 
   section._zoomData = { currentIndex: 0 };
 
@@ -67,6 +56,12 @@ function setupProduct(section) {
   qtyInput.addEventListener("input", () => updateDisplay(section));
   const giftWrapEl = section.querySelector(`#giftWrap-${idx}`);
   const pinInputEl = section.querySelector(`#pin-${idx}`);
+
+  if (customBtn && customSection) {
+    customBtn.addEventListener('click', () => {
+      customSection.classList.toggle('hidden');
+    });
+  }
 
   setupCustomization(section);
 
@@ -189,6 +184,22 @@ function updateDisplay(section) {
     }
   }
   finalValueEl.textContent = `${final.toFixed(2)}€ inkl. Mwst.`;
+
+  const list = section.querySelector('.price-breakdown');
+  if (list) {
+    const gift = getGiftWrapCharge(section);
+    const custom = getCustomizationFee(section);
+    const qty = parseInt(section.querySelector(`#quantity-${idx}`).value) || 1;
+    const pin = section.querySelector(`#pin-${idx}`)?.value.trim();
+    const discountAmount = ((getBasePrice(section) + custom + gift) * qty) * (discount / 100);
+    list.innerHTML = `<ul>
+        <li>Grundpreis: ${getBasePrice(section).toFixed(2)} €</li>
+        ${custom ? `<li>Personalisierung: ${custom.toFixed(2)} €</li>` : ''}
+        ${gift ? `<li>Geschenkverpackung: ${gift.toFixed(2)} €</li>` : ''}
+        ${discount ? `<li>Rabatt: -${discountAmount.toFixed(2)} € (${discount}%)</li>` : ''}
+        <li><strong>Endpreis: ${final.toFixed(2)} €</strong></li>
+      </ul>`;
+  }
 }
 
 // ---- Zoom Handling ----
@@ -415,7 +426,7 @@ function resetFinalPriceDisplay(price, section) {
 
 function setupCustomization(section) {
   const name = section.querySelector('.product-name')?.textContent || '';
-  const teamKey = Object.keys(TEAM_PLAYERS).find((k) =>
+  const teamKey = Object.keys(TEAM_ROSTERS).find((k) =>
     name.toLowerCase().includes(k.toLowerCase())
   );
   const playerSelect = section.querySelector('.player-select');
@@ -428,7 +439,7 @@ function setupCustomization(section) {
   if (!playerSelect) return;
 
   if (teamKey) {
-    const roster = TEAM_PLAYERS[teamKey];
+    const roster = TEAM_ROSTERS[teamKey];
     const optEmpty = document.createElement('option');
     optEmpty.value = '';
     optEmpty.textContent = '-- Eigener Name --';
