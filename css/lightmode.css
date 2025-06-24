@@ -1,0 +1,97 @@
+body.light-mode .search-wrapper input#autocomplete-shadow {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+body.light-mode .search-wrapper input#produktsuche {
+  border: 2px solid #e6c200;
+  background-color: #fff;
+  color: #000;
+}
+
+body.light-mode {
+  --bg-color: #eaeaea;
+  --text-color: #1a1a1a;
+  --accent-color: #caa000;
+  --card-bg: #ffffff;
+}
+
+body.light-mode .search-container input {
+  border: 2px solid #000 !important;
+}
+
+body.light-mode .action-buttons button:nth-child(2),
+body.light-mode #theme-toggle {
+  color: #fff !important;
+}
+
+body.light-mode .dropdown-menu {
+  background-color: #fff;
+}
+
+body.light-mode .dropdown-menu li a {
+  background-color: #fff;
+  color: #000;
+}
+
+body.light-mode .dropdown-menu li a:hover {
+  background-color: #caa000;
+  color: #000;
+}
+
+body.light-mode .form-wrapper input {
+  background-color: #f8f8f8;
+  color: #000;
+  border-color: #ccc;
+}
+
+body.light-mode .form-wrapper label {
+  color: var(--text-color);
+}
+
+body.light-mode .form-wrapper button {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+
+body.light-mode .action-buttons button {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+body.light-mode .form-wrapper input.valid {
+  border-color: #28a745;
+  box-shadow: 0 0 5px #28a74580;
+}
+
+body.light-mode .form-wrapper input.invalid {
+  border-color: #dc3545;
+  box-shadow: 0 0 5px #dc354580;
+}
+
+body.light-mode .form-wrapper h1 {
+  color: #e6c200;
+}
+
+body.light-mode .form-wrapper button:disabled {
+  background-color: #e0e0e0;
+  color: #888;
+  cursor: not-allowed;
+  border: 1px solid #dacfcf;
+}
+
+body.light-mode .zoom-modal {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+body.light-mode .zoom-modal-content {
+  color: #000; /* optional für Text/Farben im Modal */
+}
+
+body.light-mode .zoom-controls button {
+  background: #e6c200;
+  color: #fff;
+}
+
+body.light-mode .zoom-close {
+  color: #000;
+}
