@@ -52,7 +52,7 @@ $total = 0;
           foreach ($cartItems as $item):
             $base = $item['price'];
             $rabattPreis = $base * (1 - ($item['discount'] ?? 0) / 100);
-            $einzelpreis = $rabattPreis + (($item['gift'] ?? 0) ? 2 : 0);
+            $einzelpreis = $rabattPreis + (($item['gift'] ?? 0) ? 2 : 0) + ($item['custom_fee'] ?? 0);
             $sum = $einzelpreis * $item['quantity'];
             $total += $sum;
           ?>

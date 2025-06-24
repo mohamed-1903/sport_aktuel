@@ -28,6 +28,10 @@ const TEAM_PLAYERS = {
   },
 };
 
+const CUSTOMIZATION_FEE = 10; // € pro Trikot
+window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
+
+
 // Initialisierung pro Produktcontainer
 document.addEventListener("DOMContentLoaded", () => {
   document
@@ -119,6 +123,12 @@ function getGiftWrapCharge(section) {
   return checkbox?.checked ? 2 : 0;
 }
 
+function getCustomizationFee(section) {
+  const nameInput = section.querySelector('.custom-name');
+  const numberInput = section.querySelector('.custom-number');
+  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
+}
+
 function getBasePrice(section) {
   const idx = section.dataset.productIndex;
   const el = section.querySelector(`#basePrice-${idx}`);
@@ -139,8 +149,9 @@ function calculatePrice(section) {
   const qty = parseInt(section.querySelector(`#quantity-${idx}`).value) || 1;
   const gift = section.querySelector(`#giftWrap-${idx}`)?.checked;
   const pin = section.querySelector(`#pin-${idx}`)?.value.trim() || "";
+  const customFee = getCustomizationFee(section);
 
-  let subtotal = getBasePrice(section) * qty;
+  let subtotal = (getBasePrice(section) + customFee) * qty;
   if (gift) subtotal += 2;
 
   const discountPercent = DISCOUNT_CODES[pin] || 0;
@@ -411,30 +422,54 @@ function setupCustomization(section) {
   const playerSelect = section.querySelector('.player-select');
   const nameInput = section.querySelector('.custom-name');
   const numberInput = section.querySelector('.custom-number');
+  const preview = section.querySelector('.jersey-preview');
+  const nameOverlay = preview?.querySelector('.overlay-name');
+  const numberOverlay = preview?.querySelector('.overlay-number');
 
-  if (!playerSelect || !teamKey) return;
+  if (!playerSelect) return;
 
-  const roster = TEAM_PLAYERS[teamKey];
-  const optEmpty = document.createElement('option');
-  optEmpty.value = '';
-  optEmpty.textContent = '-- Eigener Name --';
-  playerSelect.appendChild(optEmpty);
+  if (teamKey) {
+    const roster = TEAM_PLAYERS[teamKey];
+    const optEmpty = document.createElement('option');
+    optEmpty.value = '';
+    optEmpty.textContent = '-- Eigener Name --';
+    playerSelect.appendChild(optEmpty);
 
-  Object.entries(roster).forEach(([num, player]) => {
-    const opt = document.createElement('option');
-    opt.value = num;
-    opt.textContent = `${player} (${num})`;
-    playerSelect.appendChild(opt);
+    Object.entries(roster).forEach(([num, player]) => {
+      const opt = document.createElement('option');
+      opt.value = num;
+      opt.textContent = `${player} (${num})`;
+      playerSelect.appendChild(opt);
+    });
+
+    playerSelect.addEventListener('change', () => {
+      const num = playerSelect.value;
+      if (num) {
+        numberInput.value = num;
+        nameInput.value = roster[num];
+      } else {
+        numberInput.value = '';
+        nameInput.value = '';
+      }
+      updateDisplay(section);
+      updatePreview();
+    });
+  }
+
+  function updatePreview() {
+    if (nameOverlay) nameOverlay.textContent = nameInput.value.trim();
+    if (numberOverlay) numberOverlay.textContent = numberInput.value.trim();
+  }
+
+  nameInput.addEventListener('input', () => {
+    updateDisplay(section);
+    updatePreview();
+  });
+  numberInput.addEventListener('input', () => {
+    updateDisplay(section);
+    updatePreview();
   });
 
-  playerSelect.addEventListener('change', () => {
-    const num = playerSelect.value;
-    if (num) {
-      numberInput.value = num;
-      nameInput.value = roster[num];
-    } else {
-      numberInput.value = '';
-      nameInput.value = '';
-    }
-  });
+  updatePreview();
+
 }
