@@ -1,8 +1,8 @@
 [data-theme="dark"] {
-  --popup-bg: rgba(32, 32, 32, 0.9);
+  --popup-bg: rgb(32 32 32 / 90%);
   --popup-text: #f0f0f0;
-  --popup-border: rgba(255, 255, 255, 0.15);
-  --popup-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  --popup-border: rgb(255 255 255 / 15%);
+  --popup-shadow: 0 12px 32px rgb(0 0 0 / 40%);
   --popup-blur: 12px;
   --popup-button-bg: #333;
   --popup-button-text: #f0f0f0;
@@ -28,7 +28,7 @@
   border-radius: 8px;
   cursor: pointer;
   text-decoration: none;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 15%);
   transition: background-color 0.3s ease, transform 0.2s ease,
     box-shadow 0.3s ease;
 }
@@ -37,7 +37,7 @@
 .popup-buttons a:hover {
   background: var(--popup-button-hover);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 20%);
 }
 
 .popup-buttons button:active,
@@ -50,12 +50,12 @@
   background-color: var(--accent-color);
   color: #000;
   font-weight: 600;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 25%);
 }
 
 .popup-buttons .btn-popup:hover {
   opacity: 0.9;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 30%);
 }
 
 /* === Darkmode Styles für Popup-Buttons === */
@@ -73,7 +73,7 @@
 /* === Fehler und Erfolgshinweise === */
 .error-popup,
 .success-popup {
-  background-color: rgba(255, 0, 0, 0.1); /* Leichte Rottönung */
+  background-color: rgb(255 0 0 / 10%); /* Leichte Rottönung */
   color: #fff;
   padding: 12px;
   border-radius: 8px;
@@ -84,7 +84,7 @@
 }
 
 .success-popup {
-  background-color: rgba(0, 128, 0, 0.1); /* Leichte Grüntönung */
+  background-color: rgb(0 128 0 / 10%); /* Leichte Grüntönung */
 }
 
 .error-popup span,
@@ -94,12 +94,13 @@
 
 /* === Darkmode Anpassung === */
 [data-theme="dark"] .error-popup {
-  background-color: rgba(255, 0, 0, 0.3);
+  background-color: rgb(255 0 0 / 30%);
 }
 
 [data-theme="dark"] .success-popup {
-  background-color: rgba(0, 128, 0, 0.3);
+  background-color: rgb(0 128 0 / 30%);
 }
+
 body:not(.light-mode) .success {
   background-color: #225c3d;
   color: #c2f0d1;

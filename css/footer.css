@@ -1,9 +1,8 @@
 footer {
   background-color: #222;
   color: #fff;
-  padding: 40px 20px;
-  font-family: 'Montserrat', sans-serif;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: Montserrat, sans-serif;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
   margin-top: 50px;
   width: 100%;
   box-sizing: border-box; /* Ensure full-width layout /
@@ -95,14 +94,14 @@ footer {
   margin: 0 10px;
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .footer-container {
     grid-template-columns: 1fr 1fr;
     gap: 20px;
   }
 }
 
-@media (max-width: 480px) {
+@media (width <= 480px) {
   .footer-container {
     grid-template-columns: 1fr;
     text-align: center;
