@@ -26,7 +26,7 @@ $total = 0;
   <!-- 🛒 Linke Seite – Artikeltabelle -->
   <section class="cart-main">
     <h2>Warenkorb</h2>
-    <div class="button-row">
+    <div class="button-rows">
       <a href="index.php">
         <button class="btn-zurueck-startseite">Zurück zur Startseite</button>
         <button class="btn-delete-all" onclick="clearList()">🧹 Alle löschen</button>
@@ -37,7 +37,6 @@ $total = 0;
       <thead>
         <tr>
           <th>Produkt</th>
-          <th>Größe</th>
           <th>Anzahl</th>
           <th>Stückpreis</th>
           <th>Summe</th>
