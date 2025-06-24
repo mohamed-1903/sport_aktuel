@@ -24,14 +24,9 @@ if (session_status() === PHP_SESSION_NONE) {
 
 <body>
     <header>
-        <button id="burger-menu" class="burger-menu" aria-label="Menü">&#9776;</button>
-        <div class="header-bar">
+        <div class="header-top">
+            <button id="burger-menu" class="burger-menu" aria-label="Menü">&#9776;</button>
             <a href="index.php" class="logo" title="zur Startseite">&#127942; SportX</a>
-            <div class="search-wrapper">
-                <input type="text" id="autocomplete-shadow" readonly tabindex="-1" />
-                <input type="text" id="produktsuche" placeholder="🔍 Suche nach Produkten..." autocomplete="off" />
-                <ul id="such-vorschlaege" class="autocomplete-liste"></ul>
-            </div>
             <div class="action-buttons">
                 <a href="index.php?page=watchlist&action=view" title="Favoriten">
                     <button type="button" id="watchlist-button">&#10084;</button>
@@ -64,6 +59,11 @@ if (session_status() === PHP_SESSION_NONE) {
                 </a>
                 <button id="theme-toggle" title="Design wechseln">&#127769;</button>
             </div>
+        </div>
+        <div class="search-wrapper">
+            <input type="text" id="autocomplete-shadow" readonly tabindex="-1" />
+            <input type="text" id="produktsuche" placeholder="🔍 Suche nach Produkten..." autocomplete="off" />
+            <ul id="such-vorschlaege" class="autocomplete-liste"></ul>
         </div>
         <div id="toast-popup" class="toast-popup"></div>
         <div id="cart-preview-popup" class="cart-preview-popup"></div>
