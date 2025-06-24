@@ -14,12 +14,19 @@
         kontakt@sportx.de
     </p>
 
+
     <h3>Verwendete Technologien</h3>
     <ul>
         <li>Cookies</li>
         <li>Sessions zur Benutzeridentifikation</li>
         <li>Keine Drittanbieter-Tracker</li>
     </ul>
+
+    <h3>Cookie-Verwendung</h3>
+    <p>
+        Wir setzen ein technisch erforderliches Cookie, um Ihre Zustimmung zur Cookie-Nutzung zu speichern.
+        Dieses Cookie wird nach einem Jahr automatisch gelöscht. Es enthält keine personenbezogenen Daten.
+    </p>
 
     <h3>Ihre Rechte</h3>
     <p>
