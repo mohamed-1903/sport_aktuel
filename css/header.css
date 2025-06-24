@@ -1,0 +1,48 @@
+header {
+  background-color: #000;
+  padding: 20px;
+  position: relative;
+}
+
+.header-bar {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.logo {
+  justify-self: start;
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--accent-color);
+}
+
+nav {
+  background-color: var(--card-bg);
+  transition: background-color 0.3s ease;
+}
+
+.nav-menu {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  padding: 15px 0;
+}
+
+.nav-menu a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 10px 15px;
+  transition: background-color 0.3s;
+}
+
+.nav-menu a:hover {
+  background-color: var(--accent-color);
+  color: #000;
+  border-radius: 5px;
+}
