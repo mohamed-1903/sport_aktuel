@@ -63,6 +63,9 @@
   gap: 30px;
   margin-top: 20px;
   align-items: stretch; /* ✨ alle gleich hoch */
+  list-style: none;
+  padding: 0;
+  margin-bottom: 0;
 }
 
 .sidebar {
@@ -1176,6 +1179,9 @@ body:not(.light-mode) .error {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .einzelprodukt-list .einzelprodukt {
@@ -1185,6 +1191,8 @@ body:not(.light-mode) .error {
   padding: 10px;
   border: 1px solid var(--border-color, #555);
   border-radius: 8px;
+  background-color: var(--card-bg);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
 }
 
 .einzelprodukt-list .produkt-wrapper {

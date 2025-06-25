@@ -15,6 +15,10 @@ function getItemsPerPage() {
     return (cols || 1) * 2;
   }
 
+  if (container.classList.contains("einzelprodukt-list")) {
+    return 4;
+  }
+
   return 2;
 }
 

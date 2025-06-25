@@ -62,7 +62,7 @@
 
 
 
-    <section class="einzelprodukt-grid" id="produktContainer">
+    <ul class="einzelprodukt-grid" id="produktContainer">
       <?php if (empty($filteredProducts)): ?>
         <p>Keine Produkte in dieser Kategorie gefunden.</p>
       <?php else: ?>
@@ -77,7 +77,7 @@
           $farbe = $produkt["farbe"] ?? "Unbekannt";
           $geschlecht = $produkt["geschlecht"] ?? "Unbekannt";
           ?>
-          <section class="einzelprodukt"
+          <li class="einzelprodukt"
             data-marke="<?= htmlspecialchars($marke) ?>"
             data-farbe="<?= htmlspecialchars($farbe) ?>"
             data-preis="<?= $preis ?>"
@@ -123,10 +123,10 @@
                 🤍
               </button>
             </section>
-          </section>
+          </li>
         <?php endforeach; ?>
       <?php endif; ?>
-    </section>
+    </ul>
 
     <section class="pagination"></section>
 
