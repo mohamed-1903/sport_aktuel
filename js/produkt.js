@@ -8,8 +8,6 @@ const DISCOUNT_CODES = {
 
 const CUSTOMIZATION_FEE = 10; // € pro Trikot
 window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
-const BADGE_BL_FEE = 4.0;
-const BADGE_CL_FEE = 10.95;
 
 let TEAM_ROSTERS = {};
 
@@ -85,8 +83,6 @@ function setupProduct(section) {
   qtyInput.addEventListener("input", () => updateDisplay(section));
   const giftWrapEl = section.querySelector(`#giftWrap-${idx}`);
   const pinInputEl = section.querySelector(`#pin-${idx}`);
-  const badgeBLEl = section.querySelector(`#badgeBL-${idx}`);
-  const badgeCLEl = section.querySelector(`#badgeCL-${idx}`);
 
   if (customBtn && customSection) {
     customBtn.addEventListener('click', () => {
@@ -98,8 +94,6 @@ function setupProduct(section) {
 
   giftWrapEl?.addEventListener("change", () => updateDisplay(section));
   pinInputEl?.addEventListener("input", () => updateDisplay(section));
-  badgeBLEl?.addEventListener("change", () => updateDisplay(section));
-  badgeCLEl?.addEventListener("change", () => updateDisplay(section));
 
   updateDisplay(section);
   const compareBtn = document.getElementById("showCompareForm");
@@ -153,17 +147,25 @@ function getGiftWrapCharge(section) {
 function getCustomizationFee(section) {
   const nameInput = section.querySelector('.custom-name');
   const numberInput = section.querySelector('.custom-number');
-  return nameInput && nameInput.value.trim()
-    ? CUSTOMIZATION_FEE
-    : numberInput && numberInput.value.trim()
-    ? CUSTOMIZATION_FEE
-    : 0;
+  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
 }
 
-function getBadgeFee(section) {
-  const bl = section.querySelector('.badge-bl')?.checked ? BADGE_BL_FEE : 0;
-  const cl = section.querySelector('.badge-cl')?.checked ? BADGE_CL_FEE : 0;
-  return bl + cl;
+function getCustomizationFee(section) {
+  const nameInput = section.querySelector('.custom-name');
+  const numberInput = section.querySelector('.custom-number');
+  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
+}
+
+function getCustomizationFee(section) {
+  const nameInput = section.querySelector('.custom-name');
+  const numberInput = section.querySelector('.custom-number');
+  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
+}
+
+function getCustomizationFee(section) {
+  const nameInput = section.querySelector('.custom-name');
+  const numberInput = section.querySelector('.custom-number');
+  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
 }
 
 function getBasePrice(section) {
@@ -187,9 +189,8 @@ function calculatePrice(section) {
   const gift = section.querySelector(`#giftWrap-${idx}`)?.checked;
   const pin = section.querySelector(`#pin-${idx}`)?.value.trim() || "";
   const customFee = getCustomizationFee(section);
-  const badgeFee = getBadgeFee(section);
 
-  let subtotal = (getBasePrice(section) + customFee + badgeFee) * qty;
+  let subtotal = (getBasePrice(section) + customFee) * qty;
   if (gift) subtotal += 2;
 
 
@@ -236,14 +237,12 @@ function updateDisplay(section) {
   if (list) {
     const gift = getGiftWrapCharge(section);
     const custom = getCustomizationFee(section);
-    const badges = getBadgeFee(section);
     const qty = parseInt(section.querySelector(`#quantity-${idx}`).value) || 1;
     const pin = section.querySelector(`#pin-${idx}`)?.value.trim();
-    const discountAmount = ((getBasePrice(section) + custom + badges + gift) * qty) * (discount / 100);
+    const discountAmount = ((getBasePrice(section) + custom + gift) * qty) * (discount / 100);
     list.innerHTML = `<ul>
         <li>Grundpreis: ${getBasePrice(section).toFixed(2)} €</li>
         ${custom ? `<li>Personalisierung: ${custom.toFixed(2)} €</li>` : ''}
-        ${badges ? `<li>Badges: ${badges.toFixed(2)} €</li>` : ''}
         ${gift ? `<li>Geschenkverpackung: ${gift.toFixed(2)} €</li>` : ''}
         ${discount ? `<li>Rabatt: -${discountAmount.toFixed(2)} € (${discount}%)</li>` : ''}
         <li><strong>Endpreis: ${final.toFixed(2)} €</strong></li>
@@ -445,14 +444,9 @@ function resetFields(section) {
   const idx = section.dataset.productIndex;
 
   section.querySelector(`#pin-${idx}`).value = "";
-section.querySelector(`#rabatt-info-${idx}`).textContent = "";
-section.querySelector(`#giftWrap-${idx}`).checked = false;
-section.querySelector(`#quantity-${idx}`).value = 1;
-const blEl = section.querySelector(`#badgeBL-${idx}`);
-if (blEl) blEl.checked = false;
-const clEl = section.querySelector(`#badgeCL-${idx}`);
-if (clEl) clEl.checked = false;
-section.querySelector(`#customSection-${idx}`)?.classList.add('hidden');
+  section.querySelector(`#rabatt-info-${idx}`).textContent = "";
+  section.querySelector(`#giftWrap-${idx}`).checked = false;
+  section.querySelector(`#quantity-${idx}`).value = 1;
 
   const finalValueEl = section.querySelector(`#finalPriceValue-${idx}`);
   const originalPriceEl = section.querySelector(`#original-price-${idx}`);

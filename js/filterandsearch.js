@@ -46,11 +46,9 @@ window.applyFilter = function () {
     produkt.style.display = sichtbar ? "" : "none";
   });
 
-
   currentPage = 1;
   updatePagination();
 };
-
 // ✅ PRODUKTSUCHE mit Feedback
 function produktSuche() {
   const eingabe = document
@@ -284,18 +282,14 @@ window.resetFilter = function () {
   if (sortSel) {
     sortSel.selectedIndex = 0;
   }
-
   if (typeof restoreOriginalOrder === "function") {
     restoreOriginalOrder();
   }
   applyFilter();
+  updatePagination();
   if (typeof produktSuche === "function") {
     produktSuche();
   }
-
-  currentPage = 1;
-  updatePagination();
-
 };
 
 // Sortiert die angezeigten Produkte nach Preis
@@ -342,7 +336,6 @@ window.toggleLayout = function () {
 
   applyFilter();
 };
-
 
 function updateLayoutToggle(layout) {
   const btn = document.querySelector(".layout-toggle");
