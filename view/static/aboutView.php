@@ -1,4 +1,4 @@
-<?php include 'view/layout/header.php'; ?>
+<?php include __DIR__ . '/../layout/header.php'; ?>
 
 <main class="content">
     <h2>Über SportX</h2>
@@ -11,4 +11,4 @@
     <p>Du kannst uns jederzeit über unsere <a href="index.php?page=static&action=kontakt">Kontaktseite</a> erreichen oder direkt per E-Mail an <a href="mailto:kontakt@sportx.de">kontakt@sportx.de</a>.</p>
 </main>
 
-<?php include 'view/layout/footer.php'; ?>
+<?php include __DIR__ . '/../layout/footer.php'; ?>

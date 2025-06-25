@@ -1,4 +1,4 @@
-<?php include 'view/layout/header.php'; ?>
+<?php include __DIR__ . '/../layout/header.php'; ?>
 
 
 <div class="form-wrapper">
@@ -108,5 +108,5 @@
 
   [rUser, rEmail, rPass, rConf].forEach(input => input.addEventListener('input', checkForm));
 </script>
-<?php include 'view/layout/footer.php'; ?>
+<?php include __DIR__ . '/../layout/footer.php'; ?>
 

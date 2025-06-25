@@ -1,10 +1,11 @@
 
-<?php include 'view/layout/header.php'; ?>
+<?php include __DIR__ . '/../layout/header.php'; ?>
 <section class="welcome">
     <img src="img/logo.png" alt="SportX Logo" class="welcome-logo">
     <h1>Willkommen bei SportX!</h1>
     <p>Dein Shop für alles rund um Fußball.</p>
     <a href="index.php?page=product&action=list" class="cta-button">Jetzt starten</a>
+
 </section>
 <?php
 $produkte = json_decode(file_get_contents('data/products.json'), true)['products'] ?? [];
@@ -55,5 +56,5 @@ $topProdukte = array_slice($topProdukte, 0, 4);
     </div>
 </section>
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
-<?php include 'view/layout/footer.php'; ?>
+<?php include __DIR__ . '/../layout/footer.php'; ?>
 

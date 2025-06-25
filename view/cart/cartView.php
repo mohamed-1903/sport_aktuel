@@ -17,7 +17,7 @@ if (!isset($_SESSION['user_id'])) {
   exit;
 }
 
-include 'view/layout/header.php';
+include __DIR__ . '/../layout/header.php';
 $cartItems = getCartItems($_SESSION['user_id']);
 $total = 0;
 ?>
@@ -52,7 +52,7 @@ $total = 0;
           foreach ($cartItems as $item):
             $base = $item['price'];
             $rabattPreis = $base * (1 - ($item['discount'] ?? 0) / 100);
-            $einzelpreis = $rabattPreis + (($item['gift'] ?? 0) ? 2 : 0);
+            $einzelpreis = $rabattPreis + (($item['gift'] ?? 0) ? 2 : 0) + ($item['custom_fee'] ?? 0);
             $sum = $einzelpreis * $item['quantity'];
             $total += $sum;
           ?>
@@ -61,6 +61,9 @@ $total = 0;
                 <img src="<?= htmlspecialchars($item['image_main']) ?>" width="60" />
                 <?= htmlspecialchars($item['name']) ?><br>
                 <small>Größe: <?= htmlspecialchars($item['size']) ?></small><br>
+                <?php if (!empty($item['custom_name']) || !empty($item['custom_number'])): ?>
+                  <small>Personalisierung: <?= htmlspecialchars($item['custom_name']) ?> <?= htmlspecialchars($item['custom_number']) ?></small><br>
+                <?php endif; ?>
                 <?php if (!empty($item['gift'])): ?>
                   <small>🎁 Geschenkverpackung</small><br>
                 <?php endif; ?>
@@ -82,6 +85,7 @@ $total = 0;
               <td class="summe-cell">
                 <?= number_format($sum, 2, ',', '.') ?> €
               </td>
+
               <td>
                 <form action="index.php?page=cart&action=remove" method="post" style="display:inline">
                   <input type="hidden" name="id" value="<?= (int)$item['product_id'] ?>">
@@ -108,6 +112,7 @@ $total = 0;
     <p>zzgl. 19% MwSt.: <span id="mwstbetrag"><?= number_format($mwst, 2, ',', '.') ?> €</span></p>
     <p><strong>Gesamtsumme: <span id="gesamtsumme"><?= number_format($total, 2, ',', '.') ?> €</span></strong></p>
 
+
     <input type="text" placeholder="Gutscheincode eingeben (optional)" class="gutschein-input" />
     <a href="index.php?page=order&action=checkout">
       <button class="btn-checkout">WEITER ZUR KASSE</button>
@@ -118,4 +123,4 @@ $total = 0;
 </main>
 
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
-<?php include 'view/layout/footer.php'; ?>
+<?php include __DIR__ . '/../layout/footer.php'; ?>

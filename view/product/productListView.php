@@ -1,4 +1,4 @@
-<?php include 'view/layout/header.php'; ?>
+<?php include __DIR__ . '/../layout/header.php'; ?>
 
 <main class="main-container">
   <aside class="sidebar">
@@ -54,7 +54,14 @@
         <option value="Unisex">Unisex</option>
       </select>
       <button type="button" class="reset-filter" onclick="resetFilter()">Zurücksetzen</button>
-    </section>
+      <select id="sort-select" onchange="sortProducts(this.value)">
+        <option value="">Sortierung</option>
+        <option value="asc">Preis ▲</option>
+        <option value="desc">Preis ▼</option>
+      </select>
+      <button type="button" class="layout-toggle" onclick="toggleLayout()">☰ Liste anzeigen</button>
+
+
 
     <section class="einzelprodukt-grid" id="produktContainer">
       <?php if (empty($filteredProducts)): ?>
@@ -122,15 +129,11 @@
       <?php endif; ?>
     </section>
 
-    <section class="pagination">
-      <button>&laquo;</button>
-      <button class="active">1</button>
-      <button>2</button>
-      <button>&raquo;</button>
-    </section>
+    <section class="pagination"></section>
+
   </main>
 </main>
 
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
 
-<?php include 'view/layout/footer.php'; ?>
+<?php include __DIR__ . '/../layout/footer.php'; ?>

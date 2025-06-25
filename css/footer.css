@@ -1,6 +1,6 @@
 footer {
-  background-color: #222;
-  color: #fff;
+  background-color: var(--card-bg);
+  color: var(--text-color);
   font-family: Montserrat, sans-serif;
   box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
   margin-top: 50px;
@@ -17,12 +17,12 @@ footer {
   padding: 0 20px;
 }
 
-.footer-column h3 {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 15px;
-  color: #ffd700;
-}
+  .footer-column h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--accent-color);
+  }
 
 .footer-column ul {
   list-style: none;
@@ -34,14 +34,14 @@ footer {
 }
 
 .footer-column a {
-  color: #fff;
+  color: var(--text-color);
   text-decoration: none;
   font-size: 16px;
   transition: color 0.3s ease;
 }
 
 .footer-column a:hover {
-  color: #ffd700;
+  color: var(--accent-color);
 }
 
 .payment-methods img {

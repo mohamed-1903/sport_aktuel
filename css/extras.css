@@ -33,14 +33,25 @@
   gap: 0.5rem;
   margin-bottom: 1rem;
 }
-.filterbar select {
+.filterbar select,
+.filterbar button {
   border: 1px solid #555;
   border-radius: 6px;
   background-color: var(--card-bg);
   color: var(--text-color);
   font-size: 16px;
   padding: 10px;
+  cursor: pointer;
 }
+.filterbar button:hover {
+  background-color: var(--accent-color);
+  color: #000;
+}
+
+.layout-toggle {
+  min-width: 140px;
+}
+
 
 .einzelprodukt-grid {
   display: grid;
@@ -115,6 +126,11 @@
   cursor: pointer;
   transition: background-color 0.2s;
 }
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
 
 .pagination button:hover {
   background-color: var(--accent-color);
@@ -1121,4 +1137,50 @@ body:not(.light-mode) .error {
 
 .compare-section button:hover {
   background: #e6c200;
+}
+
+/* Listenansicht für Produktübersicht */
+.einzelprodukt-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.einzelprodukt-list .einzelprodukt {
+  display: flex;
+  flex-direction: row; /* Buttons neben Bild und Text */
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+  border: 1px solid var(--border-color, #555);
+  border-radius: 8px;
+  height: auto;
+}
+
+.einzelprodukt-list .produkt-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+}
+
+.einzelprodukt-list .image-wrapper {
+  flex: 0 0 120px;
+}
+
+.einzelprodukt-list .image-wrapper img {
+  width: 120px;
+  height: auto;
+}
+
+.einzelprodukt-list .produkt-info {
+  text-align: left;
+  flex: 1;
+}
+
+.einzelprodukt-list .button-row {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }

@@ -27,6 +27,28 @@ function customizationSupported(): bool
 }
 
 /**
+ * Prüft einmalig, ob die optionalen Spalten für Trikot‑Personalisierung
+ * in der Tabelle cart_items vorhanden sind.
+ */
+function customizationSupported(): bool
+{
+    static $supported;
+    if ($supported !== null) {
+        return $supported;
+    }
+
+    global $db;
+    try {
+        $stmt = $db->query("SHOW COLUMNS FROM cart_items LIKE 'custom_name'");
+        $supported = (bool) $stmt->fetch();
+    } catch (PDOException $e) {
+        $supported = false;
+    }
+
+    return $supported;
+}
+
+/**
  * Gibt die ID des Warenkorbs für einen Nutzer zurück.
  * Existiert keiner, wird optional einer angelegt.
  */
@@ -148,6 +170,7 @@ function getCartItems(int $userId): array
     $stmt->execute([$userId]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
 
 function removeFromCart(int $userId, int $productId, string $size): void
 {
