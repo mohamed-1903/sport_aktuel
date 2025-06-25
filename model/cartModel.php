@@ -1,16 +1,18 @@
 <?php
-require_once 'model/db.php'; // Stellt $db (PDO) bereit
-
-/**
- * Prüft einmalig, ob die optionalen Spalten zur Trikot-Personalisierung
- * (custom_name, custom_number, custom_fee) in der Tabelle cart_items
- * vorhanden sind. Bei fehlenden Spalten werden die Abfragen entsprechend
- * angepasst, um Fehler zu vermeiden.
- */
-function customizationSupported(): bool
-{
-    static $supported;
-    if ($supported !== null) {
+if (!function_exists('customizationSupported')) {
+    function customizationSupported(): bool
+    {
+        static $supported;
+        if ($supported !== null) {
+            return $supported;
+        }
+        global $db;
+        try {
+            $stmt = $db->query("SHOW COLUMNS FROM cart_items LIKE 'custom_name'");
+            $supported = (bool) $stmt->fetch();
+        } catch (PDOException $e) {
+            $supported = false;
+        }
         return $supported;
     }
 
