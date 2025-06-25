@@ -71,37 +71,29 @@
           <p id="original-price-<?= $index ?>" class="price-old" style="display: none;"></p>
           <p id="final-price-<?= $index ?>">
             <?php if (isset($product['priceValue']) && is_numeric($product['priceValue'])): ?>
-              <span id="finalPriceValue-<?= $index ?>" class="preis">
-                <?= number_format((float)$product['priceValue'], 2, ',', '.') ?>€ inkl. Mwst.
-              </span>
-              <del id="basePrice-<?= $index ?>" class="preis" style="display:none;">
-                <?= number_format((float)$product['priceValue'], 2, ',', '.') ?>€
-              </del>
-            <?php else: ?>
-              <span class="preis">Preis nicht verfügbar</span>
-            <?php endif; ?>
-            <span id="discountLabel-<?= $index ?>" class="rabatt" style="display:none;">-20%</span>
-          </p>
-
-
-          <!-- 👕 Größenauswahl -->
-          <label for="size-<?= $index ?>">Größe:</label>
-          <select id="size-<?= $index ?>" class="size-dropdown">
-            <option value="" disabled selected>-- Bitte auswählen --</option>
-            <?php foreach ($sizes as $size): ?>
-              <option value="<?= $size ?>"><?= $size ?></option>
-            <?php endforeach; ?>
-          </select>
-
-          <!-- 🔢 Mengenauswahl -->
-          <label for="quantity-<?= $index ?>">Menge:</label>
-          <input type="number" id="quantity-<?= $index ?>" value="1" min="1" class="size-dropdown" />
-
           <?php if (stripos($product['subcategory'] ?? '', 'Trikots') !== false): ?>
+            <button type="button" class="btn-show-custom" id="customBtn-<?= $index ?>">Produkt individualisieren</button>
+          <?php endif; ?>
+        <?php if (stripos($product['subcategory'] ?? '', 'Trikots') !== false): ?>
+          <div class="option-custom hidden" id="customSection-<?= $index ?>">
             <div class="customization">
               <label for="player-<?= $index ?>">Spieler wählen:</label>
               <select id="player-<?= $index ?>" class="size-dropdown player-select"></select>
               <label for="customName-<?= $index ?>">Name:</label>
+              <input type="text" id="customName-<?= $index ?>" class="size-dropdown custom-name" maxlength="20" />
+              <label for="customNumber-<?= $index ?>">Nummer:</label>
+              <input type="number" id="customNumber-<?= $index ?>" class="size-dropdown custom-number" min="0" max="99" />
+              <div class="badges">
+                <label><input type="checkbox" id="badgeBL-<?= $index ?>" class="badge-bl"> Bundesliga-Badge</label>
+                <label><input type="checkbox" id="badgeCL-<?= $index ?>" class="badge-cl"> Champions-League-Badge</label>
+              </div>
+              <div class="jersey-preview" id="jerseyPreview-<?= $index ?>">
+                <img src="<?= htmlspecialchars($backImage) ?>" alt="Rückenansicht" />
+                <div class="overlay-name"></div>
+                <div class="overlay-number"></div>
+              </div>
+            </div>
+          </div>
               <input type="text" id="customName-<?= $index ?>" class="size-dropdown custom-name" maxlength="20" />
               <label for="customNumber-<?= $index ?>">Nummer:</label>
               <input type="number" id="customNumber-<?= $index ?>" class="size-dropdown custom-number" min="0" max="99" />
