@@ -23,9 +23,9 @@ window.applyFilter = function () {
       (!filterWerte.geschlecht || p.geschlecht === filterWerte.geschlecht) &&
       preis <= filterWerte.maxPreis;
 
+    // leeres Display lässt die ursprüngliche Flex-Darstellung erhalten
     produkt.style.display = sichtbar ? "" : "none";
   });
-
   currentPage = 1;
   updatePagination();
 };
@@ -107,6 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
       alleProdukte = data.products || [];
     });
 
+
   if (typeof produktKonfigurationen !== "undefined") {
     produktKonfigurationen.forEach(({ containerId, urls }) => {
       ladeProdukte(containerId, urls);
@@ -120,6 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
     prodContainer.classList.remove("einzelprodukt-grid");
   }
   updateLayoutToggle(savedLayout === "list" ? "list" : "grid");
+
   updatePagination();
 
 });
@@ -142,6 +144,11 @@ function ladeProdukte(containerId, urls) {
   ).then(() => {
     applyFilter();
     produktSuche();
+    if (!window.originalProductOrder) {
+      window.originalProductOrder = Array.from(
+        container.querySelectorAll(".einzelprodukt")
+      );
+    }
     updatePagination();
   });
 }
@@ -256,7 +263,14 @@ window.resetFilter = function () {
   if (suche) {
     suche.value = "";
   }
+  const sortSel = document.getElementById("sort-select");
+  if (sortSel) {
+    sortSel.selectedIndex = 0;
+  }
   applyFilter();
+  if (typeof restoreOriginalOrder === "function") {
+    restoreOriginalOrder();
+  }
   if (typeof produktSuche === "function") {
     produktSuche();
   }
@@ -275,8 +289,13 @@ window.sortProducts = function (order) {
   });
 
   items.forEach((el) => container.appendChild(el));
-  currentPage = 1;
-  updatePagination();
+};
+
+// Setzt die Produkte in ihre ursprüngliche Reihenfolge zurück
+window.restoreOriginalOrder = function () {
+  const container = document.getElementById("produktContainer");
+  if (!container || !window.originalProductOrder) return;
+  window.originalProductOrder.forEach((el) => container.appendChild(el));
 };
 
 // Wechselt zwischen Listen- und Grid-Layout für die Produktübersicht
@@ -296,7 +315,6 @@ window.toggleLayout = function () {
   const layout = useList ? "list" : "grid";
   localStorage.setItem("productLayout", layout);
   updateLayoutToggle(layout);
-  updatePagination();
 };
 
 function updateLayoutToggle(layout) {
@@ -308,6 +326,7 @@ function updateLayoutToggle(layout) {
     btn.textContent = "☰ Liste anzeigen";
   }
 }
+
 
 function showPage(page) {
   const start = (page - 1) * ITEMS_PER_PAGE;
