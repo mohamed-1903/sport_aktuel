@@ -61,7 +61,10 @@
           </div>
           <div class="additional-images">
             <?php foreach ($images as $imgIndex => $img): ?>
-              <img src="<?= htmlspecialchars($img) ?>" />
+              <img
+                src="<?= htmlspecialchars($img) ?>"
+                onclick="changeImage(this.closest('.Eprodukt'), '<?= htmlspecialchars($img) ?>', <?= $imgIndex ?>)"
+              />
             <?php endforeach; ?>
           </div>
         </div>
@@ -122,21 +125,21 @@
             </div>
 
             <?php if (stripos($product['subcategory'] ?? '', 'Trikots') !== false): ?>
-              <div class="option-custom hidden" id="customSection-<?= $index ?>">
-                <div class="customization">
-                  <label for="player-<?= $index ?>">Spieler wählen:</label>
-                  <select id="player-<?= $index ?>" class="size-dropdown player-select"></select>
-                  <label for="customName-<?= $index ?>">Name:</label>
-                  <input type="text" id="customName-<?= $index ?>" class="size-dropdown custom-name" maxlength="20" />
-                  <label for="customNumber-<?= $index ?>">Nummer:</label>
-                  <input type="number" id="customNumber-<?= $index ?>" class="size-dropdown custom-number" min="0" max="99" />
-                  <div class="jersey-preview" id="jerseyPreview-<?= $index ?>">
-                    <img src="<?= htmlspecialchars($backImage) ?>" alt="Rückenansicht" />
-                    <div class="overlay-name"></div>
-                    <div class="overlay-number"></div>
-                  </div>
+            <div class="option-custom hidden" id="customSection-<?= $index ?>">
+              <div class="customization">
+                <label for="player-<?= $index ?>">Spieler wählen:</label>
+                <select id="player-<?= $index ?>" class="size-dropdown player-select"></select>
+                <label for="customName-<?= $index ?>">Name:</label>
+                <input type="text" id="customName-<?= $index ?>" class="size-dropdown custom-name" maxlength="20" />
+                <label for="customNumber-<?= $index ?>">Nummer:</label>
+                <input type="number" id="customNumber-<?= $index ?>" class="size-dropdown custom-number" min="0" max="99" />
+                <div class="jersey-preview" id="jerseyPreview-<?= $index ?>">
+                  <img src="<?= htmlspecialchars($backImage) ?>" alt="Rückenansicht" />
+                  <div class="overlay-name"></div>
+                  <div class="overlay-number"></div>
                 </div>
               </div>
+            </div>
             <?php endif; ?>
           </div>
           <div class="price-breakdown"></div>
