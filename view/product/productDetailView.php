@@ -1,4 +1,20 @@
 <?php include __DIR__ . '/../layout/header.php'; ?>
+<?php if (!empty($_SESSION['message'])): ?>
+  <div class="toast-popup show" id="toastMessage">
+    <?= htmlspecialchars($_SESSION['message']) ?>
+  </div>
+  <script>
+    const toast = document.getElementById('toastMessage');
+    if (toast) {
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+  </script>
+  <?php unset($_SESSION['message']); ?>
+<?php endif; ?>
+
 
 <main class="produkte">
   <!-- 🔍 Zoom Modal -->
@@ -40,6 +56,7 @@
             <img id="main-image-<?= $index ?>" src="<?= htmlspecialchars($imageMain) ?>" alt="<?= htmlspecialchars($name) ?>" />
           </div>
           <div class="additional-images">
+
             <?php foreach ($images as $imgIndex => $img): ?>
               <img src="<?= htmlspecialchars($img) ?>" onclick="changeImage('<?= htmlspecialchars($img) ?>', <?= $imgIndex ?>)" />
             <?php endforeach; ?>
@@ -216,6 +233,7 @@
       <?php endfor; ?>
     </div>
   </section>
+
   <?php foreach ($productsToShow as $index => $product):
     $ratings = getRatingsForProduct((int)$product['id']);
     $avgRating = getAverageRating((int)$product['id']);

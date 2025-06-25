@@ -450,6 +450,7 @@ function flyToTarget(startEl, targetSelector) {
       setTimeout(() => target.classList.remove("pulse-highlight"), 1000);
     }
   });
+
 }
 function resetFields(section) {
   const idx = section.dataset.productIndex;
@@ -471,6 +472,7 @@ function resetFields(section) {
 
   updateDisplay(section);
 }
+
 function resetFinalPriceDisplay(price, section) {
   const idx = section.dataset.productIndex;
   section.querySelector(`#original-price-${idx}`).style.display = "none";
