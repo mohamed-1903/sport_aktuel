@@ -144,6 +144,11 @@ document.addEventListener("DOMContentLoaded", () => {
     prodContainer.classList.add("einzelprodukt-list");
     prodContainer.classList.remove("einzelprodukt-grid");
   }
+  if (prodContainer && !window.originalProductOrder) {
+    window.originalProductOrder = Array.from(
+      prodContainer.querySelectorAll(".einzelprodukt")
+    );
+  }
   updateLayoutToggle(savedLayout === "list" ? "list" : "grid");
 });
 
@@ -290,10 +295,22 @@ window.resetFilter = function () {
   if (sortSel) {
     sortSel.selectedIndex = 0;
   }
+  const container = document.getElementById("produktContainer");
+  if (container && !window.originalProductOrder) {
+    window.originalProductOrder = Array.from(
+      container.querySelectorAll(".einzelprodukt")
+    );
+  }
   if (typeof restoreOriginalOrder === "function") {
     restoreOriginalOrder();
   }
   applyFilter();
+  // sicherstellen, dass nach dem Zurücksetzen alle Produkte sichtbar sind
+  if (container) {
+    container.querySelectorAll(".einzelprodukt").forEach((el) => {
+      el.style.display = "";
+    });
+  }
   if (typeof produktSuche === "function") {
     produktSuche();
   }
