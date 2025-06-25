@@ -39,13 +39,27 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   position: sticky;
   top: 0;
-  z-index: 5;
+.filterbar button,
+.filterbar input[type="range"] {
+.filterbar input[type="range"] {
+  width: 150px;
+  accent-color: var(--accent-color);
 }
 
-.filterbar.hidden {
-  display: none;
+.filterbar select.active,
+.filterbar input[type="range"].active {
+
+.filterbar button:hover {
+  background-color: var(--accent-color);
+  color: #000;
 }
 
+.price-label {
+  margin-left: 0.5rem;
+  min-width: 80px;
+  display: inline-block;
+  text-align: center;
+}
 .filter-toggle {
   align-self: flex-end;
   margin-bottom: 0.5rem;
