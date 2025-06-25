@@ -15,6 +15,10 @@ function getItemsPerPage() {
     return (cols || 1) * 2;
   }
 
+  if (container.classList.contains("einzelprodukt-list")) {
+    return 4;
+  }
+
   return 2;
 }
 
@@ -43,6 +47,9 @@ window.applyFilter = function () {
     produkt.style.display = sichtbar ? "" : "none";
   });
 
+
+  // Nach jedem Filtervorgang die Paginierung neu berechnen,
+  // damit stets zwei gefüllte Reihen angezeigt werden.
   currentPage = 1;
   updatePagination();
 };
@@ -284,6 +291,7 @@ window.resetFilter = function () {
   if (sortSel) {
     sortSel.selectedIndex = 0;
   }
+
   if (typeof restoreOriginalOrder === "function") {
     restoreOriginalOrder();
   }
@@ -291,6 +299,10 @@ window.resetFilter = function () {
   if (typeof produktSuche === "function") {
     produktSuche();
   }
+
+  currentPage = 1;
+  updatePagination();
+
 };
 
 // Sortiert die angezeigten Produkte nach Preis
@@ -337,6 +349,7 @@ window.toggleLayout = function () {
 
   applyFilter();
 };
+
 
 function updateLayoutToggle(layout) {
   const btn = document.querySelector(".layout-toggle");

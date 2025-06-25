@@ -2,7 +2,7 @@
 
 <main class="main-content">
   <h1>Suchergebnisse für "<?= htmlspecialchars($searchQuery) ?>"</h1>
-  <section class="einzelprodukt-grid" id="produktContainer">
+  <ul class="einzelprodukt-grid" id="produktContainer">
     <?php if (empty($searchResults)): ?>
       <p>Keine Produkte gefunden.</p>
     <?php else: ?>
@@ -11,7 +11,7 @@
           $preis = floatval(preg_replace('/[^0-9.]/', '', $produkt["price"]));
           $mannschaft = stripos($produkt["name"], "Bayern") !== false ? "Bayern" : (stripos($produkt["name"], "Dortmund") !== false ? "Dortmund" : "");
         ?>
-        <section class="einzelprodukt"
+        <li class="einzelprodukt"
           data-marke="<?= htmlspecialchars($produkt['marke'] ?? '') ?>"
           data-farbe="<?= htmlspecialchars($produkt['farbe'] ?? '') ?>"
           data-preis="<?= $preis ?>"
@@ -45,10 +45,10 @@
               🤍
             </button>
           </section>
-        </section>
+        </li>
       <?php endforeach; ?>
     <?php endif; ?>
-  </section>
+  </ul>
 </main>
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
 

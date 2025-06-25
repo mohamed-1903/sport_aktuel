@@ -358,6 +358,32 @@ button {
   cursor: pointer;
 }
 
+.badges {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 10px 0;
+}
+
+.badges label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.badges {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 10px 0;
+}
+
+.badges label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
 .options-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -374,4 +400,12 @@ button {
   padding-left: 0;
   margin-top: 10px;
   font-size: 14px;
+}
+
+/* zweispaltiges Layout für die Produktdetailseite */
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: flex-start;
 }
