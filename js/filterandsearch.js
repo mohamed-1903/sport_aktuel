@@ -263,6 +263,7 @@ function handleTastaturNavigation(e, liste, input, shadow) {
     liste.style.display = "none";
     input.dispatchEvent(new Event("input"));
     input.setSelectionRange(input.value.length, input.value.length);
+  updatePagination();
   } else if (e.key === "Escape") {
     liste.style.display = "none";
     shadow.value = "";

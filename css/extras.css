@@ -44,10 +44,9 @@
   padding: 10px;
 }
 
-.filterbar button:hover,
-.filterbar select:hover {
+.filterbar button:hover {
   background-color: var(--accent-color);
-  color: #4567;
+  color: #000;
 }
 
 .layout-toggle {
