@@ -47,7 +47,7 @@
   justify-content: center; /* vertikal zentrieren */
   min-height: 180px; /* Mindesthöhe für saubere Darstellung */
   margin: 0 auto 10px; /* horizontal zentriert + Abstand nach unten */
-  width: fit-content; /* passt sich der Breite des Inhalts an */
+  width: 100%; /* passt sich der Breite des Inhalts an */
   text-align: center; /* optional, falls Text enthalten ist */
 }
 
@@ -272,6 +272,7 @@ button {
   overflow: hidden;
   width: 500px;
   max-width: 700px;
+  aspect-ratio: 3 / 4; /* passt die Höhe automatisch an */
   height: 300px;
   cursor: zoom-in;
   margin-bottom: 20px;
@@ -462,7 +463,6 @@ body.light-mode .custom-switch .slider {
 .custom-switch input:checked + .slider::before {
   transform: translateX(20px);
 }
-
 
 .custom-toggle-wrap {
   display: flex;
