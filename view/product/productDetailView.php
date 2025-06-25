@@ -55,6 +55,7 @@
           <div class="zoom-bg-container" id="zoomContainer-<?= $index ?>">
             <img id="main-image-<?= $index ?>" src="<?= htmlspecialchars($imageMain) ?>" alt="<?= htmlspecialchars($name) ?>" />
           </div>
+
           <div class="additional-images">
 
             <?php foreach ($images as $imgIndex => $img): ?>
@@ -67,6 +68,7 @@
         <!-- 🛒 Produktdetails & Optionen -->
         <div>
           <h1 class="product-name"><?= htmlspecialchars($name) ?></h1>
+
           <p id="original-price-<?= $index ?>" class="price-old" style="display: none;"></p>
           <p id="final-price-<?= $index ?>">
             <?php if (isset($product['priceValue']) && is_numeric($product['priceValue'])): ?>
@@ -150,6 +152,7 @@
           $name = $product['name'] ?? 'Unbekanntes Produkt';
           $price = isset($product['priceValue']) ? (float)$product['priceValue'] : 0.00;
           $image = $product['image_main'] ?? 'img/placeholder.jpg';
+
         ?>
 
         <!-- 🛒 In den Warenkorb -->
@@ -185,6 +188,7 @@
         </div>
       </div>
       </div>
+
     </section>
   <?php endforeach; ?>
 
