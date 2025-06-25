@@ -86,13 +86,18 @@ function setupProduct(section) {
   if (customBtn && customSection) {
     customBtn.addEventListener("click", () => {
       const hidden = customSection.classList.toggle("hidden");
-      if (customToggle) customToggle.checked = !hidden;
+      if (customToggle) {
+        customToggle.checked = !hidden;
+        if (hidden) clearCustomization(section);
+      }
     });
   }
 
   if (customToggle && customSection) {
     customToggle.addEventListener("change", () => {
-      customSection.classList.toggle("hidden", !customToggle.checked);
+      const show = customToggle.checked;
+      customSection.classList.toggle("hidden", !show);
+      if (!show) clearCustomization(section);
     });
   }
 
@@ -480,6 +485,8 @@ function resetFinalPriceDisplay(price, section) {
     `#finalPriceValue-${idx}`
   ).textContent = `${price.toFixed(2)}€ inkl. Mwst.`;
 }
+
+
 
 function setupCustomization(section) {
   const name = section.querySelector(".product-name")?.textContent || "";
