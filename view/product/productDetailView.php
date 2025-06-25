@@ -55,6 +55,7 @@
           <div class="zoom-bg-container" id="zoomContainer-<?= $index ?>">
             <img id="main-image-<?= $index ?>" src="<?= htmlspecialchars($imageMain) ?>" alt="<?= htmlspecialchars($name) ?>" />
           </div>
+
           <div class="additional-images">
 
             <?php foreach ($images as $imgIndex => $img): ?>
@@ -98,19 +99,7 @@
           <input type="number" id="quantity-<?= $index ?>" value="1" min="1" class="size-dropdown" />
 
           <?php if (stripos($product['subcategory'] ?? '', 'Trikots') !== false): ?>
-            <div class="customization">
-              <label for="player-<?= $index ?>">Spieler wählen:</label>
-              <select id="player-<?= $index ?>" class="size-dropdown player-select"></select>
-              <label for="customName-<?= $index ?>">Name:</label>
-              <input type="text" id="customName-<?= $index ?>" class="size-dropdown custom-name" maxlength="20" />
-              <label for="customNumber-<?= $index ?>">Nummer:</label>
-              <input type="number" id="customNumber-<?= $index ?>" class="size-dropdown custom-number" min="0" max="99" />
-              <div class="jersey-preview" id="jerseyPreview-<?= $index ?>">
-                <img src="<?= htmlspecialchars($backImage) ?>" alt="Rückenansicht" />
-                <div class="overlay-name"></div>
-                <div class="overlay-number"></div>
-              </div>
-            </div>
+            <button type="button" class="btn-show-custom" id="customBtn-<?= $index ?>">Produkt individualisieren</button>
           <?php endif; ?>
 
           <div class="button-rows">
@@ -141,6 +130,10 @@
               <input type="text" id="customName-<?= $index ?>" class="size-dropdown custom-name" maxlength="20" />
               <label for="customNumber-<?= $index ?>">Nummer:</label>
               <input type="number" id="customNumber-<?= $index ?>" class="size-dropdown custom-number" min="0" max="99" />
+              <div class="badges">
+                <label><input type="checkbox" id="badgeBL-<?= $index ?>" class="badge-bl"> Bundesliga-Badge</label>
+                <label><input type="checkbox" id="badgeCL-<?= $index ?>" class="badge-cl"> Champions-League-Badge</label>
+              </div>
               <div class="jersey-preview" id="jerseyPreview-<?= $index ?>">
                 <img src="<?= htmlspecialchars($backImage) ?>" alt="Rückenansicht" />
                 <div class="overlay-name"></div>
@@ -159,6 +152,7 @@
           $name = $product['name'] ?? 'Unbekanntes Produkt';
           $price = isset($product['priceValue']) ? (float)$product['priceValue'] : 0.00;
           $image = $product['image_main'] ?? 'img/placeholder.jpg';
+
         ?>
 
         <!-- 🛒 In den Warenkorb -->
