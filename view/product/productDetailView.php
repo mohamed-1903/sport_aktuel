@@ -64,6 +64,7 @@
               <img src="<?= htmlspecialchars($img) ?>" />
             <?php endforeach; ?>
           </div>
+
         </div>
 
         <!-- 🛒 Produktdetails & Optionen -->
