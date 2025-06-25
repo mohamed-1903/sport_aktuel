@@ -392,17 +392,22 @@ window.resetFilter = function () {
 window.sortProducts = function (order) {
   const container = document.getElementById("produktContainer");
   if (!container) return;
-  const items = Array.from(container.querySelectorAll(".einzelprodukt"));
 
-  items.sort((a, b) => {
-    const pa = parseFloat(a.dataset.preis) || 0;
-    const pb = parseFloat(b.dataset.preis) || 0;
-    return order === "asc" ? pa - pb : pb - pa;
-  });
+  if (order === "default") {
+    restoreOriginalOrder();
+  } else {
+    const items = Array.from(container.querySelectorAll(".einzelprodukt"));
+    items.sort((a, b) => {
+      const pa = parseFloat(a.dataset.preis) || 0;
+      const pb = parseFloat(b.dataset.preis) || 0;
+      return order === "asc" ? pa - pb : pb - pa;
+    });
+    items.forEach((el) => container.appendChild(el));
+  }
 
-  items.forEach((el) => container.appendChild(el));
   currentPage = 1;
   updatePagination();
+  updateActiveFilters();
 };
 
 // Setzt die Produkte in ihre ursprüngliche Reihenfolge zurück
@@ -419,7 +424,10 @@ function updateActiveFilters() {
   const priceInput = document.getElementById("filter-preis");
   if (priceInput) {
     const max = parseFloat(priceInput.dataset.max || priceInput.max || 0);
-    priceInput.classList.toggle("active", parseFloat(priceInput.value) < max);
+    const active = parseFloat(priceInput.value) < max;
+    priceInput.classList.toggle("active", active);
+    const rangeWrapper = document.querySelector(".range-filter");
+    if (rangeWrapper) rangeWrapper.classList.toggle("active", active);
   }
 }
 
@@ -430,6 +438,7 @@ window.updatePriceLabel = function (value) {
   const max = parseFloat(priceInput.dataset.max || priceInput.max || value);
   const val = parseFloat(value);
   label.textContent = val >= max ? "Kein Limit" : `Bis ${val} €`;
+  updateActiveFilters();
 };
 
 window.toggleFilterBar = function () {

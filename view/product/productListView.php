@@ -40,9 +40,12 @@
         <option value="Blau">Blau</option>
         <option value="Rot">Rot</option>
       </select>
-      <input type="range" id="filter-preis" min="0" value="0" step="10"
-             oninput="updatePriceLabel(this.value)" onchange="applyFilter()">
-      <span id="price-label" class="price-label">Kein Limit</span>
+      <div class="range-filter">
+        <label for="filter-preis">Preis:</label>
+        <input type="range" id="filter-preis" min="0" value="0" step="10"
+               oninput="updatePriceLabel(this.value)" onchange="applyFilter()">
+        <span id="price-label" class="price-label">Kein Limit</span>
+      </div>
       <select id="filter-mannschaft" onchange="applyFilter()">
         <option value="">Alle Mannschaften</option>
         <option value="Bayern">Bayern</option>
@@ -55,6 +58,7 @@
         <option value="Unisex">Unisex</option>
       </select>
       <select id="sort-select" onchange="sortProducts(this.value)">
+        <option value="default">Standardsortierung</option>
         <option value="asc">Preis aufsteigend ▲</option>
         <option value="desc">Preis absteigend ▼</option>
       </select>
