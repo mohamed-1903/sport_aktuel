@@ -37,6 +37,10 @@
   cursor: pointer;
   transition: background-color 0.2s;
 }
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
 
 .pagination button:hover,
 .pagination button.active {
