@@ -10,6 +10,11 @@ let TEAM_ROSTERS = {};
 const CUSTOMIZATION_FEE = 10; // € pro Trikot
 window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
 
+let TEAM_ROSTERS = {};
+
+const CUSTOMIZATION_FEE = 10; // € pro Trikot
+window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
+
 const TEAM_PLAYERS = {
   Bayern: {
     9: "Harry Kane",
@@ -81,6 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function setupProduct(section) {
   const idx = section.dataset.productIndex;
 
+
   const qtyInput = section.querySelector(`#quantity-${idx}`);
   const mainImage = section.querySelector(`#main-image-${idx}`);
   const additionalImages = section.querySelectorAll(".additional-images img");
@@ -89,6 +95,7 @@ function setupProduct(section) {
   const zoomContainer = section.querySelector(`#zoomContainer-${idx}`);
   const customBtn = section.querySelector(`#customBtn-${idx}`);
   const customSection = section.querySelector(`#customSection-${idx}`);
+
 
   section._zoomData = { currentIndex: 0 };
 
@@ -109,6 +116,14 @@ function setupProduct(section) {
   qtyInput.addEventListener("input", () => updateDisplay(section));
   const giftWrapEl = section.querySelector(`#giftWrap-${idx}`);
   const pinInputEl = section.querySelector(`#pin-${idx}`);
+
+  if (customBtn && customSection) {
+    customBtn.addEventListener('click', () => {
+      customSection.classList.toggle('hidden');
+    });
+  }
+
+  setupCustomization(section);
 
   if (customBtn && customSection) {
     customBtn.addEventListener('click', () => {
@@ -192,6 +207,12 @@ function getCustomizationFee(section) {
   return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
 }
 
+function getCustomizationFee(section) {
+  const nameInput = section.querySelector('.custom-name');
+  const numberInput = section.querySelector('.custom-number');
+  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
+}
+
 function getBasePrice(section) {
   const idx = section.dataset.productIndex;
   const el = section.querySelector(`#basePrice-${idx}`);
@@ -216,6 +237,7 @@ function calculatePrice(section) {
 
   let subtotal = (getBasePrice(section) + customFee) * qty;
   if (gift) subtotal += 2;
+
 
 
 
@@ -272,6 +294,7 @@ function updateDisplay(section) {
       </ul>`;
   }
 }
+
 
 // ---- Zoom Handling ----
 let currentSection = null;
@@ -453,11 +476,6 @@ function flyToTarget(startEl, targetSelector) {
     clone.classList.add("fly-to-target-anim");
   });
 
-  clone.addEventListener("animationend", () => clone.remove());
-  requestAnimationFrame(() => {
-    clone.classList.add("fly-to-target-anim");
-  });
-
   clone.addEventListener("animationend", () => {
     clone.remove();
     if (target) {
@@ -486,49 +504,6 @@ function resetFields(section) {
 
   updateDisplay(section);
 }
-
-
-function resetFinalPriceDisplay(price, section) {
-  const idx = section.dataset.productIndex;
-  section.querySelector(`#original-price-${idx}`).style.display = "none";
-  section.querySelector(`#discountLabel-${idx}`).style.display = "none";
-  section.querySelector(
-    `#finalPriceValue-${idx}`
-  ).textContent = `${price.toFixed(2)}€ inkl. Mwst.`;
-}
-
-// ----- Bewertungsmodal -----
-function openRatingModal(productId) {
-  document.getElementById("ratingProductId").value = productId;
-  document.getElementById("ratingModal").classList.remove("hidden");
-  document.body.classList.add("modal-open");
-}
-
-function closeRatingModal() {
-  document.body.classList.remove("modal-open");
-  document.getElementById("ratingModal").classList.add("hidden");
-}
-
-document.querySelectorAll(".open-review-modal").forEach((btn) => {
-  btn.addEventListener("click", () => openRatingModal(btn.dataset.productId));
-});
-
-const ratingModalEl = document.getElementById("ratingModal");
-if (ratingModalEl) {
-  ratingModalEl.addEventListener("click", (e) => {
-    const content = ratingModalEl.querySelector(".review-modal-content");
-    if (content && !content.contains(e.target)) {
-      closeRatingModal();
-    }
-  });
-}
-
-document.addEventListener("keydown", (e) => {
-  const modal = document.getElementById("ratingModal");
-  if (modal && !modal.classList.contains("hidden") && e.key === "Escape") {
-    closeRatingModal();
-  }
-});
 function resetFinalPriceDisplay(price, section) {
   const idx = section.dataset.productIndex;
   section.querySelector(`#original-price-${idx}`).style.display = "none";
@@ -540,7 +515,7 @@ function resetFinalPriceDisplay(price, section) {
 
 function setupCustomization(section) {
   const name = section.querySelector('.product-name')?.textContent || '';
-  const teamKey = Object.keys(TEAM_PLAYERS).find((k) =>
+  const teamKey = Object.keys(TEAM_ROSTERS).find((k) =>
     name.toLowerCase().includes(k.toLowerCase())
   );
   const playerSelect = section.querySelector('.player-select');
@@ -553,7 +528,7 @@ function setupCustomization(section) {
   if (!playerSelect) return;
 
   if (teamKey) {
-    const roster = TEAM_PLAYERS[teamKey];
+    const roster = TEAM_ROSTERS[teamKey];
     const optEmpty = document.createElement('option');
     optEmpty.value = '';
     optEmpty.textContent = '-- Eigener Name --';

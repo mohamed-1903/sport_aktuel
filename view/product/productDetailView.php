@@ -7,7 +7,9 @@
     const toast = document.getElementById('toastMessage');
     if (toast) {
       toast.classList.add('show');
-      setTimeout(() => { toast.classList.remove('show'); }, 3000);
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
     }
   </script>
   <?php unset($_SESSION['message']); ?>
@@ -59,7 +61,10 @@
           </div>
           <div class="additional-images">
             <?php foreach ($images as $imgIndex => $img): ?>
-              <img src="<?= htmlspecialchars($img) ?>" />
+              <img
+                src="<?= htmlspecialchars($img) ?>"
+                onclick="changeImage(this.closest('.Eprodukt'), '<?= htmlspecialchars($img) ?>', <?= $imgIndex ?>)"
+              />
             <?php endforeach; ?>
           </div>
         </div>
@@ -222,7 +227,6 @@
       <?php endfor; ?>
     </div>
   </section>
-
   <?php foreach ($productsToShow as $index => $product):
     $ratings = getRatingsForProduct((int)$product['id']);
     $avgRating = getAverageRating((int)$product['id']);
@@ -273,94 +277,6 @@
   </div>
 </div>
 <script>
-  <?php foreach ($productsToShow as $index => $product):
-    $ratings = getRatingsForProduct((int)$product['id']);
-    $avgRating = getAverageRating((int)$product['id']);
-  ?>
-      <
-      section class = "reviews" >
-      <
-      h3 > Kundenbewertungen zu <?= htmlspecialchars($product['name']) ?> < /h3>
-    <?php if ($avgRating): ?>
-        <
-        p > Durchschnittliche Bewertung: <?= number_format($avgRating, 1) ?> / 5 < /p>
-    <?php endif; ?>
-    <?php foreach ($ratings as $r): ?>
-        <
-        div class = "review" >
-        <
-        strong > <?= htmlspecialchars($r['username']) ?> < /strong> <
-        span class = "rating-stars"
-      style = "pointer-events:none;" >
-        <?php for ($s = 5; $s >= 1; $s--): ?> <
-          label > <?= $s <= $r['stars'] ? '★' : '☆' ?> < /label>
-    <?php endfor; ?>
-      <
-      /span> <
-      p > <?= nl2br(htmlspecialchars($r['comment'])) ?> < /p>
-    <?php if (!empty($r['image_path'])): ?>
-        <
-        img src = "<?= htmlspecialchars($r['image_path']) ?>"
-      alt = "Bild zur Bewertung" >
-      <?php endif; ?> <
-      /div>
-    <?php endforeach; ?>
-    <?php if (isset($_SESSION['user_id'])): ?>
-        <
-        button type = "button"
-      class = "open-review-modal"
-      data - product - id = "<?= (int)$product['id'] ?>" > Bewertung schreiben < /button>
-    <?php else: ?>
-        <
-        p > < a href = "index.php?page=auth&action=login" > Anmelden < /a>, um eine Bewertung zu schreiben.</p >
-      <?php endif; ?> <
-      /section>
-    <?php endforeach; ?>
-      <
-      /main> <
-      div id = "ratingModal"
-    class = "review-modal hidden" >
-    <
-    div class = "review-modal-content" >
-    <
-    button type = "button"
-    class = "review-close"
-    onclick = "closeRatingModal()" > & times; < /button> <
-    form id = "ratingForm"
-    class = "review-form"
-    action = "index.php?page=community&action=addRating"
-    method = "post"
-    enctype = "multipart/form-data" >
-      <
-      input type = "hidden"
-    name = "product_id"
-    id = "ratingProductId"
-    value = "" >
-      <
-      div class = "rating-stars" >
-      <?php for ($s = 5; $s >= 1; $s--): ?> <
-        input type = "radio"
-    id = "modal-star<?= $s ?>"
-    name = "stars"
-    value = "<?= $s ?>"
-    <?= $s == 5 ? ' checked' : '' ?> >
-      <
-      label
-    for = "modal-star<?= $s ?>" > ★ < /label>
-  <?php endfor; ?>
-    <
-    /div> <
-    textarea name = "comment"
-  required placeholder = "Deine Meinung..." > < /textarea> <
-    input type = "file"
-  name = "image"
-  accept = "image/*" >
-    <
-    button type = "submit" > Bewerten < /button> <
-    /form> <
-    /div> <
-    /div> <
-    script >
     document.getElementById('compareBtn').addEventListener('click', () => {
       const input = document.getElementById('compareInput').value.trim();
       const options = document.querySelectorAll('#compareOptions option');

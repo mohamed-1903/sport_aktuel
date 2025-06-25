@@ -19,6 +19,7 @@ function getItemsPerPage() {
 }
 
 window.applyFilter = function () {
+
   const filterWerte = {
     marke: document.getElementById("filter-marke")?.value || "",
     farbe: document.getElementById("filter-farbe")?.value || "",
@@ -44,6 +45,7 @@ window.applyFilter = function () {
   currentPage = 1;
   updatePagination();
 };
+
 
 // ✅ PRODUKTSUCHE mit Feedback
 function produktSuche() {
@@ -122,6 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
       alleProdukte = data.products || [];
     });
 
+
   if (typeof produktKonfigurationen !== "undefined") {
     produktKonfigurationen.forEach(({ containerId, urls }) => {
       ladeProdukte(containerId, urls);
@@ -139,6 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+
 // 🔽 PRODUKTE LADEN
 function ladeProdukte(containerId, urls) {
   const container = document.getElementById(containerId);
@@ -154,9 +158,15 @@ function ladeProdukte(containerId, urls) {
           Array.from(temp.children).forEach((el) => container.appendChild(el));
         })
     )
+
   ).then(() => {
     applyFilter();
     produktSuche();
+    if (!window.originalProductOrder) {
+      window.originalProductOrder = Array.from(
+        container.querySelectorAll(".einzelprodukt")
+      );
+    }
     updatePagination();
   });
 }
@@ -271,7 +281,14 @@ window.resetFilter = function () {
   if (suche) {
     suche.value = "";
   }
+  const sortSel = document.getElementById("sort-select");
+  if (sortSel) {
+    sortSel.selectedIndex = 0;
+  }
   applyFilter();
+  if (typeof restoreOriginalOrder === "function") {
+    restoreOriginalOrder();
+  }
   if (typeof produktSuche === "function") {
     produktSuche();
   }
@@ -292,6 +309,13 @@ window.sortProducts = function (order) {
   items.forEach((el) => container.appendChild(el));
   currentPage = 1;
   updatePagination();
+};
+
+// Setzt die Produkte in ihre ursprüngliche Reihenfolge zurück
+window.restoreOriginalOrder = function () {
+  const container = document.getElementById("produktContainer");
+  if (!container || !window.originalProductOrder) return;
+  window.originalProductOrder.forEach((el) => container.appendChild(el));
 };
 
 // Wechselt zwischen Listen- und Grid-Layout für die Produktübersicht
