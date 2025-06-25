@@ -49,7 +49,7 @@
           <button class="remove-product" data-remove-index="<?= $index ?>">❌</button>
         <?php endif; ?>
       </h2>
-      <div class="produkt-grid">
+      <div class="detail-grid">
         <!-- 📸 Bilderbereich -->
         <div class="image-wrapper">
           <div class="zoom-bg-container" id="zoomContainer-<?= $index ?>">
@@ -65,7 +65,7 @@
         </div>
 
         <!-- 🛒 Produktdetails & Optionen -->
-        <div>␊
+        <div>
           <h1 class="product-name"><?= htmlspecialchars($name) ?></h1>
           <p id="original-price-<?= $index ?>" class="price-old" style="display: none;"></p>
           <p id="final-price-<?= $index ?>">
@@ -97,19 +97,7 @@
           <input type="number" id="quantity-<?= $index ?>" value="1" min="1" class="size-dropdown" />
 
           <?php if (stripos($product['subcategory'] ?? '', 'Trikots') !== false): ?>
-            <div class="customization">
-              <label for="player-<?= $index ?>">Spieler wählen:</label>
-              <select id="player-<?= $index ?>" class="size-dropdown player-select"></select>
-              <label for="customName-<?= $index ?>">Name:</label>
-              <input type="text" id="customName-<?= $index ?>" class="size-dropdown custom-name" maxlength="20" />
-              <label for="customNumber-<?= $index ?>">Nummer:</label>
-              <input type="number" id="customNumber-<?= $index ?>" class="size-dropdown custom-number" min="0" max="99" />
-              <div class="jersey-preview" id="jerseyPreview-<?= $index ?>">
-                <img src="<?= htmlspecialchars($backImage) ?>" alt="Rückenansicht" />
-                <div class="overlay-name"></div>
-                <div class="overlay-number"></div>
-              </div>
-            </div>
+            <button type="button" class="btn-show-custom" id="customBtn-<?= $index ?>">Produkt individualisieren</button>
           <?php endif; ?>
 
           <div class="button-rows">
@@ -140,6 +128,10 @@
               <input type="text" id="customName-<?= $index ?>" class="size-dropdown custom-name" maxlength="20" />
               <label for="customNumber-<?= $index ?>">Nummer:</label>
               <input type="number" id="customNumber-<?= $index ?>" class="size-dropdown custom-number" min="0" max="99" />
+              <div class="badges">
+                <label><input type="checkbox" id="badgeBL-<?= $index ?>" class="badge-bl"> Bundesliga-Badge</label>
+                <label><input type="checkbox" id="badgeCL-<?= $index ?>" class="badge-cl"> Champions-League-Badge</label>
+              </div>
               <div class="jersey-preview" id="jerseyPreview-<?= $index ?>">
                 <img src="<?= htmlspecialchars($backImage) ?>" alt="Rückenansicht" />
                 <div class="overlay-name"></div>
@@ -148,17 +140,16 @@
             </div>
           </div>
         <?php endif; ?>
-      </div>
-      <div class="price-breakdown"></div>
+        <div class="price-breakdown"></div>
 
-      <!-- 🧺 Aktionen -->
+        <!-- 🧺 Aktionen -->
 
-      <div class="button-reihe" data-iid="<?= (int)$product['id'] ?>">
-        <?php
-        $iid = isset($product['iid']) ? (int)$product['iid'] : 0;
-        $name = $product['name'] ?? 'Unbekanntes Produkt';
-        $price = isset($product['priceValue']) ? (float)$product['priceValue'] : 0.00;
-        $image = $product['image_main'] ?? 'img/placeholder.jpg';
+        <div class="button-reihe" data-iid="<?= (int)$product['id'] ?>">
+          <?php
+          $iid = isset($product['iid']) ? (int)$product['iid'] : 0;
+          $name = $product['name'] ?? 'Unbekanntes Produkt';
+          $price = isset($product['priceValue']) ? (float)$product['priceValue'] : 0.00;
+          $image = $product['image_main'] ?? 'img/placeholder.jpg';
         ?>
 
         <!-- 🛒 In den Warenkorb -->
@@ -182,16 +173,16 @@
         </button>
 
 
-      </div>
-      <!-- 📄 Produktbeschreibung -->
-      <div class="produkt-info">
-        <h3 id="toggle-info-<?= $index ?>">
-          <span class="toggle-icon">+</span> Produktinformationen
-        </h3>
-        <div id="description-full-<?= $index ?>" class="hidden">
-          <p><?= nl2br(htmlspecialchars($description)) ?></p>
         </div>
-      </div>
+        <!-- 📄 Produktbeschreibung -->
+        <div class="produkt-info">
+          <h3 id="toggle-info-<?= $index ?>">
+            <span class="toggle-icon">+</span> Produktinformationen
+          </h3>
+          <div id="description-full-<?= $index ?>" class="hidden">
+            <p><?= nl2br(htmlspecialchars($description)) ?></p>
+          </div>
+        </div>
       </div>
       </div>
     </section>

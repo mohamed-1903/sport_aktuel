@@ -1,6 +1,8 @@
 <?php
 // controller/productController.php
 require_once 'model/productModel.php';
+// Für Bewertungsfunktionen benötigt die Detailansicht
+require_once 'model/ratingModel.php';
 
 $action = $_GET['action'] ?? 'list';
 
