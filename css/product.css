@@ -296,10 +296,16 @@ button {
   align-items: center;
 }
 
+
 .jersey-preview {
   position: relative;
   width: 150px;
   margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 5px;
+  background-color: #fafafa;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .jersey-preview img {
