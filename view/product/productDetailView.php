@@ -60,7 +60,7 @@
 
             <?php foreach ($images as $imgIndex => $img): ?>
               <img src="<?= htmlspecialchars($img) ?>"
-                   onclick="changeImage(this.closest('.Eprodukt'), '<?= htmlspecialchars($img) ?>', <?= $imgIndex ?>)" />
+                onclick="changeImage(this.closest('.Eprodukt'), '<?= htmlspecialchars($img) ?>', <?= $imgIndex ?>)" />
             <?php endforeach; ?>
           </div>
         </div>
@@ -142,6 +142,7 @@
             </div>
           </div>
         <?php endif; ?>
+        <div class="price-breakdown"></div>
 
         <!-- 🧺 Aktionen -->
 
@@ -152,27 +153,27 @@
           $price = isset($product['priceValue']) ? (float)$product['priceValue'] : 0.00;
           $image = $product['image_main'] ?? 'img/placeholder.jpg';
 
-        ?>
+          ?>
 
-        <!-- 🛒 In den Warenkorb -->
-        <button
-          class="btn-add-to-cart"
-          data-iid="<?= $iid ?>"
-          data-name="<?= htmlspecialchars($name) ?>"
-          data-price="<?= $price ?>"
-          data-image="<?= htmlspecialchars($image) ?>">
-          🛒
-        </button>
+          <!-- 🛒 In den Warenkorb -->
+          <button
+            class="btn-add-to-cart"
+            data-iid="<?= $iid ?>"
+            data-name="<?= htmlspecialchars($name) ?>"
+            data-price="<?= $price ?>"
+            data-image="<?= htmlspecialchars($image) ?>">
+            🛒
+          </button>
 
-        <!-- ❤️ Zur Merkliste -->
-        <button
-          class="btn-add-to-watch"
-          data-iid="<?= $iid ?>"
-          data-name="<?= htmlspecialchars($name) ?>"
-          data-price="<?= $price ?>"
-          data-image="<?= htmlspecialchars($image) ?>">
-          ❤️
-        </button>
+          <!-- ❤️ Zur Merkliste -->
+          <button
+            class="btn-add-to-watch"
+            data-iid="<?= $iid ?>"
+            data-name="<?= htmlspecialchars($name) ?>"
+            data-price="<?= $price ?>"
+            data-image="<?= htmlspecialchars($image) ?>">
+            ❤️
+          </button>
 
 
         </div>

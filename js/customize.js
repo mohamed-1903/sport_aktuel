@@ -13,6 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const togglePreview = document.getElementById('togglePreview');
   const previewSection = document.getElementById('previewSection');
 
+  // Falls die Elemente nicht existieren, ist diese Datei auf der aktuellen Seite
+  // nicht erforderlich. In diesem Fall brechen wir ab, um Fehler zu vermeiden.
+  if (!priceEl || !customFields || !badgeBL || !badgeCL) {
+    return;
+  }
+  
   function updatePrice() {
     let total = BASE_PRICE;
     const option = document.querySelector('input[name="nameOption"]:checked').value;
