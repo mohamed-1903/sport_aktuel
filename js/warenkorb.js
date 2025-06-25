@@ -61,16 +61,14 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
 
   const payload = { id: iid, size, quantity: qty, discount, gift };
   if (section) {
-    const nameInput = section.querySelector('.custom-name');
-    const numberInput = section.querySelector('.custom-number');
+    const nameInput = section.querySelector(".custom-name");
+    const numberInput = section.querySelector(".custom-number");
     const hasCustom =
       (nameInput && nameInput.value.trim()) ||
       (numberInput && numberInput.value.trim());
     if (nameInput) payload.custom_name = nameInput.value.trim();
     if (numberInput) payload.custom_number = numberInput.value.trim();
-    const fee = typeof window.CUSTOMIZATION_FEE === 'number' ? window.CUSTOMIZATION_FEE : 10;
-    if (hasCustom) payload.custom_fee = fee;
-
+    if (hasCustom) payload.custom_fee = window.CUSTOMIZATION_FEE || 0;
   }
 
   fetch("index.php?page=cart&action=add", {
@@ -104,12 +102,11 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
             icon: "🛒",
             buttons,
             onInit: (popup) => {
-
-              const rm = popup.querySelector('.remove-cart-btn');
+              const rm = popup.querySelector(".remove-cart-btn");
               if (rm) {
-                rm.addEventListener('click', () => {
+                rm.addEventListener("click", () => {
                   removeFromCart(iid, size, { name, image, productId: iid });
-                  popup.classList.add('fade-out');
+                  popup.classList.add("fade-out");
 
                   setTimeout(() => popup.remove(), 400);
                 });
@@ -197,7 +194,8 @@ function loadList() {
         const discount = parseInt(item.discount) || 0;
         const gift = item.gift == 1;
         const custom = parseFloat(item.custom_fee) || 0;
-        const einzelfpreis = preis * (1 - discount / 100) + (gift ? 2 : 0) + custom;
+        const einzelfpreis =
+          preis * (1 - discount / 100) + (gift ? 2 : 0) + custom;
         const gesamt = einzelfpreis * menge;
 
         const tr = document.createElement("tr");
@@ -210,25 +208,30 @@ function loadList() {
                 <small>Größe: ${item.size}</small><br>
                 ${
                   item.custom_name || item.custom_number
-                    ? `<small>Personalisierung: ${item.custom_name || ''} ${
-                        item.custom_number || ''
+                    ? `<small>Personalisierung: ${item.custom_name || ""} ${
+                        item.custom_number || ""
                       }</small><br>`
-                    : ''
+                    : ""
                 }
-                ${item.gift == 1 ? '<small>🎁 Geschenkverpackung</small><br>' : ''}
+                ${
+                  item.gift == 1
+                    ? "<small>🎁 Geschenkverpackung</small><br>"
+                    : ""
+                }
                 ${
                   item.discount
                     ? `<small>🎟️ Rabatt: ${item.discount}%</small>`
-                    : ''
+                    : ""
                 }
               </div>
             </div>
           </td>
           <td>
-            <input type="number" class="qty-input" data-id="${item.product_id}" data-size="${item.size}" value="${menge}" min="1" />
+            <input type="number" class="qty-input" data-id="${
+              item.product_id
+            }" data-size="${item.size}" value="${menge}" min="1" />
           </td>
           <td>${einzelfpreis.toFixed(2)} €</td>
-
           <td class="summe-cell">${gesamt.toFixed(2)} €</td>
           <td>
             <button class="remove-btn" data-id="${
@@ -250,9 +253,6 @@ function loadList() {
       nettoEl.textContent = `${netto.toFixed(2)} €`;
       mwstEl.textContent = `${mwst.toFixed(2)} €`;
 
-      // ensure totals update if quantities change later
-      recalcSummary();
-
       // 🗑 EventListener zum Entfernen
       document.querySelectorAll(".remove-btn").forEach((btn) => {
         btn.addEventListener("click", () => {
@@ -266,10 +266,6 @@ function loadList() {
 
       // 🆙 Menge ändern
       document.querySelectorAll(".qty-input").forEach((input) => {
-        input.addEventListener("input", () => {
-          updateRowAndSummary(input);
-        });
-
         input.addEventListener("change", () => {
           const id = input.dataset.id;
           const size = input.dataset.size;
@@ -277,8 +273,6 @@ function loadList() {
           if (!qty || qty < 1) {
             qty = 1;
             input.value = 1;
-            updateRowAndSummary(input);
-
           }
           updateCartQuantity(id, size, qty);
         });
@@ -315,44 +309,15 @@ function updateCartQuantity(productId, size, quantity) {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: `id=${encodeURIComponent(productId)}&size=${encodeURIComponent(size)}&quantity=${encodeURIComponent(quantity)}`,
+    body: `id=${encodeURIComponent(productId)}&size=${encodeURIComponent(
+      size
+    )}&quantity=${encodeURIComponent(quantity)}`,
   })
     .then(() => {
-
+      loadList();
       updateCartCount();
     })
     .catch((err) => console.error("Fehler beim Aktualisieren:", err));
-}
-
-function updateRowAndSummary(input) {
-  const tr = input.closest("tr");
-  if (!tr) return;
-  const priceCell = tr.querySelector(".price-cell");
-  const sumCell = tr.querySelector(".summe-cell");
-  const price = parseFloat(priceCell?.dataset.price) || 0;
-  const qty = parseInt(input.value) || 1;
-  if (sumCell) sumCell.textContent = (price * qty).toFixed(2) + " €";
-  recalcSummary();
-}
-
-function recalcSummary() {
-  const zwischensummeEl = document.getElementById("zwischensumme");
-  const gesamtsummeEl = document.getElementById("gesamtsumme");
-  const nettoEl = document.getElementById("nettosumme");
-  const mwstEl = document.getElementById("mwstbetrag");
-
-  let total = 0;
-  document.querySelectorAll("#cart-table-body tr").forEach((tr) => {
-    const price = parseFloat(tr.querySelector(".price-cell")?.dataset.price) || 0;
-    const qty = parseInt(tr.querySelector(".qty-input")?.value) || 1;
-    total += price * qty;
-  });
-  const netto = total / 1.19;
-  const mwst = total - netto;
-  if (zwischensummeEl) zwischensummeEl.textContent = total.toFixed(2) + " €";
-  if (gesamtsummeEl) gesamtsummeEl.textContent = total.toFixed(2) + " €";
-  if (nettoEl) nettoEl.textContent = netto.toFixed(2) + " €";
-  if (mwstEl) mwstEl.textContent = mwst.toFixed(2) + " €";
 }
 
 function zeigeToast(text, farbe = "#333") {

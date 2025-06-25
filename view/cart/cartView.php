@@ -53,7 +53,6 @@ $total = 0;
             $base = $item['price'];
             $rabattPreis = $base * (1 - ($item['discount'] ?? 0) / 100);
             $einzelpreis = $rabattPreis + (($item['gift'] ?? 0) ? 2 : 0) + ($item['custom_fee'] ?? 0);
-
             $sum = $einzelpreis * $item['quantity'];
             $total += $sum;
           ?>
@@ -65,7 +64,6 @@ $total = 0;
                 <?php if (!empty($item['custom_name']) || !empty($item['custom_number'])): ?>
                   <small>Personalisierung: <?= htmlspecialchars($item['custom_name']) ?> <?= htmlspecialchars($item['custom_number']) ?></small><br>
                 <?php endif; ?>
-
                 <?php if (!empty($item['gift'])): ?>
                   <small>🎁 Geschenkverpackung</small><br>
                 <?php endif; ?>
@@ -77,16 +75,12 @@ $total = 0;
                 <form action="index.php?page=cart&action=update" method="post">
                   <input type="hidden" name="id" value="<?= (int)$item['product_id'] ?>">
                   <input type="hidden" name="size" value="<?= htmlspecialchars($item['size']) ?>">
-                  <input type="number" class="qty-input" name="quantity" value="<?= (int)$item['quantity'] ?>" min="1" />
+                  <input type="number" name="quantity" value="<?= (int)$item['quantity'] ?>" min="1" />
                   <button type="submit">✔</button>
                 </form>
               </td>
-              <td class="price-cell" data-price="<?= htmlspecialchars($einzelpreis) ?>">
-                <?= number_format($einzelpreis, 2, ',', '.') ?> €
-              </td>
-              <td class="summe-cell">
-                <?= number_format($sum, 2, ',', '.') ?> €
-              </td>
+              <td><?= number_format($einzelpreis, 2, ',', '.') ?> €</td>
+              <td><?= number_format($sum, 2, ',', '.') ?> €</td>
               <td>
                 <form action="index.php?page=cart&action=remove" method="post" style="display:inline">
                   <input type="hidden" name="id" value="<?= (int)$item['product_id'] ?>">
@@ -112,7 +106,6 @@ $total = 0;
     <p>Gesamtnettosumme: <span id="nettosumme"><?= number_format($netto, 2, ',', '.') ?> €</span></p>
     <p>zzgl. 19% MwSt.: <span id="mwstbetrag"><?= number_format($mwst, 2, ',', '.') ?> €</span></p>
     <p><strong>Gesamtsumme: <span id="gesamtsumme"><?= number_format($total, 2, ',', '.') ?> €</span></strong></p>
-
 
     <input type="text" placeholder="Gutscheincode eingeben (optional)" class="gutschein-input" />
     <a href="index.php?page=order&action=checkout">

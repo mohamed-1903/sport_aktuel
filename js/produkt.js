@@ -5,20 +5,11 @@ const DISCOUNT_CODES = {
   "00000": 5,
 };
 
-let TEAM_ROSTERS = {};
 
 const CUSTOMIZATION_FEE = 10; // € pro Trikot
 window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
 
 let TEAM_ROSTERS = {};
-
-const CUSTOMIZATION_FEE = 10; // € pro Trikot
-window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
-
-let TEAM_ROSTERS = {};
-
-const CUSTOMIZATION_FEE = 10; // € pro Trikot
-window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
 
 const TEAM_PLAYERS = {
   Bayern: {
@@ -42,35 +33,6 @@ const TEAM_PLAYERS = {
     20: "Bernardo Silva",
   },
 };
-
-const CUSTOMIZATION_FEE = 10; // € pro Trikot
-window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
-
-const TEAM_PLAYERS = {
-  Bayern: {
-    9: "Harry Kane",
-    25: "Thomas Müller",
-    11: "Kingsley Coman",
-  },
-  Dortmund: {
-    9: "Sebastian Haller",
-    22: "Jude Bellingham",
-    11: "Marco Reus",
-  },
-  "Real Madrid": {
-    7: "Vinicius Jr.",
-    10: "Luka Modric",
-    8: "Toni Kroos",
-  },
-  "Manchester City": {
-    9: "Erling Haaland",
-    17: "Kevin De Bruyne",
-    20: "Bernardo Silva",
-  },
-};
-
-const CUSTOMIZATION_FEE = 10; // € pro Trikot
-window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
 
 
 // Initialisierung pro Produktcontainer
@@ -90,7 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function setupProduct(section) {
   const idx = section.dataset.productIndex;
-
 
 
   const qtyInput = section.querySelector(`#quantity-${idx}`);
@@ -122,14 +83,6 @@ function setupProduct(section) {
   qtyInput.addEventListener("input", () => updateDisplay(section));
   const giftWrapEl = section.querySelector(`#giftWrap-${idx}`);
   const pinInputEl = section.querySelector(`#pin-${idx}`);
-
-  if (customBtn && customSection) {
-    customBtn.addEventListener('click', () => {
-      customSection.classList.toggle('hidden');
-    });
-  }
-
-  setupCustomization(section);
 
   if (customBtn && customSection) {
     customBtn.addEventListener('click', () => {
@@ -227,12 +180,6 @@ function getCustomizationFee(section) {
   return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
 }
 
-function getCustomizationFee(section) {
-  const nameInput = section.querySelector('.custom-name');
-  const numberInput = section.querySelector('.custom-number');
-  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
-}
-
 function getBasePrice(section) {
   const idx = section.dataset.productIndex;
   const el = section.querySelector(`#basePrice-${idx}`);
@@ -257,7 +204,6 @@ function calculatePrice(section) {
 
   let subtotal = (getBasePrice(section) + customFee) * qty;
   if (gift) subtotal += 2;
-
 
 
 
@@ -315,7 +261,6 @@ function updateDisplay(section) {
       </ul>`;
   }
 }
-
 
 
 // ---- Zoom Handling ----
@@ -465,7 +410,6 @@ window.getTotalPrice = function (priceWOTax) {
   const TAX_RATE = 0.19;
   return priceWOTax * (1 + TAX_RATE);
 };
-
 
 // Animation aus anderen Skripten genutzt
 function flyToTarget(startEl, targetSelector) {
