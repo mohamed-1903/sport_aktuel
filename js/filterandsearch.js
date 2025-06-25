@@ -39,12 +39,11 @@ window.applyFilter = function () {
       (!filterWerte.geschlecht || p.geschlecht === filterWerte.geschlecht) &&
       preis <= filterWerte.maxPreis;
 
+    // leeres Display lässt die ursprüngliche Flex-Darstellung erhalten
     produkt.style.display = sichtbar ? "" : "none";
   });
-
-  currentPage = 1;
-  updatePagination();
 };
+
 
 
 // ✅ PRODUKTSUCHE mit Feedback
@@ -124,7 +123,6 @@ document.addEventListener("DOMContentLoaded", () => {
       alleProdukte = data.products || [];
     });
 
-
   if (typeof produktKonfigurationen !== "undefined") {
     produktKonfigurationen.forEach(({ containerId, urls }) => {
       ladeProdukte(containerId, urls);
@@ -138,9 +136,8 @@ document.addEventListener("DOMContentLoaded", () => {
     prodContainer.classList.remove("einzelprodukt-grid");
   }
   updateLayoutToggle(savedLayout === "list" ? "list" : "grid");
-  updatePagination();
-
 });
+
 
 
 // 🔽 PRODUKTE LADEN
@@ -158,7 +155,6 @@ function ladeProdukte(containerId, urls) {
           Array.from(temp.children).forEach((el) => container.appendChild(el));
         })
     )
-
   ).then(() => {
     applyFilter();
     produktSuche();
@@ -167,9 +163,9 @@ function ladeProdukte(containerId, urls) {
         container.querySelectorAll(".einzelprodukt")
       );
     }
-    updatePagination();
   });
 }
+
 
 function autocompleteSuche() {
   const input = document.getElementById("produktsuche");

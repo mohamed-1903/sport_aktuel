@@ -444,6 +444,7 @@ window.getTotalPrice = function (priceWOTax) {
   return priceWOTax * (1 + TAX_RATE);
 };
 
+
 // Animation aus anderen Skripten genutzt
 function flyToTarget(startEl, targetSelector) {
   const target = document.querySelector(targetSelector);
