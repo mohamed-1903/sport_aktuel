@@ -72,12 +72,16 @@ $total = 0;
                 <form action="index.php?page=cart&action=update" method="post">
                   <input type="hidden" name="id" value="<?= (int)$item['product_id'] ?>">
                   <input type="hidden" name="size" value="<?= htmlspecialchars($item['size']) ?>">
-                  <input type="number" name="quantity" value="<?= (int)$item['quantity'] ?>" min="1" />
+                  <input type="number" class="qty-input" name="quantity" value="<?= (int)$item['quantity'] ?>" min="1" />
                   <button type="submit">✔</button>
                 </form>
               </td>
-              <td><?= number_format($einzelpreis, 2, ',', '.') ?> €</td>
-              <td><?= number_format($sum, 2, ',', '.') ?> €</td>
+              <td class="price-cell" data-price="<?= htmlspecialchars($einzelpreis) ?>">
+                <?= number_format($einzelpreis, 2, ',', '.') ?> €
+              </td>
+              <td class="summe-cell">
+                <?= number_format($sum, 2, ',', '.') ?> €
+              </td>
               <td>
                 <form action="index.php?page=cart&action=remove" method="post" style="display:inline">
                   <input type="hidden" name="id" value="<?= (int)$item['product_id'] ?>">
@@ -97,12 +101,12 @@ $total = 0;
     <h3>Zusammenfassung</h3>
     <?php $netto = $total / 1.19;
     $mwst = $total - $netto; ?>
-    <p>Zwischensumme: <span><?= number_format($total, 2, ',', '.') ?> €</span></p>
+    <p>Zwischensumme: <span id="zwischensumme"><?= number_format($total, 2, ',', '.') ?> €</span></p>
     <p>Versandkosten: <span>0,00 €</span></p>
     <hr>
-    <p>Gesamtnettosumme: <span><?= number_format($netto, 2, ',', '.') ?> €</span></p>
-    <p>zzgl. 19% MwSt.: <span><?= number_format($mwst, 2, ',', '.') ?> €</span></p>
-    <p><strong>Gesamtsumme: <span><?= number_format($total, 2, ',', '.') ?> €</span></strong></p>
+    <p>Gesamtnettosumme: <span id="nettosumme"><?= number_format($netto, 2, ',', '.') ?> €</span></p>
+    <p>zzgl. 19% MwSt.: <span id="mwstbetrag"><?= number_format($mwst, 2, ',', '.') ?> €</span></p>
+    <p><strong>Gesamtsumme: <span id="gesamtsumme"><?= number_format($total, 2, ',', '.') ?> €</span></strong></p>
 
     <input type="text" placeholder="Gutscheincode eingeben (optional)" class="gutschein-input" />
     <a href="index.php?page=order&action=checkout">
