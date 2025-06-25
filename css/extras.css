@@ -42,8 +42,10 @@
   font-size: 16px;
   padding: 10px;
   cursor: pointer;
+  min-width: 130px;
 }
-.filterbar button:hover {
+.filterbar button:hover,
+.filterbar select:hover {
   background-color: var(--accent-color);
   color: #000;
 }
@@ -51,7 +53,6 @@
 .layout-toggle {
   min-width: 140px;
 }
-
 
 .einzelprodukt-grid {
   display: grid;
@@ -126,11 +127,6 @@
   cursor: pointer;
   transition: background-color 0.2s;
 }
-.pagination button:disabled {
-  opacity: 0.5;
-  cursor: default;
-}
-
 
 .pagination button:hover {
   background-color: var(--accent-color);
@@ -1148,20 +1144,17 @@ body:not(.light-mode) .error {
 
 .einzelprodukt-list .einzelprodukt {
   display: flex;
-  flex-direction: row; /* Buttons neben Bild und Text */
   align-items: center;
   gap: 20px;
   padding: 10px;
   border: 1px solid var(--border-color, #555);
   border-radius: 8px;
-  height: auto;
 }
 
 .einzelprodukt-list .produkt-wrapper {
   display: flex;
   align-items: center;
   gap: 20px;
-  flex: 1;
 }
 
 .einzelprodukt-list .image-wrapper {
@@ -1180,7 +1173,4 @@ body:not(.light-mode) .error {
 
 .einzelprodukt-list .button-row {
   margin-left: auto;
-  display: flex;
-  gap: 10px;
-  align-items: center;
 }
