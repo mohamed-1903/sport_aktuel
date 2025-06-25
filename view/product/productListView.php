@@ -28,6 +28,7 @@
 
     <section class="filterbar">
       <select id="filter-marke" onchange="applyFilter()">
+
         <option value="">Alle Marken</option>
         <option value="Nike">Nike</option>
         <option value="Puma">Puma</option>
@@ -40,21 +41,26 @@
         <option value="Blau">Blau</option>
         <option value="Rot">Rot</option>
       </select>
-      <input type="range" id="filter-preis" min="0" value="0" step="10"
-             oninput="updatePriceLabel(this.value)" onchange="applyFilter()">
-      <span id="price-label" class="price-label">Kein Limit</span>
+      <div class="range-filter">
+        <label for="filter-preis">Preis:</label>
+        <input type="range" id="filter-preis" min="0" value="0" step="10"
+               oninput="updatePriceLabel(this.value)" onchange="applyFilter()">
+        <span id="price-label" class="price-label">Kein Limit</span>
+      </div>
       <select id="filter-mannschaft" onchange="applyFilter()">
         <option value="">Alle Mannschaften</option>
         <option value="Bayern">Bayern</option>
         <option value="Dortmund">Dortmund</option>
       </select>
       <select id="filter-geschlecht" onchange="applyFilter()">
+
         <option value="">Alle Geschlechter</option>
         <option value="Herren">Herren</option>
         <option value="Damen">Damen</option>
         <option value="Unisex">Unisex</option>
       </select>
       <select id="sort-select" onchange="sortProducts(this.value)">
+        <option value="default">Standardsortierung</option>
         <option value="asc">Preis aufsteigend ▲</option>
         <option value="desc">Preis absteigend ▼</option>
       </select>
@@ -63,8 +69,10 @@
 
 
 
+
     </section>
     <ul class="einzelprodukt-grid" id="produktContainer">
+
       <?php if (empty($filteredProducts)): ?>
         <p>Keine Produkte in dieser Kategorie gefunden.</p>
       <?php else: ?>
@@ -128,6 +136,7 @@
         <?php endforeach; ?>
       <?php endif; ?>
     </ul>
+
 
     <section class="pagination"></section>
 
@@ -762,4 +771,3 @@ document.addEventListener("DOMContentLoaded", () => {
 window.addEventListener("resize", () => {
   updatePagination();
 });
->>>>>>> main
