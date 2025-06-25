@@ -31,17 +31,13 @@
       </div>
     </div>
   </div>
-  <?php
-  require_once 'model/ratingModel.php';
-  foreach ($productsToShow as $index => $product):
-
+  <?php foreach ($productsToShow as $index => $product):
     // 🧩 Produktdaten extrahieren mit Fallbacks
     $name = $product['name'] ?? 'Produktname nicht verfügbar';
     $price = isset($product['priceValue']) && is_numeric($product['priceValue']) ? $product['priceValue'] : 0;
     $imageMain = $product['image_main'] ?? ($product['imagepath'] ?? 'img/placeholder.jpg');
     $images = $product['images'] ?? [$imageMain];
     $backImage = $images[1] ?? $imageMain;
-
     $description = $product['description'] ?? 'Keine Beschreibung verfügbar';
     $sizes = $product['sizes'] ?? range(38, 46);
   ?>
@@ -60,19 +56,16 @@
             <img id="main-image-<?= $index ?>" src="<?= htmlspecialchars($imageMain) ?>" alt="<?= htmlspecialchars($name) ?>" />
           </div>
           <div class="additional-images">
+
             <?php foreach ($images as $imgIndex => $img): ?>
-              <img
-                src="<?= htmlspecialchars($img) ?>"
-                onclick="changeImage(this.closest('.Eprodukt'), '<?= htmlspecialchars($img) ?>', <?= $imgIndex ?>)"
-              />
+              <img src="<?= htmlspecialchars($img) ?>" onclick="changeImage('<?= htmlspecialchars($img) ?>', <?= $imgIndex ?>)" />
             <?php endforeach; ?>
           </div>
         </div>
 
         <!-- 🛒 Produktdetails & Optionen -->
-        <div>
+        <div>␊
           <h1 class="product-name"><?= htmlspecialchars($name) ?></h1>
-
           <p id="original-price-<?= $index ?>" class="price-old" style="display: none;"></p>
           <p id="final-price-<?= $index ?>">
             <?php if (isset($product['priceValue']) && is_numeric($product['priceValue'])): ?>
@@ -89,103 +82,116 @@
           </p>
 
 
-          <button type="button" class="btn-show-custom" id="customBtn-<?= $index ?>">Individualisieren</button>
-          <div class="options-wrapper">
-            <div class="option-basic">
-              <!-- 👕 Größenauswahl -->
-              <label for="size-<?= $index ?>">Größe:</label>
-              <select id="size-<?= $index ?>" class="size-dropdown">
-                <option value="" disabled selected>-- Bitte auswählen --</option>
-                <?php foreach ($sizes as $size): ?>
-                  <option value="<?= $size ?>"><?= $size ?></option>
-                <?php endforeach; ?>
-              </select>
+          <!-- 👕 Größenauswahl -->
+          <label for="size-<?= $index ?>">Größe:</label>
+          <select id="size-<?= $index ?>" class="size-dropdown">
+            <option value="" disabled selected>-- Bitte auswählen --</option>
+            <?php foreach ($sizes as $size): ?>
+              <option value="<?= $size ?>"><?= $size ?></option>
+            <?php endforeach; ?>
+          </select>
 
-              <!-- 🔢 Mengenauswahl -->
-              <label for="quantity-<?= $index ?>">Menge:</label>
-              <input type="number" id="quantity-<?= $index ?>" value="1" min="1" class="size-dropdown" />
+          <!-- 🔢 Mengenauswahl -->
+          <label for="quantity-<?= $index ?>">Menge:</label>
+          <input type="number" id="quantity-<?= $index ?>" value="1" min="1" class="size-dropdown" />
 
-              <div class="button-rows">
-                <!-- 🎟 Rabattcode -->
-                <label for="pin-<?= $index ?>">Rabatt-PIN eingeben:</label>
-                <input type="text" id="pin-<?= $index ?>" maxlength="5" placeholder="5-stellig" />
-                <p id="rabatt-info-<?= $index ?>"></p>
-
-                <!-- 🎁 Geschenkoption -->
-                <div class="gift-wrap">
-                  <label>
-                    <input type="checkbox" id="giftWrap-<?= $index ?>" />
-                    🎁 Geschenkverpackung (+ 2 €)
-                  </label>
-                </div>
-
-                <!-- 🔄 Zurücksetzen -->
-                <button onclick="resetFields(this.closest('.Eprodukt'))">Felder zurücksetzen</button>
+          <?php if (stripos($product['subcategory'] ?? '', 'Trikots') !== false): ?>
+            <div class="customization">
+              <label for="player-<?= $index ?>">Spieler wählen:</label>
+              <select id="player-<?= $index ?>" class="size-dropdown player-select"></select>
+              <label for="customName-<?= $index ?>">Name:</label>
+              <input type="text" id="customName-<?= $index ?>" class="size-dropdown custom-name" maxlength="20" />
+              <label for="customNumber-<?= $index ?>">Nummer:</label>
+              <input type="number" id="customNumber-<?= $index ?>" class="size-dropdown custom-number" min="0" max="99" />
+              <div class="jersey-preview" id="jerseyPreview-<?= $index ?>">
+                <img src="<?= htmlspecialchars($backImage) ?>" alt="Rückenansicht" />
+                <div class="overlay-name"></div>
+                <div class="overlay-number"></div>
               </div>
             </div>
+          <?php endif; ?>
 
-            <?php if (stripos($product['subcategory'] ?? '', 'Trikots') !== false): ?>
-            <div class="option-custom hidden" id="customSection-<?= $index ?>">
-              <div class="customization">
-                <label for="player-<?= $index ?>">Spieler wählen:</label>
-                <select id="player-<?= $index ?>" class="size-dropdown player-select"></select>
-                <label for="customName-<?= $index ?>">Name:</label>
-                <input type="text" id="customName-<?= $index ?>" class="size-dropdown custom-name" maxlength="20" />
-                <label for="customNumber-<?= $index ?>">Nummer:</label>
-                <input type="number" id="customNumber-<?= $index ?>" class="size-dropdown custom-number" min="0" max="99" />
-                <div class="jersey-preview" id="jerseyPreview-<?= $index ?>">
-                  <img src="<?= htmlspecialchars($backImage) ?>" alt="Rückenansicht" />
-                  <div class="overlay-name"></div>
-                  <div class="overlay-number"></div>
-                </div>
-              </div>
+          <div class="button-rows">
+            <!-- 🎟 Rabattcode -->
+            <label for="pin-<?= $index ?>">Rabatt-PIN eingeben:</label>
+            <input type="text" id="pin-<?= $index ?>" maxlength="5" placeholder="5-stellig" />
+            <p id="rabatt-info-<?= $index ?>"></p>
+
+            <!-- 🎁 Geschenkoption -->
+            <div class="gift-wrap">
+              <label>
+                <input type="checkbox" id="giftWrap-<?= $index ?>" />
+                🎁 Geschenkverpackung (+ 2 €)
+              </label>
             </div>
-            <?php endif; ?>
-          </div>
-          <div class="price-breakdown"></div>
 
-          <!-- 🧺 Aktionen -->
-
-          <div class="button-reihe" data-iid="<?= (int)$product['id'] ?>">
-            <?php
-            $iid = isset($product['iid']) ? (int)$product['iid'] : 0;
-            $name = $product['name'] ?? 'Unbekanntes Produkt';
-            $price = isset($product['priceValue']) ? (float)$product['priceValue'] : 0.00;
-            $image = $product['image_main'] ?? 'img/placeholder.jpg';
-            ?>
-
-            <!-- 🛒 In den Warenkorb -->
-            <button
-              class="btn-add-to-cart"
-              data-iid="<?= $iid ?>"
-              data-name="<?= htmlspecialchars($name) ?>"
-              data-price="<?= $price ?>"
-              data-image="<?= htmlspecialchars($image) ?>">
-              🛒
-            </button>
-
-            <!-- ❤️ Zur Merkliste -->
-            <button
-              class="btn-add-to-watch"
-              data-iid="<?= $iid ?>"
-              data-name="<?= htmlspecialchars($name) ?>"
-              data-price="<?= $price ?>"
-              data-image="<?= htmlspecialchars($image) ?>">
-              ❤️
-            </button>
-
-
-          </div>
-          <!-- 📄 Produktbeschreibung -->
-          <div class="produkt-info">
-            <h3 id="toggle-info-<?= $index ?>">
-              <span class="toggle-icon">+</span> Produktinformationen
-            </h3>
-            <div id="description-full-<?= $index ?>" class="hidden">
-              <p><?= nl2br(htmlspecialchars($description)) ?></p>
-            </div>
+            <!-- 🔄 Zurücksetzen -->
+            <button onclick="resetFields(this.closest('.Eprodukt'))">Felder zurücksetzen</button>
           </div>
         </div>
+
+        <?php if (stripos($product['subcategory'] ?? '', 'Trikots') !== false): ?>
+          <div class="option-custom hidden" id="customSection-<?= $index ?>">
+            <div class="customization">
+              <label for="player-<?= $index ?>">Spieler wählen:</label>
+              <select id="player-<?= $index ?>" class="size-dropdown player-select"></select>
+              <label for="customName-<?= $index ?>">Name:</label>
+              <input type="text" id="customName-<?= $index ?>" class="size-dropdown custom-name" maxlength="20" />
+              <label for="customNumber-<?= $index ?>">Nummer:</label>
+              <input type="number" id="customNumber-<?= $index ?>" class="size-dropdown custom-number" min="0" max="99" />
+              <div class="jersey-preview" id="jerseyPreview-<?= $index ?>">
+                <img src="<?= htmlspecialchars($backImage) ?>" alt="Rückenansicht" />
+                <div class="overlay-name"></div>
+                <div class="overlay-number"></div>
+              </div>
+            </div>
+          </div>
+        <?php endif; ?>
+      </div>
+      <div class="price-breakdown"></div>
+
+      <!-- 🧺 Aktionen -->
+
+      <div class="button-reihe" data-iid="<?= (int)$product['id'] ?>">
+        <?php
+        $iid = isset($product['iid']) ? (int)$product['iid'] : 0;
+        $name = $product['name'] ?? 'Unbekanntes Produkt';
+        $price = isset($product['priceValue']) ? (float)$product['priceValue'] : 0.00;
+        $image = $product['image_main'] ?? 'img/placeholder.jpg';
+        ?>
+
+        <!-- 🛒 In den Warenkorb -->
+        <button
+          class="btn-add-to-cart"
+          data-iid="<?= $iid ?>"
+          data-name="<?= htmlspecialchars($name) ?>"
+          data-price="<?= $price ?>"
+          data-image="<?= htmlspecialchars($image) ?>">
+          🛒
+        </button>
+
+        <!-- ❤️ Zur Merkliste -->
+        <button
+          class="btn-add-to-watch"
+          data-iid="<?= $iid ?>"
+          data-name="<?= htmlspecialchars($name) ?>"
+          data-price="<?= $price ?>"
+          data-image="<?= htmlspecialchars($image) ?>">
+          ❤️
+        </button>
+
+
+      </div>
+      <!-- 📄 Produktbeschreibung -->
+      <div class="produkt-info">
+        <h3 id="toggle-info-<?= $index ?>">
+          <span class="toggle-icon">+</span> Produktinformationen
+        </h3>
+        <div id="description-full-<?= $index ?>" class="hidden">
+          <p><?= nl2br(htmlspecialchars($description)) ?></p>
+        </div>
+      </div>
+      </div>
       </div>
     </section>
   <?php endforeach; ?>
@@ -227,6 +233,7 @@
       <?php endfor; ?>
     </div>
   </section>
+
   <?php foreach ($productsToShow as $index => $product):
     $ratings = getRatingsForProduct((int)$product['id']);
     $avgRating = getAverageRating((int)$product['id']);
@@ -277,24 +284,24 @@
   </div>
 </div>
 <script>
-    document.getElementById('compareBtn').addEventListener('click', () => {
-      const input = document.getElementById('compareInput').value.trim();
-      const options = document.querySelectorAll('#compareOptions option');
-      let secondId = null;
-      options.forEach(opt => {
-        if (opt.value === input) secondId = opt.dataset.id;
-      });
-      if (!secondId) {
-        alert('Produkt nicht gefunden');
-        return;
-      }
-      const existingIds = <?= json_encode(array_column($productsToShow, 'id')) ?>;
-      const allIds = existingIds.concat(secondId);
-      const params = allIds
-        .map((v, i) => `id${i === 0 ? '' : i + 1}=${v}`)
-        .join('&');
-      window.location.href = `index.php?page=product&action=detail&${params}`;
+  document.getElementById('compareBtn').addEventListener('click', () => {
+    const input = document.getElementById('compareInput').value.trim();
+    const options = document.querySelectorAll('#compareOptions option');
+    let secondId = null;
+    options.forEach(opt => {
+      if (opt.value === input) secondId = opt.dataset.id;
     });
+    if (!secondId) {
+      alert('Produkt nicht gefunden');
+      return;
+    }
+    const existingIds = <?= json_encode(array_column($productsToShow, 'id')) ?>;
+    const allIds = existingIds.concat(secondId);
+    const params = allIds
+      .map((v, i) => `id${i === 0 ? '' : i + 1}=${v}`)
+      .join('&');
+    window.location.href = `index.php?page=product&action=detail&${params}`;
+  });
 
   document.querySelectorAll('.remove-product').forEach(btn => {
     btn.addEventListener('click', () => {

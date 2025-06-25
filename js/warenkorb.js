@@ -61,15 +61,14 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
 
   const payload = { id: iid, size, quantity: qty, discount, gift };
   if (section) {
-    const nameInput = section.querySelector('.custom-name');
-    const numberInput = section.querySelector('.custom-number');
+    const nameInput = section.querySelector(".custom-name");
+    const numberInput = section.querySelector(".custom-number");
     const hasCustom =
       (nameInput && nameInput.value.trim()) ||
       (numberInput && numberInput.value.trim());
     if (nameInput) payload.custom_name = nameInput.value.trim();
     if (numberInput) payload.custom_number = numberInput.value.trim();
     if (hasCustom) payload.custom_fee = window.CUSTOMIZATION_FEE || 0;
-
   }
 
   fetch("index.php?page=cart&action=add", {
@@ -103,12 +102,11 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
             icon: "🛒",
             buttons,
             onInit: (popup) => {
-
-              const rm = popup.querySelector('.remove-cart-btn');
+              const rm = popup.querySelector(".remove-cart-btn");
               if (rm) {
-                rm.addEventListener('click', () => {
+                rm.addEventListener("click", () => {
                   removeFromCart(iid, size, { name, image, productId: iid });
-                  popup.classList.add('fade-out');
+                  popup.classList.add("fade-out");
 
                   setTimeout(() => popup.remove(), 400);
                 });
@@ -196,7 +194,8 @@ function loadList() {
         const discount = parseInt(item.discount) || 0;
         const gift = item.gift == 1;
         const custom = parseFloat(item.custom_fee) || 0;
-        const einzelfpreis = preis * (1 - discount / 100) + (gift ? 2 : 0) + custom;
+        const einzelfpreis =
+          preis * (1 - discount / 100) + (gift ? 2 : 0) + custom;
         const gesamt = einzelfpreis * menge;
 
         const tr = document.createElement("tr");
@@ -209,22 +208,28 @@ function loadList() {
                 <small>Größe: ${item.size}</small><br>
                 ${
                   item.custom_name || item.custom_number
-                    ? `<small>Personalisierung: ${item.custom_name || ''} ${
-                        item.custom_number || ''
+                    ? `<small>Personalisierung: ${item.custom_name || ""} ${
+                        item.custom_number || ""
                       }</small><br>`
-                    : ''
+                    : ""
                 }
-                ${item.gift == 1 ? '<small>🎁 Geschenkverpackung</small><br>' : ''}
+                ${
+                  item.gift == 1
+                    ? "<small>🎁 Geschenkverpackung</small><br>"
+                    : ""
+                }
                 ${
                   item.discount
                     ? `<small>🎟️ Rabatt: ${item.discount}%</small>`
-                    : ''
+                    : ""
                 }
               </div>
             </div>
           </td>
           <td>
-            <input type="number" class="qty-input" data-id="${item.product_id}" data-size="${item.size}" value="${menge}" min="1" />
+            <input type="number" class="qty-input" data-id="${
+              item.product_id
+            }" data-size="${item.size}" value="${menge}" min="1" />
           </td>
           <td>${einzelfpreis.toFixed(2)} €</td>
           <td class="summe-cell">${gesamt.toFixed(2)} €</td>
@@ -304,7 +309,9 @@ function updateCartQuantity(productId, size, quantity) {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: `id=${encodeURIComponent(productId)}&size=${encodeURIComponent(size)}&quantity=${encodeURIComponent(quantity)}`,
+    body: `id=${encodeURIComponent(productId)}&size=${encodeURIComponent(
+      size
+    )}&quantity=${encodeURIComponent(quantity)}`,
   })
     .then(() => {
       loadList();

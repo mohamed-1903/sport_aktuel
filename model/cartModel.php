@@ -72,7 +72,6 @@ function addToCart(int $userId, array $item): void
         $insert = $db->prepare("INSERT INTO cart_items (cart_id, product_id, size, quantity, discount, gift, custom_name, custom_number, custom_fee) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $insert->execute([$cartId, $item['id'], $item['size'], $item['quantity'], $discount, $gift, $item['custom_name'] ?? null, $item['custom_number'] ?? null, $customFee]);
     }
-
 }
 
 function getCartItems(int $userId): array
@@ -98,9 +97,7 @@ function getCartItems(int $userId): array
          WHERE c.user_id = ?"
     );
 
-    $stmt->execute([$userId]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 }
 
 function removeFromCart(int $userId, int $productId, string $size): void

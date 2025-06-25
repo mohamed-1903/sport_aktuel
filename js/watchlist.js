@@ -60,11 +60,16 @@ function toggleWatchlist(iid, btn = null, info = {}) {
             icon: "❤️",
             buttons,
             onInit: (popup) => {
-              const rm = popup.querySelector('.remove-watch-btn');
+              const rm = popup.querySelector(".remove-watch-btn");
               if (rm) {
-                rm.addEventListener('click', () => {
-                  removeFromWatchlist(iid, { name, image, price, productId: iid });
-                  popup.classList.add('fade-out');
+                rm.addEventListener("click", () => {
+                  removeFromWatchlist(iid, {
+                    name,
+                    image,
+                    price,
+                    productId: iid,
+                  });
+                  popup.classList.add("fade-out");
 
                   setTimeout(() => popup.remove(), 400);
                 });

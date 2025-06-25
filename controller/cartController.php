@@ -51,7 +51,6 @@ switch ($action) {
                         'custom_number' => $data['custom_number'] ?? null,
                         'custom_fee' => isset($data['custom_fee']) ? (float)$data['custom_fee'] : 0
                     ]);
-
                 } catch (PDOException $e) {
                     http_response_code(500);
                     echo json_encode(['error' => 'Datenbankfehler']);
@@ -194,7 +193,6 @@ switch ($action) {
                 'custom_number' => $data['custom_number'] ?? null,
                 'custom_fee' => isset($data['custom_fee']) ? (float)$data['custom_fee'] : 0
             ]);
-
         } catch (PDOException $e) {
             http_response_code(500);
             echo json_encode(['status' => 'error', 'message' => 'Datenbankfehler']);

@@ -5,15 +5,11 @@ const DISCOUNT_CODES = {
   "00000": 5,
 };
 
-let TEAM_ROSTERS = {};
 
 const CUSTOMIZATION_FEE = 10; // € pro Trikot
 window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
 
 let TEAM_ROSTERS = {};
-
-const CUSTOMIZATION_FEE = 10; // € pro Trikot
-window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
 
 const TEAM_PLAYERS = {
   Bayern: {
@@ -37,35 +33,6 @@ const TEAM_PLAYERS = {
     20: "Bernardo Silva",
   },
 };
-
-const CUSTOMIZATION_FEE = 10; // € pro Trikot
-window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
-
-const TEAM_PLAYERS = {
-  Bayern: {
-    9: "Harry Kane",
-    25: "Thomas Müller",
-    11: "Kingsley Coman",
-  },
-  Dortmund: {
-    9: "Sebastian Haller",
-    22: "Jude Bellingham",
-    11: "Marco Reus",
-  },
-  "Real Madrid": {
-    7: "Vinicius Jr.",
-    10: "Luka Modric",
-    8: "Toni Kroos",
-  },
-  "Manchester City": {
-    9: "Erling Haaland",
-    17: "Kevin De Bruyne",
-    20: "Bernardo Silva",
-  },
-};
-
-const CUSTOMIZATION_FEE = 10; // € pro Trikot
-window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
 
 
 // Initialisierung pro Produktcontainer
@@ -483,6 +450,7 @@ function flyToTarget(startEl, targetSelector) {
       setTimeout(() => target.classList.remove("pulse-highlight"), 1000);
     }
   });
+
 }
 function resetFields(section) {
   const idx = section.dataset.productIndex;
@@ -504,6 +472,7 @@ function resetFields(section) {
 
   updateDisplay(section);
 }
+
 function resetFinalPriceDisplay(price, section) {
   const idx = section.dataset.productIndex;
   section.querySelector(`#original-price-${idx}`).style.display = "none";
