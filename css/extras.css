@@ -1180,7 +1180,7 @@ body:not(.light-mode) .error {
 
 .einzelprodukt-list .einzelprodukt {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 24px;
   padding: 15px;
   border: 1px solid var(--border-color, #555);
@@ -1195,6 +1195,9 @@ body:not(.light-mode) .error {
 
 .einzelprodukt-list .image-wrapper {
   flex: 0 0 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .einzelprodukt-list .image-wrapper img {
@@ -1203,8 +1206,12 @@ body:not(.light-mode) .error {
 }
 
 .einzelprodukt-list .produkt-info {
-  text-align: left;
   flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .einzelprodukt-list .produkt-info h3 {
@@ -1217,9 +1224,8 @@ body:not(.light-mode) .error {
 }
 
 .einzelprodukt-list .button-row {
-  margin-left: auto;
   display: flex;
-  flex-direction: column;
-  gap: 5px;
-  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
 }
