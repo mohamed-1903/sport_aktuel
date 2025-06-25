@@ -1,4 +1,4 @@
-/* Mohamed: ab hier*/
+/* Mohamed: ab hier */
 .main-container {
   display: flex;
   gap: 2rem;
@@ -22,7 +22,7 @@
   gap: 1.5rem; /* mehr vertikaler Abstand zwischen Elementen */
   padding: 2rem 2rem 3rem; /* großzügigerer Innenabstand (oben, seitlich, unten) */
   border-radius: 12px; /* für Kartenstil – optional */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* subtile Tiefe */
+  box-shadow: 0 2px 8px rgb(0 0 0 / 5%); /* subtile Tiefe */
   min-height: 100vh; /* sorgt für volle Höhe bei leerem Inhalt */
   box-sizing: border-box; /* Padding zählt zur Gesamtbreite */
 }
@@ -33,6 +33,7 @@
   gap: 0.5rem;
   margin-bottom: 1rem;
 }
+
 .filterbar select,
 .filterbar button {
   border: 1px solid #555;
@@ -44,6 +45,7 @@
   cursor: pointer;
   min-width: 130px;
 }
+
 .filterbar button:hover,
 .filterbar select:hover {
   background-color: var(--accent-color);
@@ -73,7 +75,7 @@
   top: 1rem; /* Abstand von oben */
   align-self: flex-start; /* Wichtiger Fix bei flex layouts */
   height: fit-content; /* Verhindert Stretching */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
   z-index: 10;
 }
 
@@ -83,6 +85,7 @@
   border-bottom: 2px solid bl;
   padding-bottom: 0.5rem;
 }
+
 .sidebar ul {
   list-style: none;
 }
@@ -98,10 +101,12 @@
   font-size: 0.95rem;
   color: #aaa;
 }
+
 /* Hauptinhalt */
 .content {
   flex: 1;
 }
+
 .rabatt {
   background-color: #e60023;
   color: #fff;
@@ -132,6 +137,7 @@
   background-color: var(--accent-color);
   color: #000;
 }
+
 .pagination button.active {
   background-color: var(--accent-color);
   color: #000;
@@ -150,7 +156,7 @@
   font-size: 18px;
   cursor: pointer;
   display: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 30%);
   transition: opacity 0.3s, transform 0.3s;
 }
 
@@ -158,13 +164,14 @@
   transform: scale(1.1);
   background-color: #e6c200;
 }
+
 .zoom-modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.96);
+  background: rgb(0 0 0 / 96%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -193,12 +200,11 @@
 
 .zoom-controls {
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
   justify-content: center;
   align-items: center;
   gap: 12px;
   margin-top: 20px;
-  flex-wrap: wrap;
   z-index: 1;
 }
 
@@ -233,6 +239,7 @@
 .hidden {
   display: none;
 }
+
 .zoom-modal-content {
   animation: fadeIn 0.3s ease;
 }
@@ -249,8 +256,9 @@
   transform-origin: center center;
   transition: transform 0.3s ease;
 }
+
 body.light-mode .zoom-modal {
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgb(255 255 255 / 95%);
 }
 
 body.light-mode .zoom-modal-content {
@@ -261,9 +269,11 @@ body.light-mode .zoom-controls button {
   background: #e6c200;
   color: #fff;
 }
+
 body.light-mode .zoom-close {
   color: #000;
 }
+
 .zoom-modal-zoom-container {
   width: 90vw;
   height: 70vh;
@@ -279,6 +289,7 @@ body.light-mode .zoom-close {
     opacity: 0;
     transform: scale(0.9);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -290,6 +301,7 @@ body.light-mode .zoom-close {
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
   }
+
   100% {
     transform: var(--fly-transform) translate(-50%, -50%) scale(0.5);
     opacity: 0.5;
@@ -301,14 +313,12 @@ body.light-mode .zoom-close {
   z-index: 9999;
   pointer-events: none;
   animation: flyToTargetAnim 2.5s ease-in-out forwards;
-  font-size: 24px;
   color: inherit; /* übernimmt Farbe vom Original */
   background: transparent; /* ❌ kein weißer Hintergrund */
   border-radius: 50%; /* nur falls dein Button rund ist */
   padding: 0; /* ❌ kein innerer Rand */
   box-shadow: none; /* ❌ kein Schatten (oder dezent, falls gewünscht) */
   line-height: 1;
-  width: auto;
   height: auto;
   font-size: 24px; /* ggf. 32px je nach Button */
   width: 32px;
@@ -317,17 +327,20 @@ body.light-mode .zoom-close {
   align-items: center;
   justify-content: center;
 }
+
 @keyframes pulse-effect {
   0% {
-    box-shadow: 0 0 0px rgba(0, 0, 0, 0);
+    box-shadow: 0 0 0 rgb(0 0 0 / 0%);
     background-color: inherit;
   }
+
   50% {
-    box-shadow: 0 0 12px rgba(255, 200, 0, 1);
-    background-color: rgba(255, 200, 0, 0.2);
+    box-shadow: 0 0 12px rgb(255 200 0 / 100%);
+    background-color: rgb(255 200 0 / 20%);
   }
+
   100% {
-    box-shadow: 0 0 0px rgba(0, 0, 0, 0);
+    box-shadow: 0 0 0 rgb(0 0 0 / 0%);
     background-color: inherit;
   }
 }
@@ -335,17 +348,18 @@ body.light-mode .zoom-close {
 .pulse-highlight {
   animation: pulse-effect 1s ease-out;
 }
+
 /* Watchlist-Container als Grid */
 #watchlist-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 10px;
   padding: 40px 20px;
-  align-items: stretch;
+  place-items: stretch center;
   width: 100%;
-  justify-content: stretch;
-  justify-items: center; /* Alle Karten gleich hoch */
+  justify-content: stretch; /* Alle Karten gleich hoch */
 }
+
 /* Karte: voller Stretch + gleich hohe Layoutstruktur */
 .watchlist-card {
   width: 100%;
@@ -357,7 +371,7 @@ body.light-mode .zoom-close {
   padding: 20px;
   background-color: var(--card-bg);
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 25%);
   transition: transform 0.3s ease;
 }
 
@@ -409,6 +423,7 @@ body.light-mode .zoom-close {
 .watchlist-card a button:hover {
   background-color: #e6c200;
 }
+
 /* ⭕ Zentrierung der gesamten Merkliste-Seite */
 .watchlist-wrapper {
   max-width: 1200px;
@@ -416,11 +431,13 @@ body.light-mode .zoom-close {
   padding: 40px 20px;
   text-align: center;
 }
+
 /* 🧼 Button unten zentrieren */
 .watchlist-controls {
   text-align: center;
   margin-top: 30px;
 }
+
 /* ✨ Stil für 'Alle löschen' Button */
 .btn-delete-all {
   background-color: var(--accent-color);
@@ -444,6 +461,7 @@ body.light-mode .zoom-close {
   transform: scale(0.95);
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
+
 /* === 🧾 Warenkorb Layout Grid (Modern) === */
 .cart-wrapper {
   display: grid;
@@ -456,14 +474,16 @@ body.light-mode .zoom-close {
 }
 
 /* ============================= */
+
 /* 🛒 Linke Seite: Produktliste  */
+
 /* ============================= */
 
 .cart-main {
   background-color: var(--card-bg);
   border-radius: 12px;
   padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 20%);
 }
 
 .cart-main h2 {
@@ -516,14 +536,16 @@ body.light-mode .zoom-close {
 }
 
 /* ============================== */
+
 /* ✅ Rechte Seite: Zusammenfassung */
+
 /* ============================== */
 
 .cart-summary {
   background-color: var(--card-bg);
   padding: 24px;
   border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 30%);
   color: var(--text-color);
   position: sticky;
   top: 100px;
@@ -606,7 +628,7 @@ body.light-mode .zoom-close {
 }
 
 /* 📱 Responsiv */
-@media (max-width: 900px) {
+@media (width <= 900px) {
   .cart-wrapper {
     grid-template-columns: 1fr;
   }
@@ -616,6 +638,7 @@ body.light-mode .zoom-close {
     margin-top: 40px;
   }
 }
+
 .btn-zurueck-startseite {
   background-color: var(--accent-color);
   color: #000;
@@ -631,6 +654,7 @@ body.light-mode .zoom-close {
 .btn-zurueck-startseite:hover {
   background-color: #e6c200;
 }
+
 #scrollTopBtn {
   position: fixed;
   bottom: 30px;
@@ -643,10 +667,9 @@ body.light-mode .zoom-close {
   height: 48px;
   border-radius: 50%;
   font-size: 24px;
-  font-weight: bold;
-  display: none; /* wird per JS sichtbar */
+  font-weight: bold; /* wird per JS sichtbar */
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 25%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -657,6 +680,7 @@ body.light-mode .zoom-close {
   background-color: #e6c200;
   transform: scale(1.1);
 }
+
 .toast-popup {
   position: fixed;
   bottom: 30px;
@@ -672,7 +696,7 @@ body.light-mode .zoom-close {
   pointer-events: none;
   transition: opacity 0.4s ease, transform 0.4s ease;
   max-width: 90%;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 20px rgb(0 0 0 / 25%);
 }
 
 .toast-popup.show {
@@ -680,6 +704,7 @@ body.light-mode .zoom-close {
   pointer-events: auto;
   transform: translateX(-50%) translateY(0);
 }
+
 /* === Universelles Popup-Styling für Warenkorb & Watchlist === */
 .popup-stack-container {
   position: fixed;
@@ -687,6 +712,7 @@ body.light-mode .zoom-close {
   right: 30px;
   display: flex;
   flex-direction: column;
+
   /* Wenn sich viele Popups ansammeln, soll man scrollen können */
   max-height: 90vh;
   overflow-y: auto;
@@ -712,7 +738,6 @@ body.light-mode .zoom-close {
   transform: scale(1);
   transition: all 0.3s ease-out;
   opacity: 1;
-  display: block;
   pointer-events: auto;
   width: 320px; /* 👈 oder jede gewünschte feste Breite */
   min-height: 110px; /* 👈 feste Höhe für Einheitlichkeit */
@@ -723,11 +748,13 @@ body.light-mode .zoom-close {
   /* verhindern, dass Popups bei wenig Platz schrumpfen */
   flex-shrink: 0;
 }
+
 .fade-out {
   opacity: 0;
   transform: translateY(-10px);
   transition: opacity 0.4s, transform 0.4s;
 }
+
 .cart-preview-popup,
 .watchlist-preview-popup {
   position: fixed;
@@ -765,7 +792,7 @@ body.light-mode .zoom-close {
   height: 80px;
   border-radius: 12px;
   object-fit: cover;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 16px rgb(0 0 0 / 15%);
   transition: transform 0.3s ease; /* Hover-Effekt */
 }
 
@@ -800,6 +827,7 @@ body.light-mode .zoom-close {
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -812,6 +840,7 @@ body.light-mode .zoom-close {
     opacity: 0;
     transform: scale(0.8);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -820,24 +849,24 @@ body.light-mode .zoom-close {
 
 /* === Light/Dark Mode Variablen === */
 :root {
-  --popup-bg: rgba(255, 255, 255, 0.9);
-  --popup-text: #222222;
-  --popup-border: rgba(0, 0, 0, 0.1);
-  --popup-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  --popup-bg: rgb(255 255 255 / 90%);
+  --popup-text: #222;
+  --popup-border: rgb(0 0 0 / 10%);
+  --popup-shadow: 0 12px 32px rgb(0 0 0 / 25%);
   --popup-blur: 12px;
   --popup-button-bg: #fdfdfd;
   --popup-button-text: #222;
   --popup-button-hover: #eee;
   --popup-button-active: #d1d1d1;
   --accent-color: #ffd700;
-  --text-muted: #888888;
+  --text-muted: #888;
 }
 
 [data-theme="dark"] {
-  --popup-bg: rgba(32, 32, 32, 0.9);
+  --popup-bg: rgb(32 32 32 / 90%);
   --popup-text: #f0f0f0;
-  --popup-border: rgba(255, 255, 255, 0.15);
-  --popup-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  --popup-border: rgb(255 255 255 / 15%);
+  --popup-shadow: 0 12px 32px rgb(0 0 0 / 40%);
   --popup-blur: 12px;
   --popup-button-bg: #333;
   --popup-button-text: #f0f0f0;
@@ -863,7 +892,7 @@ body.light-mode .zoom-close {
   border-radius: 8px;
   cursor: pointer;
   text-decoration: none;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 15%);
   transition: background-color 0.3s ease, transform 0.2s ease,
     box-shadow 0.3s ease;
 }
@@ -872,7 +901,7 @@ body.light-mode .zoom-close {
 .popup-buttons a:hover {
   background: var(--popup-button-hover);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 20%);
 }
 
 .popup-buttons button:active,
@@ -885,12 +914,12 @@ body.light-mode .zoom-close {
   background-color: var(--accent-color);
   color: #000;
   font-weight: 600;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 25%);
 }
 
 .popup-buttons .btn-popup:hover {
   opacity: 0.9;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 30%);
 }
 
 /* === Darkmode Styles für Popup-Buttons === */
@@ -908,7 +937,7 @@ body.light-mode .zoom-close {
 /* === Fehler und Erfolgshinweise === */
 .error-popup,
 .success-popup {
-  background-color: rgba(255, 0, 0, 0.1); /* Leichte Rottönung */
+  background-color: rgb(255 0 0 / 10%); /* Leichte Rottönung */
   color: #fff;
   padding: 12px;
   border-radius: 8px;
@@ -919,7 +948,7 @@ body.light-mode .zoom-close {
 }
 
 .success-popup {
-  background-color: rgba(0, 128, 0, 0.1); /* Leichte Grüntönung */
+  background-color: rgb(0 128 0 / 10%); /* Leichte Grüntönung */
 }
 
 .error-popup span,
@@ -929,11 +958,11 @@ body.light-mode .zoom-close {
 
 /* === Darkmode Anpassung === */
 [data-theme="dark"] .error-popup {
-  background-color: rgba(255, 0, 0, 0.3);
+  background-color: rgb(255 0 0 / 30%);
 }
 
 [data-theme="dark"] .success-popup {
-  background-color: rgba(0, 128, 0, 0.3);
+  background-color: rgb(0 128 0 / 30%);
 }
 
 .dropdown-konto {
@@ -960,7 +989,7 @@ body.light-mode .zoom-close {
   padding: 1em;
   min-width: 180px;
   z-index: 1000;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 10%);
 }
 
 .dropdown-konto:hover .konto-popup {
@@ -983,6 +1012,7 @@ body.light-mode .zoom-close {
   border-radius: 4px;
   margin-bottom: 0.5em;
 }
+
 .message {
   padding: 0.8em 1.2em;
   margin: 1em auto;
@@ -1023,19 +1053,23 @@ body:not(.light-mode) .error {
   color: #fff;
   padding: 120px 20px;
 }
+
 .welcome-logo {
   width: 120px;
   height: auto;
   margin-bottom: 20px;
 }
+
 .welcome h1 {
   font-size: 56px;
   margin-bottom: 10px;
 }
+
 .welcome p {
   font-size: 24px;
   margin-bottom: 30px;
 }
+
 .beliebte {
   display: flex;
   flex-direction: column;
@@ -1045,6 +1079,7 @@ body:not(.light-mode) .error {
   color: #fff;
   padding: 80px 20px;
 }
+
 .beliebte h2 {
   font-size: 48px;
   margin-bottom: 20px;

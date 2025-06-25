@@ -16,7 +16,7 @@
   justify-content: space-between;
   align-items: center;
   border-radius: 8px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 12px rgb(0 0 0 / 20%);
   z-index: 1000;
   animation: slide-up 0.6s ease forwards;
 }
@@ -52,7 +52,7 @@
   border-radius: 4px;
   cursor: pointer;
   font-weight: 600;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 20%);
 }
 
 .cookie-banner button:hover {
@@ -68,6 +68,7 @@
     transform: translate(-50%, 100%);
     opacity: 0;
   }
+
   to {
     transform: translate(-50%, 0);
     opacity: 1;

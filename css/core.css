@@ -6,7 +6,7 @@
 }
 
 body {
-  font-family: "Montserrat", sans-serif;
+  font-family: Montserrat, sans-serif;
   background-color: #111;
   color: #fff;
   line-height: 1.6;
@@ -59,7 +59,7 @@ body {
   left: 0;
   z-index: 1;
   background-color: transparent;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgb(255 255 255 / 30%);
   pointer-events: none;
   height: 44px;
   box-sizing: border-box;
@@ -71,7 +71,7 @@ body {
 
 /* ☀️ Light-Mode Anpassung */
 body.light-mode .search-wrapper input#autocomplete-shadow {
-  color: rgba(0, 0, 0, 0.3);
+  color: rgb(0 0 0 / 30%);
 }
 
 body.light-mode .search-wrapper input#produktsuche {
@@ -79,9 +79,11 @@ body.light-mode .search-wrapper input#produktsuche {
   background-color: #fff;
   color: #000;
 }
+
 body:not(.light-mode) .search-wrapper {
   border: 2px solid #ffd700; /* nur im Darkmode */
 }
+
 /* 🔽 Vorschlagsliste */
 .autocomplete-liste {
   position: absolute;
@@ -96,7 +98,7 @@ body:not(.light-mode) .search-wrapper {
   list-style: none;
   padding: 0;
   margin: 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 20%);
   display: none;
   border-radius: 8px;
 }
@@ -127,12 +129,13 @@ body:not(.light-mode) .search-wrapper {
   object-fit: cover;
   border-radius: 6px;
 }
+
 #autocomplete-shadow {
-  position: absolute;
-  color: rgba(255, 255, 255, 0.3); /* sichtbar im Hintergrund */
+  color: rgb(255 255 255 / 30%); /* sichtbar im Hintergrund */
   position: absolute;
   z-index: 1;
 }
+
 #produktsuche {
   position: relative;
   z-index: 2;
@@ -148,7 +151,7 @@ body:not(.light-mode) .search-wrapper {
   pointer-events: none;
   font-size: 15px;
   text-align: left;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgb(255 255 255 / 5%);
 }
 
 .keine-treffer-icon {
@@ -157,7 +160,7 @@ body:not(.light-mode) .search-wrapper {
 }
 
 /* 📱 Mobile Anpassung */
-@media (max-width: 600px) {
+@media (width <= 600px) {
   .search-wrapper {
     max-width: 90%;
   }
@@ -179,15 +182,16 @@ body:not(.light-mode) .search-wrapper {
     height: 40px;
   }
 }
+
 .action-buttons {
   display: grid;
   grid-template-columns: repeat(
     4,
     1fr
   ); /* Erstellt 4 gleich große Spalten für die 4 Buttons */
+
   gap: 10px; /* Fügt einen Abstand von 10px zwischen den Buttons hinzu */
-  justify-items: center; /* Zentriert die Buttons horizontal innerhalb ihrer jeweiligen Zelle */
-  align-items: center; /* Zentriert die Buttons vertikal innerhalb ihrer Zelle */
+  place-items: center center; /* Zentriert die Buttons horizontal innerhalb ihrer jeweiligen Zelle */ /* Zentriert die Buttons vertikal innerhalb ihrer Zelle */
 }
 
 .action-buttons button {
@@ -304,6 +308,7 @@ nav {
 .cta:hover {
   background-color: #e6c200;
 }
+
 .cta-button {
   background-color: #e6c200;
   color: #000;
@@ -352,6 +357,7 @@ nav {
   gap: 30px;
   margin-top: 40px;
 }
+
 .Eprodukt.untereinander {
   margin-bottom: 30px;
   padding-bottom: 40px;
@@ -365,7 +371,6 @@ nav {
 }
 
 .einzelprodukt {
-  background-color: #222;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -378,6 +383,7 @@ nav {
   width: 100%;
   height: 100%; /* ✨ wichtig für gleichmäßige Höhe */
 }
+
 .einzelprodukt h3 {
   font-size: 16px;
   min-height: 3.4em;
@@ -396,6 +402,7 @@ nav {
   object-fit: contain;
   margin-bottom: 10px;
 }
+
 .produkt {
   display: flex;
   flex-direction: column;
@@ -443,10 +450,11 @@ nav {
 .produkt button:hover {
   background-color: #e6c200;
 }
+
 .produkt,
 .dropdown-menu {
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 5%);
 }
 
 .Eprodukt {
@@ -494,10 +502,11 @@ nav {
 .Eprodukt button:hover {
   background-color: #e6c200;
 }
+
 .Eprodukt,
 .dropdown-menu {
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 5%);
 }
 
 footer {
@@ -529,8 +538,9 @@ body.light-mode {
   --bg-color: #eaeaea; /* Hell, aber nicht weiß */
   --text-color: #1a1a1a; /* Fast-Schwarz für gute Lesbarkeit */
   --accent-color: #caa000; /* Etwas dunkleres Gold */
-  --card-bg: #ffffff; /* Saubere Boxfarbe */
+  --card-bg: #fff; /* Saubere Boxfarbe */
 }
+
 body.light-mode .search-container input {
   border: 2px solid #000 !important;
 }
@@ -543,7 +553,7 @@ body.light-mode .action-buttons button {
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
-  font-family: "Montserrat", sans-serif;
+  font-family: Montserrat, sans-serif;
   margin: 0;
   padding: 0;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -583,6 +593,7 @@ a {
   background-color: var(--accent-color);
   color: #000;
 }
+
 body.light-mode .dropdown-menu {
   background-color: #fff; /* Schwarzer Hintergrund */
 }
@@ -591,6 +602,7 @@ body.light-mode .dropdown-menu li a {
   background-color: #fff; /* Schwarz auch für einzelne Links */
   color: #000; /* Weiße Schrift */
 }
+
 body.light-mode .dropdown-menu li a:hover {
   background-color: #caa000;
   color: #000;
@@ -602,6 +614,7 @@ body.form-page {
   background-color: #121212;
   color: #f0f0f0;
 }
+
 .form-wrapper {
   background-color: #1a1a1a;
   color: #f0f0f0;
@@ -609,7 +622,7 @@ body.form-page {
   border-radius: 12px;
   max-width: 550px;
   margin: 50px auto;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 25px rgb(0 0 0 / 30%);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   transition: background-color 0.3s ease;
 }
@@ -700,7 +713,7 @@ body.form-page {
    ======================================== */
 
 /* Für Tablets und kleinere Laptops */
-@media (max-width: 992px) {
+@media (width <= 992px) {
   .header-bar {
     grid-template-columns: 1fr;
     gap: 10px;
@@ -721,7 +734,7 @@ body.form-page {
 }
 
 /* Für Smartphones */
-@media (max-width: 600px) {
+@media (width <= 600px) {
   .header-bar {
     display: flex;
     flex-direction: column;
@@ -792,22 +805,27 @@ div {
   text-align: center;
   margin: 0 auto;
 }
+
 body.light-mode .form-wrapper input {
   background-color: #f8f8f8;
   color: #000;
   border-color: #ccc;
 }
+
 body.light-mode .form-wrapper label {
   color: var(--text-color);
 }
+
 body.light-mode .form-wrapper button {
   background-color: var(--accent-color);
   color: #fff;
 }
+
 body.light-mode .action-buttons button {
   color: var(--accent-color);
   border-color: var(--accent-color);
 }
+
 body.light-mode .form-wrapper input.valid {
   border-color: #28a745; /* Helles Grün für Light Mode */
   box-shadow: 0 0 5px #28a74580; /* Optionaler Leuchteffekt */
@@ -821,6 +839,7 @@ body.light-mode .form-wrapper input.invalid {
 body.light-mode .form-wrapper h1 {
   color: #e6c200; /* Dunkleres Grau für bessere Lesbarkeit im Light Mode */
 }
+
 body.light-mode .form-wrapper button:disabled {
   background-color: #e0e0e0;
   color: #888;
