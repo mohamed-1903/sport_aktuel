@@ -74,6 +74,16 @@
   padding: 10px;
 }
 
+/* optisch ansprechende Selectboxen */
+.filterbar select {
+  appearance: none;
+  padding-right: 2rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath fill='%23ffd700' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 12px;
+}
+
 .filterbar input[type="range"] {
   width: 150px;
   accent-color: var(--accent-color);
@@ -82,13 +92,22 @@
 .filterbar select.active,
 .filterbar input[type="range"].active {
   border-color: var(--accent-color);
-  background-color: rgba(255, 215, 0, 0.1);
+  background-color: var(--accent-color);
+  color: #000;
 }
 
 .filterbar button:hover {
   background-color: var(--accent-color);
   color: #000;
 }
+
+.price-label {
+  margin-left: 0.5rem;
+  min-width: 80px;
+  display: inline-block;
+  text-align: center;
+}
+
 
 .price-label {
   margin-left: 0.5rem;
@@ -1265,6 +1284,7 @@ body:not(.light-mode) .error {
 
 
 
+
 .einzelprodukt-list .produkt-info h3 {
   font-size: 1.2rem;
   margin: 0 0 5px;
@@ -1280,3 +1300,4 @@ body:not(.light-mode) .error {
   gap: 10px;
   margin-top: 10px;
 }
+
