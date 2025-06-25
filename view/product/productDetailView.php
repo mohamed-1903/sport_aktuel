@@ -99,7 +99,13 @@
           <input type="number" id="quantity-<?= $index ?>" value="1" min="1" class="size-dropdown" />
 
           <?php if (stripos($product['subcategory'] ?? '', 'Trikots') !== false): ?>
-            <button type="button" class="btn-show-custom" id="customBtn-<?= $index ?>">Produkt individualisieren</button>
+            <div class="custom-toggle-wrap">
+              <label class="custom-switch">
+                <input type="checkbox" id="customToggle-<?= $index ?>" />
+                <span class="slider"></span>
+              </label>
+              <span>Individualisierung</span>
+            </div>
           <?php endif; ?>
 
           <div class="button-rows">

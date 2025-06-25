@@ -37,6 +37,7 @@ window.applyFilter = function () {
     geschlecht: document.getElementById("filter-geschlecht")?.value || "",
   };
 
+
   document.querySelectorAll(".einzelprodukt").forEach((produkt) => {
     const p = produkt.dataset;
     const preis = parseFloat(p.preis);
@@ -142,6 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const prodContainer = document.getElementById("produktContainer");
   const savedLayout = localStorage.getItem("productLayout");
+
   if (prodContainer && savedLayout === "list") {
     prodContainer.classList.add("einzelprodukt-list");
     prodContainer.classList.remove("einzelprodukt-grid");
@@ -152,6 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
     priceInput.addEventListener("input", () => updatePriceLabel(priceInput.value));
     updatePriceLabel(priceInput.value);
   }
+
   updateActiveFilters();
 });
 
@@ -559,6 +562,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (priceInput) {
     updatePriceLabel(priceInput.value);
   }
+
   updateActiveFilters();
 });
 

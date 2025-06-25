@@ -358,6 +358,100 @@ button {
   cursor: pointer;
 }
 
+.custom-toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.custom-switch input {
+  display: none;
+}
+
+.custom-switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+
+.custom-switch .slider {
+  position: absolute;
+  inset: 0;
+  display: block;
+  cursor: pointer;
+  background-color: #666;
+
+  border-radius: 34px;
+  transition: background-color 0.3s;
+}
+
+body.light-mode .custom-switch .slider {
+  background-color: #ccc;
+}
+
+.custom-switch .slider::before {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  left: 2px;
+  top: 2px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.custom-switch input:checked + .slider {
+  background-color: var(--accent-color);
+}
+
+.custom-switch input:checked + .slider::before {
+  transform: translateX(20px);
+}
+
+
+.custom-toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.custom-switch input {
+  display: none;
+}
+
+.custom-switch .slider {
+  position: relative;
+  width: 40px;
+  height: 20px;
+  background-color: #ccc;
+  border-radius: 34px;
+  transition: background-color 0.3s;
+}
+
+.custom-switch .slider::before {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.custom-switch input:checked + .slider {
+  background-color: var(--accent-color);
+}
+
+.custom-switch input:checked + .slider::before {
+  transform: translateX(20px);
+}
+
 .badges {
   display: flex;
   flex-direction: column;

@@ -28,6 +28,7 @@
 
     <section class="filterbar">
       <select id="filter-marke" onchange="applyFilter()">
+
         <option value="">Alle Marken</option>
         <option value="Nike">Nike</option>
         <option value="Puma">Puma</option>
@@ -65,6 +66,7 @@
 
     </section>
     <ul class="einzelprodukt-grid" id="produktContainer">
+
       <?php if (empty($filteredProducts)): ?>
         <p>Keine Produkte in dieser Kategorie gefunden.</p>
       <?php else: ?>
@@ -128,6 +130,7 @@
         <?php endforeach; ?>
       <?php endif; ?>
     </ul>
+
 
     <section class="pagination"></section>
 
