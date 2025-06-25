@@ -282,24 +282,27 @@ function moveZoom(section, e) {
 }
 
 // ----- Steuerrechner -----
-function zeigePreis(section) {
-  const idx = section.dataset.productIndex;
-  const nettoInput = section.querySelector(`#netto-${idx}`);
-  const ergebnisEl = section.querySelector(`#bruttoErgebnis-${idx}`);
+// Ausgabe des Bruttopreises für ein einzelnes Eingabefeld
+window.zeigePreis = function () {
+  const nettoInput = document.getElementById("netto");
+  const ergebnisEl = document.getElementById("bruttoErgebnis");
 
-  const netto = parseFloat(nettoInput?.value);
+  if (!nettoInput || !ergebnisEl) return;
+
+  const netto = parseFloat(nettoInput.value);
   if (!isNaN(netto)) {
     const brutto = getTotalPrice(netto).toFixed(2);
     ergebnisEl.innerText = `Preis mit 19% Steuer: ${brutto} €`;
   } else {
     ergebnisEl.innerText = "Bitte gültigen Netto-Preis eingeben.";
   }
-}
+};
 
-function getTotalPrice(netto) {
+// Berechnet einen Bruttopreis aus einem Netto-Preis
+window.getTotalPrice = function (priceWOTax) {
   const TAX_RATE = 0.19;
-  return netto * (1 + TAX_RATE);
-}
+  return priceWOTax * (1 + TAX_RATE);
+};
 
 // Animation aus anderen Skripten genutzt
 function flyToTarget(startEl, targetSelector) {
