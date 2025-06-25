@@ -269,6 +269,62 @@ function updateFokus(eintraege) {
   });
 }
 
+function populateFilterOptions() {
+  const container = document.getElementById("produktContainer");
+  if (!container) return;
+
+  const products = Array.from(container.querySelectorAll(".einzelprodukt"));
+  const collect = (attr) => [
+    ...new Set(products.map((p) => p.dataset[attr]).filter(Boolean)),
+  ];
+
+  const setOptions = (id, values, label) => {
+    const sel = document.getElementById(id);
+    if (!sel) return;
+    const current = sel.value;
+    sel.innerHTML = "";
+    const allOpt = document.createElement("option");
+    allOpt.value = "";
+    allOpt.textContent = label;
+    sel.appendChild(allOpt);
+    values.forEach((v) => {
+      const opt = document.createElement("option");
+      opt.value = v;
+      opt.textContent = v;
+      sel.appendChild(opt);
+    });
+    if (values.includes(current)) sel.value = current;
+  };
+
+  setOptions("filter-marke", collect("marke"), "Alle Marken");
+  setOptions("filter-farbe", collect("farbe"), "Alle Farben");
+  setOptions("filter-mannschaft", collect("mannschaft"), "Alle Mannschaften");
+  setOptions("filter-geschlecht", collect("geschlecht"), "Alle Geschlechter");
+
+  const priceSel = document.getElementById("filter-preis");
+  if (priceSel) {
+    const max = Math.max(
+      0,
+      ...products.map((p) => parseFloat(p.dataset.preis) || 0)
+    );
+    priceSel.innerHTML = "";
+    const baseOpt = document.createElement("option");
+    baseOpt.value = "";
+    baseOpt.textContent = "Kein Limit";
+    priceSel.appendChild(baseOpt);
+    for (let step = 50; step < max; step += 50) {
+      const opt = document.createElement("option");
+      opt.value = step;
+      opt.textContent = `Bis ${step} €`;
+      priceSel.appendChild(opt);
+    }
+    const finalOpt = document.createElement("option");
+    finalOpt.value = Math.ceil(max);
+    finalOpt.textContent = `Bis ${Math.ceil(max)} €`;
+    priceSel.appendChild(finalOpt);
+  }
+}
+
 // 🔄 Alle Filter zurücksetzen und erneut anwenden
 window.resetFilter = function () {
   document.querySelectorAll(".filterbar select").forEach((sel) => {
@@ -286,7 +342,7 @@ window.resetFilter = function () {
     restoreOriginalOrder();
   }
   applyFilter();
-  updatePagination();
+  populateFilterOptions();
   if (typeof produktSuche === "function") {
     produktSuche();
   }
@@ -430,6 +486,7 @@ function updatePagination() {
 
 document.addEventListener("DOMContentLoaded", () => {
   updatePagination();
+  populateFilterOptions();
 });
 
 window.addEventListener("resize", () => {

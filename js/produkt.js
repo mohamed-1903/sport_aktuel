@@ -5,7 +5,6 @@ const DISCOUNT_CODES = {
   "00000": 5,
 };
 
-
 const CUSTOMIZATION_FEE = 10; // € pro Trikot
 window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
 
@@ -34,10 +33,9 @@ const TEAM_PLAYERS = {
   },
 };
 
-
 // Initialisierung pro Produktcontainer
 document.addEventListener("DOMContentLoaded", () => {
-  fetch('data/rosters.json')
+  fetch("data/rosters.json")
     .then((r) => r.json())
     .then((data) => {
       TEAM_ROSTERS = data;
@@ -45,14 +43,13 @@ document.addEventListener("DOMContentLoaded", () => {
     .catch(() => {})
     .finally(() => {
       document
-        .querySelectorAll('[data-product-index]')
+        .querySelectorAll("[data-product-index]")
         .forEach((section) => setupProduct(section));
     });
 });
 
 function setupProduct(section) {
   const idx = section.dataset.productIndex;
-
 
   const qtyInput = section.querySelector(`#quantity-${idx}`);
   const mainImage = section.querySelector(`#main-image-${idx}`);
@@ -61,8 +58,8 @@ function setupProduct(section) {
   const desc = section.querySelector(`#description-full-${idx}`);
   const zoomContainer = section.querySelector(`#zoomContainer-${idx}`);
   const customBtn = section.querySelector(`#customBtn-${idx}`);
+  const customToggle = section.querySelector(`#customToggle-${idx}`);
   const customSection = section.querySelector(`#customSection-${idx}`);
-
 
   section._zoomData = { currentIndex: 0 };
 
@@ -83,10 +80,19 @@ function setupProduct(section) {
   qtyInput.addEventListener("input", () => updateDisplay(section));
   const giftWrapEl = section.querySelector(`#giftWrap-${idx}`);
   const pinInputEl = section.querySelector(`#pin-${idx}`);
+  const badgeBLEl = section.querySelector(`#badgeBL-${idx}`);
+  const badgeCLEl = section.querySelector(`#badgeCL-${idx}`);
 
   if (customBtn && customSection) {
-    customBtn.addEventListener('click', () => {
-      customSection.classList.toggle('hidden');
+    customBtn.addEventListener("click", () => {
+      const hidden = customSection.classList.toggle("hidden");
+      if (customToggle) customToggle.checked = !hidden;
+    });
+  }
+
+  if (customToggle && customSection) {
+    customToggle.addEventListener("change", () => {
+      customSection.classList.toggle("hidden", !customToggle.checked);
     });
   }
 
@@ -94,6 +100,8 @@ function setupProduct(section) {
 
   giftWrapEl?.addEventListener("change", () => updateDisplay(section));
   pinInputEl?.addEventListener("input", () => updateDisplay(section));
+  badgeBLEl?.addEventListener("change", () => updateDisplay(section));
+  badgeCLEl?.addEventListener("change", () => updateDisplay(section));
 
   updateDisplay(section);
   const compareBtn = document.getElementById("showCompareForm");
@@ -145,33 +153,23 @@ function getGiftWrapCharge(section) {
 }
 
 function getCustomizationFee(section) {
-  const nameInput = section.querySelector('.custom-name');
-  const numberInput = section.querySelector('.custom-number');
-  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
+  const nameInput = section.querySelector(".custom-name");
+  const numberInput = section.querySelector(".custom-number");
+  return nameInput && nameInput.value.trim()
+    ? CUSTOMIZATION_FEE
+    : numberInput && numberInput.value.trim()
+    ? CUSTOMIZATION_FEE
+    : 0;
 }
 
-function getCustomizationFee(section) {
-  const nameInput = section.querySelector('.custom-name');
-  const numberInput = section.querySelector('.custom-number');
-  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
-}
-
-function getCustomizationFee(section) {
-  const nameInput = section.querySelector('.custom-name');
-  const numberInput = section.querySelector('.custom-number');
-  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
-}
-
-function getCustomizationFee(section) {
-  const nameInput = section.querySelector('.custom-name');
-  const numberInput = section.querySelector('.custom-number');
-  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
+function getBadgeFee(section) {
+  const bl = section.querySelector(".badge-bl")?.checked ? BADGE_BL_FEE : 0;
+  const cl = section.querySelector(".badge-cl")?.checked ? BADGE_CL_FEE : 0;
+  return bl + cl;
 }
 
 function getBasePrice(section) {
-  const idx = section.dataset.productIndex;
-  const el = section.querySelector(`#basePrice-${idx}`);
-  return parseFloat(el?.textContent) || 0;
+  return parseFloat(section.dataset.basePrice || 0);
 }
 function calculateBasePrice(section) {
   const base = getBasePrice(section); // brutto Basis
@@ -189,16 +187,19 @@ function calculatePrice(section) {
   const gift = section.querySelector(`#giftWrap-${idx}`)?.checked;
   const pin = section.querySelector(`#pin-${idx}`)?.value.trim() || "";
   const customFee = getCustomizationFee(section);
+  const badgeFee = getBadgeFee(section);
 
-  let subtotal = (getBasePrice(section) + customFee) * qty;
+  let subtotal = (getBasePrice(section) + customFee + badgeFee) * qty;
   if (gift) subtotal += 2;
 
-
-
-
-  const discountPercent = DISCOUNT_CODES[pin] || 0;
-  const discounted = subtotal * (1 - discountPercent / 100);
-  return { original: subtotal, final: discounted, discount: discountPercent };
+  // Rabattcode prüfen
+  let discount = 0;
+  if (pin.length >= 5 && DISCOUNT_CODES.hasOwnProperty(pin)) {
+    discount = DISCOUNT_CODES[pin];
+  }
+  const original = subtotal;
+  const final = discount > 0 ? original * (1 - discount / 100) : original;
+  return { original, final, discount };
 }
 
 function updateDisplay(section) {
@@ -233,23 +234,29 @@ function updateDisplay(section) {
   }
   finalValueEl.textContent = `${final.toFixed(2)}€ inkl. Mwst.`;
 
-  const list = section.querySelector('.price-breakdown');
+  const list = section.querySelector(".price-breakdown");
   if (list) {
     const gift = getGiftWrapCharge(section);
     const custom = getCustomizationFee(section);
+    const badges = getBadgeFee(section);
     const qty = parseInt(section.querySelector(`#quantity-${idx}`).value) || 1;
     const pin = section.querySelector(`#pin-${idx}`)?.value.trim();
-    const discountAmount = ((getBasePrice(section) + custom + gift) * qty) * (discount / 100);
+    const discountAmount =
+      (getBasePrice(section) + custom + badges + gift) * qty * (discount / 100);
     list.innerHTML = `<ul>
         <li>Grundpreis: ${getBasePrice(section).toFixed(2)} €</li>
-        ${custom ? `<li>Personalisierung: ${custom.toFixed(2)} €</li>` : ''}
-        ${gift ? `<li>Geschenkverpackung: ${gift.toFixed(2)} €</li>` : ''}
-        ${discount ? `<li>Rabatt: -${discountAmount.toFixed(2)} € (${discount}%)</li>` : ''}
+        ${custom ? `<li>Personalisierung: ${custom.toFixed(2)} €</li>` : ""}
+        ${badges ? `<li>Badges: ${badges.toFixed(2)} €</li>` : ""}
+        ${gift ? `<li>Geschenkverpackung: ${gift.toFixed(2)} €</li>` : ""}
+        ${
+          discount
+            ? `<li>Rabatt: -${discountAmount.toFixed(2)} € (${discount}%)</li>`
+            : ""
+        }
         <li><strong>Endpreis: ${final.toFixed(2)} €</strong></li>
       </ul>`;
   }
 }
-
 
 // ---- Zoom Handling ----
 let currentSection = null;
@@ -438,7 +445,6 @@ function flyToTarget(startEl, targetSelector) {
       setTimeout(() => target.classList.remove("pulse-highlight"), 1000);
     }
   });
-
 }
 function resetFields(section) {
   const idx = section.dataset.productIndex;
@@ -447,6 +453,11 @@ function resetFields(section) {
   section.querySelector(`#rabatt-info-${idx}`).textContent = "";
   section.querySelector(`#giftWrap-${idx}`).checked = false;
   section.querySelector(`#quantity-${idx}`).value = 1;
+  const blEl = section.querySelector(`#badgeBL-${idx}`);
+  if (blEl) blEl.checked = false;
+  const clEl = section.querySelector(`#badgeCL-${idx}`);
+  if (clEl) clEl.checked = false;
+  section.querySelector(`#customSection-${idx}`)?.classList.add("hidden");
 
   const finalValueEl = section.querySelector(`#finalPriceValue-${idx}`);
   const originalPriceEl = section.querySelector(`#original-price-${idx}`);
@@ -471,44 +482,56 @@ function resetFinalPriceDisplay(price, section) {
 }
 
 function setupCustomization(section) {
-  const name = section.querySelector('.product-name')?.textContent || '';
+  const name = section.querySelector(".product-name")?.textContent || "";
   const teamKey = Object.keys(TEAM_ROSTERS).find((k) =>
     name.toLowerCase().includes(k.toLowerCase())
   );
-  const playerSelect = section.querySelector('.player-select');
-  const nameInput = section.querySelector('.custom-name');
-  const numberInput = section.querySelector('.custom-number');
-  const preview = section.querySelector('.jersey-preview');
-  const nameOverlay = preview?.querySelector('.overlay-name');
-  const numberOverlay = preview?.querySelector('.overlay-number');
+  const playerSelect = section.querySelector(".player-select");
+  const nameInput = section.querySelector(".custom-name");
+  const numberInput = section.querySelector(".custom-number");
+  const preview = section.querySelector(".jersey-preview");
+  const previewArea = section.querySelector(".preview-area");
+  const togglePreview = section.querySelector(".toggle-preview");
+  const nameOverlay = preview?.querySelector(".overlay-name");
+  const numberOverlay = preview?.querySelector(".overlay-number");
 
   if (!playerSelect) return;
 
   if (teamKey) {
     const roster = TEAM_ROSTERS[teamKey];
-    const optEmpty = document.createElement('option');
-    optEmpty.value = '';
-    optEmpty.textContent = '-- Eigener Name --';
+    const optEmpty = document.createElement("option");
+    optEmpty.value = "";
+    optEmpty.textContent = "-- Eigener Name --";
     playerSelect.appendChild(optEmpty);
 
     Object.entries(roster).forEach(([num, player]) => {
-      const opt = document.createElement('option');
+      const opt = document.createElement("option");
       opt.value = num;
       opt.textContent = `${player} (${num})`;
       playerSelect.appendChild(opt);
     });
 
-    playerSelect.addEventListener('change', () => {
+    playerSelect.addEventListener("change", () => {
       const num = playerSelect.value;
       if (num) {
         numberInput.value = num;
         nameInput.value = roster[num];
       } else {
-        numberInput.value = '';
-        nameInput.value = '';
+        numberInput.value = "";
+        nameInput.value = "";
       }
       updateDisplay(section);
       updatePreview();
+    });
+  }
+
+  if (togglePreview && previewArea) {
+    togglePreview.addEventListener("click", (e) => {
+      e.preventDefault();
+      const hidden = previewArea.classList.toggle("hidden");
+      togglePreview.textContent = hidden
+        ? "Vorschau einblenden"
+        : "Vorschau ausblenden";
     });
   }
 
@@ -517,11 +540,11 @@ function setupCustomization(section) {
     if (numberOverlay) numberOverlay.textContent = numberInput.value.trim();
   }
 
-  nameInput.addEventListener('input', () => {
+  nameInput.addEventListener("input", () => {
     updateDisplay(section);
     updatePreview();
   });
-  numberInput.addEventListener('input', () => {
+  numberInput.addEventListener("input", () => {
     updateDisplay(section);
     updatePreview();
   });
