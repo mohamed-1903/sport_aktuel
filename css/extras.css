@@ -27,7 +27,7 @@
   box-sizing: border-box; /* Padding zählt zur Gesamtbreite */
 }
 
-
+  gap: 0.25rem;
 .filterbar {
   display: flex;
   flex-wrap: wrap;
@@ -86,7 +86,13 @@
 
 .filterbar input[type="range"] {
   width: 150px;
-  accent-color: var(--accent-color);
+  gap: 0.25rem;
+  padding: 4px 8px;
+
+.filter-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .filterbar select.active,

@@ -39,8 +39,10 @@
         <option value="Schwarz">Schwarz</option>
         <option value="Weiß">Weiß</option>
         <option value="Blau">Blau</option>
-        <option value="Rot">Rot</option>
-      </select>
+      <div class="filter-actions">
+        <button type="button" class="reset-filter" onclick="resetFilter()">Zurücksetzen</button>
+        <button type="button" class="layout-toggle" onclick="toggleLayout()">☰ Liste anzeigen</button>
+      </div>
       <div class="range-filter">
         <label for="filter-preis">Preis:</label>
         <input type="range" id="filter-preis" min="0" value="0" step="10"
