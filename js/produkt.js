@@ -57,7 +57,6 @@ function setupProduct(section) {
   const toggleInfo = section.querySelector(`#toggle-info-${idx}`);
   const desc = section.querySelector(`#description-full-${idx}`);
   const zoomContainer = section.querySelector(`#zoomContainer-${idx}`);
-  const customBtn = section.querySelector(`#customBtn-${idx}`);
   const customToggle = section.querySelector(`#customToggle-${idx}`);
   const customSection = section.querySelector(`#customSection-${idx}`);
 
@@ -83,16 +82,7 @@ function setupProduct(section) {
   const badgeBLEl = section.querySelector(`#badgeBL-${idx}`);
   const badgeCLEl = section.querySelector(`#badgeCL-${idx}`);
 
-<<<<<<< codex/individualisierungsbereich-dynamisch-anzeigen
-  if (customBtn && customSection) {
-    customBtn.addEventListener("click", () => {
-      const hidden = customSection.classList.toggle("hidden");
-      if (customToggle) {
-        customToggle.checked = !hidden;
-        if (hidden) clearCustomization(section);
-      }
-    });
-  }
+    customSection.classList.toggle("hidden", !customToggle.checked);
 
   if (customToggle && customSection) {
     customToggle.addEventListener("change", () => {
