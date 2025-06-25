@@ -125,6 +125,23 @@
   color: #000;
 }
 
+
+.price-label {
+  margin-left: 0.5rem;
+  min-width: 80px;
+  display: inline-block;
+  text-align: center;
+}
+
+
+.price-label {
+  margin-left: 0.5rem;
+  min-width: 80px;
+  display: inline-block;
+  text-align: center;
+}
+
+
 .layout-toggle {
   min-width: 140px;
 }
@@ -1290,6 +1307,8 @@ body:not(.light-mode) .error {
   justify-content: center;
 }
 
+
+
 .einzelprodukt-list .produkt-info h3 {
   font-size: 1.2rem;
   margin: 0 0 5px;
@@ -1305,3 +1324,4 @@ body:not(.light-mode) .error {
   gap: 10px;
   margin-top: 10px;
 }
+
