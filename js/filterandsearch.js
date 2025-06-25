@@ -42,6 +42,9 @@ window.applyFilter = function () {
     // leeres Display lässt die ursprüngliche Flex-Darstellung erhalten
     produkt.style.display = sichtbar ? "" : "none";
   });
+
+  currentPage = 1;
+  updatePagination();
 };
 
 
@@ -281,10 +284,10 @@ window.resetFilter = function () {
   if (sortSel) {
     sortSel.selectedIndex = 0;
   }
-  applyFilter();
   if (typeof restoreOriginalOrder === "function") {
     restoreOriginalOrder();
   }
+  applyFilter();
   if (typeof produktSuche === "function") {
     produktSuche();
   }
@@ -331,7 +334,8 @@ window.toggleLayout = function () {
   const layout = useList ? "list" : "grid";
   localStorage.setItem("productLayout", layout);
   updateLayoutToggle(layout);
-  updatePagination();
+
+  applyFilter();
 };
 
 function updateLayoutToggle(layout) {
