@@ -8,7 +8,8 @@ const DISCOUNT_CODES = {
 
 const CUSTOMIZATION_FEE = 10; // € pro Trikot
 window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
-
+const BADGE_BL_FEE = 4.0;
+const BADGE_CL_FEE = 10.95;
 let TEAM_ROSTERS = {};
 
 const TEAM_PLAYERS = {

@@ -358,6 +358,19 @@ button {
   cursor: pointer;
 }
 
+.badges {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 10px 0;
+}
+
+.badges label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
 .options-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;

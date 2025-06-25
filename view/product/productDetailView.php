@@ -149,7 +149,6 @@
             </div>
           </div>
         <?php endif; ?>
-        <div class="price-breakdown"></div>
 
         <!-- 🧺 Aktionen -->
 
