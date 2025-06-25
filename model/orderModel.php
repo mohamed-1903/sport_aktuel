@@ -70,3 +70,10 @@ function cancelOrder(int $orderId, int $userId): bool {
     $stmt->execute([$orderId, $userId]);
     return $stmt->rowCount() > 0;
 }
+
+function countOrdersByUser(int $userId): int {
+    global $db;
+    $stmt = $db->prepare("SELECT COUNT(*) FROM orders WHERE user_id = ? AND status != 'storniert'");
+    $stmt->execute([$userId]);
+    return (int)$stmt->fetchColumn();
+}
