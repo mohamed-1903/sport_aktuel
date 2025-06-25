@@ -2,9 +2,11 @@
   display: inline-flex;
   flex-direction: row-reverse;
 }
+
 .rating-stars input {
   display: none;
 }
+
 .rating-stars label {
   font-size: 1.4rem;
   color: #ccc;
@@ -12,23 +14,28 @@
   transition: transform 0.2s ease, color 0.2s ease;
 
 }
+
 .rating-stars input:checked ~ label,
 .rating-stars label:hover,
 .rating-stars label:hover ~ label {
   color: gold;
   transform: scale(1.2);
 }
+
 .rating-stars label:hover {
   transform: scale(1.3);
 }
+
 .reviews {
   margin-top: 2rem;
   border-top: 1px solid #ccc;
   padding-top: 1rem;
 }
+
 .reviews h3 {
   margin-bottom: 0.5rem;
 }
+
 .review {
   background: #f9f9f9;
   border: 1px solid #eee;
@@ -37,33 +44,39 @@
   margin-bottom: 10px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 .review:hover {
   transform: translateY(-2px);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 10%);
 }
+
 .review img {
   max-width: 150px;
   display: block;
   margin-top: 5px;
 }
+
 .review-form {
   margin-top: 1rem;
 }
+
 .review-form textarea {
   width: 100%;
   min-height: 80px;
   margin: 5px 0;
 }
+
 .review-form button {
   margin-top: 5px;
 }
+
 .review-modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgb(0 0 0 / 80%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,6 +84,7 @@
   animation: fadeInModal 0.3s ease forwards;
 
 }
+
 .review-modal-content {
   background: #fff;
   color: #000;
@@ -82,6 +96,7 @@
   animation: slideDown 0.3s ease forwards;
 
 }
+
 .review-modal-content .review-close {
   position: absolute;
   top: 10px;
@@ -91,6 +106,7 @@
   font-size: 24px;
   cursor: pointer;
 }
+
 body.modal-open {
   overflow: hidden;
 }
@@ -104,6 +120,7 @@ body.modal-open {
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
+
 .btn-review:hover {
   background: #e6c200;
   transform: translateY(-2px);

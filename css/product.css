@@ -1,10 +1,9 @@
-/*ab hier Hussein/
+/* ab hier Hussein/
 /* Container für das Hauptbild und die zusätzlichen Bilder zentrieren */
 
 /* Hauptbild */
 #main-image {
   width: 100%;
-  object-fit: cover;
   max-width: 500px; /* Maximale Breite des Hauptbildes */
   height: 300px;
   margin-bottom: 10px; /* Abstand zwischen Hauptbild und zusätzlichen Bildern */
@@ -40,21 +39,24 @@
 .additional-images img.selected {
   border-color: #ffd700;
 }
+
 .image-wrapper {
   display: flex;
   flex-direction: column; /* vertikale Anordnung von Bild + z. B. Buttons */
   align-items: center; /* horizontal zentrieren */
   justify-content: center; /* vertikal zentrieren */
   min-height: 180px; /* Mindesthöhe für saubere Darstellung */
-  margin: 0 auto 10px auto; /* horizontal zentriert + Abstand nach unten */
+  margin: 0 auto 10px; /* horizontal zentriert + Abstand nach unten */
   width: fit-content; /* passt sich der Breite des Inhalts an */
   text-align: center; /* optional, falls Text enthalten ist */
 }
+
 .image-wrapper img {
   max-height: 100%;
   max-width: 100%;
   object-fit: contain;
 }
+
 .produkt-info {
   text-align: center;
   flex-grow: 1;
@@ -71,6 +73,7 @@
   min-height: 24px;
   margin-bottom: 10px;
 }
+
 .Eprodukt-info h3 {
   cursor: pointer;
   color: var(--accent-color);
@@ -86,6 +89,7 @@
 .info-content.show {
   max-height: 500px; /* genug für den Text */
 }
+
 .toggle-icon {
   display: inline-block;
   width: 20px;
@@ -103,17 +107,20 @@
 .hidden {
   display: none;
 }
+
 .button-rows {
   display: flex;
   gap: 10px;
   margin-top: 1px;
 }
+
 .button-reihe {
   display: flex;
   gap: 10px;
   margin-top: 10px;
   flex-direction: row;
 }
+
 .button-row {
   display: flex;
   justify-content: center;
@@ -143,9 +150,11 @@
 button {
   margin-bottom: 25px;
 }
+
 .action-buttons {
   margin-bottom: -25px;
 }
+
 .sammelliste {
   margin-top: 30px;
   padding: 10px;
@@ -186,10 +195,12 @@ button {
 .preis {
   font-size: 40px;
 }
+
 .preis-container {
   padding: 60px 20px;
   text-align: center;
 }
+
 .preis-container-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -244,8 +255,9 @@ button {
 .preis-container,
 .dropdown-menu {
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 5%);
 }
+
 .size-dropdown {
   height: 40px;
   width: auto;
@@ -254,6 +266,7 @@ button {
   border-radius: 8px;
   text-align: center;
 }
+
 .zoom-bg-container {
   position: relative;
   overflow: hidden;
@@ -263,6 +276,7 @@ button {
   cursor: zoom-in;
   margin-bottom: 20px;
 }
+
 .zoom-bg-container img {
   display: block;
   width: 100%;
@@ -270,9 +284,11 @@ button {
   object-fit: contain;
   transition: opacity 0.3s;
 }
+
 .zoom-bg-container.zoomed img {
   opacity: 0;
 }
+
 .zoom-bg-container.zoomed {
   background-repeat: no-repeat;
 }
@@ -305,7 +321,7 @@ button {
   border-radius: 8px;
   padding: 5px;
   background-color: #fafafa;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 5%);
 }
 
 .jersey-preview img {
