@@ -49,7 +49,7 @@
           <button class="remove-product" data-remove-index="<?= $index ?>">❌</button>
         <?php endif; ?>
       </h2>
-      <div class="produkt-grid">
+      <div class="detail-grid">
         <!-- 📸 Bilderbereich -->
         <div class="image-wrapper">
           <div class="zoom-bg-container" id="zoomContainer-<?= $index ?>">
@@ -67,6 +67,7 @@
         <!-- 🛒 Produktdetails & Optionen -->
         <div>
           <h1 class="product-name"><?= htmlspecialchars($name) ?></h1>
+
           <p id="original-price-<?= $index ?>" class="price-old" style="display: none;"></p>
           <p id="final-price-<?= $index ?>">
             <?php if (isset($product['priceValue']) && is_numeric($product['priceValue'])): ?>
@@ -182,18 +183,18 @@
 
 
         </div>
-      </div>
-      <!-- 📄 Produktbeschreibung -->
-      <div class="produkt-info">
-        <h3 id="toggle-info-<?= $index ?>">
-          <span class="toggle-icon">+</span> Produktinformationen
-        </h3>
-        <div id="description-full-<?= $index ?>" class="hidden">
-          <p><?= nl2br(htmlspecialchars($description)) ?></p>
+        <!-- 📄 Produktbeschreibung -->
+        <div class="produkt-info">
+          <h3 id="toggle-info-<?= $index ?>">
+            <span class="toggle-icon">+</span> Produktinformationen
+          </h3>
+          <div id="description-full-<?= $index ?>" class="hidden">
+            <p><?= nl2br(htmlspecialchars($description)) ?></p>
+          </div>
         </div>
       </div>
       </div>
-      </div>
+
     </section>
   <?php endforeach; ?>
 
