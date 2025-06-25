@@ -44,6 +44,7 @@
   padding: 10px;
   cursor: pointer;
   min-width: 130px;
+  display: inline-block;
 }
 
 .filterbar button:hover,
@@ -53,7 +54,7 @@
 }
 
 .layout-toggle {
-  min-width: o 140px;
+  min-width: 140px;
 }
 
 .einzelprodukt-grid {
@@ -82,7 +83,7 @@
 .sidebar h2 {
   font-size: 1.1rem;
   margin-bottom: 1rem;
-  border-bottom: 2px solid bl;
+  border-bottom: 2px solid #444;
   padding-bottom: 0.5rem;
 }
 
