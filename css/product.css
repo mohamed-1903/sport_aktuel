@@ -375,3 +375,11 @@ button {
   margin-top: 10px;
   font-size: 14px;
 }
+
+/* zweispaltiges Layout für die Produktdetailseite */
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: flex-start;
+}
