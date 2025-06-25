@@ -91,6 +91,7 @@ function setupProduct(section) {
     });
   }
 
+
   setupCustomization(section);
 
   giftWrapEl?.addEventListener("change", () => updateDisplay(section));
@@ -485,6 +486,8 @@ function clearCustomization(section) {
   });
   updateDisplay(section);
 }
+
+
 
 function setupCustomization(section) {
   const name = section.querySelector(".product-name")?.textContent || "";

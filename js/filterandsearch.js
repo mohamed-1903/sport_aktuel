@@ -48,6 +48,7 @@ window.applyFilter = function () {
 
   currentPage = 1;
   updatePagination();
+  updateActiveFilters();
 };
 // ✅ PRODUKTSUCHE mit Feedback
 function produktSuche() {
@@ -141,6 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
     prodContainer.classList.remove("einzelprodukt-grid");
   }
   updateLayoutToggle(savedLayout === "list" ? "list" : "grid");
+  updateActiveFilters();
 });
 
 // 🔽 PRODUKTE LADEN
@@ -346,6 +348,7 @@ window.resetFilter = function () {
   if (typeof produktSuche === "function") {
     produktSuche();
   }
+  updateActiveFilters();
 };
 
 // Sortiert die angezeigten Produkte nach Preis
@@ -370,6 +373,20 @@ window.restoreOriginalOrder = function () {
   const container = document.getElementById("produktContainer");
   if (!container || !window.originalProductOrder) return;
   window.originalProductOrder.forEach((el) => container.appendChild(el));
+};
+
+function updateActiveFilters() {
+  document.querySelectorAll(".filterbar select").forEach((sel) => {
+    sel.classList.toggle("active", sel.selectedIndex > 0);
+  });
+}
+
+window.toggleFilterBar = function () {
+  const bar = document.querySelector(".filterbar");
+  const btn = document.querySelector(".filter-toggle");
+  if (!bar || !btn) return;
+  const hidden = bar.classList.toggle("hidden");
+  btn.textContent = hidden ? "Filter anzeigen ▼" : "Filter ausblenden ▲";
 };
 
 // Wechselt zwischen Listen- und Grid-Layout für die Produktübersicht
@@ -487,6 +504,7 @@ function updatePagination() {
 document.addEventListener("DOMContentLoaded", () => {
   updatePagination();
   populateFilterOptions();
+  updateActiveFilters();
 });
 
 window.addEventListener("resize", () => {
