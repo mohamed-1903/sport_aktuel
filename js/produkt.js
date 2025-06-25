@@ -336,11 +336,6 @@ function flyToTarget(startEl, targetSelector) {
     clone.classList.add("fly-to-target-anim");
   });
 
-  clone.addEventListener("animationend", () => clone.remove());
-  requestAnimationFrame(() => {
-    clone.classList.add("fly-to-target-anim");
-  });
-
   clone.addEventListener("animationend", () => {
     clone.remove();
     if (target) {
@@ -377,3 +372,36 @@ function resetFinalPriceDisplay(price, section) {
     `#finalPriceValue-${idx}`
   ).textContent = `${price.toFixed(2)}€ inkl. Mwst.`;
 }
+
+// ----- Bewertungsmodal -----
+function openRatingModal(productId) {
+  document.getElementById("ratingProductId").value = productId;
+  document.getElementById("ratingModal").classList.remove("hidden");
+  document.body.classList.add("modal-open");
+}
+
+function closeRatingModal() {
+  document.body.classList.remove("modal-open");
+  document.getElementById("ratingModal").classList.add("hidden");
+}
+
+document.querySelectorAll(".open-review-modal").forEach((btn) => {
+  btn.addEventListener("click", () => openRatingModal(btn.dataset.productId));
+});
+
+const ratingModalEl = document.getElementById("ratingModal");
+if (ratingModalEl) {
+  ratingModalEl.addEventListener("click", (e) => {
+    const content = ratingModalEl.querySelector(".review-modal-content");
+    if (content && !content.contains(e.target)) {
+      closeRatingModal();
+    }
+  });
+}
+
+document.addEventListener("keydown", (e) => {
+  const modal = document.getElementById("ratingModal");
+  if (modal && !modal.classList.contains("hidden") && e.key === "Escape") {
+    closeRatingModal();
+  }
+});
