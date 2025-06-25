@@ -61,6 +61,8 @@ function setupProduct(section) {
   const customToggle = section.querySelector(`#customToggle-${idx}`);
   const customSection = section.querySelector(`#customSection-${idx}`);
 
+
+
   section._zoomData = { currentIndex: 0 };
 
   additionalImages.forEach((img, i) =>
@@ -103,6 +105,9 @@ function setupProduct(section) {
       setCustomVisible(customToggle.checked);
     });
   }
+
+
+
 
   setupCustomization(section);
 
@@ -499,6 +504,8 @@ function clearCustomization(section) {
   });
   updateDisplay(section);
 }
+
+
 
 function setupCustomization(section) {
   const name = section.querySelector(".product-name")?.textContent || "";
