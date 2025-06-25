@@ -495,16 +495,6 @@ function resetFinalPriceDisplay(price, section) {
   ).textContent = `${price.toFixed(2)}€ inkl. Mwst.`;
 }
 
-function clearCustomization(section) {
-  section.querySelector(".player-select")?.value = "";
-  section.querySelector(".custom-name")?.value = "";
-  section.querySelector(".custom-number")?.value = "";
-  section.querySelectorAll(".badge-bl, .badge-cl").forEach((el) => {
-    el.checked = false;
-  });
-  updateDisplay(section);
-}
-
 
 
 function setupCustomization(section) {
