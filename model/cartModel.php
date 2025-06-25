@@ -40,6 +40,7 @@ function getCartId(int $userId, bool $create = false): ?int
         $insert->execute([$userId]);
         return (int)$db->lastInsertId();
     }
+    $stmt->execute([$userId]);
 
     return $cartId ? (int)$cartId : null;
 }
@@ -96,6 +97,7 @@ function getCartItems(int $userId): array
          JOIN products p ON ci.product_id = p.id
          WHERE c.user_id = ?"
     );
+
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }

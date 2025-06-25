@@ -1,15 +1,15 @@
 <?php include __DIR__ . '/../layout/header.php'; ?>
 
-<main class="form-wrapper" style="padding:2em;">
+<sectio class="form-wrapper" style="padding:2em;">
   <?php
-    $statusTitleMap = [
-        'neu' => 'Neue Aufträge',
-        'in_bearbeitung' => 'Aufträge in Bearbeitung',
-        'abgelehnt' => 'Abgelehnte Aufträge',
-        'abgeschlossen' => 'Abgeschlossene Aufträge',
-        'storniert' => 'Stornierte Aufträge'
-    ];
-    $statusTitle = $statusTitleMap[$statusFilter] ?? '';
+  $statusTitleMap = [
+    'neu' => 'Neue Aufträge',
+    'in_bearbeitung' => 'Aufträge in Bearbeitung',
+    'abgelehnt' => 'Abgelehnte Aufträge',
+    'abgeschlossen' => 'Abgeschlossene Aufträge',
+    'storniert' => 'Stornierte Aufträge'
+  ];
+  $statusTitle = $statusTitleMap[$statusFilter] ?? '';
   ?>
   <h1 style="text-align:center;">📦 <?= htmlspecialchars($statusTitle) ?></h1>
 
@@ -34,42 +34,41 @@
           <th>Aktion</th>
         </tr>
       </thead>
-      <tbody>
-        <?php foreach ($orders as $order): ?>
-          <tr>
-            <td>#<?= (int)$order['id'] ?></td>
-            <td><?= (int)$order['user_id'] ?></td>
-            <td><?= date('d.m.Y H:i', strtotime($order['created_at'])) ?></td>
-            <td><?= htmlspecialchars($order['status']) ?></td>
-            <td>
-              <?php $items = json_decode($order['admin_comment'], true); ?>
-              <?php if (is_array($items)): ?>
-                <?php foreach ($items as $item): ?>
-                  <div><?= htmlspecialchars($item['name']) ?> (<?= $item['quantity'] ?>x Größe <?= $item['size'] ?>)</div>
-                <?php endforeach; ?>
-              <?php endif; ?>
-            </td>
-            <td>
-              <form action="index.php?page=order&action=updateStatus" method="post" style="display:flex;gap:0.5em;align-items:center;">
-                <input type="hidden" name="order_id" value="<?= (int)$order['id'] ?>">
-                <input type="hidden" name="redirect" value="<?= htmlspecialchars($statusFilter) ?>">
-                <select name="status">
-                  <option value="neu" <?= $order['status'] === 'neu' ? 'selected' : '' ?>>neu</option>
-                  <option value="in_bearbeitung" <?= $order['status'] === 'in_bearbeitung' ? 'selected' : '' ?>>in Bearbeitung</option>
-                  <option value="abgelehnt" <?= $order['status'] === 'abgelehnt' ? 'selected' : '' ?>>abgelehnt</option>
-                  <option value="abgeschlossen" <?= $order['status'] === 'abgeschlossen' ? 'selected' : '' ?>>abgeschlossen</option>
-                  <option value="storniert" <?= $order['status'] === 'storniert' ? 'selected' : '' ?>>storniert</option>
-                </select>
-                <button type="submit" class="btn-checkout">Speichern</button>
-              </form>
-            </td>
-          </tr>
-        <?php endforeach; ?>
-      </tbody>
+
+      <?php foreach ($orders as $order): ?>
+        <tr>
+          <td>#<?= (int)$order['id'] ?></td>
+          <td><?= (int)$order['user_id'] ?></td>
+          <td><?= date('d.m.Y H:i', strtotime($order['created_at'])) ?></td>
+          <td><?= htmlspecialchars($order['status']) ?></td>
+          <td>
+            <?php $items = json_decode($order['admin_comment'], true); ?>
+            <?php if (is_array($items)): ?>
+              <?php foreach ($items as $item): ?>
+                <div><?= htmlspecialchars($item['name']) ?> (<?= $item['quantity'] ?>x Größe <?= $item['size'] ?>)</div>
+              <?php endforeach; ?>
+            <?php endif; ?>
+          </td>
+          <td>
+            <form action="index.php?page=order&action=updateStatus" method="post" style="display:flex;gap:0.5em;align-items:center;">
+              <input type="hidden" name="order_id" value="<?= (int)$order['id'] ?>">
+              <input type="hidden" name="redirect" value="<?= htmlspecialchars($statusFilter) ?>">
+              <select name="status">
+                <option value="neu" <?= $order['status'] === 'neu' ? 'selected' : '' ?>>neu</option>
+                <option value="in_bearbeitung" <?= $order['status'] === 'in_bearbeitung' ? 'selected' : '' ?>>in Bearbeitung</option>
+                <option value="abgelehnt" <?= $order['status'] === 'abgelehnt' ? 'selected' : '' ?>>abgelehnt</option>
+                <option value="abgeschlossen" <?= $order['status'] === 'abgeschlossen' ? 'selected' : '' ?>>abgeschlossen</option>
+                <option value="storniert" <?= $order['status'] === 'storniert' ? 'selected' : '' ?>>storniert</option>
+              </select>
+              <button type="submit" class="btn-checkout">Speichern</button>
+            </form>
+          </td>
+        </tr>
+      <?php endforeach; ?>
+
     </table>
   <?php endif; ?>
-</main>
+  </section>
 
-<button id="scrollTopBtn" title="Nach oben">⬆</button>
-<?php include __DIR__ . '/../layout/footer.php'; ?>
-
+  <button id="scrollTopBtn" title="Nach oben">⬆</button>
+  <?php include __DIR__ . '/../layout/footer.php'; ?>

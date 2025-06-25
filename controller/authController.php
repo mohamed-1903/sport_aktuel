@@ -58,10 +58,7 @@ switch ($action) {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['is_admin'] = $user['is_admin'];
-                if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
-                    header('Location: index.php?page=auth&action=login');
-                    exit;
-                }
+
 
                 $redirect = $_GET['redirect'] ?? 'index';
                 header("Location: index.php?page={$redirect}");
