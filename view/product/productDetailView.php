@@ -7,7 +7,9 @@
     const toast = document.getElementById('toastMessage');
     if (toast) {
       toast.classList.add('show');
-      setTimeout(() => { toast.classList.remove('show'); }, 3000);
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
     }
   </script>
   <?php unset($_SESSION['message']); ?>
@@ -120,21 +122,21 @@
             </div>
 
             <?php if (stripos($product['subcategory'] ?? '', 'Trikots') !== false): ?>
-            <div class="option-custom hidden" id="customSection-<?= $index ?>">
-              <div class="customization">
-                <label for="player-<?= $index ?>">Spieler wählen:</label>
-                <select id="player-<?= $index ?>" class="size-dropdown player-select"></select>
-                <label for="customName-<?= $index ?>">Name:</label>
-                <input type="text" id="customName-<?= $index ?>" class="size-dropdown custom-name" maxlength="20" />
-                <label for="customNumber-<?= $index ?>">Nummer:</label>
-                <input type="number" id="customNumber-<?= $index ?>" class="size-dropdown custom-number" min="0" max="99" />
-                <div class="jersey-preview" id="jerseyPreview-<?= $index ?>">
-                  <img src="<?= htmlspecialchars($backImage) ?>" alt="Rückenansicht" />
-                  <div class="overlay-name"></div>
-                  <div class="overlay-number"></div>
+              <div class="option-custom hidden" id="customSection-<?= $index ?>">
+                <div class="customization">
+                  <label for="player-<?= $index ?>">Spieler wählen:</label>
+                  <select id="player-<?= $index ?>" class="size-dropdown player-select"></select>
+                  <label for="customName-<?= $index ?>">Name:</label>
+                  <input type="text" id="customName-<?= $index ?>" class="size-dropdown custom-name" maxlength="20" />
+                  <label for="customNumber-<?= $index ?>">Nummer:</label>
+                  <input type="number" id="customNumber-<?= $index ?>" class="size-dropdown custom-number" min="0" max="99" />
+                  <div class="jersey-preview" id="jerseyPreview-<?= $index ?>">
+                    <img src="<?= htmlspecialchars($backImage) ?>" alt="Rückenansicht" />
+                    <div class="overlay-name"></div>
+                    <div class="overlay-number"></div>
+                  </div>
                 </div>
               </div>
-            </div>
             <?php endif; ?>
           </div>
           <div class="price-breakdown"></div>
@@ -222,7 +224,6 @@
       <?php endfor; ?>
     </div>
   </section>
-
   <?php foreach ($productsToShow as $index => $product):
     $ratings = getRatingsForProduct((int)$product['id']);
     $avgRating = getAverageRating((int)$product['id']);
@@ -290,14 +291,14 @@
         div class = "review" >
         <
         strong > <?= htmlspecialchars($r['username']) ?> < /strong> <
-        span class = "rating-stars"
+      span class = "rating-stars"
       style = "pointer-events:none;" >
         <?php for ($s = 5; $s >= 1; $s--): ?> <
           label > <?= $s <= $r['stars'] ? '★' : '☆' ?> < /label>
     <?php endfor; ?>
       <
       /span> <
-      p > <?= nl2br(htmlspecialchars($r['comment'])) ?> < /p>
+    p > <?= nl2br(htmlspecialchars($r['comment'])) ?> < /p>
     <?php if (!empty($r['image_path'])): ?>
         <
         img src = "<?= htmlspecialchars($r['image_path']) ?>"
@@ -318,7 +319,7 @@
     <?php endforeach; ?>
       <
       /main> <
-      div id = "ratingModal"
+    div id = "ratingModal"
     class = "review-modal hidden" >
     <
     div class = "review-modal-content" >
@@ -350,16 +351,16 @@
   <?php endfor; ?>
     <
     /div> <
-    textarea name = "comment"
+  textarea name = "comment"
   required placeholder = "Deine Meinung..." > < /textarea> <
-    input type = "file"
+  input type = "file"
   name = "image"
   accept = "image/*" >
     <
-    button type = "submit" > Bewerten < /button> <
-    /form> <
-    /div> <
-    /div> <
+    button type = "submit" > Bewerten < /button> < /
+    form > <
+    /div> < /
+    div > <
     script >
     document.getElementById('compareBtn').addEventListener('click', () => {
       const input = document.getElementById('compareInput').value.trim();
