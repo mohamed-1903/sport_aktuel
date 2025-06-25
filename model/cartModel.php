@@ -2,6 +2,28 @@
 require_once 'model/db.php'; // Stellt $db (PDO) bereit
 
 /**
+ * Prüft einmalig, ob die optionalen Spalten für Trikot‑Personalisierung
+ * in der Tabelle cart_items vorhanden sind.
+ */
+function customizationSupported(): bool
+{
+    static $supported;
+    if ($supported !== null) {
+        return $supported;
+    }
+
+    global $db;
+    try {
+        $stmt = $db->query("SHOW COLUMNS FROM cart_items LIKE 'custom_name'");
+        $supported = (bool) $stmt->fetch();
+    } catch (PDOException $e) {
+        $supported = false;
+    }
+
+    return $supported;
+}
+
+/**
  * Gibt die ID des Warenkorbs für einen Nutzer zurück.
  * Existiert keiner, wird optional einer angelegt.
  */
@@ -34,21 +56,23 @@ function addToCart(int $userId, array $item): void
     $cartId = ensureCart($userId);
 
     // Prüfen ob Eintrag schon existiert
-    $stmt = $db->prepare("SELECT id, quantity FROM cart_items WHERE cart_id = ? AND product_id = ? AND size = ?");
-    $stmt->execute([$cartId, $item['id'], $item['size']]);
+    $stmt = $db->prepare("SELECT id, quantity FROM cart_items WHERE cart_id = ? AND product_id = ? AND size = ? AND custom_name <=> ? AND custom_number <=> ? AND custom_fee = ?");
+    $stmt->execute([$cartId, $item['id'], $item['size'], $item['custom_name'] ?? null, $item['custom_number'] ?? null, $item['custom_fee'] ?? 0]);
     $existing = $stmt->fetch();
 
     $gift = !empty($item['gift']) ? 1 : 0;
     $discount = isset($item['discount']) ? (int)$item['discount'] : 0;
+    $customFee = isset($item['custom_fee']) ? (float)$item['custom_fee'] : 0;
 
     if ($existing) {
         $newQty = $existing['quantity'] + $item['quantity'];
-        $update = $db->prepare("UPDATE cart_items SET quantity = ?, discount = ?, gift = ? WHERE id = ?");
-        $update->execute([$newQty, $discount, $gift, $existing['id']]);
+        $update = $db->prepare("UPDATE cart_items SET quantity = ?, discount = ?, gift = ?, custom_name = ?, custom_number = ?, custom_fee = ? WHERE id = ?");
+        $update->execute([$newQty, $discount, $gift, $item['custom_name'] ?? null, $item['custom_number'] ?? null, $customFee, $existing['id']]);
     } else {
-        $insert = $db->prepare("INSERT INTO cart_items (cart_id, product_id, size, quantity, discount, gift) VALUES (?, ?, ?, ?, ?, ?)");
-        $insert->execute([$cartId, $item['id'], $item['size'], $item['quantity'], $discount, $gift]);
+        $insert = $db->prepare("INSERT INTO cart_items (cart_id, product_id, size, quantity, discount, gift, custom_name, custom_number, custom_fee) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $insert->execute([$cartId, $item['id'], $item['size'], $item['quantity'], $discount, $gift, $item['custom_name'] ?? null, $item['custom_number'] ?? null, $customFee]);
     }
+
 }
 
 function getCartItems(int $userId): array
@@ -62,16 +86,22 @@ function getCartItems(int $userId): array
                 ci.quantity,
                 ci.discount,
                 ci.gift,
+                ci.custom_name,
+                ci.custom_number,
+                ci.custom_fee,
                 p.name,
                 p.price,
                 p.image_main
+
          FROM cart_items ci
          JOIN cart c ON ci.cart_id = c.id
          JOIN products p ON ci.product_id = p.id
          WHERE c.user_id = ?"
     );
+
     $stmt->execute([$userId]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 }
 
 function removeFromCart(int $userId, int $productId, string $size): void

@@ -42,16 +42,17 @@
   font-size: 16px;
   padding: 10px;
   cursor: pointer;
+  min-width: 130px;
 }
-.filterbar button:hover {
+.filterbar button:hover,
+.filterbar select:hover {
   background-color: var(--accent-color);
   color: #000;
 }
 
 .layout-toggle {
-  min-width: 140px;
+  min-width: o 140px;
 }
-
 
 .einzelprodukt-grid {
   display: grid;

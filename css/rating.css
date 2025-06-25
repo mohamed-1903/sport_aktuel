@@ -10,6 +10,7 @@
   color: #ccc;
   cursor: pointer;
   transition: transform 0.2s ease, color 0.2s ease;
+
 }
 .rating-stars input:checked ~ label,
 .rating-stars label:hover,
@@ -68,6 +69,7 @@
   align-items: center;
   z-index: 10000;
   animation: fadeInModal 0.3s ease forwards;
+
 }
 .review-modal-content {
   background: #fff;
@@ -78,6 +80,7 @@
   width: 90%;
   position: relative;
   animation: slideDown 0.3s ease forwards;
+
 }
 .review-modal-content .review-close {
   position: absolute;

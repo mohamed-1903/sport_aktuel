@@ -31,6 +31,7 @@ switch ($action) {
             }
             addRating($productId, $userId, $stars, $comment, $imagePath);
             $_SESSION['message'] = 'Danke für deine Bewertung!';
+
             header('Location: index.php?page=product&action=detail&id=' . $productId);
             exit;
         }
