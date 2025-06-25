@@ -67,6 +67,7 @@
         <!-- 🛒 Produktdetails & Optionen -->
         <div>
           <h1 class="product-name"><?= htmlspecialchars($name) ?></h1>
+
           <p id="original-price-<?= $index ?>" class="price-old" style="display: none;"></p>
           <p id="final-price-<?= $index ?>">
             <?php if (isset($product['priceValue']) && is_numeric($product['priceValue'])): ?>
@@ -193,6 +194,7 @@
         </div>
       </div>
       </div>
+
     </section>
   <?php endforeach; ?>
 

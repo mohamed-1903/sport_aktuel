@@ -61,6 +61,7 @@
       <button type="button" class="layout-toggle" onclick="toggleLayout()">☰ Liste anzeigen</button>
 
 
+
     </section>
     <section class="einzelprodukt-grid" id="produktContainer">
       <?php if (empty($filteredProducts)): ?>
@@ -77,7 +78,7 @@
           $farbe = $produkt["farbe"] ?? "Unbekannt";
           $geschlecht = $produkt["geschlecht"] ?? "Unbekannt";
           ?>
-          <section class="einzelprodukt"
+          <li class="einzelprodukt"
             data-marke="<?= htmlspecialchars($marke) ?>"
             data-farbe="<?= htmlspecialchars($farbe) ?>"
             data-preis="<?= $preis ?>"
@@ -123,7 +124,7 @@
                 🤍
               </button>
             </section>
-          </section>
+          </li>
         <?php endforeach; ?>
       <?php endif; ?>
     </section>
