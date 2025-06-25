@@ -244,13 +244,18 @@ function handleTastaturNavigation(e, liste, input, shadow) {
     shadow.value = "";
   }
 
-  updateFokus(eintraege);
-}
+  if (order === "asc" || order === "desc") {
+    const items = Array.from(container.querySelectorAll(".einzelprodukt"));
 
-function updateFokus(eintraege) {
-  eintraege.forEach((li, i) => {
-    li.classList.toggle("focused", i === fokusIndex);
-    if (i === fokusIndex) li.scrollIntoView({ block: "nearest" });
+    items.sort((a, b) => {
+      const pa = parseFloat(a.dataset.preis) || 0;
+      const pb = parseFloat(b.dataset.preis) || 0;
+      return order === "asc" ? pa - pb : pb - pa;
+    });
+    items.forEach((el) => container.appendChild(el));
+  } else if (typeof restoreOriginalOrder === "function") {
+    restoreOriginalOrder();
+  }
   });
 }
 

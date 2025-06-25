@@ -47,6 +47,7 @@
         <option value="Bayern">Bayern</option>
         <option value="Dortmund">Dortmund</option>
       </select>
+        <option value="">Sortierung</option>
       <select id="filter-geschlecht" onchange="applyFilter()">
         <option value="">Alle Geschlechter</option>
         <option value="Herren">Herren</option>
