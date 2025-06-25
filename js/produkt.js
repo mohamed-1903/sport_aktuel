@@ -5,11 +5,24 @@ const DISCOUNT_CODES = {
   "00000": 5,
 };
 
+let TEAM_ROSTERS = {};
+
+const CUSTOMIZATION_FEE = 10; // € pro Trikot
+window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
+
 // Initialisierung pro Produktcontainer
 document.addEventListener("DOMContentLoaded", () => {
-  document
-    .querySelectorAll("[data-product-index]")
-    .forEach((section) => setupProduct(section));
+  fetch('data/rosters.json')
+    .then((r) => r.json())
+    .then((data) => {
+      TEAM_ROSTERS = data;
+    })
+    .catch(() => {})
+    .finally(() => {
+      document
+        .querySelectorAll('[data-product-index]')
+        .forEach((section) => setupProduct(section));
+    });
 });
 
 function setupProduct(section) {
@@ -21,6 +34,8 @@ function setupProduct(section) {
   const toggleInfo = section.querySelector(`#toggle-info-${idx}`);
   const desc = section.querySelector(`#description-full-${idx}`);
   const zoomContainer = section.querySelector(`#zoomContainer-${idx}`);
+  const customBtn = section.querySelector(`#customBtn-${idx}`);
+  const customSection = section.querySelector(`#customSection-${idx}`);
 
   section._zoomData = { currentIndex: 0 };
 
@@ -41,6 +56,14 @@ function setupProduct(section) {
   qtyInput.addEventListener("input", () => updateDisplay(section));
   const giftWrapEl = section.querySelector(`#giftWrap-${idx}`);
   const pinInputEl = section.querySelector(`#pin-${idx}`);
+
+  if (customBtn && customSection) {
+    customBtn.addEventListener('click', () => {
+      customSection.classList.toggle('hidden');
+    });
+  }
+
+  setupCustomization(section);
 
   giftWrapEl?.addEventListener("change", () => updateDisplay(section));
   pinInputEl?.addEventListener("input", () => updateDisplay(section));
@@ -94,6 +117,12 @@ function getGiftWrapCharge(section) {
   return checkbox?.checked ? 2 : 0;
 }
 
+function getCustomizationFee(section) {
+  const nameInput = section.querySelector('.custom-name');
+  const numberInput = section.querySelector('.custom-number');
+  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
+}
+
 function getBasePrice(section) {
   const idx = section.dataset.productIndex;
   const el = section.querySelector(`#basePrice-${idx}`);
@@ -114,8 +143,9 @@ function calculatePrice(section) {
   const qty = parseInt(section.querySelector(`#quantity-${idx}`).value) || 1;
   const gift = section.querySelector(`#giftWrap-${idx}`)?.checked;
   const pin = section.querySelector(`#pin-${idx}`)?.value.trim() || "";
+  const customFee = getCustomizationFee(section);
 
-  let subtotal = getBasePrice(section) * qty;
+  let subtotal = (getBasePrice(section) + customFee) * qty;
   if (gift) subtotal += 2;
 
   const discountPercent = DISCOUNT_CODES[pin] || 0;
@@ -154,6 +184,22 @@ function updateDisplay(section) {
     }
   }
   finalValueEl.textContent = `${final.toFixed(2)}€ inkl. Mwst.`;
+
+  const list = section.querySelector('.price-breakdown');
+  if (list) {
+    const gift = getGiftWrapCharge(section);
+    const custom = getCustomizationFee(section);
+    const qty = parseInt(section.querySelector(`#quantity-${idx}`).value) || 1;
+    const pin = section.querySelector(`#pin-${idx}`)?.value.trim();
+    const discountAmount = ((getBasePrice(section) + custom + gift) * qty) * (discount / 100);
+    list.innerHTML = `<ul>
+        <li>Grundpreis: ${getBasePrice(section).toFixed(2)} €</li>
+        ${custom ? `<li>Personalisierung: ${custom.toFixed(2)} €</li>` : ''}
+        ${gift ? `<li>Geschenkverpackung: ${gift.toFixed(2)} €</li>` : ''}
+        ${discount ? `<li>Rabatt: -${discountAmount.toFixed(2)} € (${discount}%)</li>` : ''}
+        <li><strong>Endpreis: ${final.toFixed(2)} €</strong></li>
+      </ul>`;
+  }
 }
 
 // ---- Zoom Handling ----
@@ -376,4 +422,63 @@ function resetFinalPriceDisplay(price, section) {
   section.querySelector(
     `#finalPriceValue-${idx}`
   ).textContent = `${price.toFixed(2)}€ inkl. Mwst.`;
+}
+
+function setupCustomization(section) {
+  const name = section.querySelector('.product-name')?.textContent || '';
+  const teamKey = Object.keys(TEAM_ROSTERS).find((k) =>
+    name.toLowerCase().includes(k.toLowerCase())
+  );
+  const playerSelect = section.querySelector('.player-select');
+  const nameInput = section.querySelector('.custom-name');
+  const numberInput = section.querySelector('.custom-number');
+  const preview = section.querySelector('.jersey-preview');
+  const nameOverlay = preview?.querySelector('.overlay-name');
+  const numberOverlay = preview?.querySelector('.overlay-number');
+
+  if (!playerSelect) return;
+
+  if (teamKey) {
+    const roster = TEAM_ROSTERS[teamKey];
+    const optEmpty = document.createElement('option');
+    optEmpty.value = '';
+    optEmpty.textContent = '-- Eigener Name --';
+    playerSelect.appendChild(optEmpty);
+
+    Object.entries(roster).forEach(([num, player]) => {
+      const opt = document.createElement('option');
+      opt.value = num;
+      opt.textContent = `${player} (${num})`;
+      playerSelect.appendChild(opt);
+    });
+
+    playerSelect.addEventListener('change', () => {
+      const num = playerSelect.value;
+      if (num) {
+        numberInput.value = num;
+        nameInput.value = roster[num];
+      } else {
+        numberInput.value = '';
+        nameInput.value = '';
+      }
+      updateDisplay(section);
+      updatePreview();
+    });
+  }
+
+  function updatePreview() {
+    if (nameOverlay) nameOverlay.textContent = nameInput.value.trim();
+    if (numberOverlay) numberOverlay.textContent = numberInput.value.trim();
+  }
+
+  nameInput.addEventListener('input', () => {
+    updateDisplay(section);
+    updatePreview();
+  });
+  numberInput.addEventListener('input', () => {
+    updateDisplay(section);
+    updatePreview();
+  });
+
+  updatePreview();
 }
