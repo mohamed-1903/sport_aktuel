@@ -47,7 +47,7 @@
   justify-content: center; /* vertikal zentrieren */
   min-height: 180px; /* Mindesthöhe für saubere Darstellung */
   margin: 0 auto 10px; /* horizontal zentriert + Abstand nach unten */
-  width: fit-content; /* passt sich der Breite des Inhalts an */
+  width: 100%; /* nimmt den verfügbaren Platz ein */
   text-align: center; /* optional, falls Text enthalten ist */
 }
 
@@ -270,11 +270,12 @@ button {
 .zoom-bg-container {
   position: relative;
   overflow: hidden;
-  width: 500px;
+  width: 100%;
   max-width: 700px;
-  height: 300px;
+  aspect-ratio: 3 / 4; /* passt die Höhe automatisch an */
+  height: auto;
   cursor: zoom-in;
-  margin-bottom: 20px;
+  margin: 0 auto 20px;
 }
 
 .zoom-bg-container img {
@@ -430,12 +431,12 @@ body.light-mode .custom-switch .slider {
 
 .custom-switch .slider {
   position: absolute;
-  inset: 0;
-  display: block;
-  cursor: pointer;
-  background-color: #666;
-
-  border-radius: 34px;
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr; /* linke Seite größer für das Bild */
+  gap: 20px;
+  align-items: center;
+}
   transition: background-color 0.3s;
 }
 
