@@ -69,6 +69,7 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
     if (nameInput) payload.custom_name = nameInput.value.trim();
     if (numberInput) payload.custom_number = numberInput.value.trim();
     if (hasCustom) payload.custom_fee = window.CUSTOMIZATION_FEE || 0;
+
   }
 
   fetch("index.php?page=cart&action=add", {
