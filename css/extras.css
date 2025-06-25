@@ -42,8 +42,10 @@
   font-size: 16px;
   padding: 10px;
   cursor: pointer;
+  min-width: 130px;
 }
-.filterbar button:hover {
+.filterbar button:hover,
+.filterbar select:hover {
   background-color: var(--accent-color);
   color: #000;
 }
@@ -1095,7 +1097,7 @@ body:not(.light-mode) .error {
   color: var(--text-color);
   border: 1px solid #555;
   padding: 8px 16px;
-  border-radius: 20px;
+  border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
