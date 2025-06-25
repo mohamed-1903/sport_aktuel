@@ -61,11 +61,14 @@
       </select>
       <select id="sort-select" onchange="sortProducts(this.value)">
         <option value="default">Standardsortierung</option>
-        <option value="asc">Preis aufsteigend ▲</option>
-        <option value="desc">Preis absteigend ▼</option>
+        <option value="price-asc">Preis aufsteigend ▲</option>
+        <option value="price-desc">Preis absteigend ▼</option>
+        <option value="name-asc">Name A–Z</option>
+        <option value="name-desc">Name Z–A</option>
       </select>
       <button type="button" class="reset-filter" onclick="resetFilter()">Zurücksetzen</button>
       <button type="button" class="layout-toggle" onclick="toggleLayout()">☰ Liste anzeigen</button>
+
 
 
 
