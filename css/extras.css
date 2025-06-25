@@ -27,6 +27,7 @@
   box-sizing: border-box; /* Padding zählt zur Gesamtbreite */
 }
 
+<<<<<<< 4crtf5-codex/produktansicht-in-der-liste-fixen
 
 .filterbar {
   display: flex;
@@ -100,6 +101,88 @@
   background-color: var(--accent-color);
   color: #000;
 }
+
+.price-label {
+  margin-left: 0.5rem;
+  min-width: 80px;
+  display: inline-block;
+  text-align: center;
+}
+=======
+
+.filterbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  background-color: var(--card-bg);
+  padding: 0.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.filterbar.hidden {
+  display: none;
+}
+
+.filter-toggle {
+  align-self: flex-end;
+  margin-bottom: 0.5rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  font-size: 16px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.filter-toggle:hover {
+  background-color: var(--accent-color);
+  color: #000;
+}
+
+.filterbar select,
+.filterbar button,
+.filterbar input[type="range"] {
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  font-size: 16px;
+  padding: 10px;
+}
+
+/* optisch ansprechende Selectboxen */
+.filterbar select {
+  appearance: none;
+  padding-right: 2rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath fill='%23ffd700' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 12px;
+}
+
+.filterbar input[type="range"] {
+  width: 150px;
+  accent-color: var(--accent-color);
+}
+
+.filterbar select.active,
+.filterbar input[type="range"].active {
+  border-color: var(--accent-color);
+  background-color: var(--accent-color);
+  color: #000;
+}
+
+.filterbar button:hover {
+  background-color: var(--accent-color);
+  color: #000;
+}
+>>>>>>> main
 
 .price-label {
   margin-left: 0.5rem;
@@ -1246,6 +1329,7 @@ body:not(.light-mode) .error {
   gap: 20px;
 }
 
+<<<<<<< 4crtf5-codex/produktansicht-in-der-liste-fixen
 .einzelprodukt-list .einzelprodukt {
   display: flex;
   align-items: center;
@@ -1281,6 +1365,43 @@ body:not(.light-mode) .error {
   align-items: center;
   justify-content: center;
 }
+=======
+.einzelprodukt-list .einzelprodukt {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 15px;
+  border: 1px solid var(--border-color, #555);
+  border-radius: 10px;
+}
+
+.einzelprodukt-list .produkt-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.einzelprodukt-list .image-wrapper {
+  flex: 0 0 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.einzelprodukt-list .image-wrapper img {
+  width: 150px;
+  height: auto;
+}
+
+.einzelprodukt-list .produkt-info {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+>>>>>>> main
 
 
 
@@ -1294,6 +1415,14 @@ body:not(.light-mode) .error {
   margin: 0 0 10px;
 }
 
+<<<<<<< 4crtf5-codex/produktansicht-in-der-liste-fixen
+.einzelprodukt-list .button-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+=======
 .einzelprodukt-list .button-row {
   display: flex;
   justify-content: center;
@@ -1301,3 +1430,4 @@ body:not(.light-mode) .error {
   margin-top: 10px;
 }
 
+>>>>>>> main
