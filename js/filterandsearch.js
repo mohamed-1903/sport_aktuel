@@ -290,13 +290,15 @@ window.resetFilter = function () {
   if (sortSel) {
     sortSel.selectedIndex = 0;
   }
-  applyFilter();
   if (typeof restoreOriginalOrder === "function") {
     restoreOriginalOrder();
   }
+  applyFilter();
   if (typeof produktSuche === "function") {
     produktSuche();
   }
+  currentPage = 1;
+  updatePagination();
 };
 
 // Sortiert die angezeigten Produkte nach Preis
@@ -340,6 +342,7 @@ window.toggleLayout = function () {
   const layout = useList ? "list" : "grid";
   localStorage.setItem("productLayout", layout);
   updateLayoutToggle(layout);
+  currentPage = 1;
   updatePagination();
 };
 
