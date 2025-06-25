@@ -130,8 +130,7 @@
   flex-wrap: nowrap;
 }
 
-.button-row button,
-.button-row a button {
+.button-row button {
   background-color: #ffd700;
   color: #000;
   padding: 13px 23px;
@@ -142,8 +141,7 @@
   transition: background-color 0.3s;
 }
 
-.button-row button:hover,
-.button-row a button:hover {
+.button-row button:hover {
   background-color: #e6c200;
 }
 

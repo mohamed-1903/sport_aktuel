@@ -102,9 +102,10 @@
             </section>
 
             <section class="button-row" data-iid="<?= (int)$produkt["iid"] ?>">
-              <a href="index.php?page=product&action=detail&id=<?= (int)$produkt["iid"] ?>">
-                <button>Details</button>
-              </a>
+              <button type="button" class="btn-details"
+                onclick="location.href='index.php?page=product&action=detail&id=<?= (int)$produkt['iid'] ?>'">
+                Details
+              </button>
 
               <button class="btn-add-to-cart"
                 data-iid="<?= (int)$produkt['iid'] ?>"

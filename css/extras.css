@@ -407,8 +407,7 @@ body.light-mode .zoom-close {
   gap: 10px;
 }
 
-.watchlist-card button,
-.watchlist-card a button {
+.watchlist-card button {
   background-color: var(--accent-color);
   color: #000;
   padding: 10px 16px;
@@ -418,9 +417,7 @@ body.light-mode .zoom-close {
   cursor: pointer;
   transition: background-color 0.3s;
 }
-
-.watchlist-card button:hover,
-.watchlist-card a button:hover {
+.watchlist-card button:hover {
   background-color: #e6c200;
 }
 

@@ -18,7 +18,7 @@
                             <input type="hidden" name="id" value="<?= (int)$item['product_id'] ?>">
                             <button type="submit">🗑️ Entfernen</button>
                         </form>
-                        <a href="index.php?page=product&action=detail&id=<?= (int)$item['product_id'] ?>"><button>🔍 Anzeigen</button></a>
+                        <button type="button" class="btn-details" onclick="location.href='index.php?page=product&action=detail&id=<?= (int)$item['product_id'] ?>'">🔍 Anzeigen</button>
                     </div>
                 </div>
             <?php endforeach; ?>
