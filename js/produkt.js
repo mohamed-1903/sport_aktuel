@@ -60,6 +60,7 @@ function setupProduct(section) {
   const customToggle = section.querySelector(`#customToggle-${idx}`);
   const customSection = section.querySelector(`#customSection-${idx}`);
 
+
   section._zoomData = { currentIndex: 0 };
 
   additionalImages.forEach((img, i) =>
@@ -89,6 +90,7 @@ function setupProduct(section) {
       customSection.classList.toggle("hidden", !show);
     });
   }
+
 
 
   setupCustomization(section);
