@@ -57,8 +57,10 @@ function setupProduct(section) {
   const toggleInfo = section.querySelector(`#toggle-info-${idx}`);
   const desc = section.querySelector(`#description-full-${idx}`);
   const zoomContainer = section.querySelector(`#zoomContainer-${idx}`);
+  const customBtn = section.querySelector(`#customBtn-${idx}`);
   const customToggle = section.querySelector(`#customToggle-${idx}`);
   const customSection = section.querySelector(`#customSection-${idx}`);
+
 
 
   section._zoomData = { currentIndex: 0 };
@@ -83,13 +85,27 @@ function setupProduct(section) {
   const badgeBLEl = section.querySelector(`#badgeBL-${idx}`);
   const badgeCLEl = section.querySelector(`#badgeCL-${idx}`);
 
-  if (customToggle && customSection) {
-    customSection.classList.toggle("hidden", !customToggle.checked);
-    customToggle.addEventListener("change", () => {
-      const show = customToggle.checked;
-      customSection.classList.toggle("hidden", !show);
+  function setCustomVisible(show) {
+    if (!customSection) return;
+    customSection.classList.toggle("show", show);
+    if (!show) clearCustomization(section);
+  }
+
+  if (customBtn) {
+    customBtn.addEventListener("click", () => {
+      const show = !customSection.classList.contains("show");
+      setCustomVisible(show);
+      if (customToggle) customToggle.checked = show;
     });
   }
+
+  if (customToggle) {
+    setCustomVisible(customToggle.checked);
+    customToggle.addEventListener("change", () => {
+      setCustomVisible(customToggle.checked);
+    });
+  }
+
 
 
 
@@ -454,7 +470,8 @@ function resetFields(section) {
   if (blEl) blEl.checked = false;
   const clEl = section.querySelector(`#badgeCL-${idx}`);
   if (clEl) clEl.checked = false;
-  section.querySelector(`#customSection-${idx}`)?.classList.add("hidden");
+  const cs = section.querySelector(`#customSection-${idx}`);
+  if (cs) cs.classList.remove("show");
 
   const finalValueEl = section.querySelector(`#finalPriceValue-${idx}`);
   const originalPriceEl = section.querySelector(`#original-price-${idx}`);
@@ -476,6 +493,16 @@ function resetFinalPriceDisplay(price, section) {
   section.querySelector(
     `#finalPriceValue-${idx}`
   ).textContent = `${price.toFixed(2)}€ inkl. Mwst.`;
+}
+
+function clearCustomization(section) {
+  section.querySelector(".player-select")?.value = "";
+  section.querySelector(".custom-name")?.value = "";
+  section.querySelector(".custom-number")?.value = "";
+  section.querySelectorAll(".badge-bl, .badge-cl").forEach((el) => {
+    el.checked = false;
+  });
+  updateDisplay(section);
 }
 
 

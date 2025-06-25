@@ -99,6 +99,7 @@
           <input type="number" id="quantity-<?= $index ?>" value="1" min="1" class="size-dropdown" />
 
           <?php if (stripos($product['subcategory'] ?? '', 'Trikots') !== false): ?>
+            <button type="button" class="btn-show-custom" id="customBtn-<?= $index ?>">Produkt individualisieren</button>
             <div class="custom-toggle-wrap">
               <label class="custom-switch">
                 <input type="checkbox" id="customToggle-<?= $index ?>" />
@@ -106,7 +107,7 @@
               </label>
               <span>Individualisierung</span>
             </div>
-            <div class="option-custom hidden" id="customSection-<?= $index ?>">
+            <div class="option-custom" id="customSection-<?= $index ?>">
               <div class="customization">
                 <label for="player-<?= $index ?>">Spieler wählen:</label>
                 <select id="player-<?= $index ?>" class="size-dropdown player-select"></select>
@@ -126,6 +127,7 @@
               </div>
             </div>
           <?php endif; ?>
+
 
 
           <div class="button-rows">
@@ -148,6 +150,7 @@
         </div>
 
         <div class="price-breakdown"></div>
+
 
         <!-- 🧺 Aktionen -->
 
