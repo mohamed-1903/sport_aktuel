@@ -15,6 +15,10 @@ function getItemsPerPage() {
     return (cols || 1) * 2;
   }
 
+  if (container.classList.contains("einzelprodukt-list")) {
+    return 4;
+  }
+
   return 2;
 }
 
@@ -42,6 +46,11 @@ window.applyFilter = function () {
     // leeres Display lässt die ursprüngliche Flex-Darstellung erhalten
     produkt.style.display = sichtbar ? "" : "none";
   });
+
+  // Nach jedem Filtervorgang die Paginierung neu berechnen,
+  // damit stets zwei gefüllte Reihen angezeigt werden.
+  currentPage = 1;
+  updatePagination();
 };
 
 
