@@ -44,7 +44,7 @@
 .cookie-settings {
   position: fixed;
   bottom: 1rem;
-  right: 1rem;
+  left: 1rem;
   background: var(--card-bg);
   color: var(--text-color);
   border: none;
