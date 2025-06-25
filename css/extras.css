@@ -22,7 +22,7 @@
   gap: 1.5rem; /* mehr vertikaler Abstand zwischen Elementen */
   padding: 2rem 2rem 3rem; /* großzügigerer Innenabstand (oben, seitlich, unten) */
   border-radius: 12px; /* für Kartenstil – optional */
-  box-shadow: 0 2px 8px rgb(0 0 0 / 5%); /* subtile Tiefe */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* subtile Tiefe */
   min-height: 100vh; /* sorgt für volle Höhe bei leerem Inhalt */
   box-sizing: border-box; /* Padding zählt zur Gesamtbreite */
 }
@@ -42,9 +42,6 @@
   color: var(--text-color);
   font-size: 16px;
   padding: 10px;
-  cursor: pointer;
-  min-width: 130px;
-  display: inline-block;
 }
 
 .filterbar button:hover,

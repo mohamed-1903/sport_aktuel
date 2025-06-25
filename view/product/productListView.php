@@ -62,7 +62,8 @@
 
 
 
-    <ul class="einzelprodukt-grid" id="produktContainer">
+    </section>
+    <section class="einzelprodukt-grid" id="produktContainer">
       <?php if (empty($filteredProducts)): ?>
         <p>Keine Produkte in dieser Kategorie gefunden.</p>
       <?php else: ?>
@@ -126,7 +127,7 @@
           </li>
         <?php endforeach; ?>
       <?php endif; ?>
-    </ul>
+    </section>
 
     <section class="pagination"></section>
 
