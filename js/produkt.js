@@ -145,27 +145,13 @@ function getGiftWrapCharge(section) {
 }
 
 function getCustomizationFee(section) {
-  const nameInput = section.querySelector('.custom-name');
-  const numberInput = section.querySelector('.custom-number');
-  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
-}
-
-function getCustomizationFee(section) {
-  const nameInput = section.querySelector('.custom-name');
-  const numberInput = section.querySelector('.custom-number');
-  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
-}
-
-function getCustomizationFee(section) {
-  const nameInput = section.querySelector('.custom-name');
-  const numberInput = section.querySelector('.custom-number');
-  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
-}
-
-function getCustomizationFee(section) {
-  const nameInput = section.querySelector('.custom-name');
-  const numberInput = section.querySelector('.custom-number');
-  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
+  const nameInput = section.querySelector(".custom-name");
+  const numberInput = section.querySelector(".custom-number");
+  return nameInput && nameInput.value.trim()
+    ? CUSTOMIZATION_FEE
+    : numberInput && numberInput.value.trim()
+    ? CUSTOMIZATION_FEE
+    : 0;
 }
 
 function getBasePrice(section) {
