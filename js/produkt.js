@@ -83,6 +83,7 @@ function setupProduct(section) {
   const badgeBLEl = section.querySelector(`#badgeBL-${idx}`);
   const badgeCLEl = section.querySelector(`#badgeCL-${idx}`);
 
+<<<<<<< codex/individualisierungsbereich-dynamisch-anzeigen
   if (customBtn && customSection) {
     customBtn.addEventListener("click", () => {
       const hidden = customSection.classList.toggle("hidden");
@@ -100,6 +101,25 @@ function setupProduct(section) {
       if (!show) clearCustomization(section);
     });
   }
+=======
+  if (customBtn && customSection) {
+    customBtn.addEventListener("click", () => {
+      const hidden = customSection.classList.toggle("hidden");
+      if (customToggle) {
+        customToggle.checked = !hidden;
+        if (hidden) clearCustomization(section);
+      }
+    });
+  }
+
+  if (customToggle && customSection) {
+    customToggle.addEventListener("change", () => {
+      const show = customToggle.checked;
+      customSection.classList.toggle("hidden", !show);
+      if (!show) clearCustomization(section);
+    });
+  }
+>>>>>>> main
 
   setupCustomization(section);
 
@@ -484,6 +504,16 @@ function resetFinalPriceDisplay(price, section) {
   section.querySelector(
     `#finalPriceValue-${idx}`
   ).textContent = `${price.toFixed(2)}€ inkl. Mwst.`;
+}
+
+function clearCustomization(section) {
+  section.querySelector(".player-select")?.value = "";
+  section.querySelector(".custom-name")?.value = "";
+  section.querySelector(".custom-number")?.value = "";
+  section.querySelectorAll(".badge-bl, .badge-cl").forEach((el) => {
+    el.checked = false;
+  });
+  updateDisplay(section);
 }
 
 function setupCustomization(section) {

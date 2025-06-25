@@ -109,6 +109,7 @@
             </div>
           <?php endif; ?>
 
+
           <div class="button-rows">
             <!-- 🎟 Rabattcode -->
             <label for="pin-<?= $index ?>">Rabatt-PIN eingeben:</label>
