@@ -1,9 +1,25 @@
 // ✅ FILTERFUNKTION
-const ITEMS_PER_PAGE = 8;
 let currentPage = 1;
 let paginatedItems = [];
 
+function getItemsPerPage() {
+  const container = document.getElementById("produktContainer");
+  if (!container) return 8;
+
+  if (container.classList.contains("einzelprodukt-grid")) {
+    const cols = window
+      .getComputedStyle(container)
+      .getPropertyValue("grid-template-columns")
+      .split(" ")
+      .filter((c) => c.trim().length > 0).length;
+    return (cols || 1) * 2;
+  }
+
+  return 2;
+}
+
 window.applyFilter = function () {
+
   const filterWerte = {
     marke: document.getElementById("filter-marke")?.value || "",
     farbe: document.getElementById("filter-farbe")?.value || "",
@@ -23,12 +39,13 @@ window.applyFilter = function () {
       (!filterWerte.geschlecht || p.geschlecht === filterWerte.geschlecht) &&
       preis <= filterWerte.maxPreis;
 
-    // leeres Display lässt die ursprüngliche Flex-Darstellung erhalten
     produkt.style.display = sichtbar ? "" : "none";
   });
+
   currentPage = 1;
   updatePagination();
 };
+
 
 // ✅ PRODUKTSUCHE mit Feedback
 function produktSuche() {
@@ -121,10 +138,10 @@ document.addEventListener("DOMContentLoaded", () => {
     prodContainer.classList.remove("einzelprodukt-grid");
   }
   updateLayoutToggle(savedLayout === "list" ? "list" : "grid");
-
   updatePagination();
 
 });
+
 
 // 🔽 PRODUKTE LADEN
 function ladeProdukte(containerId, urls) {
@@ -141,6 +158,7 @@ function ladeProdukte(containerId, urls) {
           Array.from(temp.children).forEach((el) => container.appendChild(el));
         })
     )
+
   ).then(() => {
     applyFilter();
     produktSuche();
@@ -289,6 +307,8 @@ window.sortProducts = function (order) {
   });
 
   items.forEach((el) => container.appendChild(el));
+  currentPage = 1;
+  updatePagination();
 };
 
 // Setzt die Produkte in ihre ursprüngliche Reihenfolge zurück
@@ -315,6 +335,7 @@ window.toggleLayout = function () {
   const layout = useList ? "list" : "grid";
   localStorage.setItem("productLayout", layout);
   updateLayoutToggle(layout);
+  updatePagination();
 };
 
 function updateLayoutToggle(layout) {
@@ -327,10 +348,10 @@ function updateLayoutToggle(layout) {
   }
 }
 
-
 function showPage(page) {
-  const start = (page - 1) * ITEMS_PER_PAGE;
-  const end = start + ITEMS_PER_PAGE;
+  const itemsPerPage = getItemsPerPage();
+  const start = (page - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
   currentPage = page;
 
   paginatedItems.forEach((el, idx) => {
@@ -343,7 +364,7 @@ function showPage(page) {
 
   const prev = document.querySelector(".pagination button.prev");
   const next = document.querySelector(".pagination button.next");
-  const totalPages = Math.max(1, Math.ceil(paginatedItems.length / ITEMS_PER_PAGE));
+  const totalPages = Math.max(1, Math.ceil(paginatedItems.length / getItemsPerPage()));
   if (prev) prev.disabled = currentPage === 1;
   if (next) next.disabled = currentPage === totalPages;
 }
@@ -375,7 +396,7 @@ function renderPagination(total) {
     if (currentPage > 1) showPage(currentPage - 1);
   });
   next.addEventListener("click", () => {
-    const totalPages = Math.max(1, Math.ceil(paginatedItems.length / ITEMS_PER_PAGE));
+    const totalPages = Math.max(1, Math.ceil(paginatedItems.length / getItemsPerPage()));
     if (currentPage < totalPages) showPage(currentPage + 1);
   });
   container.querySelectorAll("button.page").forEach((btn) => {
@@ -392,11 +413,16 @@ function updatePagination() {
   if (!container) return;
   paginatedItems = Array.from(container.querySelectorAll(".einzelprodukt"))
     .filter((el) => el.style.display !== "none");
-  const totalPages = Math.max(1, Math.ceil(paginatedItems.length / ITEMS_PER_PAGE));
+  const itemsPerPage = getItemsPerPage();
+  const totalPages = Math.max(1, Math.ceil(paginatedItems.length / itemsPerPage));
   if (currentPage > totalPages) currentPage = totalPages;
   renderPagination(totalPages);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  updatePagination();
+});
+
+window.addEventListener("resize", () => {
   updatePagination();
 });
