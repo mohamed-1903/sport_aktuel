@@ -19,7 +19,8 @@ window.applyFilter = function () {
       (!filterWerte.geschlecht || p.geschlecht === filterWerte.geschlecht) &&
       preis <= filterWerte.maxPreis;
 
-    produkt.style.display = sichtbar ? "block" : "none";
+    // leeres Display lässt die ursprüngliche Flex-Darstellung erhalten
+    produkt.style.display = sichtbar ? "" : "none";
   });
 };
 
@@ -105,6 +106,14 @@ document.addEventListener("DOMContentLoaded", () => {
       ladeProdukte(containerId, urls);
     });
   }
+
+  const prodContainer = document.getElementById("produktContainer");
+  const savedLayout = localStorage.getItem("productLayout");
+  if (prodContainer && savedLayout === "list") {
+    prodContainer.classList.add("einzelprodukt-list");
+    prodContainer.classList.remove("einzelprodukt-grid");
+  }
+  updateLayoutToggle(savedLayout === "list" ? "list" : "grid");
 });
 
 // 🔽 PRODUKTE LADEN
@@ -125,6 +134,11 @@ function ladeProdukte(containerId, urls) {
   ).then(() => {
     applyFilter();
     produktSuche();
+    if (!window.originalProductOrder) {
+      window.originalProductOrder = Array.from(
+        container.querySelectorAll(".einzelprodukt")
+      );
+    }
   });
 }
 
@@ -238,8 +252,66 @@ window.resetFilter = function () {
   if (suche) {
     suche.value = "";
   }
+  const sortSel = document.getElementById("sort-select");
+  if (sortSel) {
+    sortSel.selectedIndex = 0;
+  }
   applyFilter();
+  if (typeof restoreOriginalOrder === "function") {
+    restoreOriginalOrder();
+  }
   if (typeof produktSuche === "function") {
     produktSuche();
   }
 };
+
+// Sortiert die angezeigten Produkte nach Preis
+window.sortProducts = function (order) {
+  const container = document.getElementById("produktContainer");
+  if (!container) return;
+  const items = Array.from(container.querySelectorAll(".einzelprodukt"));
+
+  items.sort((a, b) => {
+    const pa = parseFloat(a.dataset.preis) || 0;
+    const pb = parseFloat(b.dataset.preis) || 0;
+    return order === "asc" ? pa - pb : pb - pa;
+  });
+
+  items.forEach((el) => container.appendChild(el));
+};
+
+// Setzt die Produkte in ihre ursprüngliche Reihenfolge zurück
+window.restoreOriginalOrder = function () {
+  const container = document.getElementById("produktContainer");
+  if (!container || !window.originalProductOrder) return;
+  window.originalProductOrder.forEach((el) => container.appendChild(el));
+};
+
+// Wechselt zwischen Listen- und Grid-Layout für die Produktübersicht
+window.toggleLayout = function () {
+  const container = document.getElementById("produktContainer");
+  if (!container) return;
+
+  const useList = !container.classList.contains("einzelprodukt-list");
+  if (useList) {
+    container.classList.add("einzelprodukt-list");
+    container.classList.remove("einzelprodukt-grid");
+  } else {
+    container.classList.add("einzelprodukt-grid");
+    container.classList.remove("einzelprodukt-list");
+  }
+
+  const layout = useList ? "list" : "grid";
+  localStorage.setItem("productLayout", layout);
+  updateLayoutToggle(layout);
+};
+
+function updateLayoutToggle(layout) {
+  const btn = document.querySelector(".layout-toggle");
+  if (!btn) return;
+  if (layout === "list") {
+    btn.textContent = "🔳 Grid anzeigen";
+  } else {
+    btn.textContent = "☰ Liste anzeigen";
+  }
+}
