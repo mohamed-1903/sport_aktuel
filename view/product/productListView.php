@@ -22,6 +22,9 @@
 
   <main class="main-content">
     <h1><?= htmlspecialchars($displayTitle) ?></h1>
+    <button type="button" class="filter-toggle" onclick="toggleFilterBar()">
+      Filter ausblenden ▲
+    </button>
 
     <section class="filterbar">
       <select id="filter-marke" onchange="applyFilter()">
@@ -63,7 +66,7 @@
 
 
     </section>
-    <section class="einzelprodukt-grid" id="produktContainer">
+    <ul class="einzelprodukt-grid" id="produktContainer">
       <?php if (empty($filteredProducts)): ?>
         <p>Keine Produkte in dieser Kategorie gefunden.</p>
       <?php else: ?>
@@ -87,47 +90,46 @@
 
             <section class="produkt-wrapper">
               <section class="image-wrapper">
-                <img src="<?= htmlspecialchars($produkt["image_main"] ?? "")
-                          ?>" alt="<?= htmlspecialchars($produkt["name"]) ?>">
+                <img src="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>"
+                     alt="<?= htmlspecialchars($produkt["name"]) ?>">
               </section>
 
               <section class="produkt-info">
                 <h3><?= htmlspecialchars($produkt["name"]) ?></h3>
-                <p><?= htmlspecialchars($produkt["price"]) ?>€ <span>inkl. Mwst.</span>
+                <p><?= htmlspecialchars($produkt["price"]) ?>€
+                  <span>inkl. Mwst.</span>
                   <?php if ($discount > 0): ?>
                     <span class="rabatt">-<?= $discount ?>%</span>
                   <?php endif; ?>
                 </p>
+
+                <section class="button-row" data-iid="<?= (int)$produkt["iid"] ?>">
+                  <a href="index.php?page=product&action=detail&id=<?= (int)$produkt["iid"] ?>">
+                    <button>Details</button>
+                  </a>
+
+                  <button class="btn-add-to-cart"
+                          data-iid="<?= (int)$produkt['iid'] ?>"
+                          data-name="<?= htmlspecialchars($produkt['name']) ?>"
+                          data-price="<?= (float)$produkt['price'] ?? 0 ?>"
+                          data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
+                    🛒
+                  </button>
+
+                  <button class="btn-add-to-watch"
+                          data-iid="<?= (int)$produkt['iid'] ?>"
+                          data-name="<?= htmlspecialchars($produkt['name']) ?>"
+                          data-price="<?= (float)$produkt['price'] ?? 0 ?>"
+                          data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
+                    🤍
+                  </button>
+                </section>
               </section>
-            </section>
-
-            <section class="button-row" data-iid="<?= (int)$produkt["iid"] ?>">
-              <a href="index.php?page=product&action=detail&id=<?= (int)$produkt["iid"] ?>">
-                <button>Details</button>
-              </a>
-
-              <button class="btn-add-to-cart"
-                data-iid="<?= (int)$produkt['iid'] ?>"
-                data-name="<?= htmlspecialchars($produkt['name']) ?>"
-                data-price="<?= (float)$produkt['price'] ?? 0 ?>"
-                data-image="<?= htmlspecialchars($produkt["image_main"] ?? "")
-                            ?>">
-                🛒
-              </button>
-
-              <button class="btn-add-to-watch"
-                data-iid="<?= (int)$produkt['iid'] ?>"
-                data-name="<?= htmlspecialchars($produkt['name']) ?>"
-                data-price="<?= (float)$produkt['price'] ?? 0 ?>"
-                data-image="<?= htmlspecialchars($produkt["image_main"] ?? "")
-                            ?>">
-                🤍
-              </button>
             </section>
           </li>
         <?php endforeach; ?>
       <?php endif; ?>
-    </section>
+    </ul>
 
     <section class="pagination"></section>
 
