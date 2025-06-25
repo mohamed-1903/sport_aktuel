@@ -307,22 +307,17 @@ function nextZoomImage() {
 
 function prevZoomImage() {
   currentImageIndex =
-    (currentImageIndex - 1 + zoomImages.length) % zoomImages.length;
-  updateZoomImage();
-}
+  requestAnimationFrame(() => {
+    clone.classList.add("fly-to-target-anim");
+  });
 
-function zoomIn() {
-  zoomScale = Math.min(3, zoomScale + 0.25);
-  updateZoomImage();
-}
-
-function zoomOut() {
-  zoomScale = Math.max(0.5, zoomScale - 0.25);
-  updateZoomImage();
-}
-
-function resetZoom() {
-  zoomScale = 1;
+  clone.addEventListener("animationend", () => {
+    clone.remove();
+    if (target) {
+      target.classList.add("pulse-highlight");
+      setTimeout(() => target.classList.remove("pulse-highlight"), 1000);
+    }
+  });
   updateZoomImage();
 }
 
