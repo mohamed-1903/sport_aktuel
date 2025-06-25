@@ -57,9 +57,9 @@ function setupProduct(section) {
   const toggleInfo = section.querySelector(`#toggle-info-${idx}`);
   const desc = section.querySelector(`#description-full-${idx}`);
   const zoomContainer = section.querySelector(`#zoomContainer-${idx}`);
-  const customBtn = section.querySelector(`#customBtn-${idx}`);
   const customToggle = section.querySelector(`#customToggle-${idx}`);
   const customSection = section.querySelector(`#customSection-${idx}`);
+
 
   section._zoomData = { currentIndex: 0 };
 
@@ -83,18 +83,15 @@ function setupProduct(section) {
   const badgeBLEl = section.querySelector(`#badgeBL-${idx}`);
   const badgeCLEl = section.querySelector(`#badgeCL-${idx}`);
 
-  if (customBtn && customSection) {
-    customBtn.addEventListener("click", () => {
-      const hidden = customSection.classList.toggle("hidden");
-      if (customToggle) customToggle.checked = !hidden;
+  if (customToggle && customSection) {
+    customSection.classList.toggle("hidden", !customToggle.checked);
+    customToggle.addEventListener("change", () => {
+      const show = customToggle.checked;
+      customSection.classList.toggle("hidden", !show);
     });
   }
 
-  if (customToggle && customSection) {
-    customToggle.addEventListener("change", () => {
-      customSection.classList.toggle("hidden", !customToggle.checked);
-    });
-  }
+
 
   setupCustomization(section);
 
@@ -480,6 +477,8 @@ function resetFinalPriceDisplay(price, section) {
     `#finalPriceValue-${idx}`
   ).textContent = `${price.toFixed(2)}€ inkl. Mwst.`;
 }
+
+
 
 function setupCustomization(section) {
   const name = section.querySelector(".product-name")?.textContent || "";
