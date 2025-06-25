@@ -1,0 +1,54 @@
+.custom-container {
+  max-width: 420px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+}
+
+.notice {
+  font-size: 14px;
+  background: #f5f5f5;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.option-group {
+  margin-bottom: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.custom-fields input {
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 8px;
+}
+
+.price-display {
+  font-weight: bold;
+  margin-top: 15px;
+  font-size: 18px;
+}
+
+.preview {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.toggle-preview {
+  color: green;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.preview-area {
+  margin: 0 auto;
+}
+
+.shirt-svg {
+  width: 200px;
+}

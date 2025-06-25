@@ -55,8 +55,8 @@
       </select>
       <button type="button" class="reset-filter" onclick="resetFilter()">Zurücksetzen</button>
       <select id="sort-select" onchange="sortProducts(this.value)">
-        <option value="asc">Preis ▲</option>
-        <option value="desc">Preis ▼</option>
+        <option value="asc">Preis aufsteigend ▲</option>
+        <option value="desc">Preis absteigend ▼</option>
       </select>
       <button type="button" class="layout-toggle" onclick="toggleLayout()">☰ Liste anzeigen</button>
     </section>
