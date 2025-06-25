@@ -85,6 +85,7 @@ $total = 0;
               <td class="summe-cell">
                 <?= number_format($sum, 2, ',', '.') ?> €
               </td>
+
               <td>
                 <form action="index.php?page=cart&action=remove" method="post" style="display:inline">
                   <input type="hidden" name="id" value="<?= (int)$item['product_id'] ?>">
