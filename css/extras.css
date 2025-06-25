@@ -27,15 +27,45 @@
   box-sizing: border-box; /* Padding zählt zur Gesamtbreite */
 }
 
+
 .filterbar {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-bottom: 1rem;
+  background-color: var(--card-bg);
+  padding: 0.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.filterbar.hidden {
+  display: none;
+}
+
+.filter-toggle {
+  align-self: flex-end;
+  margin-bottom: 0.5rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  font-size: 16px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.filter-toggle:hover {
+  background-color: var(--accent-color);
+  color: #000;
 }
 
 .filterbar select,
-.filterbar button {
+.filterbar button,
+.filterbar input[type="range"] {
   border: 1px solid #555;
   border-radius: 6px;
   background-color: var(--card-bg);
@@ -44,9 +74,27 @@
   padding: 10px;
 }
 
+.filterbar input[type="range"] {
+  width: 150px;
+  accent-color: var(--accent-color);
+}
+
+.filterbar select.active,
+.filterbar input[type="range"].active {
+  border-color: var(--accent-color);
+  background-color: rgba(255, 215, 0, 0.1);
+}
+
 .filterbar button:hover {
   background-color: var(--accent-color);
   color: #000;
+}
+
+.price-label {
+  margin-left: 0.5rem;
+  min-width: 80px;
+  display: inline-block;
+  text-align: center;
 }
 
 .layout-toggle {
@@ -1180,7 +1228,7 @@ body:not(.light-mode) .error {
 
 .einzelprodukt-list .einzelprodukt {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 24px;
   padding: 15px;
   border: 1px solid var(--border-color, #555);
@@ -1195,6 +1243,9 @@ body:not(.light-mode) .error {
 
 .einzelprodukt-list .image-wrapper {
   flex: 0 0 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .einzelprodukt-list .image-wrapper img {
@@ -1203,8 +1254,12 @@ body:not(.light-mode) .error {
 }
 
 .einzelprodukt-list .produkt-info {
-  text-align: left;
   flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .einzelprodukt-list .produkt-info h3 {
@@ -1217,5 +1272,8 @@ body:not(.light-mode) .error {
 }
 
 .einzelprodukt-list .button-row {
-  margin-left: auto;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
 }
