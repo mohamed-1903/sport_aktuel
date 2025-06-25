@@ -92,18 +92,6 @@ function setupProduct(section) {
 
   setupCustomization(section);
 
-  if (customBtn && customSection) {
-    customBtn.addEventListener('click', () => {
-      customSection.classList.toggle('hidden');
-    });
-  }
-
-  setupCustomization(section);
-
-  setupCustomization(section);
-
-  setupCustomization(section);
-
   giftWrapEl?.addEventListener("change", () => updateDisplay(section));
   pinInputEl?.addEventListener("input", () => updateDisplay(section));
 
