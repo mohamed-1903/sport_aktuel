@@ -87,7 +87,6 @@ function setupProduct(section) {
     customToggle.addEventListener("change", () => {
       const show = customToggle.checked;
       customSection.classList.toggle("hidden", !show);
-      if (!show) clearCustomization(section);
     });
   }
 
@@ -475,16 +474,6 @@ function resetFinalPriceDisplay(price, section) {
   section.querySelector(
     `#finalPriceValue-${idx}`
   ).textContent = `${price.toFixed(2)}€ inkl. Mwst.`;
-}
-
-function clearCustomization(section) {
-  section.querySelector(".player-select")?.value = "";
-  section.querySelector(".custom-name")?.value = "";
-  section.querySelector(".custom-number")?.value = "";
-  section.querySelectorAll(".badge-bl, .badge-cl").forEach((el) => {
-    el.checked = false;
-  });
-  updateDisplay(section);
 }
 
 
