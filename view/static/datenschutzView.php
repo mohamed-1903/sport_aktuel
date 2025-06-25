@@ -26,7 +26,7 @@
     <p>
         Wir setzen ein technisch erforderliches Cookie, um Ihre Zustimmung zur Cookie-Nutzung zu speichern.
         Dieses Cookie wird nach einem Jahr automatisch gelöscht und speichert keine personenbezogenen Daten.
-        Sie können Ihre Auswahl jederzeit über den Link „Cookie-Einstellungen“ im Footer ändern
+        Sie können Ihre Auswahl jederzeit über den unten links im Footer angezeigten Link „Cookie-Einstellungen“ ändern
         oder das Setzen von Cookies ablehnen.
     </p>
 
