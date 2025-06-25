@@ -23,7 +23,6 @@ function getItemsPerPage() {
 }
 
 window.applyFilter = function () {
-
   const filterWerte = {
     marke: document.getElementById("filter-marke")?.value || "",
     farbe: document.getElementById("filter-farbe")?.value || "",
@@ -47,13 +46,9 @@ window.applyFilter = function () {
     produkt.style.display = sichtbar ? "" : "none";
   });
 
-  // Nach jedem Filtervorgang die Paginierung neu berechnen,
-  // damit stets zwei gefüllte Reihen angezeigt werden.
   currentPage = 1;
   updatePagination();
 };
-
-
 
 // ✅ PRODUKTSUCHE mit Feedback
 function produktSuche() {
@@ -108,7 +103,9 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         const query = input.value.trim();
         if (query.length > 1) {
-          const url = `index.php?page=product&action=search&query=${encodeURIComponent(query)}`;
+          const url = `index.php?page=product&action=search&query=${encodeURIComponent(
+            query
+          )}`;
           window.location.href = url;
         }
       } else {
@@ -147,8 +144,6 @@ document.addEventListener("DOMContentLoaded", () => {
   updateLayoutToggle(savedLayout === "list" ? "list" : "grid");
 });
 
-
-
 // 🔽 PRODUKTE LADEN
 function ladeProdukte(containerId, urls) {
   const container = document.getElementById(containerId);
@@ -174,7 +169,6 @@ function ladeProdukte(containerId, urls) {
     }
   });
 }
-
 
 function autocompleteSuche() {
   const input = document.getElementById("produktsuche");
@@ -229,7 +223,6 @@ function autocompleteSuche() {
         )}`;
         window.location.href = url;
       });
-
 
       liste.appendChild(li);
     });
@@ -372,7 +365,10 @@ function showPage(page) {
 
   const prev = document.querySelector(".pagination button.prev");
   const next = document.querySelector(".pagination button.next");
-  const totalPages = Math.max(1, Math.ceil(paginatedItems.length / getItemsPerPage()));
+  const totalPages = Math.max(
+    1,
+    Math.ceil(paginatedItems.length / getItemsPerPage())
+  );
   if (prev) prev.disabled = currentPage === 1;
   if (next) next.disabled = currentPage === totalPages;
 }
@@ -404,7 +400,10 @@ function renderPagination(total) {
     if (currentPage > 1) showPage(currentPage - 1);
   });
   next.addEventListener("click", () => {
-    const totalPages = Math.max(1, Math.ceil(paginatedItems.length / getItemsPerPage()));
+    const totalPages = Math.max(
+      1,
+      Math.ceil(paginatedItems.length / getItemsPerPage())
+    );
     if (currentPage < totalPages) showPage(currentPage + 1);
   });
   container.querySelectorAll("button.page").forEach((btn) => {
@@ -419,10 +418,14 @@ function renderPagination(total) {
 function updatePagination() {
   const container = document.getElementById("produktContainer");
   if (!container) return;
-  paginatedItems = Array.from(container.querySelectorAll(".einzelprodukt"))
-    .filter((el) => el.style.display !== "none");
+  paginatedItems = Array.from(
+    container.querySelectorAll(".einzelprodukt")
+  ).filter((el) => el.style.display !== "none");
   const itemsPerPage = getItemsPerPage();
-  const totalPages = Math.max(1, Math.ceil(paginatedItems.length / itemsPerPage));
+  const totalPages = Math.max(
+    1,
+    Math.ceil(paginatedItems.length / itemsPerPage)
+  );
   if (currentPage > totalPages) currentPage = totalPages;
   renderPagination(totalPages);
 }

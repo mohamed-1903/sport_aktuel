@@ -445,12 +445,14 @@ function resetFields(section) {
   const idx = section.dataset.productIndex;
 
   section.querySelector(`#pin-${idx}`).value = "";
-  section.querySelector(`#rabatt-info-${idx}`).textContent = "";
-  section.querySelector(`#giftWrap-${idx}`).checked = false;
-  section.querySelector(`#quantity-${idx}`).value = 1;
-  section.querySelector(`#badgeBL-${idx}`)?.checked = false;
-  section.querySelector(`#badgeCL-${idx}`)?.checked = false;
-  section.querySelector(`#customSection-${idx}`)?.classList.add('hidden');
+section.querySelector(`#rabatt-info-${idx}`).textContent = "";
+section.querySelector(`#giftWrap-${idx}`).checked = false;
+section.querySelector(`#quantity-${idx}`).value = 1;
+const blEl = section.querySelector(`#badgeBL-${idx}`);
+if (blEl) blEl.checked = false;
+const clEl = section.querySelector(`#badgeCL-${idx}`);
+if (clEl) clEl.checked = false;
+section.querySelector(`#customSection-${idx}`)?.classList.add('hidden');
 
   const finalValueEl = section.querySelector(`#finalPriceValue-${idx}`);
   const originalPriceEl = section.querySelector(`#original-price-${idx}`);

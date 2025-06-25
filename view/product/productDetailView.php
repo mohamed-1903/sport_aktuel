@@ -152,7 +152,6 @@
           $name = $product['name'] ?? 'Unbekanntes Produkt';
           $price = isset($product['priceValue']) ? (float)$product['priceValue'] : 0.00;
           $image = $product['image_main'] ?? 'img/placeholder.jpg';
-
           ?>
 
           <!-- 🛒 In den Warenkorb -->
@@ -177,6 +176,7 @@
 
 
         </div>
+        <div class="price-breakdown"></div>
         <!-- 📄 Produktbeschreibung -->
         <div class="produkt-info">
           <h3 id="toggle-info-<?= $index ?>">
