@@ -1,5 +1,25 @@
 // ✅ FILTERFUNKTION
+let currentPage = 1;
+let paginatedItems = [];
+
+function getItemsPerPage() {
+  const container = document.getElementById("produktContainer");
+  if (!container) return 8;
+
+  if (container.classList.contains("einzelprodukt-grid")) {
+    const cols = window
+      .getComputedStyle(container)
+      .getPropertyValue("grid-template-columns")
+      .split(" ")
+      .filter((c) => c.trim().length > 0).length;
+    return (cols || 1) * 2;
+  }
+
+  return 2;
+}
+
 window.applyFilter = function () {
+
   const filterWerte = {
     marke: document.getElementById("filter-marke")?.value || "",
     farbe: document.getElementById("filter-farbe")?.value || "",
@@ -23,6 +43,8 @@ window.applyFilter = function () {
     produkt.style.display = sichtbar ? "" : "none";
   });
 };
+
+
 
 // ✅ PRODUKTSUCHE mit Feedback
 function produktSuche() {
@@ -116,6 +138,8 @@ document.addEventListener("DOMContentLoaded", () => {
   updateLayoutToggle(savedLayout === "list" ? "list" : "grid");
 });
 
+
+
 // 🔽 PRODUKTE LADEN
 function ladeProdukte(containerId, urls) {
   const container = document.getElementById(containerId);
@@ -141,6 +165,7 @@ function ladeProdukte(containerId, urls) {
     }
   });
 }
+
 
 function autocompleteSuche() {
   const input = document.getElementById("produktsuche");
@@ -269,20 +294,17 @@ window.resetFilter = function () {
 window.sortProducts = function (order) {
   const container = document.getElementById("produktContainer");
   if (!container) return;
+  const items = Array.from(container.querySelectorAll(".einzelprodukt"));
 
-  if (order === "asc" || order === "desc") {
-    const items = Array.from(container.querySelectorAll(".einzelprodukt"));
+  items.sort((a, b) => {
+    const pa = parseFloat(a.dataset.preis) || 0;
+    const pb = parseFloat(b.dataset.preis) || 0;
+    return order === "asc" ? pa - pb : pb - pa;
+  });
 
-    items.sort((a, b) => {
-      const pa = parseFloat(a.dataset.preis) || 0;
-      const pb = parseFloat(b.dataset.preis) || 0;
-      return order === "asc" ? pa - pb : pb - pa;
-    });
-
-    items.forEach((el) => container.appendChild(el));
-  } else if (typeof restoreOriginalOrder === "function") {
-    restoreOriginalOrder();
-  }
+  items.forEach((el) => container.appendChild(el));
+  currentPage = 1;
+  updatePagination();
 };
 
 // Setzt die Produkte in ihre ursprüngliche Reihenfolge zurück
@@ -309,6 +331,7 @@ window.toggleLayout = function () {
   const layout = useList ? "list" : "grid";
   localStorage.setItem("productLayout", layout);
   updateLayoutToggle(layout);
+  updatePagination();
 };
 
 function updateLayoutToggle(layout) {
@@ -320,3 +343,82 @@ function updateLayoutToggle(layout) {
     btn.textContent = "☰ Liste anzeigen";
   }
 }
+
+function showPage(page) {
+  const itemsPerPage = getItemsPerPage();
+  const start = (page - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  currentPage = page;
+
+  paginatedItems.forEach((el, idx) => {
+    el.style.display = idx >= start && idx < end ? "" : "none";
+  });
+
+  document.querySelectorAll(".pagination button.page").forEach((btn) => {
+    btn.classList.toggle("active", parseInt(btn.dataset.page) === currentPage);
+  });
+
+  const prev = document.querySelector(".pagination button.prev");
+  const next = document.querySelector(".pagination button.next");
+  const totalPages = Math.max(1, Math.ceil(paginatedItems.length / getItemsPerPage()));
+  if (prev) prev.disabled = currentPage === 1;
+  if (next) next.disabled = currentPage === totalPages;
+}
+
+function renderPagination(total) {
+  const container = document.querySelector(".pagination");
+  if (!container) return;
+  container.innerHTML = "";
+
+  const prev = document.createElement("button");
+  prev.className = "prev";
+  prev.innerHTML = "&laquo;";
+  container.appendChild(prev);
+
+  for (let i = 1; i <= total; i++) {
+    const b = document.createElement("button");
+    b.className = `page${i === currentPage ? " active" : ""}`;
+    b.dataset.page = i;
+    b.textContent = i;
+    container.appendChild(b);
+  }
+
+  const next = document.createElement("button");
+  next.className = "next";
+  next.innerHTML = "&raquo;";
+  container.appendChild(next);
+
+  prev.addEventListener("click", () => {
+    if (currentPage > 1) showPage(currentPage - 1);
+  });
+  next.addEventListener("click", () => {
+    const totalPages = Math.max(1, Math.ceil(paginatedItems.length / getItemsPerPage()));
+    if (currentPage < totalPages) showPage(currentPage + 1);
+  });
+  container.querySelectorAll("button.page").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      showPage(parseInt(btn.dataset.page));
+    });
+  });
+
+  showPage(currentPage);
+}
+
+function updatePagination() {
+  const container = document.getElementById("produktContainer");
+  if (!container) return;
+  paginatedItems = Array.from(container.querySelectorAll(".einzelprodukt"))
+    .filter((el) => el.style.display !== "none");
+  const itemsPerPage = getItemsPerPage();
+  const totalPages = Math.max(1, Math.ceil(paginatedItems.length / itemsPerPage));
+  if (currentPage > totalPages) currentPage = totalPages;
+  renderPagination(totalPages);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  updatePagination();
+});
+
+window.addEventListener("resize", () => {
+  updatePagination();
+});

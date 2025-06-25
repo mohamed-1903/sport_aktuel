@@ -18,6 +18,16 @@ switch ($action) {
             header("Location: index.php?page=cart&action=view");
             exit;
         }
+
+        $orderCount = countOrdersByUser($_SESSION['user_id']);
+        $next = $orderCount + 1;
+        $discountPercent = 0;
+        if ($next % 20 === 0) {
+            $discountPercent = 20;
+        } elseif ($next % 10 === 0) {
+            $discountPercent = 10;
+        }
+
         require 'view/order/checkoutView.php';
         break;
 
@@ -27,6 +37,16 @@ switch ($action) {
             header("Location: index.php?page=cart&action=view");
             exit;
         }
+
+        $orderCount = countOrdersByUser($_SESSION['user_id']);
+        $next = $orderCount + 1;
+        $discountPercent = 0;
+        if ($next % 20 === 0) {
+            $discountPercent = 20;
+        } elseif ($next % 10 === 0) {
+            $discountPercent = 10;
+        }
+        $_SESSION['last_discount_percent'] = $discountPercent;
 
         $success = saveOrder($_SESSION['user_id'], $cartItems);
 
@@ -41,6 +61,8 @@ switch ($action) {
         break;
 
     case 'success':
+        $discountPercent = $_SESSION['last_discount_percent'] ?? 0;
+        unset($_SESSION['last_discount_percent']);
         require 'view/order/checkoutSuccessView.php';
         break;
 

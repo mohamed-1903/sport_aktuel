@@ -52,6 +52,7 @@
   min-width: 140px;
 }
 
+
 .einzelprodukt-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -125,6 +126,11 @@
   cursor: pointer;
   transition: background-color 0.2s;
 }
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
 
 .pagination button:hover {
   background-color: var(--accent-color);
