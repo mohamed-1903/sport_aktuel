@@ -258,3 +258,11 @@ Um mehrere Produkte gleichzeitig zur Merkliste hinzuzufügen oder daraus zu entf
 ```json
 { "product_ids": [1, 2, 3] }
 ```
+
+## 🍪 Cookies
+Dieses Projekt verwendet ein technisches Cookie, um die Zustimmung zur Cookie-Nutzung zu speichern.
+Beim erstmaligen Besuch erscheint ein Hinweisbanner, 
+in dem Sie Cookies akzeptieren oder ablehnen können.
+Ihre Auswahl wird für ein Jahr gespeichert und lässt sich 
+später über den Button "Cookie-Einstellungen" im Footer 
+anpassen.

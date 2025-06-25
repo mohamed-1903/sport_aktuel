@@ -19,9 +19,11 @@ if (session_status() === PHP_SESSION_NONE) {
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/form.css">
     <link rel="stylesheet" href="css/product.css">
+    <link rel="stylesheet" href="css/rating.css">
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/themes.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/cookie.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 
@@ -73,7 +75,7 @@ if (session_status() === PHP_SESSION_NONE) {
         <div id="cart-popup" class="cart-preview-popup"></div>
         <div id="watchlist-preview-popup" class="watchlist-preview-popup"></div>
         <div id="watch-popup" class="watchlist-preview-popup"></div>
-<div id="popup-stack" class="popup-stack-container"></div>
+        <div id="popup-stack" class="popup-stack-container"></div>
 
         <nav>
             <ul class="nav-menu">
