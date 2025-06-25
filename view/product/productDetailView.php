@@ -58,7 +58,8 @@
           <div class="additional-images">
 
             <?php foreach ($images as $imgIndex => $img): ?>
-              <img src="<?= htmlspecialchars($img) ?>" onclick="changeImage('<?= htmlspecialchars($img) ?>', <?= $imgIndex ?>)" />
+              <img src="<?= htmlspecialchars($img) ?>"
+                   onclick="changeImage(this.closest('.Eprodukt'), '<?= htmlspecialchars($img) ?>', <?= $imgIndex ?>)" />
             <?php endforeach; ?>
           </div>
         </div>
