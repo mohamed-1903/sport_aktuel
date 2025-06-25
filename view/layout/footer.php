@@ -97,3 +97,4 @@
 <script src="js/watchlist.js"></script>
 <script src="js/warenkorb.js"></script>
 <script src="js/burger_menu.js"></script>
+<script src="js/customize.js"></script>
