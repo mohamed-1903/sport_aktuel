@@ -10,6 +10,69 @@ let TEAM_ROSTERS = {};
 const CUSTOMIZATION_FEE = 10; // € pro Trikot
 window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
 
+let TEAM_ROSTERS = {};
+
+const CUSTOMIZATION_FEE = 10; // € pro Trikot
+window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
+
+let TEAM_ROSTERS = {};
+
+const CUSTOMIZATION_FEE = 10; // € pro Trikot
+window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
+
+const TEAM_PLAYERS = {
+  Bayern: {
+    9: "Harry Kane",
+    25: "Thomas Müller",
+    11: "Kingsley Coman",
+  },
+  Dortmund: {
+    9: "Sebastian Haller",
+    22: "Jude Bellingham",
+    11: "Marco Reus",
+  },
+  "Real Madrid": {
+    7: "Vinicius Jr.",
+    10: "Luka Modric",
+    8: "Toni Kroos",
+  },
+  "Manchester City": {
+    9: "Erling Haaland",
+    17: "Kevin De Bruyne",
+    20: "Bernardo Silva",
+  },
+};
+
+const CUSTOMIZATION_FEE = 10; // € pro Trikot
+window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
+
+const TEAM_PLAYERS = {
+  Bayern: {
+    9: "Harry Kane",
+    25: "Thomas Müller",
+    11: "Kingsley Coman",
+  },
+  Dortmund: {
+    9: "Sebastian Haller",
+    22: "Jude Bellingham",
+    11: "Marco Reus",
+  },
+  "Real Madrid": {
+    7: "Vinicius Jr.",
+    10: "Luka Modric",
+    8: "Toni Kroos",
+  },
+  "Manchester City": {
+    9: "Erling Haaland",
+    17: "Kevin De Bruyne",
+    20: "Bernardo Silva",
+  },
+};
+
+const CUSTOMIZATION_FEE = 10; // € pro Trikot
+window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
+
+
 // Initialisierung pro Produktcontainer
 document.addEventListener("DOMContentLoaded", () => {
   fetch('data/rosters.json')
@@ -28,6 +91,8 @@ document.addEventListener("DOMContentLoaded", () => {
 function setupProduct(section) {
   const idx = section.dataset.productIndex;
 
+
+
   const qtyInput = section.querySelector(`#quantity-${idx}`);
   const mainImage = section.querySelector(`#main-image-${idx}`);
   const additionalImages = section.querySelectorAll(".additional-images img");
@@ -36,6 +101,7 @@ function setupProduct(section) {
   const zoomContainer = section.querySelector(`#zoomContainer-${idx}`);
   const customBtn = section.querySelector(`#customBtn-${idx}`);
   const customSection = section.querySelector(`#customSection-${idx}`);
+
 
   section._zoomData = { currentIndex: 0 };
 
@@ -62,6 +128,26 @@ function setupProduct(section) {
       customSection.classList.toggle('hidden');
     });
   }
+
+  setupCustomization(section);
+
+  if (customBtn && customSection) {
+    customBtn.addEventListener('click', () => {
+      customSection.classList.toggle('hidden');
+    });
+  }
+
+  setupCustomization(section);
+
+  if (customBtn && customSection) {
+    customBtn.addEventListener('click', () => {
+      customSection.classList.toggle('hidden');
+    });
+  }
+
+  setupCustomization(section);
+
+  setupCustomization(section);
 
   setupCustomization(section);
 
@@ -123,6 +209,30 @@ function getCustomizationFee(section) {
   return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
 }
 
+function getCustomizationFee(section) {
+  const nameInput = section.querySelector('.custom-name');
+  const numberInput = section.querySelector('.custom-number');
+  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
+}
+
+function getCustomizationFee(section) {
+  const nameInput = section.querySelector('.custom-name');
+  const numberInput = section.querySelector('.custom-number');
+  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
+}
+
+function getCustomizationFee(section) {
+  const nameInput = section.querySelector('.custom-name');
+  const numberInput = section.querySelector('.custom-number');
+  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
+}
+
+function getCustomizationFee(section) {
+  const nameInput = section.querySelector('.custom-name');
+  const numberInput = section.querySelector('.custom-number');
+  return nameInput && nameInput.value.trim() ? CUSTOMIZATION_FEE : numberInput && numberInput.value.trim() ? CUSTOMIZATION_FEE : 0;
+}
+
 function getBasePrice(section) {
   const idx = section.dataset.productIndex;
   const el = section.querySelector(`#basePrice-${idx}`);
@@ -147,6 +257,10 @@ function calculatePrice(section) {
 
   let subtotal = (getBasePrice(section) + customFee) * qty;
   if (gift) subtotal += 2;
+
+
+
+
 
   const discountPercent = DISCOUNT_CODES[pin] || 0;
   const discounted = subtotal * (1 - discountPercent / 100);
@@ -201,6 +315,8 @@ function updateDisplay(section) {
       </ul>`;
   }
 }
+
+
 
 // ---- Zoom Handling ----
 let currentSection = null;
@@ -350,6 +466,7 @@ window.getTotalPrice = function (priceWOTax) {
   return priceWOTax * (1 + TAX_RATE);
 };
 
+
 // Animation aus anderen Skripten genutzt
 function flyToTarget(startEl, targetSelector) {
   const target = document.querySelector(targetSelector);
@@ -378,11 +495,6 @@ function flyToTarget(startEl, targetSelector) {
 
   document.body.appendChild(clone);
 
-  requestAnimationFrame(() => {
-    clone.classList.add("fly-to-target-anim");
-  });
-
-  clone.addEventListener("animationend", () => clone.remove());
   requestAnimationFrame(() => {
     clone.classList.add("fly-to-target-anim");
   });
