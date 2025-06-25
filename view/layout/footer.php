@@ -68,6 +68,15 @@
     <p>&copy; 2025 SportX. Alle Rechte vorbehalten.</p>
   </div>
 </footer>
+<div id="cookie-banner" class="cookie-banner">
+  <p>Diese Seite verwendet Cookies, um Funktionen wie den Warenkorb zu ermöglichen.</p>
+  <div class="cookie-buttons">
+    <button id="cookie-accept">Akzeptieren</button>
+    <button id="cookie-decline">Ablehnen</button>
+  </div>
+</div>
+<button id="cookie-settings" class="cookie-settings">Cookie-Einstellungen</button>
+<script src="js/cookies.js"></script>
 <script src="js/style_modification.js"></script>
 <script src="js/filterandsearch.js"></script>
 <script src="js/produkt.js"></script>
