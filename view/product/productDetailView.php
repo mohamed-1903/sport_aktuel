@@ -148,17 +148,16 @@
             </div>
           </div>
         <?php endif; ?>
-      </div>
-      <div class="price-breakdown"></div>
+        <div class="price-breakdown"></div>
 
-      <!-- 🧺 Aktionen -->
+        <!-- 🧺 Aktionen -->
 
-      <div class="button-reihe" data-iid="<?= (int)$product['id'] ?>">
-        <?php
-        $iid = isset($product['iid']) ? (int)$product['iid'] : 0;
-        $name = $product['name'] ?? 'Unbekanntes Produkt';
-        $price = isset($product['priceValue']) ? (float)$product['priceValue'] : 0.00;
-        $image = $product['image_main'] ?? 'img/placeholder.jpg';
+        <div class="button-reihe" data-iid="<?= (int)$product['id'] ?>">
+          <?php
+          $iid = isset($product['iid']) ? (int)$product['iid'] : 0;
+          $name = $product['name'] ?? 'Unbekanntes Produkt';
+          $price = isset($product['priceValue']) ? (float)$product['priceValue'] : 0.00;
+          $image = $product['image_main'] ?? 'img/placeholder.jpg';
         ?>
 
         <!-- 🛒 In den Warenkorb -->
@@ -182,6 +181,7 @@
         </button>
 
 
+        </div>
       </div>
       <!-- 📄 Produktbeschreibung -->
       <div class="produkt-info">
