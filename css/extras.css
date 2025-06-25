@@ -64,7 +64,8 @@
 }
 
 .filterbar select,
-.filterbar button {
+.filterbar button,
+.filterbar input[type="range"] {
   border: 1px solid #555;
   border-radius: 6px;
   background-color: var(--card-bg);
@@ -73,7 +74,13 @@
   padding: 10px;
 }
 
-.filterbar select.active {
+.filterbar input[type="range"] {
+  width: 150px;
+  accent-color: var(--accent-color);
+}
+
+.filterbar select.active,
+.filterbar input[type="range"].active {
   border-color: var(--accent-color);
   background-color: rgba(255, 215, 0, 0.1);
 }
@@ -82,6 +89,14 @@
   background-color: var(--accent-color);
   color: #000;
 }
+
+.price-label {
+  margin-left: 0.5rem;
+  min-width: 80px;
+  display: inline-block;
+  text-align: center;
+}
+
 
 .layout-toggle {
   min-width: 140px;
@@ -1249,6 +1264,7 @@ body:not(.light-mode) .error {
 }
 
 
+
 .einzelprodukt-list .produkt-info h3 {
   font-size: 1.2rem;
   margin: 0 0 5px;
@@ -1264,4 +1280,3 @@ body:not(.light-mode) .error {
   gap: 10px;
   margin-top: 10px;
 }
-

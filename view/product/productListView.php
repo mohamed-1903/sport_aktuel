@@ -28,6 +28,7 @@
 
     <section class="filterbar">
       <select id="filter-marke" onchange="applyFilter()">
+
         <option value="">Alle Marken</option>
         <option value="Nike">Nike</option>
         <option value="Puma">Puma</option>
@@ -40,11 +41,9 @@
         <option value="Blau">Blau</option>
         <option value="Rot">Rot</option>
       </select>
-      <select id="filter-preis" onchange="applyFilter()">
-        <option value="">Kein Limit</option>
-        <option value="50">Bis 50 €</option>
-        <option value="100">Bis 100 €</option>
-      </select>
+      <input type="range" id="filter-preis" min="0" value="0" step="10"
+             oninput="updatePriceLabel(this.value)" onchange="applyFilter()">
+      <span id="price-label" class="price-label">Kein Limit</span>
       <select id="filter-mannschaft" onchange="applyFilter()">
         <option value="">Alle Mannschaften</option>
         <option value="Bayern">Bayern</option>
@@ -56,11 +55,11 @@
         <option value="Damen">Damen</option>
         <option value="Unisex">Unisex</option>
       </select>
-      <button type="button" class="reset-filter" onclick="resetFilter()">Zurücksetzen</button>
       <select id="sort-select" onchange="sortProducts(this.value)">
         <option value="asc">Preis aufsteigend ▲</option>
         <option value="desc">Preis absteigend ▼</option>
       </select>
+      <button type="button" class="reset-filter" onclick="resetFilter()">Zurücksetzen</button>
       <button type="button" class="layout-toggle" onclick="toggleLayout()">☰ Liste anzeigen</button>
 
 
