@@ -53,6 +53,7 @@ $total = 0;
             $base = $item['price'];
             $rabattPreis = $base * (1 - ($item['discount'] ?? 0) / 100);
             $einzelpreis = $rabattPreis + (($item['gift'] ?? 0) ? 2 : 0) + ($item['custom_fee'] ?? 0);
+
             $sum = $einzelpreis * $item['quantity'];
             $total += $sum;
           ?>
@@ -64,6 +65,7 @@ $total = 0;
                 <?php if (!empty($item['custom_name']) || !empty($item['custom_number'])): ?>
                   <small>Personalisierung: <?= htmlspecialchars($item['custom_name']) ?> <?= htmlspecialchars($item['custom_number']) ?></small><br>
                 <?php endif; ?>
+
                 <?php if (!empty($item['gift'])): ?>
                   <small>🎁 Geschenkverpackung</small><br>
                 <?php endif; ?>

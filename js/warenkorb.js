@@ -68,7 +68,8 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
       (numberInput && numberInput.value.trim());
     if (nameInput) payload.custom_name = nameInput.value.trim();
     if (numberInput) payload.custom_number = numberInput.value.trim();
-    if (hasCustom) payload.custom_fee = window.CUSTOMIZATION_FEE || 0;
+    const fee = typeof window.CUSTOMIZATION_FEE === 'number' ? window.CUSTOMIZATION_FEE : 10;
+    if (hasCustom) payload.custom_fee = fee;
 
   }
 
@@ -226,7 +227,7 @@ function loadList() {
           <td>
             <input type="number" class="qty-input" data-id="${item.product_id}" data-size="${item.size}" value="${menge}" min="1" />
           </td>
-          <td class="price-cell" data-price="${preis}">${preis.toFixed(2)} €</td>
+          <td>${einzelfpreis.toFixed(2)} €</td>
 
           <td class="summe-cell">${gesamt.toFixed(2)} €</td>
           <td>

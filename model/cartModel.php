@@ -92,6 +92,7 @@ function getCartItems(int $userId): array
                 p.name,
                 p.price,
                 p.image_main
+
          FROM cart_items ci
          JOIN cart c ON ci.cart_id = c.id
          JOIN products p ON ci.product_id = p.id
