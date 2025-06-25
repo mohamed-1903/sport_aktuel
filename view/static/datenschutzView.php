@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/../layout/header.php'; ?>
+<?php include 'view/layout/header.php'; ?>
 
 <main class="content">
     <h2>Datenschutzerklärung</h2>
@@ -25,7 +25,9 @@
     <h3>Cookie-Verwendung</h3>
     <p>
         Wir setzen ein technisch erforderliches Cookie, um Ihre Zustimmung zur Cookie-Nutzung zu speichern.
-        Dieses Cookie wird nach einem Jahr automatisch gelöscht. Es enthält keine personenbezogenen Daten.
+        Dieses Cookie wird nach einem Jahr automatisch gelöscht und speichert keine personenbezogenen Daten.
+        Sie können Ihre Auswahl jederzeit über den Link „Cookie-Einstellungen“ im Footer ändern
+        oder das Setzen von Cookies ablehnen.
     </p>
 
     <h3>Ihre Rechte</h3>
@@ -35,4 +37,4 @@
     </p>
 </main>
 
-<?php include __DIR__ . '/../layout/footer.php'; ?>
+<?php include 'view/layout/footer.php'; ?>

@@ -59,7 +59,8 @@
         <option value="desc">Preis absteigend ▼</option>
       </select>
       <button type="button" class="layout-toggle" onclick="toggleLayout()">☰ Liste anzeigen</button>
-    </section>
+
+
 
     <section class="einzelprodukt-grid" id="produktContainer">
       <?php if (empty($filteredProducts)): ?>
@@ -128,6 +129,7 @@
     </section>
 
     <section class="pagination"></section>
+
   </main>
 </main>
 
