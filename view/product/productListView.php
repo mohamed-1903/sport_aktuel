@@ -61,7 +61,7 @@
       <button type="button" class="layout-toggle" onclick="toggleLayout()">☰ Liste anzeigen</button>
 
 
-
+    </section>
     <section class="einzelprodukt-grid" id="produktContainer">
       <?php if (empty($filteredProducts)): ?>
         <p>Keine Produkte in dieser Kategorie gefunden.</p>
