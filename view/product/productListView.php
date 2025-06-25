@@ -66,8 +66,11 @@
         <option value="name-asc">Name A–Z</option>
         <option value="name-desc">Name Z–A</option>
       </select>
-      <button type="button" class="reset-filter" onclick="resetFilter()">Zurücksetzen</button>
-      <button type="button" class="layout-toggle" onclick="toggleLayout()">☰ Liste anzeigen</button>
+      <div class="filter-actions">
+        <button type="button" class="reset-filter" onclick="resetFilter()">Zurücksetzen</button>
+        <button type="button" class="layout-toggle" onclick="toggleLayout()">☰ Liste anzeigen</button>
+      </div>
+
 
 
 
