@@ -65,7 +65,7 @@
         </div>
 
         <!-- 🛒 Produktdetails & Optionen -->
-        <div>␊
+        <div>
           <h1 class="product-name"><?= htmlspecialchars($name) ?></h1>
           <p id="original-price-<?= $index ?>" class="price-old" style="display: none;"></p>
           <p id="final-price-<?= $index ?>">
