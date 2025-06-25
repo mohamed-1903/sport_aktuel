@@ -127,12 +127,7 @@
       <?php endif; ?>
     </section>
 
-    <section class="pagination">
-      <button>&laquo;</button>
-      <button class="active">1</button>
-      <button>2</button>
-      <button>&raquo;</button>
-    </section>
+    <section class="pagination"></section>
   </main>
 </main>
 

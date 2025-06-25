@@ -1,4 +1,8 @@
 // ✅ FILTERFUNKTION
+const ITEMS_PER_PAGE = 8;
+let currentPage = 1;
+let paginatedItems = [];
+
 window.applyFilter = function () {
   const filterWerte = {
     marke: document.getElementById("filter-marke")?.value || "",
@@ -19,9 +23,11 @@ window.applyFilter = function () {
       (!filterWerte.geschlecht || p.geschlecht === filterWerte.geschlecht) &&
       preis <= filterWerte.maxPreis;
 
-    // leeres Display lässt die ursprüngliche Flex-Darstellung erhalten
     produkt.style.display = sichtbar ? "" : "none";
   });
+
+  currentPage = 1;
+  updatePagination();
 };
 
 // ✅ PRODUKTSUCHE mit Feedback
@@ -114,6 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
     prodContainer.classList.remove("einzelprodukt-grid");
   }
   updateLayoutToggle(savedLayout === "list" ? "list" : "grid");
+  updatePagination();
 
 });
 
@@ -135,6 +142,7 @@ function ladeProdukte(containerId, urls) {
   ).then(() => {
     applyFilter();
     produktSuche();
+    updatePagination();
   });
 }
 
@@ -267,6 +275,8 @@ window.sortProducts = function (order) {
   });
 
   items.forEach((el) => container.appendChild(el));
+  currentPage = 1;
+  updatePagination();
 };
 
 // Wechselt zwischen Listen- und Grid-Layout für die Produktübersicht
@@ -286,6 +296,7 @@ window.toggleLayout = function () {
   const layout = useList ? "list" : "grid";
   localStorage.setItem("productLayout", layout);
   updateLayoutToggle(layout);
+  updatePagination();
 };
 
 function updateLayoutToggle(layout) {
@@ -297,3 +308,76 @@ function updateLayoutToggle(layout) {
     btn.textContent = "☰ Liste anzeigen";
   }
 }
+
+function showPage(page) {
+  const start = (page - 1) * ITEMS_PER_PAGE;
+  const end = start + ITEMS_PER_PAGE;
+  currentPage = page;
+
+  paginatedItems.forEach((el, idx) => {
+    el.style.display = idx >= start && idx < end ? "" : "none";
+  });
+
+  document.querySelectorAll(".pagination button.page").forEach((btn) => {
+    btn.classList.toggle("active", parseInt(btn.dataset.page) === currentPage);
+  });
+
+  const prev = document.querySelector(".pagination button.prev");
+  const next = document.querySelector(".pagination button.next");
+  const totalPages = Math.max(1, Math.ceil(paginatedItems.length / ITEMS_PER_PAGE));
+  if (prev) prev.disabled = currentPage === 1;
+  if (next) next.disabled = currentPage === totalPages;
+}
+
+function renderPagination(total) {
+  const container = document.querySelector(".pagination");
+  if (!container) return;
+  container.innerHTML = "";
+
+  const prev = document.createElement("button");
+  prev.className = "prev";
+  prev.innerHTML = "&laquo;";
+  container.appendChild(prev);
+
+  for (let i = 1; i <= total; i++) {
+    const b = document.createElement("button");
+    b.className = `page${i === currentPage ? " active" : ""}`;
+    b.dataset.page = i;
+    b.textContent = i;
+    container.appendChild(b);
+  }
+
+  const next = document.createElement("button");
+  next.className = "next";
+  next.innerHTML = "&raquo;";
+  container.appendChild(next);
+
+  prev.addEventListener("click", () => {
+    if (currentPage > 1) showPage(currentPage - 1);
+  });
+  next.addEventListener("click", () => {
+    const totalPages = Math.max(1, Math.ceil(paginatedItems.length / ITEMS_PER_PAGE));
+    if (currentPage < totalPages) showPage(currentPage + 1);
+  });
+  container.querySelectorAll("button.page").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      showPage(parseInt(btn.dataset.page));
+    });
+  });
+
+  showPage(currentPage);
+}
+
+function updatePagination() {
+  const container = document.getElementById("produktContainer");
+  if (!container) return;
+  paginatedItems = Array.from(container.querySelectorAll(".einzelprodukt"))
+    .filter((el) => el.style.display !== "none");
+  const totalPages = Math.max(1, Math.ceil(paginatedItems.length / ITEMS_PER_PAGE));
+  if (currentPage > totalPages) currentPage = totalPages;
+  renderPagination(totalPages);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  updatePagination();
+});
