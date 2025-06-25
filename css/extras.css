@@ -1218,4 +1218,8 @@ body:not(.light-mode) .error {
 
 .einzelprodukt-list .button-row {
   margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: flex-end;
 }
