@@ -97,7 +97,6 @@ function getCartItems(int $userId): array
          WHERE c.user_id = ?"
     );
 
-    $stmt->execute([$userId]);
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
