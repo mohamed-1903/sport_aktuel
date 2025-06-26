@@ -151,9 +151,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const priceInput = document.getElementById("filter-preis");
   if (priceInput) {
     priceInput.addEventListener("input", () => updatePriceLabel(priceInput.value));
-    updatePriceLabel(priceInput.value);
+    // Das Label wird erst nach dem Laden aller Produkte gesetzt
   }
-  updateActiveFilters();
+  // Filter nur zurücksetzen, wenn Produkte bereits im DOM vorhanden sind
+  // Bei dynamisch geladenen Listen erfolgt das Zurücksetzen nach dem Ladevorgang
+  if (typeof produktKonfigurationen === "undefined") {
+    resetFilter();
+  }
 });
 
 // 🔽 PRODUKTE LADEN
