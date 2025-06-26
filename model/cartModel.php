@@ -78,25 +78,40 @@ function getCartItems(int $userId): array
 {
     global $db;
 
-    $stmt = $db->prepare(
-        "SELECT ci.id AS cart_item_id,
-                ci.product_id,
-                ci.size,
-                ci.quantity,
-                ci.discount,
-                ci.gift,
-                ci.custom_name,
-                ci.custom_number,
-                ci.custom_fee,
-                p.name,
-                p.price,
-                p.image_main
-         FROM cart_items ci
-         JOIN cart c ON ci.cart_id = c.id
-         JOIN products p ON ci.product_id = p.id
-         WHERE c.user_id = ?"
-    );
+    if (customizationSupported()) {
+        $select = "SELECT ci.id AS cart_item_id,
+                        ci.product_id,
+                        ci.size,
+                        ci.quantity,
+                        ci.discount,
+                        ci.gift,
+                        ci.custom_name,
+                        ci.custom_number,
+                        ci.custom_fee,
+                        p.name,
+                        p.price,
+                        p.image_main
+                 FROM cart_items ci
+                 JOIN cart c ON ci.cart_id = c.id
+                 JOIN products p ON ci.product_id = p.id
+                 WHERE c.user_id = ?";
+    } else {
+        $select = "SELECT ci.id AS cart_item_id,
+                        ci.product_id,
+                        ci.size,
+                        ci.quantity,
+                        ci.discount,
+                        ci.gift,
+                        p.name,
+                        p.price,
+                        p.image_main
+                 FROM cart_items ci
+                 JOIN cart c ON ci.cart_id = c.id
+                 JOIN products p ON ci.product_id = p.id
+                 WHERE c.user_id = ?";
+    }
 
+    $stmt = $db->prepare($select);
     $stmt->execute([$userId]);
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
