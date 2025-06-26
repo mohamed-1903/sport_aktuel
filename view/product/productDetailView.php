@@ -99,7 +99,32 @@
           <input type="number" id="quantity-<?= $index ?>" value="1" min="1" class="size-dropdown" />
 
           <?php if (stripos($product['subcategory'] ?? '', 'Trikots') !== false): ?>
-            <button type="button" class="btn-show-custom" id="customBtn-<?= $index ?>">Produkt individualisieren</button>
+            <div class="custom-toggle-wrap">
+              <label class="custom-switch">
+                <input type="checkbox" id="customToggle-<?= $index ?>" />
+                <span class="slider"></span>
+              </label>
+              <span>Individualisierung</span>
+            </div>
+            <div class="option-custom" id="customSection-<?= $index ?>">
+              <div class="customization">
+                <label for="player-<?= $index ?>">Spieler wählen:</label>
+                <select id="player-<?= $index ?>" class="size-dropdown player-select"></select>
+                <label for="customName-<?= $index ?>">Name:</label>
+                <input type="text" id="customName-<?= $index ?>" class="size-dropdown custom-name" maxlength="20" />
+                <label for="customNumber-<?= $index ?>">Nummer:</label>
+                <input type="number" id="customNumber-<?= $index ?>" class="size-dropdown custom-number" min="0" max="99" />
+                <div class="badges">
+                  <label><input type="checkbox" id="badgeBL-<?= $index ?>" class="badge-bl"> Bundesliga-Badge</label>
+                  <label><input type="checkbox" id="badgeCL-<?= $index ?>" class="badge-cl"> Champions-League-Badge</label>
+                </div>
+                <div class="jersey-preview" id="jerseyPreview-<?= $index ?>">
+                  <img src="<?= htmlspecialchars($backImage) ?>" alt="Rückenansicht" />
+                  <div class="overlay-name"></div>
+                  <div class="overlay-number"></div>
+                </div>
+              </div>
+            </div>
           <?php endif; ?>
 
           <div class="button-rows">
@@ -121,27 +146,6 @@
           </div>
         </div>
 
-        <?php if (stripos($product['subcategory'] ?? '', 'Trikots') !== false): ?>
-          <div class="option-custom hidden" id="customSection-<?= $index ?>">
-            <div class="customization">
-              <label for="player-<?= $index ?>">Spieler wählen:</label>
-              <select id="player-<?= $index ?>" class="size-dropdown player-select"></select>
-              <label for="customName-<?= $index ?>">Name:</label>
-              <input type="text" id="customName-<?= $index ?>" class="size-dropdown custom-name" maxlength="20" />
-              <label for="customNumber-<?= $index ?>">Nummer:</label>
-              <input type="number" id="customNumber-<?= $index ?>" class="size-dropdown custom-number" min="0" max="99" />
-              <div class="badges">
-                <label><input type="checkbox" id="badgeBL-<?= $index ?>" class="badge-bl"> Bundesliga-Badge</label>
-                <label><input type="checkbox" id="badgeCL-<?= $index ?>" class="badge-cl"> Champions-League-Badge</label>
-              </div>
-              <div class="jersey-preview" id="jerseyPreview-<?= $index ?>">
-                <img src="<?= htmlspecialchars($backImage) ?>" alt="Rückenansicht" />
-                <div class="overlay-name"></div>
-                <div class="overlay-number"></div>
-              </div>
-            </div>
-          </div>
-        <?php endif; ?>
         <div class="price-breakdown"></div>
 
         <!-- 🧺 Aktionen -->
@@ -186,7 +190,6 @@
             <p><?= nl2br(htmlspecialchars($description)) ?></p>
           </div>
         </div>
-      </div>
       </div>
 
     </section>
