@@ -22,9 +22,13 @@
 
   <main class="main-content">
     <h1><?= htmlspecialchars($displayTitle) ?></h1>
+    <button type="button" class="filter-toggle" onclick="toggleFilterBar()">
+      Filter ausblenden ▲
+    </button>
 
     <section class="filterbar">
       <select id="filter-marke" onchange="applyFilter()">
+
         <option value="">Alle Marken</option>
         <option value="Nike">Nike</option>
         <option value="Puma">Puma</option>
@@ -37,33 +41,42 @@
         <option value="Blau">Blau</option>
         <option value="Rot">Rot</option>
       </select>
-      <select id="filter-preis" onchange="applyFilter()">
-        <option value="">Kein Limit</option>
-        <option value="50">Bis 50 €</option>
-        <option value="100">Bis 100 €</option>
-      </select>
+      <div class="range-filter">
+        <label for="filter-preis">Preis:</label>
+        <input type="range" id="filter-preis" min="0" value="0" step="10"
+               oninput="updatePriceLabel(this.value)" onchange="applyFilter()">
+        <span id="price-label" class="price-label">Kein Limit</span>
+      </div>
       <select id="filter-mannschaft" onchange="applyFilter()">
         <option value="">Alle Mannschaften</option>
         <option value="Bayern">Bayern</option>
         <option value="Dortmund">Dortmund</option>
       </select>
       <select id="filter-geschlecht" onchange="applyFilter()">
+
         <option value="">Alle Geschlechter</option>
         <option value="Herren">Herren</option>
         <option value="Damen">Damen</option>
         <option value="Unisex">Unisex</option>
       </select>
-      <button type="button" class="reset-filter" onclick="resetFilter()">Zurücksetzen</button>
       <select id="sort-select" onchange="sortProducts(this.value)">
-        <option value="asc">Preis aufsteigend ▲</option>
-        <option value="desc">Preis absteigend ▼</option>
+        <option value="default">Standardsortierung</option>
+        <option value="price-asc">Preis aufsteigend ▲</option>
+        <option value="price-desc">Preis absteigend ▼</option>
+        <option value="name-asc">Name A–Z</option>
+        <option value="name-desc">Name Z–A</option>
       </select>
-      <button type="button" class="layout-toggle" onclick="toggleLayout()">☰ Liste anzeigen</button>
+      <div class="filter-actions">
+        <button type="button" class="reset-filter" onclick="resetFilter()">Zurücksetzen</button>
+        <button type="button" class="layout-toggle" onclick="toggleLayout()">☰ Liste anzeigen</button>
+      </div>
+
 
 
 
     </section>
-    <section class="einzelprodukt-grid" id="produktContainer">
+    <ul class="einzelprodukt-grid" id="produktContainer">
+
       <?php if (empty($filteredProducts)): ?>
         <p>Keine Produkte in dieser Kategorie gefunden.</p>
       <?php else: ?>
@@ -87,17 +100,19 @@
 
             <section class="produkt-wrapper">
               <section class="image-wrapper">
-                <img src="<?= htmlspecialchars($produkt["image_main"] ?? "")
-                          ?>" alt="<?= htmlspecialchars($produkt["name"]) ?>">
+                <img src="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>"
+                     alt="<?= htmlspecialchars($produkt["name"]) ?>">
               </section>
 
               <section class="produkt-info">
                 <h3><?= htmlspecialchars($produkt["name"]) ?></h3>
-                <p><?= htmlspecialchars($produkt["price"]) ?>€ <span>inkl. Mwst.</span>
+                <p><?= htmlspecialchars($produkt["price"]) ?>€
+                  <span>inkl. Mwst.</span>
                   <?php if ($discount > 0): ?>
                     <span class="rabatt">-<?= $discount ?>%</span>
                   <?php endif; ?>
                 </p>
+
               </section>
             </section>
 
@@ -107,27 +122,26 @@
               </a>
 
               <button class="btn-add-to-cart"
-                data-iid="<?= (int)$produkt['iid'] ?>"
-                data-name="<?= htmlspecialchars($produkt['name']) ?>"
-                data-price="<?= (float)$produkt['price'] ?? 0 ?>"
-                data-image="<?= htmlspecialchars($produkt["image_main"] ?? "")
-                            ?>">
+                      data-iid="<?= (int)$produkt['iid'] ?>"
+                      data-name="<?= htmlspecialchars($produkt['name']) ?>"
+                      data-price="<?= (float)$produkt['price'] ?? 0 ?>"
+                      data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
                 🛒
               </button>
 
               <button class="btn-add-to-watch"
-                data-iid="<?= (int)$produkt['iid'] ?>"
-                data-name="<?= htmlspecialchars($produkt['name']) ?>"
-                data-price="<?= (float)$produkt['price'] ?? 0 ?>"
-                data-image="<?= htmlspecialchars($produkt["image_main"] ?? "")
-                            ?>">
+                      data-iid="<?= (int)$produkt['iid'] ?>"
+                      data-name="<?= htmlspecialchars($produkt['name']) ?>"
+                      data-price="<?= (float)$produkt['price'] ?? 0 ?>"
+                      data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
                 🤍
               </button>
             </section>
           </li>
         <?php endforeach; ?>
       <?php endif; ?>
-    </section>
+    </ul>
+
 
     <section class="pagination"></section>
 

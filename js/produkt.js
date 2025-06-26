@@ -61,6 +61,8 @@ function setupProduct(section) {
   const customToggle = section.querySelector(`#customToggle-${idx}`);
   const customSection = section.querySelector(`#customSection-${idx}`);
 
+
+
   section._zoomData = { currentIndex: 0 };
 
   additionalImages.forEach((img, i) =>
@@ -103,6 +105,10 @@ function setupProduct(section) {
       setCustomVisible(customToggle.checked);
     });
   }
+
+
+
+
 
   setupCustomization(section);
 
@@ -468,6 +474,7 @@ function resetFields(section) {
   const cs = section.querySelector(`#customSection-${idx}`);
   if (cs) cs.classList.remove("show");
 
+
   const finalValueEl = section.querySelector(`#finalPriceValue-${idx}`);
   const originalPriceEl = section.querySelector(`#original-price-${idx}`);
   const discountLabelEl = section.querySelector(`#discountLabel-${idx}`);
@@ -499,6 +506,8 @@ function clearCustomization(section) {
   });
   updateDisplay(section);
 }
+
+
 
 function setupCustomization(section) {
   const name = section.querySelector(".product-name")?.textContent || "";
