@@ -74,8 +74,6 @@
 
 
 
-
-
     </section>
     <ul class="einzelprodukt-grid" id="produktContainer">
 

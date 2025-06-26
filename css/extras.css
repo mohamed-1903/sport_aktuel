@@ -142,6 +142,37 @@
 .range-filter {
   display: flex;
   align-items: center;
+  gap: 0.25rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  padding: 4px 8px;
+}
+
+.range-filter.active {
+  border-color: var(--accent-color);
+  background-color: var(--accent-color);
+  color: #000;
+}
+
+.filter-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+
+.price-label {
+  margin-left: 0.5rem;
+  min-width: 80px;
+  display: inline-block;
+  text-align: center;
+}
+
+.range-filter {
+  display: flex;
+  align-items: center;
   gap: 0.5rem;
   border: 1px solid #555;
   border-radius: 6px;
@@ -1362,6 +1393,7 @@ body:not(.light-mode) .error {
   align-items: center;
   justify-content: center;
 }
+
 
 .einzelprodukt-list .produkt-info h3 {
   font-size: 1.2rem;
