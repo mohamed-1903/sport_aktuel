@@ -65,7 +65,6 @@ function setupProduct(section) {
 
 
 
-  section._zoomData = { currentIndex: 0 };
 
   additionalImages.forEach((img, i) =>
     img.addEventListener("click", () => changeImage(section, img.src, i))
@@ -461,15 +460,6 @@ function resetFields(section) {
   const idx = section.dataset.productIndex;
 
   section.querySelector(`#pin-${idx}`).value = "";
-  section.querySelector(`#rabatt-info-${idx}`).textContent = "";
-  section.querySelector(`#giftWrap-${idx}`).checked = false;
-  section.querySelector(`#quantity-${idx}`).value = 1;
-  const blEl = section.querySelector(`#badgeBL-${idx}`);
-  if (blEl) blEl.checked = false;
-  const clEl = section.querySelector(`#badgeCL-${idx}`);
-  if (clEl) clEl.checked = false;
-  const cs = section.querySelector(`#customSection-${idx}`);
-  if (cs) cs.classList.remove("show");
   const toggle = section.querySelector(`#customToggle-${idx}`);
   if (toggle) toggle.checked = false;
 
