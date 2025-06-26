@@ -38,7 +38,7 @@
 
 .filterbar {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.25rem;
   margin-bottom: 1rem;
@@ -89,6 +89,7 @@
   background-position: right 8px center;
   background-size: 12px;
 }
+
 
 .filterbar input[type="range"] {
   width: 140px;
