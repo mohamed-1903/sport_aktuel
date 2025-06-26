@@ -26,13 +26,14 @@
   min-height: 100vh; /* sorgt für volle Höhe bei leerem Inhalt */
   box-sizing: border-box; /* Padding zählt zur Gesamtbreite */
 }
+
 .filter-tools {
   display: flex;
   flex-direction: row;
   gap: 0.25rem;
   margin-bottom: 0.5rem;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: flex-start; /* Buttons linksbündig */
   width: 100%;
 }
 
@@ -40,7 +41,6 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  flex-direction: row;
   gap: 0.25rem;
   margin-bottom: 1rem;
   background-color: var(--card-bg);
@@ -48,7 +48,9 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   overflow-x: auto;
+  justify-content: flex-start; /* linksbündig */
 }
+
 
 .filterbar.hidden {
   display: none;
@@ -139,9 +141,10 @@
   flex-wrap: nowrap;
   gap: 0.25rem;
   align-items: center;
-  justify-content: center; /* Filter nebeneinander zentrieren */
-  overflow-x: auto; /* bei Bedarf horizontal scrollen */
+  justify-content: flex-start; /* Filter linksbündig */
+  overflow-x: auto;            /* bei Bedarf horizontal scrollen */
 }
+
 
 .filter-controls.hidden {
   display: none;
@@ -170,6 +173,18 @@
   background-color: var(--accent-color);
   color: #000;
 }
+
+/* Buttons oberhalb der Filterleiste */
+.filter-tools {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
 .price-label {
   margin-left: 0.25rem;
   min-width: 70px;
