@@ -84,27 +84,28 @@
           <?php
           $preis = floatval(preg_replace('/[^0-9.]/', '', $produkt["price"]));
           $mannschaft = stripos($produkt["name"], "Bayern") !== false ? "Bayern" : (stripos($produkt["name"], "Dortmund") !== false ? "Dortmund" : "");
-          $discount = $produkt["discount"] ?? 0;
-          ?>
-          <?php
-          $marke = $produkt["marke"] ?? "Unbekannt";
-          $farbe = $produkt["farbe"] ?? "Unbekannt";
-          $geschlecht = $produkt["geschlecht"] ?? "Unbekannt";
-          ?>
-          <li class="einzelprodukt"
-            data-marke="<?= htmlspecialchars($marke) ?>"
-            data-farbe="<?= htmlspecialchars($farbe) ?>"
-            data-preis="<?= $preis ?>"
-            data-mannschaft="<?= $mannschaft ?>"
-            data-geschlecht="<?= htmlspecialchars($geschlecht) ?>">
-
-            <section class="produkt-wrapper">
-              <section class="image-wrapper">
-                <img src="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>"
-                     alt="<?= htmlspecialchars($produkt["name"]) ?>">
               </section>
+            </section>
+            <section class="button-row" data-iid="<?= (int)$produkt["iid"] ?>">
+              <a href="index.php?page=product&action=detail&id=<?= (int)$produkt["iid"] ?>">
+                <button>Details</button>
+              </a>
+              <button class="btn-add-to-cart"
+                      data-iid="<?= (int)$produkt['iid'] ?>"
+                      data-name="<?= htmlspecialchars($produkt['name']) ?>"
+                      data-price="<?= (float)$produkt['price'] ?? 0 ?>"
+                      data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
+                🛒
+              </button>
 
-              <section class="produkt-info">
+              <button class="btn-add-to-watch"
+                      data-iid="<?= (int)$produkt['iid'] ?>"
+                      data-name="<?= htmlspecialchars($produkt['name']) ?>"
+                      data-price="<?= (float)$produkt['price'] ?? 0 ?>"
+                      data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
+                🤍
+              </button>
+        <?php endforeach; ?>
                 <h3><?= htmlspecialchars($produkt["name"]) ?></h3>
                 <p><?= htmlspecialchars($produkt["price"]) ?>€
                   <span>inkl. Mwst.</span>
