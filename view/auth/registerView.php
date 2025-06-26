@@ -10,11 +10,11 @@
     <?php endif; ?>
 
     <form id="registerForm" action="index.php?page=auth&action=register" method="POST" autocomplete="off">
-      <label for="registerUsername">Benutzername:</label><br>
+      <label for="registerUsername">Benutzername:</label>
       <input type="text" name="username" id="registerUsername" required minlength="5" pattern="(?=.*[a-z])(?=.*[A-Z]).{5,}">
       <small></small><br>
 
-      <label for="registerEmail">E-Mail:</label><br>
+      <label for="registerEmail">E-Mail:</label>
       <input type="email" name="email" id="registerEmail" required>
       <small></small><br>
 
@@ -22,15 +22,14 @@
       <input type="password" name="password" id="registerPassword" required minlength="10">
       <small></small><br>
 
-      <label for="registerConfirmPassword">Passwort wiederholen:</label><br>
+      <label for="registerConfirmPassword">Passwort wiederholen:</label>
       <input type="password" id="registerConfirmPassword" required>
       <small></small><br>
 
       <button type="submit" id="registerBtn" disabled>Registrieren</button>
     </form>
 
-    <a href="index.php?page=auth&action=login" class="back-link">
-      <button type="button">Zurück zur Anmeldung</button>
+    <a href="index.php?page=auth&action=login" class="btn-link">Zurück zur Anmeldung</button>
     </a>
   </div>
 </div>
@@ -73,8 +72,12 @@
   async function checkTaken(field, value) {
     const res = await fetch('index.php?page=auth&action=check', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ [field]: value })
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        [field]: value
+      })
     });
     const data = await res.json();
     return data[field + 'Taken'];
@@ -109,4 +112,3 @@
   [rUser, rEmail, rPass, rConf].forEach(input => input.addEventListener('input', checkForm));
 </script>
 <?php include __DIR__ . '/../layout/footer.php'; ?>
-

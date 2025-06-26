@@ -64,3 +64,6 @@
   text-align: center;
   color: var(--accent-color);
 }
+.btn-link:hover {
+  text-decoration: underline; 
+}

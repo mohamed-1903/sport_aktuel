@@ -19,9 +19,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/form.css">
     <link rel="stylesheet" href="css/product.css">
-    <!-- Styles für Filterbar und weitere Extras -->
     <link rel="stylesheet" href="css/extras.css">
-
     <link rel="stylesheet" href="css/customize.css">
     <link rel="stylesheet" href="css/rating.css">
     <link rel="stylesheet" href="css/modal.css">
@@ -118,5 +116,8 @@ if (session_status() === PHP_SESSION_NONE) {
                 </li>
             </ul>
         </nav>
-        <div id="nav-overlay" class="nav-overlay"></div>
+        <div class="gutschein-banner">
+            <p>💸 Jetzt 20 % Rabatt mit Code <strong>SPORT20</strong> sichern – nur für kurze Zeit!</p>
+        </div>
+
     </header>
