@@ -28,9 +28,16 @@
 }
 
 
+.filter-tools {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+  align-items: center;
+}
+
 .filterbar {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 0.25rem;
   margin-bottom: 1rem;
@@ -38,6 +45,7 @@
   padding: 0.25rem 0.5rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  overflow-x: auto;
 }
 
 .filterbar.hidden {
@@ -60,8 +68,8 @@
 }
 
 .filterbar select,
-.filterbar button,
-.filterbar input[type="range"] {
+.filterbar input[type="range"],
+.filter-tools button {
   border: 1px solid #555;
   border-radius: 6px;
   background-color: var(--card-bg);
@@ -92,7 +100,8 @@
   color: #000;
 }
 
-.filterbar button:hover {
+.filterbar button:hover,
+.filter-tools button:hover {
   background-color: var(--accent-color);
   color: #000;
 }
@@ -149,7 +158,7 @@
 }
 
 /* Kartenansicht für Produkte im Grid */
-.einzelprodukt-grid .produkt-wrapper {
+.einzelprodukt-grid .einzelprodukt {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1301,12 +1310,6 @@ body:not(.light-mode) .error {
   border-radius: 10px;
 }
 
-.einzelprodukt-list .produkt-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
 
 .einzelprodukt-list .image-wrapper {
   flex: 0 0 150px;
