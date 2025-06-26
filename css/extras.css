@@ -30,10 +30,11 @@
 
 .filter-tools {
   display: flex;
+  flex-direction: row;
   gap: 0.25rem;
   margin-bottom: 0.5rem;
   align-items: center;
-  justify-content: space-between; /* Buttons links, Mitte, rechts */
+  justify-content: flex-start; /* Buttons linksbündig */
   width: 100%;
 }
 
@@ -48,6 +49,7 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   overflow-x: auto;
+  justify-content: flex-start; /* linksbündig */
 }
 
 .filterbar.hidden {
@@ -141,8 +143,8 @@
   flex-wrap: nowrap;
   gap: 0.25rem;
   align-items: center;
-  justify-content: center; /* Filter nebeneinander zentrieren */
-  overflow-x: auto;        /* bei Bedarf horizontal scrollen */
+  justify-content: flex-start; /* Filter linksbündig */
+  overflow-x: auto;            /* bei Bedarf horizontal scrollen */
 }
 
 .filter-controls.hidden {
@@ -177,9 +179,11 @@
 /* Buttons oberhalb der Filterleiste */
 .filter-tools {
   display: flex;
+  flex-direction: row;
   gap: 0.25rem;
   margin-bottom: 0.5rem;
-  justify-content: space-between;
+  justify-content: flex-start;
+  align-items: center;
   width: 100%;
 }
 
