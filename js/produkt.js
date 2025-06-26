@@ -11,6 +11,7 @@ const BADGE_CL_FEE = 10.95; // Champions-League-Badge
 window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
 
 
+
 let TEAM_ROSTERS = {};
 
 const TEAM_PLAYERS = {
@@ -62,6 +63,8 @@ function setupProduct(section) {
   const zoomContainer = section.querySelector(`#zoomContainer-${idx}`);
   const customToggle = section.querySelector(`#customToggle-${idx}`);
   const customSection = section.querySelector(`#customSection-${idx}`);
+  const toggleWrap = section.querySelector('.custom-toggle-wrap');
+
 
 
 
@@ -90,7 +93,6 @@ function setupProduct(section) {
   function setCustomVisible(show) {
     if (!customSection) return;
     customSection.classList.toggle("show", show);
-    if (!show) clearCustomization(section);
   }
 
 
@@ -99,6 +101,14 @@ function setupProduct(section) {
     customToggle.addEventListener("change", () => {
       setCustomVisible(customToggle.checked);
     });
+    if (toggleWrap) {
+      toggleWrap.addEventListener("click", (e) => {
+        if (e.target.tagName.toLowerCase() !== "input") {
+          customToggle.checked = !customToggle.checked;
+          setCustomVisible(customToggle.checked);
+        }
+      });
+    }
   }
 
 
@@ -473,7 +483,6 @@ function resetFields(section) {
   const toggle = section.querySelector(`#customToggle-${idx}`);
   if (toggle) toggle.checked = false;
 
-
   const finalValueEl = section.querySelector(`#finalPriceValue-${idx}`);
   const originalPriceEl = section.querySelector(`#original-price-${idx}`);
   const discountLabelEl = section.querySelector(`#discountLabel-${idx}`);
@@ -495,6 +504,7 @@ function resetFinalPriceDisplay(price, section) {
     `#finalPriceValue-${idx}`
   ).textContent = `${price.toFixed(2)}€ inkl. Mwst.`;
 }
+
 
 function setupCustomization(section) {
   const name = section.querySelector(".product-name")?.textContent || "";
