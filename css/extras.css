@@ -39,7 +39,7 @@
 
 .filterbar {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.25rem;
   margin-bottom: 1rem;
@@ -81,6 +81,7 @@
   margin-bottom: 0; /* Buttons ohne Abstand darunter */
 }
 
+
 /* optisch ansprechende Selectboxen */
 .filterbar select {
   appearance: none;
@@ -90,6 +91,7 @@
   background-position: right 8px center;
   background-size: 12px;
 }
+
 
 .filterbar input[type="range"] {
   width: 140px;

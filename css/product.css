@@ -285,7 +285,7 @@ button {
   width: 80%;
   max-width: 500px;
   aspect-ratio: 3 / 4; /* passt die Höhe automatisch an */
-  height: auto;
+  height: 450px;
   cursor: zoom-in;
   margin: 0 auto 20px;
 }
