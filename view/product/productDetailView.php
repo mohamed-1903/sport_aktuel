@@ -99,7 +99,6 @@
           <input type="number" id="quantity-<?= $index ?>" value="1" min="1" class="size-dropdown" />
 
           <?php if (stripos($product['subcategory'] ?? '', 'Trikots') !== false): ?>
-            <button type="button" class="btn-show-custom" id="customBtn-<?= $index ?>">Produkt individualisieren</button>
             <div class="custom-toggle-wrap">
               <label class="custom-switch">
                 <input type="checkbox" id="customToggle-<?= $index ?>" />
@@ -132,6 +131,7 @@
 
 
 
+
           <div class="button-rows">
             <!-- 🎟 Rabattcode -->
             <label for="pin-<?= $index ?>">Rabatt-PIN eingeben:</label>
@@ -152,6 +152,7 @@
         </div>
 
         <div class="price-breakdown"></div>
+
 
 
 
