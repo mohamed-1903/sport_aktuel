@@ -11,4 +11,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   burger.addEventListener('click', toggleMenu);
   overlay.addEventListener('click', toggleMenu);
+
+  const dropdownLinks = nav.querySelectorAll('.dropdown > a');
+  dropdownLinks.forEach((link) => {
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 768) {
+        e.preventDefault();
+        const item = link.parentElement;
+        const isOpen = item.classList.contains('open');
+        nav.querySelectorAll('.dropdown').forEach((el) => el.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      }
+    });
+  });
 });

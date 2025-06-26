@@ -52,6 +52,9 @@
   text-align: left;
 }
 
+
+
+
 .image-wrapper img {
   max-height: 100%;
   max-width: 100%;
@@ -279,6 +282,9 @@ button {
   margin: 0 auto 20px;
 }
 
+
+
+
 .zoom-bg-container img {
   display: block;
   width: 100%;
@@ -324,6 +330,8 @@ button {
   background-color: transparent;
   box-shadow: 0 2px 4px rgb(0 0 0 / 5%);
 }
+
+
 
 .jersey-preview img {
   width: 100%;
@@ -417,6 +425,7 @@ body.light-mode .custom-switch .slider {
   gap: 5px;
 }
 
+
 .options-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -434,6 +443,8 @@ body.light-mode .custom-switch .slider {
   max-height: 600px;
 }
 
+
+
 .price-breakdown ul {
   list-style: none;
   padding-left: 0;
@@ -448,3 +459,4 @@ body.light-mode .custom-switch .slider {
   gap: 20px;
   align-items: center;
 }
+
