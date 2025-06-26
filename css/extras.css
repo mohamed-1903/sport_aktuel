@@ -728,7 +728,7 @@ body.light-mode .zoom-close {
 }
 
 .cart-table td:first-child {
-  text-align: left;
+  text-align: center;
 }
 
 .cart-table td img {
