@@ -58,3 +58,9 @@
 .form-wrapper button:hover:enabled {
   background-color: #e6c200;
 }
+.form-wrapper p {
+  margin-top: 20px;
+  font-size: 14px;
+  text-align: center;
+  color: var(--accent-color);
+}

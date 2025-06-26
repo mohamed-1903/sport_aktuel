@@ -10,6 +10,8 @@ const BADGE_BL_FEE = 4.0; // Bundesliga-Badge
 const BADGE_CL_FEE = 10.95; // Champions-League-Badge
 window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
 
+
+
 let TEAM_ROSTERS = {};
 
 const TEAM_PLAYERS = {
@@ -63,6 +65,9 @@ function setupProduct(section) {
   const customSection = section.querySelector(`#customSection-${idx}`);
   const toggleWrap = section.querySelector('.custom-toggle-wrap');
 
+
+
+
   section._zoomData = { currentIndex: 0 };
 
   additionalImages.forEach((img, i) =>
@@ -105,6 +110,12 @@ function setupProduct(section) {
       });
     }
   }
+
+
+
+
+
+
 
   setupCustomization(section);
 

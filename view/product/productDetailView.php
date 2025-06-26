@@ -127,6 +127,12 @@
             </div>
           <?php endif; ?>
 
+
+
+
+
+
+
           <div class="button-rows">
             <!-- 🎟 Rabattcode -->
             <label for="pin-<?= $index ?>">Rabatt-PIN eingeben:</label>
@@ -147,6 +153,10 @@
         </div>
 
         <div class="price-breakdown"></div>
+
+
+
+
 
         <!-- 🧺 Aktionen -->
 
@@ -191,6 +201,7 @@
           </div>
         </div>
       </div>
+
 
     </section>
   <?php endforeach; ?>
