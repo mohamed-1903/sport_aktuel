@@ -145,7 +145,7 @@
             data-name="<?= htmlspecialchars($name) ?>"
             data-price="<?= $price ?>"
             data-image="<?= htmlspecialchars($image) ?>">
-            🛒
+            🛒 In den Warenkorb
           </button>
 
           <!-- ❤️ Zur Merkliste -->
