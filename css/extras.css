@@ -27,8 +27,7 @@
   box-sizing: border-box; /* Padding zählt zur Gesamtbreite */
 }
 
-
-.filterbar {
+  align-items: center;
   display: flex;
   flex-wrap: wrap;
   gap: 0.25rem;
@@ -97,8 +96,19 @@
   background-color: var(--accent-color);
   color: #000;
 }
-
-.price-label {
+/* Buttons oberhalb der Filterleiste */
+.filter-tools {
+  margin-bottom: 0.5rem;
+.einzelprodukt-grid .image-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.einzelprodukt-grid .image-wrapper img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
   margin-left: 0.25rem;
   min-width: 70px;
   display: inline-block;
