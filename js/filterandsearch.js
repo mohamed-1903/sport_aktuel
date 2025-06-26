@@ -580,6 +580,10 @@ function updatePagination() {
   renderPagination(totalPages);
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  // Stelle sicher, dass beim Laden der Seite keine Filter aktiv sind
+  resetFilter();
+});
 
 
 

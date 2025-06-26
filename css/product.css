@@ -123,15 +123,18 @@
   gap: 10px;
   margin-top: 10px;
   flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .button-row {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 10px;
   margin-top: 15px;
   flex-wrap: nowrap;
+  width: 100%;
 }
 
 .button-row button,

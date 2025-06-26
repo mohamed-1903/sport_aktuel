@@ -33,7 +33,8 @@
   gap: 0.25rem;
   margin-bottom: 0.5rem;
   align-items: center;
-  justify-content: center; /* zentrierte Buttons über der Filterleiste */
+  justify-content: space-between; /* Buttons links, Mitte, rechts */
+  width: 100%;
 }
 
 .filterbar {
@@ -79,6 +80,7 @@
   padding: 6px 8px;
   margin-bottom: 0; /* Buttons ohne Abstand darunter */
 }
+
 
 /* optisch ansprechende Selectboxen */
 .filterbar select {
@@ -177,6 +179,8 @@
   display: flex;
   gap: 0.25rem;
   margin-bottom: 0.5rem;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .price-label {
@@ -383,8 +387,9 @@
 .einzelprodukt-grid .button-row {
   margin-top: 0.5rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   gap: 10px;
+  width: 100%;
 }
 
 /* Kartenansicht für Produkte im Grid */
@@ -421,8 +426,9 @@
 .einzelprodukt-grid .button-row {
   margin-top: 0.5rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   gap: 10px;
+  width: 100%;
 }
 
 .sidebar {
