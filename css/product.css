@@ -123,19 +123,24 @@
   gap: 10px;
   margin-top: 10px;
   flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .button-row {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 10px;
   margin-top: 15px;
   flex-wrap: nowrap;
+  width: 100%;
 }
 
 .button-row button,
-.button-row a button {
+.button-row a button,
+.button-reihe button,
+.button-reihe a button {
   background-color: #ffd700;
   color: #000;
   padding: 13px 23px;
@@ -144,10 +149,13 @@
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s;
+  margin-bottom: 0; /* Buttons nebeneinander ohne Vertikalabstand */
 }
 
 .button-row button:hover,
-.button-row a button:hover {
+.button-row a button:hover,
+.button-reihe button:hover,
+.button-reihe a button:hover {
   background-color: #e6c200;
 }
 
