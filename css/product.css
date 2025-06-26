@@ -328,5 +328,5 @@ button {
   display: grid;
   grid-template-columns: 1fr 1fr; /* Bildbereich wieder kleiner */
   gap: 20px;
-  align-items: center;
+  align-items: flex-start; /* Buttons direkt unter dem Bild */
 }
