@@ -34,12 +34,9 @@
   gap: 0.25rem;
   margin-bottom: 1rem;
   background-color: var(--card-bg);
-  padding: 0.5rem;
+  padding: 0.25rem 0.5rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  position: sticky;
-  top: 0;
-  z-index: 5;
 }
 
 .filterbar.hidden {
@@ -53,8 +50,8 @@
   border-radius: 6px;
   background-color: var(--card-bg);
   color: var(--text-color);
-  font-size: 16px;
-  padding: 10px;
+  font-size: 14px;
+  padding: 6px 10px;
   cursor: pointer;
 }
 
@@ -70,8 +67,8 @@
   border-radius: 6px;
   background-color: var(--card-bg);
   color: var(--text-color);
-  font-size: 16px;
-  padding: 10px;
+  font-size: 14px;
+  padding: 6px 8px;
 }
 
 /* optisch ansprechende Selectboxen */
@@ -85,7 +82,7 @@
 }
 
 .filterbar input[type="range"] {
-  width: 150px;
+  width: 140px;
   accent-color: var(--accent-color);
 }
 
@@ -100,6 +97,37 @@
   background-color: var(--accent-color);
   color: #000;
 }
+
+.price-label {
+  margin-left: 0.25rem;
+  min-width: 70px;
+  display: inline-block;
+  text-align: center;
+}
+
+.range-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  padding: 2px 6px;
+}
+
+.range-filter.active {
+  border-color: var(--accent-color);
+  background-color: var(--accent-color);
+  color: #000;
+}
+
+.filter-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
 
 .price-label {
   margin-left: 0.5rem;
@@ -1338,8 +1366,9 @@ body:not(.light-mode) .error {
 
 .einzelprodukt-list .produkt-wrapper {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
 }
 
 .einzelprodukt-list .image-wrapper {
@@ -1378,4 +1407,3 @@ body:not(.light-mode) .error {
   gap: 10px;
   margin-top: 10px;
 }
-
