@@ -1012,6 +1012,7 @@ body.light-mode .zoom-close {
 .popup-content-flex {
   display: flex;
   align-items: center;
+  justify-content: center; /* Bild und Text mittig ausrichten */
   gap: 15px;
 }
 
@@ -1104,7 +1105,9 @@ body.light-mode .zoom-close {
 
 /* === Buttons für Popups === */
 .popup-buttons {
+  /* Ensure the action buttons inside popups appear next to each other */
   display: flex;
+  flex-direction: row;
   justify-content: flex-end;
   gap: 12px;
   margin-top: 20px;
