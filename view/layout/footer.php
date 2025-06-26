@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="css/components.css">
 <link rel="stylesheet" href="css/cookie.css">
 <link rel="stylesheet" href="css/core.css">
-<link rel="stylesheet" href="css/extras.css">
 <link rel="stylesheet" href="css/footer.css">
 <link rel="stylesheet" href="css/form.css">
 <link rel="stylesheet" href="css/header.css">
