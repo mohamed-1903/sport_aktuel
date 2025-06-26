@@ -104,7 +104,7 @@
                 <input type="checkbox" id="customToggle-<?= $index ?>" />
                 <span class="slider"></span>
               </label>
-              <label for="customToggle-<?= $index ?>" class="toggle-label">Individualisierung</label>
+              <span>Individualisierung</span>
             </div>
             <div class="option-custom" id="customSection-<?= $index ?>">
               <div class="customization">
@@ -132,7 +132,6 @@
 
 
 
-
           <div class="button-rows">
             <!-- 🎟 Rabattcode -->
             <label for="pin-<?= $index ?>">Rabatt-PIN eingeben:</label>
@@ -153,7 +152,6 @@
         </div>
 
         <div class="price-breakdown"></div>
-
 
 
 
