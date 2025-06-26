@@ -83,6 +83,7 @@
             <?php endif; ?>
             <span id="discountLabel-<?= $index ?>" class="rabatt" style="display:none;">-20%</span>
           </p>
+          <div class="price-breakdown"></div>
 
 
           <!-- 👕 Größenauswahl -->
@@ -121,8 +122,6 @@
                 <div class="jersey-preview" id="jerseyPreview-<?= $index ?>">
                   <img src="<?= htmlspecialchars($backImage) ?>" alt="Rückenansicht" />
                   <div class="overlay-name"></div>
-                  <div class="overlay-number"></div>
-                </div>
               </div>
             </div>
           <?php endif; ?>

@@ -219,28 +219,21 @@ function calculatePrice(section) {
     discount = DISCOUNT_CODES[pin];
   }
   const original = subtotal;
-  const final = discount > 0 ? original * (1 - discount / 100) : original;
-  return { original, final, discount };
-}
-
-function updateDisplay(section) {
-  const idx = section.dataset.productIndex;
-  const { original, final, discount } = calculatePrice(section);
-  const finalValueEl = section.querySelector(`#finalPriceValue-${idx}`);
-  const originalPriceEl = section.querySelector(`#original-price-${idx}`);
-  const discountLabelEl = section.querySelector(`#discountLabel-${idx}`);
-  const infoEl = section.querySelector(`#rabatt-info-${idx}`);
-
-  if (discount > 0) {
-    originalPriceEl.style.display = "inline";
-    originalPriceEl.textContent = `${original.toFixed(2)}€ inkl. Mwst.`;
-    originalPriceEl.style.textDecoration = "line-through";
-    discountLabelEl.style.display = "inline";
-    discountLabelEl.textContent = `-${discount}%`;
-    if (infoEl) {
-      infoEl.textContent = `✔ Rabattcode akzeptiert: ${discount}%`;
-      infoEl.style.color = "green";
-    }
+  const list = section.querySelector(".price-breakdown");
+  if (list) {
+    const gift = getGiftWrapCharge(section);
+    const custom = getCustomizationFee(section);
+    const badges = getBadgeFee(section);
+    const qty = parseInt(section.querySelector(`#quantity-${idx}`).value) || 1;
+    const discountAmount =
+      (getBasePrice(section) + custom + badges + gift) * qty * (discount / 100);
+    const parts = [];
+    if (gift) parts.push(`+${gift.toFixed(2)} €`);
+    if (custom) parts.push(`+${custom.toFixed(2)} €`);
+    if (badges) parts.push(`+${badges.toFixed(2)} €`);
+    if (discount) parts.push(`-${discountAmount.toFixed(2)} €`);
+    list.textContent = parts.join(" ");
+  }
   } else {
     originalPriceEl.style.display = "none";
     discountLabelEl.style.display = "none";

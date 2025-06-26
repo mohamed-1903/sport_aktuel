@@ -291,7 +291,7 @@ button {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  width: 180px;
   transition: opacity 0.3s;
 }
 
@@ -415,12 +415,10 @@ body.light-mode .custom-switch .slider {
   background-color: var(--accent-color);
 }
 
-.custom-switch input:checked + .slider::before {
-  transform: translateX(26px);
+.price-breakdown {
+  margin-top: 8px;
+  font-size: 14px;
 }
-
-.badges {
-  display: flex;
   flex-direction: column;
   gap: 4px;
   margin: 8px 0;
