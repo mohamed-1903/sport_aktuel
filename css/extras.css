@@ -26,14 +26,13 @@
   min-height: 100vh; /* sorgt für volle Höhe bei leerem Inhalt */
   box-sizing: border-box; /* Padding zählt zur Gesamtbreite */
 }
-
-
 .filter-tools {
   display: flex;
+  flex-direction: row;
   gap: 0.25rem;
   margin-bottom: 0.5rem;
   align-items: center;
-  justify-content: space-between; /* Buttons links, Mitte, rechts */
+  justify-content: flex-start;
   width: 100%;
 }
 
@@ -41,6 +40,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  flex-direction: row;
   gap: 0.25rem;
   margin-bottom: 1rem;
   background-color: var(--card-bg);
@@ -81,7 +81,6 @@
   margin-bottom: 0; /* Buttons ohne Abstand darunter */
 }
 
-
 /* optisch ansprechende Selectboxen */
 .filterbar select {
   appearance: none;
@@ -91,7 +90,6 @@
   background-position: right 8px center;
   background-size: 12px;
 }
-
 
 .filterbar input[type="range"] {
   width: 140px;
@@ -142,13 +140,12 @@
   gap: 0.25rem;
   align-items: center;
   justify-content: center; /* Filter nebeneinander zentrieren */
-  overflow-x: auto;        /* bei Bedarf horizontal scrollen */
+  overflow-x: auto; /* bei Bedarf horizontal scrollen */
 }
 
 .filter-controls.hidden {
   display: none;
 }
-
 
 .price-label {
   margin-left: 0.25rem;
@@ -173,16 +170,6 @@
   background-color: var(--accent-color);
   color: #000;
 }
-
-/* Buttons oberhalb der Filterleiste */
-.filter-tools {
-  display: flex;
-  gap: 0.25rem;
-  margin-bottom: 0.5rem;
-  justify-content: space-between;
-  width: 100%;
-}
-
 .price-label {
   margin-left: 0.25rem;
   min-width: 70px;
@@ -1554,7 +1541,6 @@ body:not(.light-mode) .error {
   border-radius: 10px;
 }
 
-
 .einzelprodukt-list .image-wrapper {
   flex: 0 0 150px;
   display: flex;
@@ -1576,7 +1562,6 @@ body:not(.light-mode) .error {
   justify-content: center;
 }
 
-
 .einzelprodukt-list .produkt-info h3 {
   font-size: 1.2rem;
   margin: 0 0 5px;
@@ -1592,4 +1577,3 @@ body:not(.light-mode) .error {
   gap: 10px;
   margin-top: 10px;
 }
-
