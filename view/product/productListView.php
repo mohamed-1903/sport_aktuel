@@ -113,13 +113,10 @@
                   <?php endif; ?>
                 </p>
 
-              </section>
-            </section>
-
-            <section class="button-row" data-iid="<?= (int)$produkt["iid"] ?>">
-              <a href="index.php?page=product&action=detail&id=<?= (int)$produkt["iid"] ?>">
-                <button>Details</button>
-              </a>
+                <section class="button-row" data-iid="<?= (int)$produkt["iid"] ?>">
+                  <a href="index.php?page=product&action=detail&id=<?= (int)$produkt["iid"] ?>">
+                    <button>Details</button>
+                  </a>
 
               <button class="btn-add-to-cart"
                       data-iid="<?= (int)$produkt['iid'] ?>"
@@ -129,13 +126,16 @@
                 🛒
               </button>
 
-              <button class="btn-add-to-watch"
-                      data-iid="<?= (int)$produkt['iid'] ?>"
-                      data-name="<?= htmlspecialchars($produkt['name']) ?>"
-                      data-price="<?= (float)$produkt['price'] ?? 0 ?>"
-                      data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
-                🤍
-              </button>
+                  <button class="btn-add-to-watch"
+                          data-iid="<?= (int)$produkt['iid'] ?>"
+                          data-name="<?= htmlspecialchars($produkt['name']) ?>"
+                          data-price="<?= (float)$produkt['price'] ?? 0 ?>"
+                          data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
+                    🤍
+                  </button>
+                </section>
+
+              </section>
             </section>
           </li>
         <?php endforeach; ?>
