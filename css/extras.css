@@ -389,7 +389,10 @@
 .einzelprodukt-grid .button-row {
   margin-top: 0.5rem;
   display: flex;
+  flex-direction: row; /* Buttons nebeneinander */
   justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
   gap: 10px;
   width: 100%;
 }
@@ -428,7 +431,10 @@
 .einzelprodukt-grid .button-row {
   margin-top: 0.5rem;
   display: flex;
+  flex-direction: row; /* Buttons nebeneinander */
   justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
   gap: 10px;
   width: 100%;
 }
@@ -1588,7 +1594,10 @@ body:not(.light-mode) .error {
 
 .einzelprodukt-list .button-row {
   display: flex;
+  flex-direction: row; /* Buttons nebeneinander */
   justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
   gap: 10px;
   margin-top: 10px;
 }
