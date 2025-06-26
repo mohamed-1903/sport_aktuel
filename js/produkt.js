@@ -6,6 +6,8 @@ const DISCOUNT_CODES = {
 };
 
 const CUSTOMIZATION_FEE = 10; // € pro Trikot
+const BADGE_BL_FEE = 4.0; // Bundesliga-Badge
+const BADGE_CL_FEE = 10.95; // Champions-League-Badge
 window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
 
 let TEAM_ROSTERS = {};
