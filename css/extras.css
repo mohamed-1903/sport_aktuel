@@ -39,7 +39,7 @@
 
 .filterbar {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* Elemente in einer Zeile anzeigen */
   align-items: center;
   gap: 0.25rem;
   margin-bottom: 1rem;
@@ -81,6 +81,7 @@
   font-size: 14px;
   padding: 6px 8px;
   margin-bottom: 0; /* Buttons ohne Abstand darunter */
+  flex: 0 0 auto; /* verhindert, dass die Elemente die volle Breite einnehmen */
 }
 
 /* optisch ansprechende Selectboxen */
