@@ -74,6 +74,8 @@
 .filterbar select,
 .filterbar input[type="range"],
 .filter-tools button {
+  display: inline-block;
+  width: auto;
   border: 1px solid #555;
   border-radius: 6px;
   background-color: var(--card-bg);
