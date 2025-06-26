@@ -172,7 +172,7 @@ function ladeProdukte(containerId, urls) {
         })
     )
   ).then(() => {
-    applyFilter();
+    resetFilter();
     produktSuche();
     if (!window.originalProductOrder) {
       window.originalProductOrder = Array.from(
@@ -368,6 +368,7 @@ window.resetFilter = function () {
   document.querySelectorAll(".filterbar select").forEach((sel) => {
     sel.selectedIndex = 0;
   });
+  populateFilterOptions();
   const priceInput = document.getElementById("filter-preis");
   if (priceInput) {
     priceInput.value = priceInput.dataset.max || priceInput.max || 0;
@@ -386,7 +387,6 @@ window.resetFilter = function () {
     restoreOriginalOrder();
   }
   applyFilter();
-  populateFilterOptions();
   if (typeof produktSuche === "function") {
     produktSuche();
   }
@@ -580,10 +580,7 @@ function updatePagination() {
   renderPagination(totalPages);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  // Stelle sicher, dass beim Laden der Seite keine Filter aktiv sind
-  resetFilter();
-});
+
 
 
 window.addEventListener("resize", () => {
