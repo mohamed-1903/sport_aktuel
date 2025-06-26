@@ -581,13 +581,8 @@ function updatePagination() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  updatePagination();
-  populateFilterOptions();
-  const priceInput = document.getElementById("filter-preis");
-  if (priceInput) {
-    updatePriceLabel(priceInput.value);
-  }
-  updateActiveFilters();
+  // Stelle sicher, dass beim Laden der Seite keine Filter aktiv sind
+  resetFilter();
 });
 
 
