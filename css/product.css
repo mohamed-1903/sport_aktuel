@@ -43,13 +43,17 @@
 .image-wrapper {
   display: flex;
   flex-direction: column; /* vertikale Anordnung von Bild + z. B. Buttons */
-  align-items: center; /* horizontal zentrieren */
-  justify-content: center; /* vertikal zentrieren */
+  align-items: flex-start; /* linksbündig */
+  justify-content: center; /* vertikal zentriert */
+  height: 100%;
   min-height: 180px; /* Mindesthöhe für saubere Darstellung */
-  margin: 0 auto 10px; /* horizontal zentriert + Abstand nach unten */
-  width: fit-content; /* passt sich der Breite des Inhalts an */
-  text-align: center; /* optional, falls Text enthalten ist */
+  margin: 0 0 10px; /* Abstand nach unten, linksbündig */
+  width: 100%; /* nimmt den verfügbaren Platz ein */
+  text-align: left;
 }
+
+
+
 
 .image-wrapper img {
   max-height: 100%;
@@ -270,12 +274,16 @@ button {
 .zoom-bg-container {
   position: relative;
   overflow: hidden;
-  width: 500px;
+  width: 100%;
   max-width: 700px;
-  height: 300px;
+  aspect-ratio: 3 / 4; /* passt die Höhe automatisch an */
+  height: auto;
   cursor: zoom-in;
-  margin-bottom: 20px;
+  margin: 0 auto 20px;
 }
+
+
+
 
 .zoom-bg-container img {
   display: block;
@@ -305,23 +313,25 @@ button {
 }
 
 .customization {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+  margin-top: 8px;
   align-items: center;
 }
 
 .jersey-preview {
   position: relative;
-  width: 150px;
+  width: 240px;
   margin-top: 10px;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 5px;
-  background-color: #fafafa;
+  background-color: transparent;
   box-shadow: 0 2px 4px rgb(0 0 0 / 5%);
 }
+
+
 
 .jersey-preview img {
   width: 100%;
@@ -341,28 +351,72 @@ button {
 
 .jersey-preview .overlay-name {
   bottom: 35%;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .jersey-preview .overlay-number {
   bottom: 15%;
-  font-size: 20px;
+  font-size: 24px;
 }
 
-.btn-show-custom {
+
+.custom-toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin-top: 10px;
-  background-color: #ffd700;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 20px;
+}
+
+.custom-switch input {
+  display: none;
+}
+
+.custom-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.custom-switch .slider {
+  position: absolute;
+  inset: 0;
+  display: block;
   cursor: pointer;
+  background-color: #666;
+  border-radius: 34px;
+  transition: background-color 0.3s;
+}
+
+body.light-mode .custom-switch .slider {
+  background-color: #ccc;
+}
+
+.custom-switch .slider::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 2px;
+  top: 2px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.custom-switch input:checked + .slider {
+  background-color: var(--accent-color);
+}
+
+.custom-switch input:checked + .slider::before {
+  transform: translateX(26px);
 }
 
 .badges {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  margin: 10px 0;
+  margin: 8px 0;
 }
 
 .badges label {
@@ -371,18 +425,6 @@ button {
   gap: 5px;
 }
 
-.badges {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin: 10px 0;
-}
-
-.badges label {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
 
 .options-wrapper {
   display: grid;
@@ -391,9 +433,17 @@ button {
   margin-top: 10px;
 }
 
-.option-custom.hidden {
-  display: none;
+.option-custom {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s ease;
 }
+
+.option-custom.show {
+  max-height: 600px;
+}
+
+
 
 .price-breakdown ul {
   list-style: none;
@@ -405,7 +455,8 @@ button {
 /* zweispaltiges Layout für die Produktdetailseite */
 .detail-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.4fr 1fr; /* linke Seite größer für das Bild */
   gap: 20px;
-  align-items: flex-start;
+  align-items: center;
 }
+

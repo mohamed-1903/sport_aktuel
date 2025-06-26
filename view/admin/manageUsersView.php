@@ -1,12 +1,12 @@
 <?php include __DIR__ . '/../layout/header.php'; ?>
 
-<main class="form-wrapper" style="padding: 2em;">
+<main class="main-content">
   <h1 style="text-align: center;">👥 Benutzerverwaltung</h1>
 
   <?php if (empty($allUsers)): ?>
     <p style="text-align: center;">Es wurden keine Benutzer gefunden.</p>
   <?php else: ?>
-    <table class="cart-table" style="margin: auto;">
+    <table class="cart-table">
       <thead>
         <tr>
           <th>#</th>
@@ -27,7 +27,7 @@
               <!-- Inaktiv: <a href="#"><button>Löschen</button></a> -->
               <form action="index.php?page=admin&action=deleteUser" method="post" onsubmit="return confirm('Benutzer wirklich löschen?');">
                 <input type="hidden" name="user_id" value="<?= (int)$user['id'] ?>">
-                <button type="submit" class="btn-delete">❌ Entfernen</button>
+                <button type="submit" class="btn-delete-all">❌ Entfernen</button>
               </form>
             </td>
           </tr>
@@ -39,4 +39,3 @@
 
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
 <?php include __DIR__ . '/../layout/footer.php'; ?>
-
