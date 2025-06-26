@@ -732,7 +732,10 @@ body.light-mode .zoom-close {
   height: auto;
   object-fit: contain;
   border-radius: 8px;
+  display: block;
+  margin: 0 auto;
 }
+
 
 /* Entfernen-Button */
 .remove-btn {
