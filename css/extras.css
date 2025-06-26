@@ -27,10 +27,10 @@
   box-sizing: border-box; /* Padding zählt zur Gesamtbreite */
 }
 
-
 .filterbar {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 0.25rem;
   margin-bottom: 1rem;
   background-color: var(--card-bg);
@@ -44,8 +44,6 @@
 }
 
 .filter-toggle {
-  align-self: flex-end;
-  margin-bottom: 0.5rem;
   border: 1px solid #555;
   border-radius: 6px;
   background-color: var(--card-bg);
@@ -122,12 +120,12 @@
   color: #000;
 }
 
-.filter-actions {
+/* Buttons oberhalb der Filterleiste */
+.filter-tools {
   display: flex;
-  flex-direction: column;
   gap: 0.25rem;
+  margin-bottom: 0.5rem;
 }
-
 
 .price-label {
   margin-left: 0.25rem;
@@ -159,6 +157,35 @@
   gap: 0.25rem;
 }
 
+.price-label {
+  margin-left: 0.25rem;
+  min-width: 70px;
+  display: inline-block;
+  text-align: center;
+}
+
+.range-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  padding: 2px 6px;
+}
+
+.range-filter.active {
+  border-color: var(--accent-color);
+  background-color: var(--accent-color);
+  color: #000;
+}
+
+.filter-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
 
 .price-label {
   margin-left: 0.5rem;
@@ -190,6 +217,29 @@
   gap: 0.25rem;
 }
 
+.price-label {
+  margin-left: 0.5rem;
+  min-width: 80px;
+  display: inline-block;
+  text-align: center;
+}
+
+.range-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  padding: 5px 10px;
+}
+
+.range-filter.active {
+  border-color: var(--accent-color);
+  background-color: var(--accent-color);
+  color: #000;
+}
 
 .price-label {
   margin-left: 0.5rem;
@@ -215,7 +265,6 @@
   color: #000;
 }
 
-
 .price-label {
   margin-left: 0.5rem;
   min-width: 80px;
@@ -223,39 +272,12 @@
   text-align: center;
 }
 
-.range-filter {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  border: 1px solid #555;
-  border-radius: 6px;
-  background-color: var(--card-bg);
-  color: var(--text-color);
-  padding: 5px 10px;
-}
-
-.range-filter.active {
-  border-color: var(--accent-color);
-  background-color: var(--accent-color);
-  color: #000;
-}
-
-
 .price-label {
   margin-left: 0.5rem;
   min-width: 80px;
   display: inline-block;
   text-align: center;
 }
-
-
-.price-label {
-  margin-left: 0.5rem;
-  min-width: 80px;
-  display: inline-block;
-  text-align: center;
-}
-
 
 .layout-toggle {
   min-width: 140px;
@@ -270,6 +292,36 @@
   list-style: none;
   padding: 0;
   margin-bottom: 0;
+}
+
+/* Kartenansicht für Produkte im Grid */
+.einzelprodukt-grid .produkt-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  align-items: center;
+}
+.einzelprodukt-grid .image-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.einzelprodukt-grid .image-wrapper img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.einzelprodukt-grid .produkt-info {
+  text-align: center;
+}
+
+.einzelprodukt-grid .button-row {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
 /* Kartenansicht für Produkte im Grid */
@@ -1443,7 +1495,6 @@ body:not(.light-mode) .error {
   justify-content: center;
 }
 
-
 .einzelprodukt-list .produkt-info h3 {
   font-size: 1.2rem;
   margin: 0 0 5px;
@@ -1459,4 +1510,3 @@ body:not(.light-mode) .error {
   gap: 10px;
   margin-top: 10px;
 }
-

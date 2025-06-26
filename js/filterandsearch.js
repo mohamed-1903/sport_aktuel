@@ -24,9 +24,10 @@ function getItemsPerPage() {
 
 window.applyFilter = function () {
   const priceInput = document.getElementById("filter-preis");
-  const priceMax = priceInput && priceInput.dataset.max
-    ? parseFloat(priceInput.dataset.max)
-    : Infinity;
+  const priceMax =
+    priceInput && priceInput.dataset.max
+      ? parseFloat(priceInput.dataset.max)
+      : Infinity;
   const priceVal = parseFloat(priceInput?.value || priceMax);
 
   const filterWerte = {
@@ -36,7 +37,6 @@ window.applyFilter = function () {
     mannschaft: document.getElementById("filter-mannschaft")?.value || "",
     geschlecht: document.getElementById("filter-geschlecht")?.value || "",
   };
-
 
   document.querySelectorAll(".einzelprodukt").forEach((produkt) => {
     const p = produkt.dataset;
@@ -151,14 +151,13 @@ document.addEventListener("DOMContentLoaded", () => {
   updateLayoutToggle(savedLayout === "list" ? "list" : "grid");
   const priceInput = document.getElementById("filter-preis");
   if (priceInput) {
-    priceInput.addEventListener("input", () => updatePriceLabel(priceInput.value));
+    priceInput.addEventListener("input", () =>
+      updatePriceLabel(priceInput.value)
+    );
     updatePriceLabel(priceInput.value);
   }
   updateActiveFilters();
 });
-
-
-
 
 // 🔽 PRODUKTE LADEN
 function ladeProdukte(containerId, urls) {
@@ -291,237 +290,7 @@ function colorEmoji(name) {
   const map = {
     schwarz: "⬛",
     weiss: "⬜",
-    "weiß": "⬜",
-    blau: "🟦",
-    rot: "🟥",
-    gelb: "🟨",
-    grün: "🟩",
-    gruen: "🟩",
-    grau: "⬜",
-    orange: "🟧",
-    lila: "🟪",
-    violett: "🟪",
-    pink: "🩷",
-    gold: "🟨",
-    braun: "🟫",
-    navy: "🟦",
-  };
-  return map[base] || "⬛";
-}
-
-function colorEmoji(name) {
-  const base = name.toLowerCase().split(/[-/]/)[0];
-  const map = {
-    schwarz: "⬛",
-    weiss: "⬜",
-    "weiß": "⬜",
-    blau: "🟦",
-    rot: "🟥",
-    gelb: "🟨",
-    grün: "🟩",
-    gruen: "🟩",
-    grau: "⬜",
-    orange: "🟧",
-    lila: "🟪",
-    violett: "🟪",
-    pink: "🩷",
-    gold: "🟨",
-    braun: "🟫",
-    navy: "🟦",
-  };
-  return map[base] || "⬛";
-}
-
-function colorEmoji(name) {
-  const base = name.toLowerCase().split(/[-/]/)[0];
-  const map = {
-    schwarz: "⬛",
-    weiss: "⬜",
-    "weiß": "⬜",
-    blau: "🟦",
-    rot: "🟥",
-    gelb: "🟨",
-    grün: "🟩",
-    gruen: "🟩",
-    grau: "⬜",
-    orange: "🟧",
-    lila: "🟪",
-    violett: "🟪",
-    pink: "🩷",
-    gold: "🟨",
-    braun: "🟫",
-    navy: "🟦",
-  };
-  return map[base] || "⬛";
-}
-
-function colorEmoji(name) {
-  const base = name.toLowerCase().split(/[-/]/)[0];
-  const map = {
-    schwarz: "⬛",
-    weiss: "⬜",
-    "weiß": "⬜",
-    blau: "🟦",
-    rot: "🟥",
-    gelb: "🟨",
-    grün: "🟩",
-    gruen: "🟩",
-    grau: "⬜",
-    orange: "🟧",
-    lila: "🟪",
-    violett: "🟪",
-    pink: "🩷",
-    gold: "🟨",
-    braun: "🟫",
-    navy: "🟦",
-  };
-  return map[base] || "⬛";
-}
-
-function colorEmoji(name) {
-  const base = name.toLowerCase().split(/[-/]/)[0];
-  const map = {
-    schwarz: "⬛",
-    weiss: "⬜",
-    "weiß": "⬜",
-    blau: "🟦",
-    rot: "🟥",
-    gelb: "🟨",
-    grün: "🟩",
-    gruen: "🟩",
-    grau: "⬜",
-    orange: "🟧",
-    lila: "🟪",
-    violett: "🟪",
-    pink: "🩷",
-    gold: "🟨",
-    braun: "🟫",
-    navy: "🟦",
-  };
-  return map[base] || "⬛";
-}
-
-function colorEmoji(name) {
-  const base = name.toLowerCase().split(/[-/]/)[0];
-  const map = {
-    schwarz: "⬛",
-    weiss: "⬜",
-    "weiß": "⬜",
-    blau: "🟦",
-    rot: "🟥",
-    gelb: "🟨",
-    grün: "🟩",
-    gruen: "🟩",
-    grau: "⬜",
-    orange: "🟧",
-    lila: "🟪",
-    violett: "🟪",
-    pink: "🩷",
-    gold: "🟨",
-    braun: "🟫",
-    navy: "🟦",
-  };
-  return map[base] || "⬛";
-}
-
-function colorEmoji(name) {
-  const base = name.toLowerCase().split(/[-/]/)[0];
-  const map = {
-    schwarz: "⬛",
-    weiss: "⬜",
-    "weiß": "⬜",
-    blau: "🟦",
-    rot: "🟥",
-    gelb: "🟨",
-    grün: "🟩",
-    gruen: "🟩",
-    grau: "⬜",
-    orange: "🟧",
-    lila: "🟪",
-    violett: "🟪",
-    pink: "🩷",
-    gold: "🟨",
-    braun: "🟫",
-    navy: "🟦",
-  };
-  return map[base] || "⬛";
-}
-
-function colorEmoji(name) {
-  const base = name.toLowerCase().split(/[-/]/)[0];
-  const map = {
-    schwarz: "⬛",
-    weiss: "⬜",
-    "weiß": "⬜",
-    blau: "🟦",
-    rot: "🟥",
-    gelb: "🟨",
-    grün: "🟩",
-    gruen: "🟩",
-    grau: "⬜",
-    orange: "🟧",
-    lila: "🟪",
-    violett: "🟪",
-    pink: "🩷",
-    gold: "🟨",
-    braun: "🟫",
-    navy: "🟦",
-  };
-  return map[base] || "⬛";
-}
-
-function colorEmoji(name) {
-  const base = name.toLowerCase().split(/[-/]/)[0];
-  const map = {
-    schwarz: "⬛",
-    weiss: "⬜",
-    "weiß": "⬜",
-    blau: "🟦",
-    rot: "🟥",
-    gelb: "🟨",
-    grün: "🟩",
-    gruen: "🟩",
-    grau: "⬜",
-    orange: "🟧",
-    lila: "🟪",
-    violett: "🟪",
-    pink: "🩷",
-    gold: "🟨",
-    braun: "🟫",
-    navy: "🟦",
-  };
-  return map[base] || "⬛";
-}
-
-function colorEmoji(name) {
-  const base = name.toLowerCase().split(/[-/]/)[0];
-  const map = {
-    schwarz: "⬛",
-    weiss: "⬜",
-    "weiß": "⬜",
-    blau: "🟦",
-    rot: "🟥",
-    gelb: "🟨",
-    grün: "🟩",
-    gruen: "🟩",
-    grau: "⬜",
-    orange: "🟧",
-    lila: "🟪",
-    violett: "🟪",
-    pink: "🩷",
-    gold: "🟨",
-    braun: "🟫",
-    navy: "🟦",
-  };
-  return map[base] || "⬛";
-}
-
-function colorEmoji(name) {
-  const base = name.toLowerCase().split(/[-/]/)[0];
-  const map = {
-    schwarz: "⬛",
-    weiss: "⬜",
-    "weiß": "⬜",
+    weiß: "⬜",
     blau: "🟦",
     rot: "🟥",
     gelb: "🟨",
@@ -569,8 +338,6 @@ function populateFilterOptions() {
     });
     if (values.includes(current)) sel.value = current;
   };
-
-
 
   setOptions("filter-marke", collect("marke"), "Alle Marken");
   setOptions("filter-farbe", collect("farbe"), "Alle Farben");
@@ -644,7 +411,9 @@ window.sortProducts = function (order) {
       if (order === "name-asc" || order === "name-desc") {
         const na = a.querySelector("h3")?.textContent.trim() || "";
         const nb = b.querySelector("h3")?.textContent.trim() || "";
-        return order === "name-asc" ? na.localeCompare(nb) : nb.localeCompare(na);
+        return order === "name-asc"
+          ? na.localeCompare(nb)
+          : nb.localeCompare(na);
       }
       return 0;
     });
@@ -656,14 +425,47 @@ window.sortProducts = function (order) {
   updateActiveFilters();
 };
 
-
-
-
 // Setzt die Produkte in ihre ursprüngliche Reihenfolge zurück
 window.restoreOriginalOrder = function () {
   const container = document.getElementById("produktContainer");
   if (!container || !window.originalProductOrder) return;
   window.originalProductOrder.forEach((el) => container.appendChild(el));
+};
+
+function updateActiveFilters() {
+  document.querySelectorAll(".filterbar select").forEach((sel) => {
+    if (sel.id === "sort-select") {
+      sel.classList.toggle("active", sel.value !== "default");
+    } else {
+      sel.classList.toggle("active", sel.selectedIndex > 0);
+    }
+  });
+  const priceInput = document.getElementById("filter-preis");
+  if (priceInput) {
+    const max = parseFloat(priceInput.dataset.max || priceInput.max || 0);
+    const active = parseFloat(priceInput.value) < max;
+    priceInput.classList.toggle("active", active);
+    const rangeWrapper = document.querySelector(".range-filter");
+    if (rangeWrapper) rangeWrapper.classList.toggle("active", active);
+  }
+}
+
+window.updatePriceLabel = function (value) {
+  const priceInput = document.getElementById("filter-preis");
+  const label = document.getElementById("price-label");
+  if (!priceInput || !label) return;
+  const max = parseFloat(priceInput.dataset.max || priceInput.max || value);
+  const val = parseFloat(value);
+  label.textContent = val >= max ? "Kein Limit" : `Bis ${val} €`;
+  updateActiveFilters();
+};
+
+window.toggleFilterBar = function () {
+  const bar = document.querySelector(".filterbar");
+  const btn = document.querySelector(".filter-toggle");
+  if (!bar || !btn) return;
+  const hidden = bar.classList.toggle("hidden");
+  btn.textContent = hidden ? "Filter anzeigen ▼" : "Filter ausblenden ▲";
 };
 
 function updateActiveFilters() {
@@ -1155,8 +957,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   updateActiveFilters();
 });
-
-
 
 window.addEventListener("resize", () => {
   updatePagination();

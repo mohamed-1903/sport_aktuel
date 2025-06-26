@@ -22,9 +22,13 @@
 
   <main class="main-content">
     <h1><?= htmlspecialchars($displayTitle) ?></h1>
-    <button type="button" class="filter-toggle" onclick="toggleFilterBar()">
-      Filter ausblenden ▲
-    </button>
+    <div class="filter-tools">
+      <button type="button" class="filter-toggle" onclick="toggleFilterBar()">
+        Filter ausblenden ▲
+      </button>
+      <button type="button" class="reset-filter" onclick="resetFilter()">Zurücksetzen</button>
+      <button type="button" class="layout-toggle" onclick="toggleLayout()">☰ Liste anzeigen</button>
+    </div>
 
     <section class="filterbar">
       <select id="filter-marke" onchange="applyFilter()">
@@ -44,7 +48,7 @@
       <div class="range-filter">
         <label for="filter-preis">Preis:</label>
         <input type="range" id="filter-preis" min="0" value="0" step="10"
-               oninput="updatePriceLabel(this.value)" onchange="applyFilter()">
+          oninput="updatePriceLabel(this.value)" onchange="applyFilter()">
         <span id="price-label" class="price-label">Kein Limit</span>
       </div>
       <select id="filter-mannschaft" onchange="applyFilter()">
@@ -66,17 +70,9 @@
         <option value="name-asc">Name A–Z</option>
         <option value="name-desc">Name Z–A</option>
       </select>
-      <div class="filter-actions">
-        <button type="button" class="reset-filter" onclick="resetFilter()">Zurücksetzen</button>
-        <button type="button" class="layout-toggle" onclick="toggleLayout()">☰ Liste anzeigen</button>
-      </div>
-
-
-
 
     </section>
     <ul class="einzelprodukt-grid" id="produktContainer">
-
       <?php if (empty($filteredProducts)): ?>
         <p>Keine Produkte in dieser Kategorie gefunden.</p>
       <?php else: ?>
@@ -101,7 +97,7 @@
             <section class="produkt-wrapper">
               <section class="image-wrapper">
                 <img src="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>"
-                     alt="<?= htmlspecialchars($produkt["name"]) ?>">
+                  alt="<?= htmlspecialchars($produkt["name"]) ?>">
               </section>
 
               <section class="produkt-info">
@@ -118,19 +114,19 @@
                     <button>Details</button>
                   </a>
 
-              <button class="btn-add-to-cart"
-                      data-iid="<?= (int)$produkt['iid'] ?>"
-                      data-name="<?= htmlspecialchars($produkt['name']) ?>"
-                      data-price="<?= (float)$produkt['price'] ?? 0 ?>"
-                      data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
-                🛒
-              </button>
+                  <button class="btn-add-to-cart"
+                    data-iid="<?= (int)$produkt['iid'] ?>"
+                    data-name="<?= htmlspecialchars($produkt['name']) ?>"
+                    data-price="<?= (float)$produkt['price'] ?? 0 ?>"
+                    data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
+                    🛒
+                  </button>
 
                   <button class="btn-add-to-watch"
-                          data-iid="<?= (int)$produkt['iid'] ?>"
-                          data-name="<?= htmlspecialchars($produkt['name']) ?>"
-                          data-price="<?= (float)$produkt['price'] ?? 0 ?>"
-                          data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
+                    data-iid="<?= (int)$produkt['iid'] ?>"
+                    data-name="<?= htmlspecialchars($produkt['name']) ?>"
+                    data-price="<?= (float)$produkt['price'] ?? 0 ?>"
+                    data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
                     🤍
                   </button>
                 </section>
@@ -141,7 +137,6 @@
         <?php endforeach; ?>
       <?php endif; ?>
     </ul>
-
 
     <section class="pagination"></section>
 
