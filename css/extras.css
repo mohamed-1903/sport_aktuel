@@ -315,30 +315,18 @@
 
 .einzelprodukt-grid .produkt-info {
   text-align: center;
-}
-
-.einzelprodukt-grid .button-row {
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-/* Kartenansicht für Produkte im Grid */
-.einzelprodukt-grid .produkt-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
   align-items: center;
 }
-
-.einzelprodukt-grid .produkt-info {
-  text-align: center;
+.einzelprodukt-grid .produkt-info h3 {
+  margin: 0 0 0.25rem;
 }
-
+.einzelprodukt-grid .produkt-info p {
+  margin: 0;
+}
 .einzelprodukt-grid .button-row {
-  margin-top: 10px;
+  margin-top: 0.5rem;
   display: flex;
   justify-content: center;
   gap: 10px;
@@ -1465,13 +1453,6 @@ body:not(.light-mode) .error {
   padding: 15px;
   border: 1px solid var(--border-color, #555);
   border-radius: 10px;
-}
-
-.einzelprodukt-list .produkt-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
 }
 
 .einzelprodukt-list .image-wrapper {
