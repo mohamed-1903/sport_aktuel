@@ -130,6 +130,7 @@
 
 
 
+
           <div class="button-rows">
             <!-- 🎟 Rabattcode -->
             <label for="pin-<?= $index ?>">Rabatt-PIN eingeben:</label>
@@ -150,6 +151,7 @@
         </div>
 
         <div class="price-breakdown"></div>
+
 
 
         <!-- 🧺 Aktionen -->
@@ -194,7 +196,6 @@
             <p><?= nl2br(htmlspecialchars($description)) ?></p>
           </div>
         </div>
-      </div>
       </div>
 
     </section>

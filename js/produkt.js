@@ -109,6 +109,7 @@ function setupProduct(section) {
 
 
 
+
   setupCustomization(section);
 
   giftWrapEl?.addEventListener("change", () => updateDisplay(section));
@@ -473,6 +474,7 @@ function resetFields(section) {
   const cs = section.querySelector(`#customSection-${idx}`);
   if (cs) cs.classList.remove("show");
 
+
   const finalValueEl = section.querySelector(`#finalPriceValue-${idx}`);
   const originalPriceEl = section.querySelector(`#original-price-${idx}`);
   const discountLabelEl = section.querySelector(`#discountLabel-${idx}`);
@@ -493,6 +495,16 @@ function resetFinalPriceDisplay(price, section) {
   section.querySelector(
     `#finalPriceValue-${idx}`
   ).textContent = `${price.toFixed(2)}€ inkl. Mwst.`;
+}
+
+function clearCustomization(section) {
+  section.querySelector(".player-select")?.value = "";
+  section.querySelector(".custom-name")?.value = "";
+  section.querySelector(".custom-number")?.value = "";
+  section.querySelectorAll(".badge-bl, .badge-cl").forEach((el) => {
+    el.checked = false;
+  });
+  updateDisplay(section);
 }
 
 
