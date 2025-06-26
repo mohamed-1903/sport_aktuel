@@ -997,7 +997,7 @@ body.light-mode .zoom-close {
 }
 
 /* 📱 Responsiv */
-@media (width <= 900px) {
+@media (max-width: 900px) {
   .cart-wrapper {
     grid-template-columns: 1fr;
   }
@@ -1005,6 +1005,18 @@ body.light-mode .zoom-close {
   .cart-summary {
     position: static;
     margin-top: 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .cart-main {
+    overflow-x: auto;
+  }
+
+  .cart-table th,
+  .cart-table td {
+    padding: 8px;
+    font-size: 14px;
   }
 }
 
