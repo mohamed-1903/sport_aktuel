@@ -30,6 +30,7 @@
 
 .filter-tools {
   display: flex;
+  flex-direction: row;
   gap: 0.25rem;
   margin-bottom: 0.5rem;
   align-items: center;
@@ -177,9 +178,11 @@
 /* Buttons oberhalb der Filterleiste */
 .filter-tools {
   display: flex;
+  flex-direction: row;
   gap: 0.25rem;
   margin-bottom: 0.5rem;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
 }
 
