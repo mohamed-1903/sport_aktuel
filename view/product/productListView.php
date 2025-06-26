@@ -22,15 +22,13 @@
 
   <main class="main-content">
     <h1><?= htmlspecialchars($displayTitle) ?></h1>
-    <div class="filter-tools">
+    <section class="filterbar">
       <button type="button" class="filter-toggle" onclick="toggleFilterBar()">
         Filter ausblenden ▲
       </button>
       <button type="button" class="reset-filter" onclick="resetFilter()">Zurücksetzen</button>
       <button type="button" class="layout-toggle" onclick="toggleLayout()">☰ Liste anzeigen</button>
-    </div>
-
-    <section class="filterbar">
+      <div class="filter-controls">
       <select id="filter-marke" onchange="applyFilter()">
         <option value="">Alle Marken</option>
         <option value="Nike">Nike</option>
@@ -68,7 +66,7 @@
         <option value="name-asc">Name A–Z</option>
         <option value="name-desc">Name Z–A</option>
       </select>
-
+      </div>
     </section>
     <ul class="einzelprodukt-grid" id="produktContainer">
       <?php if (empty($filteredProducts)): ?>

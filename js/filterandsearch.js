@@ -454,10 +454,10 @@ window.updatePriceLabel = function (value) {
 };
 
 window.toggleFilterBar = function () {
-  const bar = document.querySelector(".filterbar");
+  const controls = document.querySelector(".filter-controls");
   const btn = document.querySelector(".filter-toggle");
-  if (!bar || !btn) return;
-  const hidden = bar.classList.toggle("hidden");
+  if (!controls || !btn) return;
+  const hidden = controls.classList.toggle("hidden");
   btn.textContent = hidden ? "Filter anzeigen ▼" : "Filter ausblenden ▲";
 };
 

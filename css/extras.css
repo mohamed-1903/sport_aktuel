@@ -121,11 +121,16 @@
   color: #000;
 }
 
-/* Buttons oberhalb der Filterleiste */
-.filter-tools {
+/* Filterelemente innerhalb der Leiste */
+.filter-controls {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.25rem;
-  margin-bottom: 0.5rem;
+  align-items: center;
+}
+
+.filter-controls.hidden {
+  display: none;
 }
 
 .layout-toggle {
