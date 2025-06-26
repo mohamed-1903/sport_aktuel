@@ -6,6 +6,8 @@ const DISCOUNT_CODES = {
 };
 
 const CUSTOMIZATION_FEE = 10; // € pro Trikot
+const BADGE_BL_FEE = 4.0; // Bundesliga-Badge
+const BADGE_CL_FEE = 10.95; // Champions-League-Badge
 window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
 
 let TEAM_ROSTERS = {};
@@ -105,6 +107,7 @@ function setupProduct(section) {
       setCustomVisible(customToggle.checked);
     });
   }
+
 
 
 
@@ -495,6 +498,16 @@ function resetFinalPriceDisplay(price, section) {
   section.querySelector(
     `#finalPriceValue-${idx}`
   ).textContent = `${price.toFixed(2)}€ inkl. Mwst.`;
+}
+
+function clearCustomization(section) {
+  section.querySelector(".player-select")?.value = "";
+  section.querySelector(".custom-name")?.value = "";
+  section.querySelector(".custom-number")?.value = "";
+  section.querySelectorAll(".badge-bl, .badge-cl").forEach((el) => {
+    el.checked = false;
+  });
+  updateDisplay(section);
 }
 
 function setupCustomization(section) {

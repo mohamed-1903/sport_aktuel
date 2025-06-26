@@ -53,6 +53,7 @@
 }
 
 
+
 .image-wrapper img {
   max-height: 100%;
   max-width: 100%;
@@ -281,6 +282,7 @@ button {
 }
 
 
+
 .zoom-bg-container img {
   display: block;
   width: 100%;
@@ -327,6 +329,7 @@ button {
   box-shadow: 0 2px 4px rgb(0 0 0 / 5%);
 }
 
+
 .jersey-preview img {
   width: 100%;
   display: block;
@@ -361,6 +364,59 @@ button {
   border-radius: 20px;
   cursor: pointer;
 }
+
+.custom-toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.custom-switch input {
+  display: none;
+}
+
+.custom-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.custom-switch .slider {
+  position: absolute;
+  inset: 0;
+  display: block;
+  cursor: pointer;
+  background-color: #666;
+  border-radius: 34px;
+  transition: background-color 0.3s;
+}
+
+body.light-mode .custom-switch .slider {
+  background-color: #ccc;
+}
+
+.custom-switch .slider::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 2px;
+  top: 2px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.custom-switch input:checked + .slider {
+  background-color: var(--accent-color);
+}
+
+.custom-switch input:checked + .slider::before {
+  transform: translateX(26px);
+}
+
 
 .custom-toggle-wrap {
   display: flex;
@@ -509,6 +565,7 @@ body.light-mode .custom-switch .slider {
   max-height: 800px;
 }
 
+
 .price-breakdown ul {
   list-style: none;
   padding-left: 0;
@@ -523,4 +580,3 @@ body.light-mode .custom-switch .slider {
   gap: 20px;
   align-items: center;
 }
-
