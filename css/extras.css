@@ -1015,6 +1015,7 @@ body.light-mode .zoom-close {
   gap: 15px;
 }
 
+
 .popup-content-flex img {
   width: 80px;
   height: 80px;
@@ -1111,6 +1112,7 @@ body.light-mode .zoom-close {
   gap: 12px;
   margin-top: 20px;
 }
+
 
 .popup-buttons button,
 .popup-buttons a {
