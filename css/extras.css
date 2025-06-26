@@ -27,13 +27,14 @@
   box-sizing: border-box; /* Padding zählt zur Gesamtbreite */
 }
 
+
 .filterbar {
   display: flex;
   flex-wrap: wrap;
   gap: 0.25rem;
   margin-bottom: 1rem;
   background-color: var(--card-bg);
-  padding: 0.25rem 0.5rem;
+  padding: 0.5rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   position: sticky;
@@ -52,8 +53,8 @@
   border-radius: 6px;
   background-color: var(--card-bg);
   color: var(--text-color);
-  font-size: 14px;
-  padding: 6px 10px;
+  font-size: 16px;
+  padding: 10px;
   cursor: pointer;
 }
 
@@ -69,8 +70,8 @@
   border-radius: 6px;
   background-color: var(--card-bg);
   color: var(--text-color);
-  font-size: 14px;
-  padding: 6px 8px;
+  font-size: 16px;
+  padding: 10px;
 }
 
 /* optisch ansprechende Selectboxen */
@@ -84,7 +85,7 @@
 }
 
 .filterbar input[type="range"] {
-  width: 140px;
+  width: 150px;
   accent-color: var(--accent-color);
 }
 
@@ -101,68 +102,6 @@
 }
 
 .price-label {
-  margin-left: 0.25rem;
-  min-width: 70px;
-  display: inline-block;
-  text-align: center;
-}
-
-.range-filter {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  border: 1px solid #555;
-  border-radius: 6px;
-  background-color: var(--card-bg);
-  color: var(--text-color);
-  padding: 2px 6px;
-}
-
-.range-filter.active {
-  border-color: var(--accent-color);
-  background-color: var(--accent-color);
-  color: #000;
-}
-
-.filter-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-
-.price-label {
-  margin-left: 0.25rem;
-  min-width: 70px;
-  display: inline-block;
-  text-align: center;
-}
-
-.range-filter {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  border: 1px solid #555;
-  border-radius: 6px;
-  background-color: var(--card-bg);
-  color: var(--text-color);
-  padding: 2px 6px;
-}
-
-.range-filter.active {
-  border-color: var(--accent-color);
-  background-color: var(--accent-color);
-  color: #000;
-}
-
-.filter-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-
-.price-label {
   margin-left: 0.5rem;
   min-width: 80px;
   display: inline-block;
@@ -192,35 +131,6 @@
   gap: 0.25rem;
 }
 
-.price-label {
-  margin-left: 0.5rem;
-  min-width: 80px;
-  display: inline-block;
-  text-align: center;
-}
-
-.range-filter {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  border: 1px solid #555;
-  border-radius: 6px;
-  background-color: var(--card-bg);
-  color: var(--text-color);
-  padding: 4px 8px;
-}
-
-.range-filter.active {
-  border-color: var(--accent-color);
-  background-color: var(--accent-color);
-  color: #000;
-}
-
-.filter-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
 
 .price-label {
   margin-left: 0.5rem;
@@ -246,6 +156,7 @@
   color: #000;
 }
 
+
 .price-label {
   margin-left: 0.5rem;
   min-width: 80px;
@@ -270,12 +181,6 @@
   color: #000;
 }
 
-.price-label {
-  margin-left: 0.5rem;
-  min-width: 80px;
-  display: inline-block;
-  text-align: center;
-}
 
 .price-label {
   margin-left: 0.5rem;
@@ -283,6 +188,15 @@
   display: inline-block;
   text-align: center;
 }
+
+
+.price-label {
+  margin-left: 0.5rem;
+  min-width: 80px;
+  display: inline-block;
+  text-align: center;
+}
+
 
 .layout-toggle {
   min-width: 140px;
@@ -1406,6 +1320,7 @@ body:not(.light-mode) .error {
 }
 
 /* Listenansicht für Produktübersicht */
+/* Listenansicht für Produktübersicht */
 .einzelprodukt-list {
   display: flex;
   flex-direction: column;
@@ -1441,14 +1356,12 @@ body:not(.light-mode) .error {
 
 .einzelprodukt-list .produkt-info {
   flex: 1;
-  text-align: left;
+  text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
 }
-
-
 
 .einzelprodukt-list .produkt-info h3 {
   font-size: 1.2rem;
@@ -1461,7 +1374,8 @@ body:not(.light-mode) .error {
 
 .einzelprodukt-list .button-row {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   gap: 10px;
   margin-top: 10px;
 }
+

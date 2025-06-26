@@ -118,13 +118,13 @@
                     <button>Details</button>
                   </a>
 
-              <button class="btn-add-to-cart"
-                      data-iid="<?= (int)$produkt['iid'] ?>"
-                      data-name="<?= htmlspecialchars($produkt['name']) ?>"
-                      data-price="<?= (float)$produkt['price'] ?? 0 ?>"
-                      data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
-                🛒
-              </button>
+                  <button class="btn-add-to-cart"
+                          data-iid="<?= (int)$produkt['iid'] ?>"
+                          data-name="<?= htmlspecialchars($produkt['name']) ?>"
+                          data-price="<?= (float)$produkt['price'] ?? 0 ?>"
+                          data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
+                    🛒
+                  </button>
 
                   <button class="btn-add-to-watch"
                           data-iid="<?= (int)$produkt['iid'] ?>"
@@ -134,7 +134,6 @@
                     🤍
                   </button>
                 </section>
-
               </section>
             </section>
           </li>
