@@ -55,7 +55,6 @@
 
 
 
-
 .image-wrapper img {
   max-height: 100%;
   max-width: 100%;
@@ -286,7 +285,6 @@ button {
 
 
 
-
 .zoom-bg-container img {
   display: block;
   width: 100%;
@@ -335,7 +333,6 @@ button {
 
 
 
-
 .jersey-preview img {
   width: 100%;
   display: block;
@@ -372,10 +369,6 @@ button {
 
 .custom-switch input {
   display: none;
-}
-
-.toggle-label {
-  cursor: pointer;
 }
 
 .custom-switch {
@@ -433,7 +426,6 @@ body.light-mode .custom-switch .slider {
 }
 
 
-
 .options-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -450,7 +442,6 @@ body.light-mode .custom-switch .slider {
 .option-custom.show {
   max-height: 600px;
 }
-
 
 
 
