@@ -66,9 +66,6 @@ switch ($page) {
             case 'kontakt':
                 require 'view/static/kontaktView.php';
                 break;
-            case 'customize':
-                require 'view/static/customizeView.php';
-                break;
             default:
                 require 'view/static/indexView.php';
         }

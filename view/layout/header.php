@@ -20,7 +20,6 @@ if (session_status() === PHP_SESSION_NONE) {
     <link rel="stylesheet" href="css/form.css">
     <link rel="stylesheet" href="css/product.css">
 
-    <link rel="stylesheet" href="css/customize.css">
     <link rel="stylesheet" href="css/rating.css">
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/themes.css">

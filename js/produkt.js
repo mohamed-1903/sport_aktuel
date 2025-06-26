@@ -5,49 +5,13 @@ const DISCOUNT_CODES = {
   "00000": 5,
 };
 
-const CUSTOMIZATION_FEE = 10; // € pro Trikot
-const BADGE_BL_FEE = 4.0; // Bundesliga-Badge
-const BADGE_CL_FEE = 10.95; // Champions-League-Badge
-window.CUSTOMIZATION_FEE = CUSTOMIZATION_FEE;
 
-let TEAM_ROSTERS = {};
-
-const TEAM_PLAYERS = {
-  Bayern: {
-    9: "Harry Kane",
-    25: "Thomas Müller",
-    11: "Kingsley Coman",
-  },
-  Dortmund: {
-    9: "Sebastian Haller",
-    22: "Jude Bellingham",
-    11: "Marco Reus",
-  },
-  "Real Madrid": {
-    7: "Vinicius Jr.",
-    10: "Luka Modric",
-    8: "Toni Kroos",
-  },
-  "Manchester City": {
-    9: "Erling Haaland",
-    17: "Kevin De Bruyne",
-    20: "Bernardo Silva",
-  },
-};
 
 // Initialisierung pro Produktcontainer
 document.addEventListener("DOMContentLoaded", () => {
-  fetch("data/rosters.json")
-    .then((r) => r.json())
-    .then((data) => {
-      TEAM_ROSTERS = data;
-    })
-    .catch(() => {})
-    .finally(() => {
-      document
-        .querySelectorAll("[data-product-index]")
-        .forEach((section) => setupProduct(section));
-    });
+  document
+    .querySelectorAll("[data-product-index]")
+    .forEach((section) => setupProduct(section));
 });
 
 function setupProduct(section) {
@@ -59,9 +23,6 @@ function setupProduct(section) {
   const toggleInfo = section.querySelector(`#toggle-info-${idx}`);
   const desc = section.querySelector(`#description-full-${idx}`);
   const zoomContainer = section.querySelector(`#zoomContainer-${idx}`);
-  const customToggle = section.querySelector(`#customToggle-${idx}`);
-  const customSection = section.querySelector(`#customSection-${idx}`);
-  const toggleWrap = section.querySelector('.custom-toggle-wrap');
 
   section._zoomData = { currentIndex: 0 };
 
@@ -82,36 +43,8 @@ function setupProduct(section) {
   qtyInput.addEventListener("input", () => updateDisplay(section));
   const giftWrapEl = section.querySelector(`#giftWrap-${idx}`);
   const pinInputEl = section.querySelector(`#pin-${idx}`);
-  const badgeBLEl = section.querySelector(`#badgeBL-${idx}`);
-  const badgeCLEl = section.querySelector(`#badgeCL-${idx}`);
-
-  function setCustomVisible(show) {
-    if (!customSection) return;
-    customSection.classList.toggle("show", show);
-  }
-
-
-  if (customToggle) {
-    setCustomVisible(customToggle.checked);
-    customToggle.addEventListener("change", () => {
-      setCustomVisible(customToggle.checked);
-    });
-    if (toggleWrap) {
-      toggleWrap.addEventListener("click", (e) => {
-        if (e.target === toggleWrap) {
-          customToggle.checked = !customToggle.checked;
-          setCustomVisible(customToggle.checked);
-        }
-      });
-    }
-  }
-
-  setupCustomization(section);
-
   giftWrapEl?.addEventListener("change", () => updateDisplay(section));
   pinInputEl?.addEventListener("input", () => updateDisplay(section));
-  badgeBLEl?.addEventListener("change", () => updateDisplay(section));
-  badgeCLEl?.addEventListener("change", () => updateDisplay(section));
 
   updateDisplay(section);
   const compareBtn = document.getElementById("showCompareForm");
@@ -162,21 +95,6 @@ function getGiftWrapCharge(section) {
   return checkbox?.checked ? 2 : 0;
 }
 
-function getCustomizationFee(section) {
-  const nameInput = section.querySelector(".custom-name");
-  const numberInput = section.querySelector(".custom-number");
-  return nameInput && nameInput.value.trim()
-    ? CUSTOMIZATION_FEE
-    : numberInput && numberInput.value.trim()
-    ? CUSTOMIZATION_FEE
-    : 0;
-}
-
-function getBadgeFee(section) {
-  const bl = section.querySelector(".badge-bl")?.checked ? BADGE_BL_FEE : 0;
-  const cl = section.querySelector(".badge-cl")?.checked ? BADGE_CL_FEE : 0;
-  return bl + cl;
-}
 
 function getBasePrice(section) {
   return parseFloat(section.dataset.basePrice || 0);
@@ -196,10 +114,7 @@ function calculatePrice(section) {
   const qty = parseInt(section.querySelector(`#quantity-${idx}`).value) || 1;
   const gift = section.querySelector(`#giftWrap-${idx}`)?.checked;
   const pin = section.querySelector(`#pin-${idx}`)?.value.trim() || "";
-  const customFee = getCustomizationFee(section);
-  const badgeFee = getBadgeFee(section);
-
-  let subtotal = (getBasePrice(section) + customFee + badgeFee) * qty;
+  let subtotal = getBasePrice(section) * qty;
   if (gift) subtotal += 2;
 
   // Rabattcode prüfen
@@ -247,15 +162,11 @@ function updateDisplay(section) {
   const list = section.querySelector(".price-breakdown");
   if (list) {
     const gift = getGiftWrapCharge(section);
-    const custom = getCustomizationFee(section);
-    const badges = getBadgeFee(section);
     const qty = parseInt(section.querySelector(`#quantity-${idx}`).value) || 1;
     const discountAmount =
-      (getBasePrice(section) + custom + badges + gift) * qty * (discount / 100);
+      (getBasePrice(section) + gift) * qty * (discount / 100);
     const parts = [];
     if (gift) parts.push(`+${gift.toFixed(2)} €`);
-    if (custom) parts.push(`+${custom.toFixed(2)} €`);
-    if (badges) parts.push(`+${badges.toFixed(2)} €`);
     if (discount) parts.push(`-${discountAmount.toFixed(2)} €`);
     list.textContent = parts.join(" ");
   }
@@ -456,14 +367,6 @@ function resetFields(section) {
   section.querySelector(`#rabatt-info-${idx}`).textContent = "";
   section.querySelector(`#giftWrap-${idx}`).checked = false;
   section.querySelector(`#quantity-${idx}`).value = 1;
-  const blEl = section.querySelector(`#badgeBL-${idx}`);
-  if (blEl) blEl.checked = false;
-  const clEl = section.querySelector(`#badgeCL-${idx}`);
-  if (clEl) clEl.checked = false;
-  const cs = section.querySelector(`#customSection-${idx}`);
-  if (cs) cs.classList.remove("show");
-  const toggle = section.querySelector(`#customToggle-${idx}`);
-  if (toggle) toggle.checked = false;
 
   const finalValueEl = section.querySelector(`#finalPriceValue-${idx}`);
   const originalPriceEl = section.querySelector(`#original-price-${idx}`);
@@ -488,73 +391,3 @@ function resetFinalPriceDisplay(price, section) {
 }
 
 
-function setupCustomization(section) {
-  const name = section.querySelector(".product-name")?.textContent || "";
-  const teamKey = Object.keys(TEAM_ROSTERS).find((k) =>
-    name.toLowerCase().includes(k.toLowerCase())
-  );
-  const playerSelect = section.querySelector(".player-select");
-  const nameInput = section.querySelector(".custom-name");
-  const numberInput = section.querySelector(".custom-number");
-  const preview = section.querySelector(".jersey-preview");
-  const previewArea = section.querySelector(".preview-area");
-  const togglePreview = section.querySelector(".toggle-preview");
-  const nameOverlay = preview?.querySelector(".overlay-name");
-  const numberOverlay = preview?.querySelector(".overlay-number");
-
-  if (!playerSelect) return;
-
-  if (teamKey) {
-    const roster = TEAM_ROSTERS[teamKey];
-    const optEmpty = document.createElement("option");
-    optEmpty.value = "";
-    optEmpty.textContent = "-- Eigener Name --";
-    playerSelect.appendChild(optEmpty);
-
-    Object.entries(roster).forEach(([num, player]) => {
-      const opt = document.createElement("option");
-      opt.value = num;
-      opt.textContent = `${player} (${num})`;
-      playerSelect.appendChild(opt);
-    });
-
-    playerSelect.addEventListener("change", () => {
-      const num = playerSelect.value;
-      if (num) {
-        numberInput.value = num;
-        nameInput.value = roster[num];
-      } else {
-        numberInput.value = "";
-        nameInput.value = "";
-      }
-      updateDisplay(section);
-      updatePreview();
-    });
-  }
-
-  if (togglePreview && previewArea) {
-    togglePreview.addEventListener("click", (e) => {
-      e.preventDefault();
-      const hidden = previewArea.classList.toggle("hidden");
-      togglePreview.textContent = hidden
-        ? "Vorschau einblenden"
-        : "Vorschau ausblenden";
-    });
-  }
-
-  function updatePreview() {
-    if (nameOverlay) nameOverlay.textContent = nameInput.value.trim();
-    if (numberOverlay) numberOverlay.textContent = numberInput.value.trim();
-  }
-
-  nameInput.addEventListener("input", () => {
-    updateDisplay(section);
-    updatePreview();
-  });
-  numberInput.addEventListener("input", () => {
-    updateDisplay(section);
-    updatePreview();
-  });
-
-  updatePreview();
-}
