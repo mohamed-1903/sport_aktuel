@@ -43,12 +43,13 @@
 .image-wrapper {
   display: flex;
   flex-direction: column; /* vertikale Anordnung von Bild + z. B. Buttons */
-  align-items: center; /* horizontal zentrieren */
-  justify-content: center; /* vertikal zentrieren */
+  align-items: flex-start; /* linksbündig */
+  justify-content: center; /* vertikal zentriert */
+  height: 100%;
   min-height: 180px; /* Mindesthöhe für saubere Darstellung */
-  margin: 0 auto 10px; /* horizontal zentriert + Abstand nach unten */
-  width: fit-content; /* passt sich der Breite des Inhalts an */
-  text-align: center; /* optional, falls Text enthalten ist */
+  margin: 0 0 10px; /* Abstand nach unten, linksbündig */
+  width: 100%; /* nimmt den verfügbaren Platz ein */
+  text-align: left;
 }
 
 .image-wrapper img {
@@ -270,9 +271,9 @@ button {
 .zoom-bg-container {
   position: relative;
   overflow: hidden;
-  width: 500px;
+  width: 700px;
   max-width: 700px;
-  height: 300px;
+  height: 500px;
   cursor: zoom-in;
   margin-bottom: 20px;
 }
@@ -358,6 +359,58 @@ button {
   cursor: pointer;
 }
 
+.custom-toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.custom-switch input {
+  display: none;
+}
+
+.custom-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.custom-switch .slider {
+  position: absolute;
+  inset: 0;
+  display: block;
+  cursor: pointer;
+  background-color: #666;
+  border-radius: 34px;
+  transition: background-color 0.3s;
+}
+
+body.light-mode .custom-switch .slider {
+  background-color: #ccc;
+}
+
+.custom-switch .slider::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 2px;
+  top: 2px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.custom-switch input:checked + .slider {
+  background-color: var(--accent-color);
+}
+
+.custom-switch input:checked + .slider::before {
+  transform: translateX(26px);
+}
+
 .badges {
   display: flex;
   flex-direction: column;
@@ -405,7 +458,7 @@ button {
 /* zweispaltiges Layout für die Produktdetailseite */
 .detail-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.4fr 1fr; /* linke Seite größer für das Bild */
   gap: 20px;
   align-items: flex-start;
 }
