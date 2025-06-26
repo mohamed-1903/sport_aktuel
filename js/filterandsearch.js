@@ -24,10 +24,9 @@ function getItemsPerPage() {
 
 window.applyFilter = function () {
   const priceInput = document.getElementById("filter-preis");
-  const priceMax =
-    priceInput && priceInput.dataset.max
-      ? parseFloat(priceInput.dataset.max)
-      : Infinity;
+  const priceMax = priceInput && priceInput.dataset.max
+    ? parseFloat(priceInput.dataset.max)
+    : Infinity;
   const priceVal = parseFloat(priceInput?.value || priceMax);
 
   const filterWerte = {
@@ -151,9 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateLayoutToggle(savedLayout === "list" ? "list" : "grid");
   const priceInput = document.getElementById("filter-preis");
   if (priceInput) {
-    priceInput.addEventListener("input", () =>
-      updatePriceLabel(priceInput.value)
-    );
+    priceInput.addEventListener("input", () => updatePriceLabel(priceInput.value));
     updatePriceLabel(priceInput.value);
   }
   updateActiveFilters();
@@ -309,6 +306,7 @@ function colorEmoji(name) {
 }
 
 
+
 function populateFilterOptions() {
   const container = document.getElementById("produktContainer");
   if (!container) return;
@@ -339,6 +337,7 @@ function populateFilterOptions() {
     });
     if (values.includes(current)) sel.value = current;
   };
+
 
   setOptions("filter-marke", collect("marke"), "Alle Marken");
   setOptions("filter-farbe", collect("farbe"), "Alle Farben");
@@ -412,9 +411,7 @@ window.sortProducts = function (order) {
       if (order === "name-asc" || order === "name-desc") {
         const na = a.querySelector("h3")?.textContent.trim() || "";
         const nb = b.querySelector("h3")?.textContent.trim() || "";
-        return order === "name-asc"
-          ? na.localeCompare(nb)
-          : nb.localeCompare(na);
+        return order === "name-asc" ? na.localeCompare(nb) : nb.localeCompare(na);
       }
       return 0;
     });
@@ -425,6 +422,7 @@ window.sortProducts = function (order) {
   updatePagination();
   updateActiveFilters();
 };
+
 
 // Setzt die Produkte in ihre ursprüngliche Reihenfolge zurück
 window.restoreOriginalOrder = function () {
@@ -591,6 +589,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   updateActiveFilters();
 });
+
 
 window.addEventListener("resize", () => {
   updatePagination();

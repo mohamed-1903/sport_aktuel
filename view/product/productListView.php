@@ -26,13 +26,12 @@
       <button type="button" class="filter-toggle" onclick="toggleFilterBar()">
         Filter ausblenden ▲
       </button>
-      <button type="button" class="reset-filter" onclick="resetFilter()">Zurücksetzen</button>
       <button type="button" class="layout-toggle" onclick="toggleLayout()">☰ Liste anzeigen</button>
+      <button type="button" class="reset-filter" onclick="resetFilter()">Zurücksetzen</button>
     </div>
-
     <section class="filterbar">
+      <div class="filter-controls">
       <select id="filter-marke" onchange="applyFilter()">
-
         <option value="">Alle Marken</option>
         <option value="Nike">Nike</option>
         <option value="Puma">Puma</option>
@@ -48,7 +47,7 @@
       <div class="range-filter">
         <label for="filter-preis">Preis:</label>
         <input type="range" id="filter-preis" min="0" value="0" step="10"
-          oninput="updatePriceLabel(this.value)" onchange="applyFilter()">
+               oninput="updatePriceLabel(this.value)" onchange="applyFilter()">
         <span id="price-label" class="price-label">Kein Limit</span>
       </div>
       <select id="filter-mannschaft" onchange="applyFilter()">
@@ -70,9 +69,10 @@
         <option value="name-asc">Name A–Z</option>
         <option value="name-desc">Name Z–A</option>
       </select>
-
+      </div>
     </section>
     <ul class="einzelprodukt-grid" id="produktContainer">
+
       <?php if (empty($filteredProducts)): ?>
         <p>Keine Produkte in dieser Kategorie gefunden.</p>
       <?php else: ?>
@@ -94,49 +94,47 @@
             data-mannschaft="<?= $mannschaft ?>"
             data-geschlecht="<?= htmlspecialchars($geschlecht) ?>">
 
-            <section class="produkt-wrapper">
-              <section class="image-wrapper">
-                <img src="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>"
-                  alt="<?= htmlspecialchars($produkt["name"]) ?>">
-              </section>
+            <div class="image-wrapper">
+              <img src="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>"
+                   alt="<?= htmlspecialchars($produkt["name"]) ?>">
+            </div>
 
-              <section class="produkt-info">
-                <h3><?= htmlspecialchars($produkt["name"]) ?></h3>
-                <p><?= htmlspecialchars($produkt["price"]) ?>€
-                  <span>inkl. Mwst.</span>
-                  <?php if ($discount > 0): ?>
-                    <span class="rabatt">-<?= $discount ?>%</span>
-                  <?php endif; ?>
-                </p>
+            <div class="produkt-info">
+              <h3><?= htmlspecialchars($produkt["name"]) ?></h3>
+              <p><?= htmlspecialchars($produkt["price"]) ?>€
+                <span>inkl. Mwst.</span>
+                <?php if ($discount > 0): ?>
+                  <span class="rabatt">-<?= $discount ?>%</span>
+                <?php endif; ?>
+              </p>
 
-                <section class="button-row" data-iid="<?= (int)$produkt["iid"] ?>">
-                  <a href="index.php?page=product&action=detail&id=<?= (int)$produkt["iid"] ?>">
-                    <button>Details</button>
-                  </a>
+              <div class="button-row" data-iid="<?= (int)$produkt["iid"] ?>">
+                <a href="index.php?page=product&action=detail&id=<?= (int)$produkt["iid"] ?>">
+                  <button>Details</button>
+                </a>
 
-                  <button class="btn-add-to-cart"
-                    data-iid="<?= (int)$produkt['iid'] ?>"
-                    data-name="<?= htmlspecialchars($produkt['name']) ?>"
-                    data-price="<?= (float)$produkt['price'] ?? 0 ?>"
-                    data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
-                    🛒
-                  </button>
+                <button class="btn-add-to-cart"
+                        data-iid="<?= (int)$produkt['iid'] ?>"
+                        data-name="<?= htmlspecialchars($produkt['name']) ?>"
+                        data-price="<?= (float)$produkt['price'] ?? 0 ?>"
+                        data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
+                  🛒
+                </button>
 
-                  <button class="btn-add-to-watch"
-                    data-iid="<?= (int)$produkt['iid'] ?>"
-                    data-name="<?= htmlspecialchars($produkt['name']) ?>"
-                    data-price="<?= (float)$produkt['price'] ?? 0 ?>"
-                    data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
-                    🤍
-                  </button>
-                </section>
-
-              </section>
-            </section>
+                <button class="btn-add-to-watch"
+                        data-iid="<?= (int)$produkt['iid'] ?>"
+                        data-name="<?= htmlspecialchars($produkt['name']) ?>"
+                        data-price="<?= (float)$produkt['price'] ?? 0 ?>"
+                        data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
+                  🤍
+                </button>
+              </div>
+            </div>
           </li>
         <?php endforeach; ?>
       <?php endif; ?>
     </ul>
+
 
     <section class="pagination"></section>
 
