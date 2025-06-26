@@ -63,38 +63,6 @@
                 onclick="changeImage(this.closest('.Eprodukt'), '<?= htmlspecialchars($img) ?>', <?= $imgIndex ?>)" />
             <?php endforeach; ?>
           </div>
-        <!-- 🧺 Aktionen -->
-
-        <div class="button-reihe" data-iid="<?= (int)$product['id'] ?>">
-          <?php
-          $iid = isset($product['iid']) ? (int)$product['iid'] : 0;
-          $name = $product['name'] ?? 'Unbekanntes Produkt';
-          $price = isset($product['priceValue']) ? (float)$product['priceValue'] : 0.00;
-          $image = $product['image_main'] ?? 'img/placeholder.jpg';
-          ?>
-
-          <!-- 🛒 In den Warenkorb -->
-          <button
-            class="btn-add-to-cart"
-            data-iid="<?= $iid ?>"
-            data-name="<?= htmlspecialchars($name) ?>"
-            data-price="<?= $price ?>"
-            data-image="<?= htmlspecialchars($image) ?>">
-            🛒 In den Warenkorb
-          </button>
-
-          <!-- ❤️ Zur Merkliste -->
-          <button
-            class="btn-add-to-watch"
-            data-iid="<?= $iid ?>"
-            data-name="<?= htmlspecialchars($name) ?>"
-            data-price="<?= $price ?>"
-            data-image="<?= htmlspecialchars($image) ?>">
-            ❤️
-          </button>
-
-
-        </div>
         </div>
 
         <!-- 🛒 Produktdetails & Optionen -->
@@ -160,6 +128,38 @@
 
 
 
+        <!-- 🧺 Aktionen -->
+
+        <div class="button-reihe" data-iid="<?= (int)$product['id'] ?>">
+          <?php
+          $iid = isset($product['iid']) ? (int)$product['iid'] : 0;
+          $name = $product['name'] ?? 'Unbekanntes Produkt';
+          $price = isset($product['priceValue']) ? (float)$product['priceValue'] : 0.00;
+          $image = $product['image_main'] ?? 'img/placeholder.jpg';
+          ?>
+
+          <!-- 🛒 In den Warenkorb -->
+          <button
+            class="btn-add-to-cart"
+            data-iid="<?= $iid ?>"
+            data-name="<?= htmlspecialchars($name) ?>"
+            data-price="<?= $price ?>"
+            data-image="<?= htmlspecialchars($image) ?>">
+            🛒 In den Warenkorb
+          </button>
+
+          <!-- ❤️ Zur Merkliste -->
+          <button
+            class="btn-add-to-watch"
+            data-iid="<?= $iid ?>"
+            data-name="<?= htmlspecialchars($name) ?>"
+            data-price="<?= $price ?>"
+            data-image="<?= htmlspecialchars($image) ?>">
+            ❤️
+          </button>
+
+
+        </div>
         <!-- 📄 Produktbeschreibung -->
         <div class="produkt-info">
           <h3 id="toggle-info-<?= $index ?>">
