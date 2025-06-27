@@ -68,9 +68,6 @@ $cartCount = $uid ? countCartItems($uid) : 0;
                             <?php endif; ?>
                             <a href="index.php?page=auth&action=logout">Abmelden</a>
                         <?php endif; ?>
-                        <hr>
-                        <a href="#">Passwort vergessen?</a>
-                        <a href="index.php?page=return&action=form">Retoure anmelden?</a>
                     </div>
                 </div>
                     <a href="index.php?page=cart&action=view" title="Warenkorb">
