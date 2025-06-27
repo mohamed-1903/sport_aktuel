@@ -87,13 +87,14 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
           const price = parseFloat(btn.dataset.price) || 0;
           // Gestapeltes Popup anzeigen
           const buttons = `
+            <button class="remove-cart-btn" data-id="${iid}" data-size="${size}">Entfernen</button>
+            <a href="index.php?page=cart&action=view">Warenkorb</a>
             ${
               !isOnProductDetailPageCart
                 ? `<a href="index.php?page=product&action=detail&id=${iid}" class="show-btn">Anzeigen</a>`
                 : ""
-            }
-            <button class="remove-cart-btn" data-id="${iid}" data-size="${size}">Entfernen</button>
-            <a href="index.php?page=cart&action=view">Zum Warenkorb</a>`;
+            }`;
+
           zeigeGestapeltesPopup({
             name,
             image,
@@ -422,7 +423,7 @@ function zeigeProduktPreview({ name, image, price, productId }) {
         <small>🛒 In den Warenkorb gelegt</small>
         <small>${price.toFixed(2)} €</small>
         <div class="popup-buttons">
-          <a href="index.php?page=cart&action=view">Zum Warenkorb</a>
+          <a href="index.php?page=cart&action=view">Warenkorb</a>
           ${
             !isOnProductDetailPageCart
               ? `<a href="index.php?page=product&action=detail&id=${productId}">Anzeigen</a>`
