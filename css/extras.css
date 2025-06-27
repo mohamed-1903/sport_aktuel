@@ -83,25 +83,21 @@
   max-width: 1200px;
 }
 
-/* Selects, Range-Slider, Buttons */
 .filterbar select,
 .filterbar input[type="range"],
 .filter-tools button {
+  display: inline-block;
+  width: auto;
   border: 1px solid #555;
   border-radius: 6px;
   background-color: var(--card-bg);
   color: var(--text-color);
   font-size: 14px;
   padding: 6px 8px;
-  margin-bottom: 0;
-  flex: 0 0 auto;
-  max-width: 200px;
+  margin-bottom: 0; /* Buttons ohne Abstand darunter */
+  flex: 0 0 auto; /* verhindert, dass die Elemente die volle Breite einnehmen */
 }
-.filter-controls select,
-.filter-controls .range-filter {
-  width: auto;
-  min-width: 150px;
-}
+
 
 
 /* Select Dropdown-Pfeil optisch gestalten */
@@ -728,7 +724,7 @@ body.light-mode .zoom-close {
 }
 
 .cart-table td:first-child {
-  text-align: left;
+  text-align: center;
 }
 
 .cart-table td img {
@@ -736,7 +732,21 @@ body.light-mode .zoom-close {
   height: auto;
   object-fit: contain;
   border-radius: 8px;
+  display: block;
+  margin: 0 auto;
 }
+
+.qty-input {
+  width: 60px;
+  padding: 4px;
+  text-align: center;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--text-color);
+}
+
+
 
 /* Entfernen-Button */
 .remove-btn {
@@ -1016,6 +1026,8 @@ body.light-mode .zoom-close {
   gap: 15px;
 }
 
+
+
 .popup-content-flex img {
   width: 80px;
   height: 80px;
@@ -1112,6 +1124,8 @@ body.light-mode .zoom-close {
   gap: 12px;
   margin-top: 20px;
 }
+
+
 
 .popup-buttons button,
 .popup-buttons a {
