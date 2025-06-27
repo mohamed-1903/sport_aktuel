@@ -23,16 +23,16 @@ function getItemsPerPage() {
 }
 
 window.applyFilter = function () {
-  const priceInput = document.getElementById("filter-preis");
-  const priceMax = priceInput && priceInput.dataset.max
-    ? parseFloat(priceInput.dataset.max)
-    : Infinity;
-  const priceVal = parseFloat(priceInput?.value || priceMax);
+  const minInput = document.getElementById("filter-price-min");
+  const maxInput = document.getElementById("filter-price-max");
+  const minVal = parseFloat(minInput?.value || "");
+  const maxVal = parseFloat(maxInput?.value || "");
 
   const filterWerte = {
     marke: document.getElementById("filter-marke")?.value || "",
     farbe: document.getElementById("filter-farbe")?.value || "",
-    maxPreis: priceVal >= priceMax ? Infinity : priceVal,
+    minPreis: isNaN(minVal) ? 0 : minVal,
+    maxPreis: isNaN(maxVal) ? Infinity : maxVal,
     mannschaft: document.getElementById("filter-mannschaft")?.value || "",
     geschlecht: document.getElementById("filter-geschlecht")?.value || "",
   };
@@ -41,10 +41,17 @@ window.applyFilter = function () {
     const p = produkt.dataset;
     const preis = parseFloat(p.preis);
     const sichtbar =
-      (!filterWerte.marke || p.marke === filterWerte.marke) &&
-      (!filterWerte.farbe || p.farbe === filterWerte.farbe) &&
-      (!filterWerte.mannschaft || p.mannschaft === filterWerte.mannschaft) &&
-      (!filterWerte.geschlecht || p.geschlecht === filterWerte.geschlecht) &&
+      (!filterWerte.marke ||
+        (p.marke || "").toLowerCase() === filterWerte.marke.toLowerCase()) &&
+      (!filterWerte.farbe ||
+        (p.farbe || "").toLowerCase() === filterWerte.farbe.toLowerCase()) &&
+      (!filterWerte.mannschaft ||
+        (p.mannschaft || "").toLowerCase() ===
+          filterWerte.mannschaft.toLowerCase()) &&
+      (!filterWerte.geschlecht ||
+        (p.geschlecht || "").toLowerCase() ===
+          filterWerte.geschlecht.toLowerCase()) &&
+      preis >= filterWerte.minPreis &&
       preis <= filterWerte.maxPreis;
 
     // leeres Display lässt die ursprüngliche Flex-Darstellung erhalten
@@ -148,11 +155,10 @@ document.addEventListener("DOMContentLoaded", () => {
     prodContainer.classList.remove("einzelprodukt-grid");
   }
   updateLayoutToggle(savedLayout === "list" ? "list" : "grid");
-  const priceInput = document.getElementById("filter-preis");
-  if (priceInput) {
-    priceInput.addEventListener("input", () => updatePriceLabel(priceInput.value));
-    updatePriceLabel(priceInput.value);
-  }
+  populateFilterOptions();
+  const minInput = document.getElementById("filter-price-min");
+  const maxInput = document.getElementById("filter-price-max");
+  [minInput, maxInput].forEach((el) => el && el.addEventListener("change", applyFilter));
   updateActiveFilters();
 });
 
@@ -307,7 +313,7 @@ function colorEmoji(name) {
 
 
 
-function populateFilterOptions() {
+window.populateFilterOptions = function () {
   const container = document.getElementById("produktContainer");
   if (!container) return;
 
@@ -344,23 +350,34 @@ function populateFilterOptions() {
   setOptions("filter-mannschaft", collect("mannschaft"), "Alle Mannschaften");
   setOptions("filter-geschlecht", collect("geschlecht"), "Alle Geschlechter");
 
-  const priceInput = document.getElementById("filter-preis");
-  const priceLabel = document.getElementById("price-label");
-  if (priceInput) {
-    const max = Math.max(
-      0,
-      ...products.map((p) => parseFloat(p.dataset.preis) || 0)
-    );
-    const roundedMax = Math.ceil(max);
-    priceInput.max = roundedMax;
-    priceInput.dataset.max = roundedMax;
-    if (!priceInput.value || parseFloat(priceInput.value) > roundedMax) {
-      priceInput.value = roundedMax;
-    }
-    if (priceLabel) {
-      updatePriceLabel(priceInput.value);
-    }
-  }
+  const minInput = document.getElementById("filter-price-min");
+  const maxInput = document.getElementById("filter-price-max");
+  const prices = products
+    .map((p) => parseFloat(p.dataset.preis) || 0)
+    .filter((n) => !isNaN(n))
+    .sort((a, b) => a - b);
+
+  const uniquePrices = [...new Set(prices)];
+
+  const fillOptions = (select, placeholder) => {
+    if (!select) return;
+    const current = select.value;
+    select.innerHTML = "";
+    const blank = document.createElement("option");
+    blank.value = "";
+    blank.textContent = placeholder;
+    select.appendChild(blank);
+    uniquePrices.forEach((price) => {
+      const opt = document.createElement("option");
+      opt.value = price;
+      opt.textContent = `${price} €`;
+      select.appendChild(opt);
+    });
+    if (current) select.value = current;
+  };
+
+  fillOptions(minInput, "Min");
+  fillOptions(maxInput, "Max");
 }
 
 // 🔄 Alle Filter zurücksetzen und erneut anwenden
@@ -369,11 +386,10 @@ window.resetFilter = function () {
     sel.selectedIndex = 0;
   });
   populateFilterOptions();
-  const priceInput = document.getElementById("filter-preis");
-  if (priceInput) {
-    priceInput.value = priceInput.dataset.max || priceInput.max || 0;
-    updatePriceLabel(priceInput.value);
-  }
+  const minInput = document.getElementById("filter-price-min");
+  const maxInput = document.getElementById("filter-price-max");
+  if (minInput) minInput.selectedIndex = 0;
+  if (maxInput) maxInput.selectedIndex = 0;
   const suche = document.getElementById("produktsuche");
   if (suche) {
     suche.value = "";
@@ -427,8 +443,14 @@ window.sortProducts = function (order) {
 // Setzt die Produkte in ihre ursprüngliche Reihenfolge zurück
 window.restoreOriginalOrder = function () {
   const container = document.getElementById("produktContainer");
-  if (!container || !window.originalProductOrder) return;
-  window.originalProductOrder.forEach((el) => container.appendChild(el));
+  if (!container) return;
+  const items = Array.from(container.querySelectorAll(".einzelprodukt"));
+  items.sort((a, b) => {
+    const ia = parseInt(a.dataset.id, 10) || 0;
+    const ib = parseInt(b.dataset.id, 10) || 0;
+    return ia - ib;
+  });
+  items.forEach((el) => container.appendChild(el));
 };
 
 function updateActiveFilters() {
@@ -439,24 +461,36 @@ function updateActiveFilters() {
       sel.classList.toggle("active", sel.selectedIndex > 0);
     }
   });
-  const priceInput = document.getElementById("filter-preis");
-  if (priceInput) {
-    const max = parseFloat(priceInput.dataset.max || priceInput.max || 0);
-    const active = parseFloat(priceInput.value) < max;
-    priceInput.classList.toggle("active", active);
-    const rangeWrapper = document.querySelector(".range-filter");
-    if (rangeWrapper) rangeWrapper.classList.toggle("active", active);
-  }
+  const minInput = document.getElementById("filter-price-min");
+  const maxInput = document.getElementById("filter-price-max");
+  const minActive = minInput && minInput.selectedIndex > 0;
+  const maxActive = maxInput && maxInput.selectedIndex > 0;
+  if (minInput) minInput.classList.toggle("active", minActive);
+  if (maxInput) maxInput.classList.toggle("active", maxActive);
+  const menu = document.querySelector(".price-menu");
+  if (menu) menu.classList.toggle("active", minActive || maxActive);
+  const btn = document.querySelector(".price-toggle");
+  if (btn) btn.classList.toggle("active", minActive || maxActive);
 }
 
-window.updatePriceLabel = function (value) {
-  const priceInput = document.getElementById("filter-preis");
-  const label = document.getElementById("price-label");
-  if (!priceInput || !label) return;
-  const max = parseFloat(priceInput.dataset.max || priceInput.max || value);
-  const val = parseFloat(value);
-  label.textContent = val >= max ? "Kein Limit" : `Bis ${val} €`;
-  updateActiveFilters();
+window.togglePriceDropdown = function () {
+  const menu = document.getElementById("price-dropdown");
+  const btn = document.querySelector(".price-toggle");
+  if (!menu || !btn) return;
+  const open = menu.classList.toggle("show");
+  btn.classList.toggle("open", open);
+  const outside = (e) => {
+    if (!e.target.closest(".price-filter")) {
+      menu.classList.remove("show");
+      btn.classList.remove("open");
+      document.removeEventListener("click", outside);
+    }
+  };
+  if (open) {
+    document.addEventListener("click", outside);
+  } else {
+    document.removeEventListener("click", outside);
+  }
 };
 
 // Ein/Ausblenden der Filterleiste
@@ -583,6 +617,7 @@ function updatePagination() {
 document.addEventListener("DOMContentLoaded", () => {
   // Stelle sicher, dass beim Laden der Seite keine Filter aktiv sind
   resetFilter();
+  updatePagination();
 });
 
 
