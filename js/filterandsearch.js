@@ -455,6 +455,8 @@ function updateActiveFilters() {
   if (maxInput) maxInput.classList.toggle("active", maxActive);
   const menu = document.querySelector(".price-menu");
   if (menu) menu.classList.toggle("active", minActive || maxActive);
+  const btn = document.querySelector(".price-toggle");
+  if (btn) btn.classList.toggle("active", minActive || maxActive);
 }
 
 window.togglePriceDropdown = function () {
