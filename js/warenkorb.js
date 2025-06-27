@@ -326,7 +326,12 @@ function updateCartQuantity(productId, size, quantity, reload = true) {
     )}&quantity=${encodeURIComponent(quantity)}`,
   })
     .then(() => {
-      if (reload) loadList();
+      if (reload) {
+        loadList();
+      } else {
+        recalculateTotals();
+      }
+
       updateCartCount();
     })
     .catch((err) => console.error("Fehler beim Aktualisieren:", err));
@@ -340,7 +345,11 @@ function recalculateTotals() {
   const mwstEl = document.getElementById("mwstbetrag");
   let total = 0;
   sumCells.forEach((cell) => {
-    const val = parseFloat(cell.textContent);
+    const raw = cell.textContent
+      .replace(/[^0-9,.-]/g, "")
+      .replace(',', '.');
+    const val = parseFloat(raw);
+
     if (!isNaN(val)) total += val;
   });
   const netto = total / 1.19;
