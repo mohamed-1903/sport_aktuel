@@ -31,7 +31,8 @@ document.addEventListener("click", (e) => {
     .closest(".Eprodukt")
     ?.querySelector("input[type=number]");
   const size = sizeSelect ? sizeSelect.value : "M";
-  const quantity = parseInt(quantityInput?.value) || 1;
+  let quantity = parseInt(quantityInput?.value) || 1;
+  if (quantity > 25) quantity = 25;
 
   if (sizeSelect && !size) {
     alert("❗ Bitte eine Größe auswählen.");
@@ -231,7 +232,7 @@ function loadList() {
             <select class="qty-select" data-id="${
               item.product_id
             }" data-size="${item.size}" data-price="${einzelfpreis.toFixed(2)}">
-              ${Array.from({ length: 10 }, (_, i) => `<option value="${
+              ${Array.from({ length: 25 }, (_, i) => `<option value="${
                 i + 1
               }"${menge === i + 1 ? " selected" : ""}>${i + 1}</option>`).join("")}
             </select>
@@ -331,6 +332,11 @@ function handleQtyChange(sel) {
     qty = 1;
     sel.value = 1;
   }
+  if (qty > 25) {
+    qty = 25;
+    sel.value = 25;
+  }
+
   let price = parseFloat(sel.dataset.price);
   if (isNaN(price)) {
     const priceCell = sel.closest("tr")?.querySelector("td:nth-child(3)");

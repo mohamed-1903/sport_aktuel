@@ -82,10 +82,10 @@ $total = 0;
                     data-size="<?= htmlspecialchars($item['size']) ?>"
                     data-price="<?= number_format($einzelpreis, 2, '.', '') ?>"
                   >
-                    <?php for ($i = 1; $i <= 10; $i++): ?>
+                    <?php for ($i = 1; $i <= 25; $i++): ?>
                       <option value="<?= $i ?>" <?= $i == (int)$item['quantity'] ? 'selected' : '' ?>><?= $i ?></option>
                     <?php endfor; ?>
-                  </select>
+                 </select>
                 </form>
               </td>
 
