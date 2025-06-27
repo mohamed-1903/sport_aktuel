@@ -723,6 +723,16 @@ body.light-mode .zoom-close {
   font-size: 16px;
 }
 
+
+.qty-input {
+  width: 60px;
+  padding: 4px;
+  text-align: center;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--text-color);
+}
 .cart-table td:first-child {
   text-align: center;
 }
