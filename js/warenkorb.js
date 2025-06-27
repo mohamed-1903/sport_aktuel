@@ -88,13 +88,14 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
           const price = parseFloat(btn.dataset.price) || 0;
           // Gestapeltes Popup anzeigen
           const buttons = `
+            <button class="remove-cart-btn" data-id="${iid}" data-size="${size}">Entfernen</button>
+            <a href="index.php?page=cart&action=view">Warenkorb</a>
             ${
               !isOnProductDetailPageCart
-                ? `<a href="index.php?page=product&action=detail&id=${iid}" class="show-btn">🔍 Anzeigen</a>`
+                ? `<a href="index.php?page=product&action=detail&id=${iid}" class="show-btn">Anzeigen</a>`
                 : ""
-            }
-            <button class="remove-cart-btn" data-id="${iid}" data-size="${size}">🗑 Entfernen</button>
-            <a href="index.php?page=cart&action=view">Zum Warenkorb</a>`;
+            }`;
+
           zeigeGestapeltesPopup({
             name,
             image,
@@ -235,6 +236,7 @@ function loadList() {
                 i + 1
               }"${menge === i + 1 ? " selected" : ""}>${i + 1}</option>`).join("")}
             </select>
+
           </td>
           <td>${einzelfpreis.toFixed(2)} €</td>
           <td class="summe-cell">${gesamt.toFixed(2)} €</td>
@@ -273,6 +275,7 @@ function loadList() {
       document.querySelectorAll(".qty-select").forEach((sel) => {
         sel.addEventListener("change", () => {
           handleQtyChange(sel);
+
         });
       });
     });
@@ -317,6 +320,7 @@ function updateCartQuantity(productId, size, quantity, reload = true) {
       } else {
         recalculateTotals();
       }
+
       updateCartCount();
     })
     .catch((err) => console.error("Fehler beim Aktualisieren:", err));
@@ -332,6 +336,7 @@ function handleQtyChange(sel) {
     qty = 25;
     sel.value = 25;
   }
+
   let price = parseFloat(sel.dataset.price);
   if (isNaN(price)) {
     const priceCell = sel.closest("tr")?.querySelector("td:nth-child(3)");
@@ -362,6 +367,7 @@ function recalculateTotals() {
       .replace(/[^0-9,.-]/g, "")
       .replace(',', '.');
     const val = parseFloat(raw);
+
     if (!isNaN(val)) total += val;
   });
   const netto = total / 1.19;
@@ -411,7 +417,7 @@ function zeigeGestapeltesPopup({
           ${
             buttons ||
             (productId
-              ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
+              ? `<a href="index.php?page=product&action=detail&id=${productId}">Anzeigen</a>`
               : "")
           }
         </div>
@@ -444,10 +450,10 @@ function zeigeProduktPreview({ name, image, price, productId }) {
         <small>🛒 In den Warenkorb gelegt</small>
         <small>${price.toFixed(2)} €</small>
         <div class="popup-buttons">
-          <a href="index.php?page=cart&action=view">Zum Warenkorb</a>
+          <a href="index.php?page=cart&action=view">Warenkorb</a>
           ${
             !isOnProductDetailPageCart
-              ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
+              ? `<a href="index.php?page=product&action=detail&id=${productId}">Anzeigen</a>`
               : ""
           }
         </div>
@@ -477,7 +483,7 @@ function zeigeCartRemovePreview({ name, image, productId }) {
       <a href="index.php?page=cart&action=view">Warenkorb</a>
       ${
         !isDetailPage
-          ? `<a href="index.php?page=product&action=detail&id=${productId}" class="show-btn">🔍 Anzeigen</a>`
+          ? `<a href="index.php?page=product&action=detail&id=${productId}" class="show-btn">Anzeigen</a>`
           : ""
       }
     `,
