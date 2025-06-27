@@ -51,7 +51,9 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   overflow-x: auto;
   justify-content: flex-start; /* linksbündig */
+  text-align: left;
 }
+
 
 
 .filterbar.hidden {
@@ -83,6 +85,13 @@
   margin-bottom: 0; /* Buttons ohne Abstand darunter */
   flex: 0 0 auto; /* verhindert, dass die Elemente die volle Breite einnehmen */
 }
+
+/* Einheitliche Breite für alle Filterelemente */
+.filterbar select,
+.filterbar input[type="range"] {
+  width: 140px;
+}
+
 
 
 
@@ -133,6 +142,7 @@
   justify-content: flex-start; /* Filter linksbündig */
   overflow-x: auto;        /* bei Bedarf horizontal scrollen */
 }
+
 
 
 .filter-controls.hidden {
@@ -190,8 +200,28 @@
   border-radius: 6px;
   background-color: var(--card-bg);
   color: var(--text-color);
-  padding: 5px 10px;
+  padding: 2px 6px;
 }
+
+.range-filter.active {
+  border-color: var(--accent-color);
+  background-color: var(--accent-color);
+  color: #000;
+}
+
+.filter-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.price-label {
+  margin-left: 0.5rem;
+  min-width: 80px;
+  display: inline-block;
+  text-align: left;
+}
+
 
 .range-filter input[type="range"] {
   width: 140px;
@@ -233,14 +263,14 @@
   margin-left: 0.5rem;
   min-width: 80px;
   display: inline-block;
-  text-align: center;
+  text-align: left;
 }
 
 .price-label {
   margin-left: 0.5rem;
   min-width: 80px;
   display: inline-block;
-  text-align: center;
+  text-align: left;
 }
 
 .layout-toggle {
