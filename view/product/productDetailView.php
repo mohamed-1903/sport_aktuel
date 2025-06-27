@@ -189,9 +189,8 @@
         <?php endif; ?>
       <?php endforeach; ?>
     </datalist>
-    <button id="compareBtn" class="btn-compare">Produkte zum vergleichen</button>
+    <button id="compareBtn" class="btn-compare">⚖️ Vergleichen</button>
   </div>
-
 
   <!-- 🧠 Ähnliche Produkte statisch -->
   <section class="produkte">
@@ -289,18 +288,30 @@
 </div>
 
 <script>
-  document.getElementById('compareBtn').addEventListener('click', () => {
-    const input = document.getElementById('compareInput').value.trim();
-    const options = document.querySelectorAll('#compareOptions option');
-    let secondId = null;
-    options.forEach(opt => {
-      if (opt.value === input) secondId = opt.dataset.id;
+  let compareProducts = [];
+  let compareFocus = -1;
+  let selectedCompareId = null;
+  const currentCompareIds = <?= json_encode(array_column($productsToShow, 'id')) ?>;
 
-    });
-
+  const showCompareBtn = document.getElementById('showCompareBtn');
+  const compareSection = document.getElementById('compareSection');
   const compareInput = document.getElementById('compareInput');
   const compareShadow = document.getElementById('compareShadow');
   const compareList = document.getElementById('compareSuggestions');
+
+  if (showCompareBtn) {
+    showCompareBtn.addEventListener('click', () => {
+      compareSection.classList.remove('hidden');
+      showCompareBtn.classList.add('hidden');
+      compareInput.focus();
+    });
+  }
+
+  fetch('data/products.json')
+    .then(res => res.json())
+    .then(data => {
+      compareProducts = data.products || [];
+    });
 
   function updateCompareList() {
     const val = compareInput.value.toLowerCase().trim();
@@ -395,6 +406,7 @@
     const params = allIds.map((v, i) => `id${i === 0 ? '' : i + 1}=${v}`).join('&');
     window.location.href = `index.php?page=product&action=detail&${params}`;
   });
+
 
   document.querySelectorAll('.remove-product').forEach(btn => {
     btn.addEventListener('click', () => {
