@@ -21,18 +21,38 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   const imageInput = document.getElementById('ratingImage');
+  const previewContainer = document.getElementById('imagePreviewContainer');
   const preview = document.getElementById('ratingPreview');
-  if (imageInput && preview) {
+  const removeBtn = document.getElementById('removeImageBtn');
+  if (imageInput && preview && previewContainer) {
+
     imageInput.addEventListener('change', () => {
       const file = imageInput.files[0];
       if (file) {
         preview.src = URL.createObjectURL(file);
-        preview.classList.remove('hidden');
+        previewContainer.classList.remove('hidden');
       } else {
-        preview.classList.add('hidden');
+        previewContainer.classList.add('hidden');
       }
     });
   }
+  if (removeBtn) {
+    removeBtn.addEventListener('click', () => {
+      imageInput.value = '';
+      preview.src = '';
+      previewContainer.classList.add('hidden');
+    });
+  }
+
+  document.querySelectorAll('.suggest-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const textarea = document.querySelector('#ratingForm textarea[name="comment"]');
+      if (textarea) {
+        textarea.value = btn.textContent;
+        textarea.focus();
+      }
+    });
+  });
 
 });
 

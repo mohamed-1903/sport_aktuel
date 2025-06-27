@@ -259,8 +259,17 @@
         <?php endfor; ?>
       </div>
       <textarea name="comment" required placeholder="Deine Meinung..."></textarea>
+      <div class="suggestion-bar">
+        <?php foreach ($reviewSuggestions as $sg): ?>
+          <button type="button" class="suggest-btn"><?= htmlspecialchars($sg) ?></button>
+        <?php endforeach; ?>
+      </div>
       <input type="file" name="image" id="ratingImage" accept="image/*">
-      <img id="ratingPreview" class="hidden" alt="Vorschau" />
+      <div id="imagePreviewContainer" class="image-preview hidden">
+        <img id="ratingPreview" alt="Vorschau" />
+        <button type="button" id="removeImageBtn" aria-label="Bild entfernen">&times;</button>
+      </div>
+
       <button type="submit">Bewerten</button>
     </form>
   </div>
