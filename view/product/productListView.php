@@ -49,11 +49,13 @@
         <div id="price-dropdown" class="price-menu">
           <div class="price-field">
             <select id="filter-price-min" onchange="applyFilter()"></select>
+
             <span class="currency">€</span>
           </div>
           <hr>
           <div class="price-field">
             <select id="filter-price-max" onchange="applyFilter()"></select>
+
             <span class="currency">€</span>
           </div>
         </div>
