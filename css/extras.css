@@ -93,6 +93,8 @@
 }
 
 
+
+
 /* Einheitliche Breite für alle Filterelemente */
 .filterbar select,
 .filterbar input[type="range"] {
@@ -145,6 +147,7 @@
   justify-content: flex-start; /* Filter linksbündig */
   overflow-x: auto;        /* bei Bedarf horizontal scrollen */
 }
+
 
 
 .filter-controls.hidden {
@@ -314,7 +317,7 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  align-items: center;
+  align-items: flex-start; /* linksbündig */
 }
 .einzelprodukt-grid .image-wrapper {
   display: flex;
@@ -328,11 +331,12 @@
 }
 
 .einzelprodukt-grid .produkt-info {
-  text-align: center;
+  text-align: left;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 }
+
 
 .einzelprodukt-grid .produkt-info h3 {
   margin: 0 0 0.25rem;
@@ -345,7 +349,7 @@
 .einzelprodukt-grid .button-row {
   margin-top: 0.5rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start; /* linksbündig */
   gap: 10px;
   width: 100%;
 }
@@ -356,7 +360,7 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  align-items: center;
+  align-items: flex-start; /* linksbündig */
 }
 .einzelprodukt-grid .image-wrapper {
   display: flex;
@@ -370,11 +374,12 @@
 }
 
 .einzelprodukt-grid .produkt-info {
-  text-align: center;
+  text-align: left;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 }
+
 .einzelprodukt-grid .produkt-info h3 {
   margin: 0 0 0.25rem;
 }
@@ -384,7 +389,7 @@
 .einzelprodukt-grid .button-row {
   margin-top: 0.5rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start; /* linksbündig */
   gap: 10px;
   width: 100%;
 }
@@ -1107,6 +1112,29 @@ body.light-mode .zoom-close {
   line-height: 1;
 }
 
+
+.toast-popup .close-toast {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: auto;
+  line-height: 1;
+}
+
+
+.toast-popup .close-toast {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: auto;
+  line-height: 1;
+}
+
+
 /* === Universelles Popup-Styling für Warenkorb & Watchlist === */
 .popup-stack-container {
   position: fixed;
@@ -1281,6 +1309,7 @@ body.light-mode .zoom-close {
 [data-theme="dark"] {
   --popup-bg: rgb(32 32 32 / 90%);
   --popup-text: #f0f0f0;
+
   --popup-border: rgb(255 255 255 / 15%);
   --popup-shadow: 0 12px 32px rgb(0 0 0 / 40%);
   --popup-blur: 12px;
@@ -1294,6 +1323,8 @@ body.light-mode .zoom-close {
   --toast-shadow: 0 8px 24px rgb(0 0 0 / 50%);
   --toast-blur: 8px;
 }
+
+
 
 /* === Buttons für Popups === */
 .popup-buttons {
@@ -1689,12 +1720,13 @@ body.light-mode .welcome-overlay {
 
 .einzelprodukt-list .produkt-info {
   flex: 1;
-  text-align: center;
+  text-align: left;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
+
 
 .einzelprodukt-list .produkt-info h3 {
   font-size: 1.2rem;
@@ -1707,7 +1739,8 @@ body.light-mode .welcome-overlay {
 
 .einzelprodukt-list .button-row {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start; /* linksbündig */
   gap: 10px;
   margin-top: 10px;
 }
+
