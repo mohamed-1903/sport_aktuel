@@ -44,14 +44,33 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  document.querySelectorAll('.suggest-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const textarea = document.querySelector('#ratingForm textarea[name="comment"]');
-      if (textarea) {
-        textarea.value = btn.textContent;
-        textarea.focus();
-      }
+  const suggestionBar = document.getElementById('suggestionBar');
+  const suggestionsByRating = suggestionBar ? JSON.parse(suggestionBar.dataset.suggestions || '{}') : {};
+  const commentField = document.querySelector('#ratingForm textarea[name="comment"]');
+
+  function renderSuggestions(rating) {
+    if (!suggestionBar) return;
+    suggestionBar.innerHTML = '';
+    (suggestionsByRating[rating] || []).forEach(text => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'suggest-btn';
+      btn.textContent = text;
+      btn.addEventListener('click', () => {
+        if (commentField) {
+          commentField.value = text;
+          commentField.focus();
+        }
+      });
+      suggestionBar.appendChild(btn);
     });
+  }
+
+  const checked = document.querySelector('.rating-stars input:checked');
+  renderSuggestions(checked ? checked.value : '5');
+
+  document.querySelectorAll('.rating-stars input').forEach(rad => {
+    rad.addEventListener('change', () => renderSuggestions(rad.value));
   });
 
 });
