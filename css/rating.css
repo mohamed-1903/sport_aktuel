@@ -111,8 +111,8 @@
   display: flex;
   gap: 6px;
   flex: 0 0 auto;
-
 }
+
 
 .suggestion-bar::-webkit-scrollbar {
   height: 6px;

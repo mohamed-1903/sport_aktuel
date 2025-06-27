@@ -1118,6 +1118,7 @@ body.light-mode .zoom-close {
   line-height: 1;
 }
 
+
 /* === Universelles Popup-Styling für Warenkorb & Watchlist === */
 .popup-stack-container {
   position: fixed;
@@ -1306,9 +1307,6 @@ body.light-mode .zoom-close {
   --toast-shadow: 0 8px 24px rgb(0 0 0 / 50%);
   --toast-blur: 8px;
 }
-
-
-
 
 /* === Buttons für Popups === */
 .popup-buttons {

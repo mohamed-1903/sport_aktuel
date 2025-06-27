@@ -18,6 +18,7 @@
 
 
 
+
 <main class="produkte">
   <!-- 🔍 Zoom Modal -->
   <div id="zoomModal" class="zoom-modal hidden">
