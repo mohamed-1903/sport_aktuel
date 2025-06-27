@@ -886,13 +886,6 @@ body.light-mode .zoom-close {
   margin: 0 auto;
 }
 
-.qty-control {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-}
-
 .qty-input {
   width: 50px;
   padding: 4px;
@@ -902,6 +895,7 @@ body.light-mode .zoom-close {
   background: var(--card-bg);
   color: var(--text-color);
 }
+
 
 .qty-btn {
   width: 26px;

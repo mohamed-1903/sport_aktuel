@@ -75,21 +75,16 @@ $total = 0;
                 <form action="index.php?page=cart&action=update" method="post">
                   <input type="hidden" name="id" value="<?= (int)$item['product_id'] ?>">
                   <input type="hidden" name="size" value="<?= htmlspecialchars($item['size']) ?>">
-                  <div class="qty-control">
-                    <button type="button" class="qty-btn qty-minus">-</button>
-                    <input
-                      type="number"
-                      name="quantity"
-                      class="qty-input"
-                      data-id="<?= (int)$item['product_id'] ?>"
-                      data-size="<?= htmlspecialchars($item['size']) ?>"
-                      data-price="<?= number_format($einzelpreis, 2, '.', '') ?>"
-                      value="<?= (int)$item['quantity'] ?>"
-                      min="1"
-                      max="25"
-                    />
-                    <button type="button" class="qty-btn qty-plus">+</button>
-                  </div>
+                  <input
+                    type="number"
+                    name="quantity"
+                    class="qty-input"
+                    data-id="<?= (int)$item['product_id'] ?>"
+                    data-size="<?= htmlspecialchars($item['size']) ?>"
+                    data-price="<?= number_format($einzelpreis, 2, '.', '') ?>"
+                    value="<?= (int)$item['quantity'] ?>"
+                    min="1"
+                  />
                 </form>
               </td>
 
