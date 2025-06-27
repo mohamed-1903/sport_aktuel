@@ -95,7 +95,10 @@ function toggleWatchlist(iid, btn = null, info = {}) {
         zeigeToast("Fehler bei der Merkliste", "#cc0000");
       }
     })
-    .catch((err) => console.error("Watchlist Toggle Error", err));
+    .catch((err) => {
+      zeigeToast("⚠️ Serverfehler beim Hinzufügen", "#cc0000");
+      console.error(err);
+    });
 }
 
 function toggleWatchlistBulk(ids = []) {
@@ -266,7 +269,6 @@ function zeigeWatchPreview({ name, image, price, productId }) {
           ${
             !isOnProductDetailPageWatch
               ? `<a href="index.php?page=product&action=detail&id=${productId}">Anzeigen</a>`
-
               : ""
           }
         </div>
