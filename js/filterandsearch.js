@@ -609,7 +609,6 @@ function updatePagination() {
   renderPagination(totalPages);
 }
 
-
 // Nach dem kompletten Laden der Seite erneut Pagination berechnen,
 // damit alle Produkte und Layout-Styles berücksichtigt werden
 window.addEventListener("load", () => {
@@ -620,3 +619,4 @@ window.addEventListener("load", () => {
 window.addEventListener("resize", () => {
   updatePagination();
 });
+
