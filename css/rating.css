@@ -41,9 +41,8 @@
   background: linear-gradient(135deg, #fff, #f2f2f2);
   border-left: 4px solid #ffd700;
   border-radius: 5px;
-  padding: 15px 15px 15px 40px;
-  margin-bottom: 15px;
-  position: relative;
+  padding: 12px 15px;
+  margin-bottom: 12px;
 
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -169,6 +168,27 @@ body.modal-open {
 
 .review img:hover {
   transform: scale(1.05);
+}
+
+.review strong {
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.review p {
+  margin: 6px 0;
+  line-height: 1.4;
+}
+
+.rating-stars {
+  margin-bottom: 4px;
+}
+
+.no-reviews {
+  font-style: italic;
+  color: #666;
+  margin: 8px 0;
 }
 
 

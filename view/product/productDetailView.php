@@ -2,11 +2,11 @@
 <?php if (!empty($_SESSION['message'])): ?>
   <div class="toast-popup show" id="toastMessage">
     <?= htmlspecialchars($_SESSION['message']) ?>
+    <button type="button" class="close-toast" onclick="this.parentElement.classList.remove('show')">&times;</button>
   </div>
   <script>
     const toast = document.getElementById('toastMessage');
     if (toast) {
-      toast.classList.add('show');
       setTimeout(() => {
         toast.classList.remove('show');
       }, 3000);

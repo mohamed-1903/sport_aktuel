@@ -2,7 +2,7 @@
 window.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('ratingModal');
   if (!modal) return;
-  const closeBtn = modal.querySelector('.review-close');
+
 
   document.querySelectorAll('.open-review-modal').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -17,13 +17,23 @@ window.addEventListener('DOMContentLoaded', () => {
     if (e.target === modal) closeRatingModal();
   });
 
-  if (closeBtn) closeBtn.addEventListener('click', closeRatingModal);
-
-  window.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-      closeRatingModal();
-    }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeRatingModal();
   });
+
+  const imageInput = document.getElementById('ratingImage');
+  const preview = document.getElementById('ratingPreview');
+  if (imageInput && preview) {
+    imageInput.addEventListener('change', () => {
+      const file = imageInput.files[0];
+      if (file) {
+        preview.src = URL.createObjectURL(file);
+        preview.classList.remove('hidden');
+      } else {
+        preview.classList.add('hidden');
+      }
+    });
+  }
 
 });
 
