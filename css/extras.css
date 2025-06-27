@@ -1061,7 +1061,9 @@ body.light-mode .zoom-close {
   font-weight: bold; /* wird per JS sichtbar */
   cursor: pointer;
   box-shadow: 0 4px 8px rgb(0 0 0 / 25%);
-  display: flex;
+  box-shadow: var(--toast-shadow);
+  border: 1px solid var(--toast-border);
+  backdrop-filter: blur(var(--toast-blur)) saturate(160%);
   align-items: center;
   justify-content: center;
   transition: transform 0.3s ease, background-color 0.3s ease;
@@ -1249,6 +1251,12 @@ body.light-mode .zoom-close {
   }
 }
 
+  --toast-border: rgb(0 0 0 / 12%);
+  --toast-shadow: 0 8px 24px rgb(0 0 0 / 25%);
+  --toast-blur: 8px;
+  --toast-border: rgb(255 255 255 / 20%);
+  --toast-shadow: 0 8px 24px rgb(0 0 0 / 50%);
+  --toast-blur: 8px;
 /* Pop-in-Effekt (Hervorheben bei Eintritt) */
 @keyframes popIn {
   from {
