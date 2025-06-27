@@ -19,7 +19,7 @@
 .rating-stars input:checked ~ label,
 .rating-stars label:hover,
 .rating-stars label:hover ~ label {
-  color: #ffd700;
+  color: var(--accent-color);
   transform: scale(1.2);
 }
 
@@ -29,7 +29,7 @@
 
 .reviews {
   margin-top: 2rem;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid var(--popup-border);
   padding-top: 1rem;
 }
 
@@ -38,8 +38,8 @@
 }
 
 .review {
-  background: linear-gradient(135deg, #fff, #f2f2f2);
-  border-left: 4px solid #ffd700;
+  background: var(--card-bg);
+  border-left: 4px solid var(--accent-color);
   border-radius: 5px;
   padding: 12px 15px;
   margin-bottom: 12px;
@@ -249,7 +249,7 @@ body.modal-open {
 }
 
 .btn-review {
-  background: #ffd700;
+  background: var(--accent-color);
   border: none;
   border-radius: 25px;
   padding: 8px 18px;
@@ -296,7 +296,7 @@ body.modal-open {
   position: absolute;
   left: 10px;
   top: 10px;
-  color: #ffd700;
+  color: var(--accent-color);
 }
 
 .review img {
