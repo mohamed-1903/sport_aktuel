@@ -436,7 +436,22 @@ window.sortProducts = function (order) {
     items.forEach((el) => container.appendChild(el));
   }
 
-  currentPage = 1;
+  const btn = document.querySelector(".price-toggle");
+  if (!menu || !btn) return;
+  const open = menu.classList.toggle("show");
+  btn.classList.toggle("open", open);
+  const outside = (e) => {
+    if (!e.target.closest(".price-filter")) {
+      menu.classList.remove("show");
+      btn.classList.remove("open");
+      document.removeEventListener("click", outside);
+    }
+  };
+  if (open) {
+    document.addEventListener("click", outside);
+  } else {
+    document.removeEventListener("click", outside);
+  }
   updatePagination();
   updateActiveFilters();
 };
