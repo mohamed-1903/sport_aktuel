@@ -1,6 +1,6 @@
 <?php include __DIR__ . '/../layout/header.php'; ?>
 
-<main class="form-wrapper" style="padding: 2em; max-width: 700px; margin: auto;">
+<main class="form-wrapper" style="padding: 2em; max-width: 700px; margin: auto; margin-top: 2em;">
   <h1 style="text-align: center;">➕ Produkt hinzufügen</h1>
 
   <form action="index.php?page=admin&action=addProduct" method="POST" class="product-form" style="display: flex; flex-direction: column; gap: 1em;">
@@ -47,6 +47,7 @@
 
     <label>Beschreibung:
       <textarea name="description" rows="5" style="width: 100%;"></textarea>
+
     </label>
 
     <button type="submit" class="btn-checkout">✅ Produkt speichern</button>
@@ -58,4 +59,3 @@
 
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
 <?php include __DIR__ . '/../layout/footer.php'; ?>
-

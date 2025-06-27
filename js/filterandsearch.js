@@ -62,7 +62,6 @@ window.applyFilter = function () {
       preis >= filterWerte.minPreis &&
       preis <= filterWerte.maxPreis;
 
-
     // leeres Display lässt die ursprüngliche Flex-Darstellung erhalten
     produkt.style.display = sichtbar ? "" : "none";
   });
@@ -143,8 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Produktdaten aus JSON-Datei laden
-  // Pfad relativ zum Projektstamm
+  // Produktdaten laden
   fetch("data/products.json")
     .then((res) => res.json())
     .then((data) => {
@@ -165,14 +163,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   updateLayoutToggle(savedLayout === "list" ? "list" : "grid");
   populateFilterOptions();
+
   const priceSel = document.getElementById("filter-price");
   if (priceSel) priceSel.addEventListener("change", applyFilter);
+
   updateActiveFilters();
+  applyFilter(); // <-- das ist der entscheidende Fix
 });
-
-
-
-
 
 // 🔽 PRODUKTE LADEN
 function ladeProdukte(containerId, urls) {
@@ -199,7 +196,6 @@ function ladeProdukte(containerId, urls) {
     }
   });
 }
-
 function autocompleteSuche() {
   const input = document.getElementById("produktsuche");
   const liste = document.getElementById("such-vorschlaege");
@@ -305,7 +301,7 @@ function colorEmoji(name) {
   const map = {
     schwarz: "⬛",
     weiss: "⬜",
-    "weiß": "⬜",
+    weiß: "⬜",
     blau: "🟦",
     rot: "🟥",
     gelb: "🟨",
@@ -323,10 +319,7 @@ function colorEmoji(name) {
   return map[base] || "⬛";
 }
 
-
-
 window.populateFilterOptions = function () {
-
   const container = document.getElementById("produktContainer");
   if (!container) return;
 
@@ -357,7 +350,6 @@ window.populateFilterOptions = function () {
     if (values.includes(current)) sel.value = current;
   };
 
-
   setOptions("filter-marke", collect("marke"), "Alle Marken");
   setOptions("filter-farbe", collect("farbe"), "Alle Farben");
   setOptions("filter-mannschaft", collect("mannschaft"), "Alle Mannschaften");
@@ -377,11 +369,7 @@ window.populateFilterOptions = function () {
     allOpt.value = "";
     allOpt.textContent = "Alle Preise";
     priceSel.appendChild(allOpt);
-    for (
-      let p = Math.floor(minPrice / step) * step;
-      p < maxPrice;
-      p += step
-    ) {
+    for (let p = Math.floor(minPrice / step) * step; p < maxPrice; p += step) {
       const opt = document.createElement("option");
       if (p + step >= maxPrice) {
         opt.value = `${p}+`;
@@ -396,7 +384,7 @@ window.populateFilterOptions = function () {
     }
     if (current) priceSel.value = current;
   }
-}
+};
 
 // 🔄 Alle Filter zurücksetzen und erneut anwenden
 window.resetFilter = function () {
@@ -444,7 +432,9 @@ window.sortProducts = function (order) {
       if (order === "name-asc" || order === "name-desc") {
         const na = a.querySelector("h3")?.textContent.trim() || "";
         const nb = b.querySelector("h3")?.textContent.trim() || "";
-        return order === "name-asc" ? na.localeCompare(nb) : nb.localeCompare(na);
+        return order === "name-asc"
+          ? na.localeCompare(nb)
+          : nb.localeCompare(na);
       }
       return 0;
     });
@@ -455,7 +445,6 @@ window.sortProducts = function (order) {
   updatePagination();
   updateActiveFilters();
 };
-
 
 // Setzt die Produkte in ihre ursprüngliche Reihenfolge zurück
 window.restoreOriginalOrder = function () {
@@ -471,7 +460,6 @@ window.restoreOriginalOrder = function () {
 };
 
 function updateActiveFilters() {
-
   document.querySelectorAll(".filterbar select").forEach((sel) => {
     if (sel.id === "sort-select") {
       sel.classList.toggle("active", sel.value !== "default");
@@ -610,13 +598,6 @@ document.addEventListener("DOMContentLoaded", () => {
   resetFilter();
   updatePagination();
 });
-
-// Nach dem kompletten Laden der Seite erneut Pagination berechnen,
-// damit alle Produkte und Layout-Styles berücksichtigt werden
-window.addEventListener("load", () => {
-  updatePagination();
-});
-
 
 window.addEventListener("resize", () => {
   updatePagination();

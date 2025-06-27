@@ -852,6 +852,7 @@ body.light-mode .zoom-close {
   text-align: center;
   border-bottom: 1px solid #444;
   font-size: 16px;
+  color: var(--text-color); /* adapt text to theme */
 }
 
 .cart-table td:first-child {
