@@ -386,11 +386,8 @@ function zeigeToast(text, farbe = "") {
   const el = document.getElementById("toast-popup");
   if (!el) return;
 
-  el.innerHTML = `<span>${text}</span><button class="close-toast" aria-label="Schließen">&times;</button>`;
-  el.style.background = farbe || "";
-  const closeBtn = el.querySelector(".close-toast");
-  if (closeBtn) closeBtn.onclick = () => el.classList.remove("show");
-
+  el.textContent = text;
+  el.style.backgroundColor = farbe;
   el.classList.add("show");
 
   clearTimeout(el._hideTimer);

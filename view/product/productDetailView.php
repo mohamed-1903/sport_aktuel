@@ -201,7 +201,7 @@
       <?php endforeach; ?>
     </datalist>
 
-    <button id="compareBtn" class="btn-compare">⚖️ Vergleichen</button>
+    <button id="compareBtn" class="btn-compare"> Produkte zum Vergleichen</button>
   </div>
 
   <!-- 🧠 Ähnliche Produkte statisch -->
