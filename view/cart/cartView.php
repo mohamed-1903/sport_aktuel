@@ -71,17 +71,21 @@ $total = 0;
                   <small>🎟️ Rabatt: <?= (int)$item['discount'] ?>%</small>
                 <?php endif; ?>
               </td>
-              <td>
-                <form action="index.php?page=cart&action=update" method="post">
-                  <input type="hidden" name="id" value="<?= (int)$item['product_id'] ?>">
-                  <input type="hidden" name="size" value="<?= htmlspecialchars($item['size']) ?>">
-                  <select
-                    name="quantity"
-                    class="qty-select"
-                    data-id="<?= (int)$item['product_id'] ?>"
-                    data-size="<?= htmlspecialchars($item['size']) ?>"
-                    data-price="<?= number_format($einzelpreis, 2, '.', '') ?>"
-                  >
+                  <div class="qty-control">
+                    <button type="button" class="qty-btn qty-minus">-</button>
+                    <input
+                      type="number"
+                      name="quantity"
+                      class="qty-input"
+                      data-id="<?= (int)$item['product_id'] ?>"
+                      data-size="<?= htmlspecialchars($item['size']) ?>"
+                      data-price="<?= number_format($einzelpreis, 2, '.', '') ?>"
+                      value="<?= (int)$item['quantity'] ?>"
+                      min="1"
+                      max="25"
+                    />
+                    <button type="button" class="qty-btn qty-plus">+</button>
+                  </div>
                     <?php for ($i = 1; $i <= 25; $i++): ?>
                       <option value="<?= $i ?>" <?= $i == (int)$item['quantity'] ? 'selected' : '' ?>><?= $i ?></option>
                     <?php endfor; ?>

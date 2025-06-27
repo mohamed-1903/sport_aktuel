@@ -717,8 +717,31 @@ body.light-mode .zoom-close {
   transition: transform 0.3s ease;
 }
 
-.watchlist-card:hover {
-  transform: translateY(-5px);
+.qty-control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.qty-input {
+  width: 50px;
+
+.qty-btn {
+  width: 26px;
+  height: 26px;
+  line-height: 24px;
+  text-align: center;
+  border: 1px solid #555;
+  background: var(--card-bg);
+  color: var(--text-color);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.qty-btn:hover {
+  background: #555;
+}
 }
 
 .watchlist-card img {

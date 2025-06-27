@@ -203,25 +203,41 @@ function loadList() {
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>
-            <div style="display:flex; align-items:center; gap:10px;">
-              <img src="${item.image_main}" alt="Bild" width="60" />
-              <div>
-                <strong>${item.name}</strong><br>
-                <small>Größe: ${item.size}</small><br>
-                ${
-                  item.custom_name || item.custom_number
-                    ? `<small>Personalisierung: ${item.custom_name || ""} ${
-                        item.custom_number || ""
-                      }</small><br>`
-                    : ""
-                }
-                ${
-                  item.gift == 1
-                    ? "<small>🎁 Geschenkverpackung</small><br>"
-                    : ""
-                }
-                ${
-                  item.discount
+            <div class="qty-control">
+              <button type="button" class="qty-btn qty-minus">-</button>
+              <input type="number" class="qty-input" data-id="${
+                item.product_id
+              }" data-size="${item.size}" data-price="${einzelfpreis.toFixed(2)}" value="${menge}" min="1" max="25" />
+              <button type="button" class="qty-btn qty-plus">+</button>
+            </div>
+      document.querySelectorAll(".qty-input").forEach((input) => {
+        input.addEventListener("change", () => handleQtyChange(input));
+      });
+      document.querySelectorAll(".qty-minus").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const input = btn.parentElement.querySelector(".qty-input");
+          if (input) {
+            input.stepDown();
+            handleQtyChange(input);
+          }
+        });
+      });
+      document.querySelectorAll(".qty-plus").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const input = btn.parentElement.querySelector(".qty-input");
+          if (input) {
+            input.stepUp();
+            handleQtyChange(input);
+          }
+function handleQtyChange(el) {
+  let qty = parseInt(el.value);
+    el.value = 1;
+    el.value = 25;
+  let price = parseFloat(el.dataset.price);
+    const priceCell = el.closest("tr")?.querySelector("td:nth-child(3)");
+  const sumCell = el.closest("tr").querySelector(".summe-cell");
+  const id = el.dataset.id;
+  const size = el.dataset.size;
                     ? `<small>🎟️ Rabatt: ${item.discount}%</small>`
                     : ""
                 }
