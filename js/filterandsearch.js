@@ -168,6 +168,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const priceSel = document.getElementById("filter-price");
   if (priceSel) priceSel.addEventListener("change", applyFilter);
   updateActiveFilters();
+
+  // alle Filter zurücksetzen und Pagination initial erstellen
+  resetFilter();
+  updatePagination();
 });
 
 
@@ -605,9 +609,11 @@ function updatePagination() {
   renderPagination(totalPages);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  // Stelle sicher, dass beim Laden der Seite keine Filter aktiv sind
-  resetFilter();
+
+
+// Nach dem kompletten Laden der Seite erneut Pagination berechnen,
+// damit alle Produkte und Layout-Styles berücksichtigt werden
+window.addEventListener("load", () => {
   updatePagination();
 });
 
