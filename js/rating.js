@@ -44,33 +44,28 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  const suggestionBar = document.getElementById('suggestionBar');
-  const suggestionsByRating = suggestionBar ? JSON.parse(suggestionBar.dataset.suggestions || '{}') : {};
   const commentField = document.querySelector('#ratingForm textarea[name="comment"]');
 
-  function renderSuggestions(rating) {
-    if (!suggestionBar) return;
-    suggestionBar.innerHTML = '';
-    (suggestionsByRating[rating] || []).forEach(text => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'suggest-btn';
-      btn.textContent = text;
-      btn.addEventListener('click', () => {
-        if (commentField) {
-          commentField.value = text;
-          commentField.focus();
-        }
-      });
-      suggestionBar.appendChild(btn);
+  function showSuggestions(rating) {
+    document.querySelectorAll('#ratingForm .suggestions-set').forEach(set => {
+      set.classList.toggle('hidden', set.dataset.rating !== rating);
     });
   }
 
+  document.querySelectorAll('#ratingForm .suggest-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (commentField) {
+        commentField.value = btn.textContent;
+        commentField.focus();
+      }
+    });
+  });
+
   const checked = document.querySelector('.rating-stars input:checked');
-  renderSuggestions(checked ? checked.value : '5');
+  showSuggestions(checked ? checked.value : '5');
 
   document.querySelectorAll('.rating-stars input').forEach(rad => {
-    rad.addEventListener('change', () => renderSuggestions(rad.value));
+    rad.addEventListener('change', () => showSuggestions(rad.value));
   });
 
 });

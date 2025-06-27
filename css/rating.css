@@ -107,6 +107,13 @@
   scrollbar-width: thin;
 }
 
+.suggestions-set {
+  display: flex;
+  gap: 6px;
+  flex: 0 0 auto;
+
+}
+
 .suggestion-bar::-webkit-scrollbar {
   height: 6px;
 }
@@ -156,6 +163,7 @@
   cursor: pointer;
   font-size: 16px;
 }
+
 
 .review-form button {
   margin-top: 12px;

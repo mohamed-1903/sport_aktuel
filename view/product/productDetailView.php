@@ -17,6 +17,7 @@
 
 
 
+
 <main class="produkte">
   <!-- 🔍 Zoom Modal -->
   <div id="zoomModal" class="zoom-modal hidden">
@@ -261,7 +262,15 @@
         <?php endfor; ?>
       </div>
       <textarea name="comment" required placeholder="Deine Meinung..."></textarea>
-      <div class="suggestion-bar" id="suggestionBar" data-suggestions='<?= htmlspecialchars(json_encode($reviewSuggestions), ENT_QUOTES, 'UTF-8') ?>'></div>
+      <div class="suggestion-bar" id="suggestionBar">
+        <?php foreach ($reviewSuggestions as $rating => $texts): ?>
+          <div class="suggestions-set <?= $rating == 5 ? '' : 'hidden' ?>" data-rating="<?= (int)$rating ?>">
+            <?php foreach ($texts as $text): ?>
+              <button type="button" class="suggest-btn"><?= htmlspecialchars($text) ?></button>
+            <?php endforeach; ?>
+          </div>
+        <?php endforeach; ?>
+      </div>
       <input type="file" name="image" id="ratingImage" accept="image/*">
       <div id="imagePreviewContainer" class="image-preview hidden">
         <img id="ratingPreview" alt="Vorschau" />
