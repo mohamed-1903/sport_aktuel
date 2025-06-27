@@ -175,7 +175,9 @@
 
     </section>
   <?php endforeach; ?>
-  <div class="compare-section">
+
+  <button id="showCompareBtn" class="compare-toggle-btn" aria-label="Vergleich öffnen">+</button>
+  <div id="compareSection" class="compare-section hidden">
     <label for="compareInput">Produkt zum Vergleichen auswählen:</label>
     <div class="search-wrapper compare-search">
       <input type="text" id="compareShadow" class="compare-shadow" readonly tabindex="-1" />
@@ -190,9 +192,9 @@
         <?php endif; ?>
       <?php endforeach; ?>
     </datalist>
-
-    <button id="compareBtn" class="btn-compare">Produkte zum vergleichen</button>
+    <button id="compareBtn" class="btn-compare">⚖️ Vergleichen</button>
   </div>
+
 
   <!-- 🧠 Ähnliche Produkte statisch -->
   <section class="produkte">
@@ -293,6 +295,16 @@
   let compareFocus = -1;
   let selectedCompareId = null;
   const currentCompareIds = <?= json_encode(array_column($productsToShow, 'id')) ?>;
+
+  const showCompareBtn = document.getElementById('showCompareBtn');
+  const compareSection = document.getElementById('compareSection');
+  if (showCompareBtn) {
+    showCompareBtn.addEventListener('click', () => {
+      compareSection.classList.remove('hidden');
+      showCompareBtn.classList.add('hidden');
+      compareInput.focus();
+    });
+  }
 
   fetch('data/products.json')
     .then(res => res.json())
@@ -397,8 +409,6 @@
     const params = allIds.map((v, i) => `id${i === 0 ? '' : i + 1}=${v}`).join('&');
     window.location.href = `index.php?page=product&action=detail&${params}`;
   });
-
-
 
   document.querySelectorAll('.remove-product').forEach(btn => {
     btn.addEventListener('click', () => {

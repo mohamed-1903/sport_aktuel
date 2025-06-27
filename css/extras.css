@@ -1639,6 +1639,26 @@ body.light-mode .welcome-overlay {
   color: #000;
 }
 
+.compare-toggle-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  color: #000;
+  border: none;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.compare-toggle-btn:hover {
+  background: #e6c200;
+  transform: scale(1.1);
+}
+
 .compare-section {
   margin: 30px 0;
   display: flex;
@@ -1701,6 +1721,7 @@ body.light-mode .welcome-overlay {
   background: linear-gradient(45deg, var(--accent-color), #ffe259);
   transform: scale(1.05);
 }
+
 
 /* Listenansicht für Produktübersicht */
 /* Listenansicht für Produktübersicht */
