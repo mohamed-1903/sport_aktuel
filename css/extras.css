@@ -39,7 +39,8 @@
 
 .filterbar {
   display: flex;
-  flex-wrap: nowrap; /* Elemente in einer Zeile anzeigen */
+  flex-direction: row;      /* horizontal ausrichten */
+  flex-wrap: nowrap;        /* Elemente in einer Zeile anzeigen */
   align-items: center;
   gap: 0.25rem;
   margin-bottom: 1rem;
@@ -49,6 +50,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   overflow-x: auto;
   justify-content: flex-start; /* linksbündig */
+  text-align: left;
 }
 
 
@@ -74,6 +76,8 @@
 .filterbar select,
 .filterbar input[type="range"],
 .filter-tools button {
+  display: inline-block;
+  width: auto;
   border: 1px solid #555;
   border-radius: 6px;
   background-color: var(--card-bg);
@@ -82,6 +86,12 @@
   padding: 6px 8px;
   margin-bottom: 0; /* Buttons ohne Abstand darunter */
   flex: 0 0 auto; /* verhindert, dass die Elemente die volle Breite einnehmen */
+}
+
+/* Einheitliche Breite für alle Filterelemente */
+.filterbar select,
+.filterbar input[type="range"] {
+  width: 140px;
 }
 
 /* optisch ansprechende Selectboxen */
@@ -116,7 +126,7 @@
   margin-left: 0.25rem;
   min-width: 70px;
   display: inline-block;
-  text-align: center;
+  text-align: left;
 }
 
 .range-filter {
@@ -139,11 +149,12 @@
 /* Filterelemente innerhalb der Leiste */
 .filter-controls {
   display: flex;
+  flex-direction: row;     /* horizontal anordnen */
   flex-wrap: nowrap;
   gap: 0.25rem;
   align-items: center;
   justify-content: flex-start; /* Filter linksbündig */
-  overflow-x: auto;            /* bei Bedarf horizontal scrollen */
+  overflow-x: auto;        /* bei Bedarf horizontal scrollen */
 }
 
 
@@ -155,7 +166,7 @@
   margin-left: 0.25rem;
   min-width: 70px;
   display: inline-block;
-  text-align: center;
+  text-align: left;
 }
 
 .range-filter {
@@ -190,7 +201,7 @@
   margin-left: 0.25rem;
   min-width: 70px;
   display: inline-block;
-  text-align: center;
+  text-align: left;
 }
 
 .range-filter {
@@ -220,7 +231,7 @@
   margin-left: 0.25rem;
   min-width: 70px;
   display: inline-block;
-  text-align: center;
+  text-align: left;
 }
 
 .range-filter {
@@ -247,10 +258,10 @@
 }
 
 .price-label {
-  margin-left: 0.5rem;
+  margin-left: 0.25rem;
   min-width: 80px;
   display: inline-block;
-  text-align: center;
+  text-align: left;
 }
 
 .range-filter {
@@ -261,7 +272,7 @@
   border-radius: 6px;
   background-color: var(--card-bg);
   color: var(--text-color);
-  padding: 4px 8px;
+  padding: 2px 6px;
 }
 
 .range-filter.active {
@@ -277,21 +288,21 @@
 }
 
 .price-label {
-  margin-left: 0.5rem;
+  margin-left: 0.25rem;
   min-width: 80px;
   display: inline-block;
-  text-align: center;
+  text-align: left;
 }
 
 .range-filter {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.25rem;
   border: 1px solid #555;
   border-radius: 6px;
   background-color: var(--card-bg);
   color: var(--text-color);
-  padding: 5px 10px;
+  padding: 2px 6px;
 }
 
 .range-filter.active {
@@ -301,21 +312,21 @@
 }
 
 .price-label {
-  margin-left: 0.5rem;
+  margin-left: 0.25rem;
   min-width: 80px;
   display: inline-block;
-  text-align: center;
+  text-align: left;
 }
 
 .range-filter {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.25rem;
   border: 1px solid #555;
   border-radius: 6px;
   background-color: var(--card-bg);
   color: var(--text-color);
-  padding: 5px 10px;
+  padding: 2px 6px;
 }
 
 .range-filter.active {
@@ -325,17 +336,17 @@
 }
 
 .price-label {
-  margin-left: 0.5rem;
+  margin-left: 0.25rem;
   min-width: 80px;
   display: inline-block;
-  text-align: center;
+  text-align: left;
 }
 
 .price-label {
-  margin-left: 0.5rem;
+  margin-left: 0.25rem;
   min-width: 80px;
   display: inline-block;
-  text-align: center;
+  text-align: left;
 }
 
 .layout-toggle {
