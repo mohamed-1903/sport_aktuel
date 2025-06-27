@@ -25,8 +25,8 @@ function getItemsPerPage() {
 window.applyFilter = function () {
   const minInput = document.getElementById("filter-price-min");
   const maxInput = document.getElementById("filter-price-max");
-  const minVal = parseFloat(minInput?.value || 0);
-  const maxVal = parseFloat(maxInput?.value || Infinity);
+  const minVal = parseFloat(minInput?.value || "");
+  const maxVal = parseFloat(maxInput?.value || "");
 
   const filterWerte = {
     marke: document.getElementById("filter-marke")?.value || "",
@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateLayoutToggle(savedLayout === "list" ? "list" : "grid");
   const minInput = document.getElementById("filter-price-min");
   const maxInput = document.getElementById("filter-price-max");
-  [minInput, maxInput].forEach((el) => el && el.addEventListener("input", applyFilter));
+  [minInput, maxInput].forEach((el) => el && el.addEventListener("change", applyFilter));
   updateActiveFilters();
 });
 
@@ -344,20 +344,32 @@ function populateFilterOptions() {
 
   const minInput = document.getElementById("filter-price-min");
   const maxInput = document.getElementById("filter-price-max");
-  if (maxInput) {
-    const max = Math.max(
-      0,
-      ...products.map((p) => parseFloat(p.dataset.preis) || 0)
-    );
-    const roundedMax = Math.ceil(max);
-    maxInput.placeholder = roundedMax;
-    if (parseFloat(maxInput.value) > roundedMax) {
-      maxInput.value = roundedMax;
-    }
-  }
-  if (minInput && !minInput.placeholder) {
-    minInput.placeholder = 0;
-  }
+  const prices = products
+    .map((p) => parseFloat(p.dataset.preis) || 0)
+    .filter((n) => !isNaN(n))
+    .sort((a, b) => a - b);
+
+  const uniquePrices = [...new Set(prices)];
+
+  const fillOptions = (select, placeholder) => {
+    if (!select) return;
+    const current = select.value;
+    select.innerHTML = "";
+    const blank = document.createElement("option");
+    blank.value = "";
+    blank.textContent = placeholder;
+    select.appendChild(blank);
+    uniquePrices.forEach((price) => {
+      const opt = document.createElement("option");
+      opt.value = price;
+      opt.textContent = `${price} €`;
+      select.appendChild(opt);
+    });
+    if (current) select.value = current;
+  };
+
+  fillOptions(minInput, "Min");
+  fillOptions(maxInput, "Max");
 }
 
 // 🔄 Alle Filter zurücksetzen und erneut anwenden
@@ -368,8 +380,8 @@ window.resetFilter = function () {
   populateFilterOptions();
   const minInput = document.getElementById("filter-price-min");
   const maxInput = document.getElementById("filter-price-max");
-  if (minInput) minInput.value = "";
-  if (maxInput) maxInput.value = "";
+  if (minInput) minInput.selectedIndex = 0;
+  if (maxInput) maxInput.selectedIndex = 0;
   const suche = document.getElementById("produktsuche");
   if (suche) {
     suche.value = "";
@@ -437,8 +449,8 @@ function updateActiveFilters() {
   });
   const minInput = document.getElementById("filter-price-min");
   const maxInput = document.getElementById("filter-price-max");
-  const minActive = minInput && minInput.value !== "";
-  const maxActive = maxInput && maxInput.value !== "";
+  const minActive = minInput && minInput.selectedIndex > 0;
+  const maxActive = maxInput && maxInput.selectedIndex > 0;
   if (minInput) minInput.classList.toggle("active", minActive);
   if (maxInput) maxInput.classList.toggle("active", maxActive);
   const menu = document.querySelector(".price-menu");

@@ -1657,7 +1657,7 @@ body.light-mode .welcome-overlay {
   display: flex;
   align-items: center;
 }
-.price-field input {
+.price-field select {
   width: 80px;
   padding: 4px 20px 4px 6px;
   border: 1px solid #555;
