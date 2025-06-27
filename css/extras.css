@@ -1600,6 +1600,20 @@ body.light-mode .welcome-overlay {
   background: var(--accent-color);
   color: #000;
   border: none;
+/* Globale Zentrierung überschreiben */
+.filterbar,
+.filter-controls,
+.filter-tools,
+.einzelprodukt-grid .image-wrapper,
+.einzelprodukt-grid .produkt-info,
+.einzelprodukt-grid .button-row,
+.einzelprodukt-list .image-wrapper,
+.einzelprodukt-list .produkt-info,
+.einzelprodukt-list .button-row {
+  margin: 0;
+  text-align: left;
+}
+
   padding: 10px 20px;
   border-radius: 25px;
   cursor: pointer;
