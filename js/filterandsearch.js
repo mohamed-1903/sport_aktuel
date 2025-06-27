@@ -62,6 +62,7 @@ window.applyFilter = function () {
       preis >= filterWerte.minPreis &&
       preis <= filterWerte.maxPreis;
 
+
     // leeres Display lässt die ursprüngliche Flex-Darstellung erhalten
     produkt.style.display = sichtbar ? "" : "none";
   });
@@ -168,6 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (priceSel) priceSel.addEventListener("change", applyFilter);
   updateActiveFilters();
 });
+
 
 
 
@@ -396,8 +398,6 @@ window.populateFilterOptions = function () {
   }
 }
 
-
-
 // 🔄 Alle Filter zurücksetzen und erneut anwenden
 window.resetFilter = function () {
   document.querySelectorAll(".filterbar select").forEach((sel) => {
@@ -610,6 +610,7 @@ document.addEventListener("DOMContentLoaded", () => {
   resetFilter();
   updatePagination();
 });
+
 
 window.addEventListener("resize", () => {
   updatePagination();

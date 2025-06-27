@@ -95,6 +95,7 @@
 
 
 
+
 /* Einheitliche Breite für alle Filterelemente */
 .filterbar select,
 .filterbar input[type="range"] {
@@ -147,6 +148,7 @@
   justify-content: flex-start; /* Filter linksbündig */
   overflow-x: auto;        /* bei Bedarf horizontal scrollen */
 }
+
 
 
 
@@ -319,6 +321,7 @@
   height: 100%;
   align-items: flex-start; /* linksbündig */
 }
+
 .einzelprodukt-grid .image-wrapper {
   display: flex;
   justify-content: center;
@@ -336,6 +339,7 @@
   flex-direction: column;
   align-items: flex-start;
 }
+
 
 
 .einzelprodukt-grid .produkt-info h3 {
@@ -362,6 +366,7 @@
   height: 100%;
   align-items: flex-start; /* linksbündig */
 }
+
 .einzelprodukt-grid .image-wrapper {
   display: flex;
   justify-content: center;
@@ -393,6 +398,7 @@
   gap: 10px;
   width: 100%;
 }
+
 
 .sidebar {
   width: 220px;
@@ -1728,6 +1734,7 @@ body.light-mode .welcome-overlay {
 }
 
 
+
 .einzelprodukt-list .produkt-info h3 {
   font-size: 1.2rem;
   margin: 0 0 5px;
@@ -1742,5 +1749,19 @@ body.light-mode .welcome-overlay {
   justify-content: flex-start; /* linksbündig */
   gap: 10px;
   margin-top: 10px;
+}
+
+/* Globale Zentrierung überschreiben */
+.filterbar,
+.filter-controls,
+.filter-tools,
+.einzelprodukt-grid .image-wrapper,
+.einzelprodukt-grid .produkt-info,
+.einzelprodukt-grid .button-row,
+.einzelprodukt-list .image-wrapper,
+.einzelprodukt-list .produkt-info,
+.einzelprodukt-list .button-row {
+  margin: 0;
+  text-align: left;
 }
 
