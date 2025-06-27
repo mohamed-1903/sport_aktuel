@@ -1627,32 +1627,87 @@ body.light-mode .welcome-overlay {
   color: #000;
 }
 
-.compare-section {
-  margin: 20px 0;
+.compare-toggle-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  color: #000;
+  border: none;
+  font-size: 32px;
   display: flex;
-  gap: 10px;
   align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
-.compare-section input {
-  padding: 5px;
-  border-radius: 5px;
-  border: 1px solid #555;
+.compare-toggle-btn:hover {
+  background: #e6c200;
+  transform: scale(1.1);
+}
+
+.compare-section {
+  margin: 30px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+  padding: 12px 16px;
   background: var(--card-bg);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+}
+
+.compare-search {
+  position: relative;
+  max-width: 320px;
+  width: 100%;
+}
+
+.compare-search input#compareInput {
+  padding: 8px 12px;
+  border: 1px solid #555;
+  border-radius: 20px;
+  background: var(--bg-color);
   color: var(--text-color);
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.compare-search input.compare-shadow {
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: transparent;
+  color: rgb(255 255 255 / 30%);
+  pointer-events: none;
 }
 
 .compare-section button {
-  background: var(--accent-color);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(45deg, #ffe259, var(--accent-color));
   color: #000;
-  padding: 8px 12px;
+  padding: 10px 20px;
   border: none;
   border-radius: 25px;
+  font-weight: bold;
   cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
 }
 
 .compare-section button:hover {
-  background: #e6c200;
+  background: linear-gradient(45deg, var(--accent-color), #ffe259);
+  transform: scale(1.05);
 }
 
 /* Listenansicht für Produktübersicht */
