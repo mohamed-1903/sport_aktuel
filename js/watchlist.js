@@ -167,22 +167,18 @@ function loadWatchlist() {
   <div class="image-wrapper"><img src="${item.image_main}" alt="${
           item.name
         }"></div>
-  <div class="produkt-info">
-    <h3>${item.name}</h3>
-    <p>${parseFloat(item.price).toFixed(2)} €</p>
-              <div class="button-group">
-                <button class="btn-popup remove-watch" 
-                  data-id="${item.product_id}" 
-                  data-name="${item.name}" 
-                  data-image="${item.image_main}" 
-                  data-price="${parseFloat(item.price)}">
-                  Entfernen
-                </button>
-                  <a href="index.php?page=watchlist&action=view" class="btn-popup">Merkliste</a>
-                  <a href="index.php?page=product&action=detail&id=${
-                    item.product_id
-                  }" class="btn-popup">Anzeigen</a>
-             </div>
+          <div class="produkt-info">
+            <h3>${item.name}</h3>
+            <p>${parseFloat(item.price).toFixed(2)} €</p>
+            <button class="remove-watch" data-id="${
+              item.product_id
+            }" data-name="${item.name}" data-image="${
+          item.image_main
+        }" data-price="${parseFloat(item.price)}">Entfernen</button>
+            <a href="index.php?page=product&action=detail&id=${
+              item.product_id
+            }"><button>Anzeigen</button></a>
+
           </div>`;
         container.appendChild(card);
       });
@@ -269,7 +265,8 @@ function zeigeWatchPreview({ name, image, price, productId }) {
           <a href="index.php?page=watchlist&action=view">Merkliste</a>
           ${
             !isOnProductDetailPageWatch
-              ? `<a href="index.php?page=product&action=detail&id=${product_id}" class="btn-popup">Anzeigen</a>`
+              ? `<a href="index.php?page=product&action=detail&id=${productId}">Anzeigen</a>`
+
               : ""
           }
         </div>
