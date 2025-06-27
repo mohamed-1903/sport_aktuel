@@ -195,7 +195,7 @@
         <?php endif; ?>
       <?php endforeach; ?>
     </datalist>
-    <button id="compareBtn">Produkt vergleichen</button>
+    <button id="compareBtn" class="btn-compare">⚖️ Vergleichen</button>
   </div>
 
   <!-- 🧠 Ähnliche Produkte statisch -->
@@ -291,6 +291,10 @@
 
 <script>
   document.getElementById('compareBtn').addEventListener('click', () => {
+    const btn = document.getElementById('compareBtn');
+    btn.classList.add('pulse-highlight');
+    setTimeout(() => btn.classList.remove('pulse-highlight'), 1000);
+
     const input = document.getElementById('compareInput').value.trim();
     const options = document.querySelectorAll('#compareOptions option');
     let secondId = null;
