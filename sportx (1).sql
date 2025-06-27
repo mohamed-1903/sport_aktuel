@@ -131,6 +131,8 @@ CREATE TABLE `orders` (
     `user_id` int(11) DEFAULT NULL,
     `status` enum(
         'neu',
+        'bestellt',
+        'versandt_nicht_erhalten',
         'in_bearbeitung',
         'abgeschlossen',
         'abgelehnt',
@@ -138,7 +140,8 @@ CREATE TABLE `orders` (
     ) DEFAULT 'neu',
     `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
     `updated_at` timestamp NULL DEFAULT NULL,
-    `admin_comment` text DEFAULT NULL
+    `admin_comment` text DEFAULT NULL,
+    `rejection_reason` text DEFAULT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 --

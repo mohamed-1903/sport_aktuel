@@ -19,9 +19,13 @@ function getUserByUsername(string $username): ?array {
     return $user ?: null;
 }
 
-function loginUser(string $email, string $password): ?array {
+function loginUser(string $email, string $password) {
     $user = getUserByEmail($email);
     if ($user && password_verify($password, $user['password_hash'])) {
+        if ($user['status'] === 'banned') {
+            return ['banned' => true];
+        }
+
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
         $_SESSION['is_admin'] = $user['is_admin']; // wichtig!
@@ -67,4 +71,26 @@ function userHasOrders($userId): bool {
     $stmt = $db->prepare("SELECT COUNT(*) FROM orders WHERE user_id = ?");
     $stmt->execute([$userId]);
     return $stmt->fetchColumn() > 0;
+}
+
+function getUserById(int $id): ?array {
+    global $db;
+    $stmt = $db->prepare("SELECT * FROM users WHERE id = ? LIMIT 1");
+    $stmt->execute([$id]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $user ?: null;
+}
+
+function setUserStatus(int $id, string $status): bool {
+    global $db;
+    $stmt = $db->prepare("UPDATE users SET status = ? WHERE id = ?");
+    return $stmt->execute([$status, $id]);
+}
+
+function toggleUserStatus(int $id): void {
+    $user = getUserById($id);
+    if ($user) {
+        $newStatus = $user['status'] === 'banned' ? 'active' : 'banned';
+        setUserStatus($id, $newStatus);
+    }
 }
