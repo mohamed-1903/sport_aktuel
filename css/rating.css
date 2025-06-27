@@ -171,6 +171,28 @@
   max-width: 120px;
 }
 
+.image-preview-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  margin-bottom: 8px;
+}
+
+.review-images {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  overflow-x: auto;
+  margin-top: 6px;
+}
+
+.review-images img {
+  max-width: 120px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 .image-preview img {
   width: 100%;
   border-radius: 4px;
@@ -215,7 +237,6 @@
   width: 100vw;
   height: 100vh;
   background: var(--overlay-bg);
-
   display: flex;
   justify-content: center;
   align-items: flex-start;

@@ -19,6 +19,7 @@
 
 
 
+
 <main class="produkte">
   <!-- 🔍 Zoom Modal -->
   <div id="zoomModal" class="zoom-modal hidden">
@@ -236,8 +237,12 @@
             <?php endfor; ?>
           </span>
           <p><?= nl2br(htmlspecialchars($r['comment'])) ?></p>
-          <?php if (!empty($r['image_path'])): ?>
-            <img src="<?= htmlspecialchars($r['image_path']) ?>" alt="Bild zur Bewertung">
+          <?php if (!empty($r['image_paths'])): ?>
+            <div class="review-images" data-images='<?= json_encode($r['image_paths']) ?>'>
+              <?php foreach ($r['image_paths'] as $idx => $img): ?>
+                <img src="<?= htmlspecialchars($img) ?>" data-idx="<?= $idx ?>" alt="Bild zur Bewertung">
+              <?php endforeach; ?>
+            </div>
           <?php endif; ?>
           <?php if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == $r['user_id'] || !empty($_SESSION['is_admin']))): ?>
             <form class="delete-rating-form" method="post" action="index.php?page=community&action=deleteRating" onsubmit="return confirm('Bewertung löschen?');">
@@ -248,6 +253,7 @@
           <?php endif; ?>
         </div>
       <?php endforeach; ?>
+
       <?php if (isset($_SESSION['user_id'])): ?>
         <button type="button" class="open-review-modal btn-review" data-product-id="<?= (int)$product['id'] ?>">Bewertung schreiben</button>
       <?php else: ?>
@@ -280,15 +286,13 @@
           </div>
         <?php endforeach; ?>
       </div>
-      <input type="file" name="image" id="ratingImage" accept="image/*">
-      <div id="imagePreviewContainer" class="image-preview hidden">
-        <img id="ratingPreview" alt="Vorschau" />
-        <button type="button" id="removeImageBtn" aria-label="Bild entfernen">&times;</button>
-      </div>
+      <input type="file" name="images[]" id="ratingImages" accept="image/*" multiple>
+      <div id="imagePreviewList" class="image-preview-list hidden"></div>
       <button type="submit">Bewerten</button>
     </form>
   </div>
 </div>
+
 <script>
   document.getElementById('compareBtn').addEventListener('click', () => {
     const input = document.getElementById('compareInput').value.trim();
