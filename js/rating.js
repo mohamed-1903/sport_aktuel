@@ -3,6 +3,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('ratingModal');
   if (!modal) return;
 
+
   document.querySelectorAll('.open-review-modal').forEach(btn => {
     btn.addEventListener('click', () => {
       document.body.classList.add('modal-open');
@@ -33,12 +34,22 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
 });
 
 function closeRatingModal() {
   const modal = document.getElementById('ratingModal');
   if (modal) {
-    modal.classList.add('hidden');
+    modal.classList.add('hide');
+    modal.addEventListener(
+      'animationend',
+      () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('hide');
+      },
+      { once: true }
+    );
+
     document.body.classList.remove('modal-open');
   }
 }
