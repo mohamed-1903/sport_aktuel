@@ -228,9 +228,14 @@ function loadList() {
             </div>
           </td>
           <td>
-            <input type="number" class="qty-input" data-id="${
+            <select class="qty-select" data-id="${
               item.product_id
-            }" data-size="${item.size}" data-price="${einzelfpreis.toFixed(2)}" value="${menge}" min="1" />
+            }" data-size="${item.size}" data-price="${einzelfpreis.toFixed(2)}">
+              ${Array.from({ length: 10 }, (_, i) => `<option value="${
+                i + 1
+              }"${menge === i + 1 ? " selected" : ""}>${i + 1}</option>`).join("")}
+            </select>
+
           </td>
           <td>${einzelfpreis.toFixed(2)} €</td>
           <td class="summe-cell">${gesamt.toFixed(2)} €</td>
@@ -266,26 +271,21 @@ function loadList() {
       });
 
       // 🆙 Menge ändern
-      document.querySelectorAll(".qty-input").forEach((input) => {
-        input.addEventListener("input", () => {
-          let qty = parseInt(input.value);
+      document.querySelectorAll(".qty-select").forEach((sel) => {
+        sel.addEventListener("change", () => {
+          let qty = parseInt(sel.value);
+
           if (!qty || qty < 1) {
             qty = 1;
-            input.value = 1;
+            sel.value = 1;
           }
-          const price = parseFloat(input.dataset.price) || 0;
-          const sumCell = input.closest("tr").querySelector(".summe-cell");
+          const price = parseFloat(sel.dataset.price) || 0;
+          const sumCell = sel.closest("tr").querySelector(".summe-cell");
           if (sumCell) sumCell.textContent = `${(price * qty).toFixed(2)} €`;
           recalculateTotals();
-        });
-        input.addEventListener("change", () => {
-          const id = input.dataset.id;
-          const size = input.dataset.size;
-          let qty = parseInt(input.value);
-          if (!qty || qty < 1) {
-            qty = 1;
-            input.value = 1;
-          }
+          const id = sel.dataset.id;
+          const size = sel.dataset.size;
+
           updateCartQuantity(id, size, qty, false);
         });
       });
