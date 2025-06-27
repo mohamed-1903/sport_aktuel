@@ -60,11 +60,13 @@ function addToCart(int $userId, array $item): void
     $gift = !empty($item['gift']) ? 1 : 0;
     $discount = isset($item['discount']) ? (int)$item['discount'] : 0;
     $discountCode = $item['discount_code'] ?? null;
+
     $customFee = isset($item['custom_fee']) ? (float)$item['custom_fee'] : 0;
 
     $stmt = $db->prepare(
         "SELECT id, quantity FROM cart_items
          WHERE cart_id = ? AND product_id = ? AND size = ? AND discount = ? AND discount_code <=> ? AND gift = ?
+
            AND custom_name <=> ? AND custom_number <=> ? AND custom_fee = ?"
     );
     $stmt->execute([
@@ -73,6 +75,7 @@ function addToCart(int $userId, array $item): void
         $item['size'],
         $discount,
         $discountCode,
+
         $gift,
         $item['custom_name'] ?? null,
         $item['custom_number'] ?? null,
