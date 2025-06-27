@@ -245,6 +245,7 @@
           <?php endif; ?>
         </div>
       <?php endforeach; ?>
+
       <?php if (isset($_SESSION['user_id'])): ?>
         <button type="button" class="open-review-modal btn-review" data-product-id="<?= (int)$product['id'] ?>">Bewertung schreiben</button>
       <?php else: ?>
@@ -285,6 +286,7 @@
     </form>
   </div>
 </div>
+
 <script>
   document.getElementById('compareBtn').addEventListener('click', () => {
     const input = document.getElementById('compareInput').value.trim();

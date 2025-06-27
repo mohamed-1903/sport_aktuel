@@ -28,6 +28,7 @@ function ensureRatingSchema(): void {
     if ($stmt->rowCount() === 0) {
         $db->exec("ALTER TABLE ratings ADD COLUMN display_name VARCHAR(255) AFTER user_id");
     }
+
     $done = true;
 }
 
