@@ -1624,3 +1624,54 @@ body.light-mode .welcome-overlay {
   gap: 10px;
   margin-top: 10px;
 }
+
+/* Preisfilter-Dropdown */
+.price-filter {
+  position: relative;
+}
+.price-toggle {
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  padding: 6px 8px;
+  cursor: pointer;
+}
+.price-menu {
+  display: none;
+  position: absolute;
+  top: 110%;
+  left: 0;
+  flex-direction: column;
+  background-color: var(--card-bg);
+  border: 1px solid #555;
+  border-radius: 6px;
+  padding: 0.5rem;
+  z-index: 20;
+}
+.price-menu.show {
+  display: flex;
+}
+.price-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.price-field select {
+  width: 80px;
+  padding: 4px 20px 4px 6px;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+}
+.price-field .currency {
+  position: absolute;
+  right: 8px;
+  pointer-events: none;
+}
+.price-menu hr {
+  margin: 0.5rem 0;
+  border: none;
+  border-top: 1px solid #555;
+}
