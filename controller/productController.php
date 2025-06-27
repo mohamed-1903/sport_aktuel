@@ -111,6 +111,10 @@ switch ($action) {
             $p['iid'] = $p['id'];
             $p['priceValue'] = $p['price'];
         }
+        // Nach ID sortieren
+        usort($filteredProducts, static function ($a, $b) {
+            return ($a['id'] ?? 0) <=> ($b['id'] ?? 0);
+        });
 
         $displayTitle = $subcategory ?: $category;
         require 'view/product/productListView.php';
