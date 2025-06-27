@@ -15,10 +15,6 @@
   <?php unset($_SESSION['message']); ?>
 <?php endif; ?>
 
-
-
-
-
 <main class="produkte">
   <!-- 🔍 Zoom Modal -->
   <div id="zoomModal" class="zoom-modal hidden">
