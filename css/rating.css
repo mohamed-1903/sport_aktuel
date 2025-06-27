@@ -10,21 +10,25 @@
 .rating-stars label {
   font-size: 1.4rem;
   color: #ffd700;
-
   cursor: pointer;
   transition: transform 0.2s ease, color 0.2s ease;
-  text-shadow: 0 0 2px rgb(0 0 0 / 30%);
 }
 
+#ratingForm .rating-stars label {
+  color: transparent;
+  -webkit-text-stroke: 1px #ffd700;
+}
 
-.rating-stars input:checked ~ label,
-.rating-stars label:hover,
-.rating-stars label:hover ~ label {
-  color: var(--accent-color);
+#ratingForm .rating-stars input:checked ~ label,
+#ratingForm .rating-stars label:hover,
+#ratingForm .rating-stars label:hover ~ label {
+  color: #ffd700;
+  -webkit-text-stroke: 0;
+
   transform: scale(1.2);
 }
 
-.rating-stars label:hover {
+#ratingForm .rating-stars label:hover {
   transform: scale(1.3);
 }
 

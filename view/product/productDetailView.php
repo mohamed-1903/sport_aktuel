@@ -18,6 +18,7 @@
 
 
 
+
 <main class="produkte">
   <!-- 🔍 Zoom Modal -->
   <div id="zoomModal" class="zoom-modal hidden">
@@ -247,7 +248,6 @@
           <?php endif; ?>
         </div>
       <?php endforeach; ?>
-
       <?php if (isset($_SESSION['user_id'])): ?>
         <button type="button" class="open-review-modal btn-review" data-product-id="<?= (int)$product['id'] ?>">Bewertung schreiben</button>
       <?php else: ?>
@@ -289,27 +289,14 @@
     </form>
   </div>
 </div>
-
 <script>
-  let compareProducts = [];
-  let compareFocus = -1;
-  let selectedCompareId = null;
-  const currentCompareIds = <?= json_encode(array_column($productsToShow, 'id')) ?>;
+  document.getElementById('compareBtn').addEventListener('click', () => {
+    const input = document.getElementById('compareInput').value.trim();
+    const options = document.querySelectorAll('#compareOptions option');
+    let secondId = null;
+    options.forEach(opt => {
+      if (opt.value === input) secondId = opt.dataset.id;
 
-  const showCompareBtn = document.getElementById('showCompareBtn');
-  const compareSection = document.getElementById('compareSection');
-  if (showCompareBtn) {
-    showCompareBtn.addEventListener('click', () => {
-      compareSection.classList.remove('hidden');
-      showCompareBtn.classList.add('hidden');
-      compareInput.focus();
-    });
-  }
-
-  fetch('data/products.json')
-    .then(res => res.json())
-    .then(data => {
-      compareProducts = data.products || [];
     });
 
   const compareInput = document.getElementById('compareInput');
