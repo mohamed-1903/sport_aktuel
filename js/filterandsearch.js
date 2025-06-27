@@ -109,7 +109,7 @@ function produktSuche() {
 let alleProdukte = [];
 let fokusIndex = -1;
 
-document.addEventListener("DOMContentLoaded", () => {
+function initFilterAndSearch() {
   const input = document.getElementById("produktsuche");
   const shadow = document.getElementById("autocomplete-shadow");
   const liste = document.getElementById("such-vorschlaege");
@@ -168,7 +168,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const priceSel = document.getElementById("filter-price");
   if (priceSel) priceSel.addEventListener("change", applyFilter);
   updateActiveFilters();
-});
+
+  // alle Filter zurücksetzen und Pagination initial erstellen
+  resetFilter();
+  updatePagination();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initFilterAndSearch);
+} else {
+  initFilterAndSearch();
+}
 
 
 
@@ -197,6 +207,7 @@ function ladeProdukte(containerId, urls) {
         container.querySelectorAll(".einzelprodukt")
       );
     }
+    updatePagination();
   });
 }
 
@@ -605,9 +616,11 @@ function updatePagination() {
   renderPagination(totalPages);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  // Stelle sicher, dass beim Laden der Seite keine Filter aktiv sind
-  resetFilter();
+
+
+// Nach dem kompletten Laden der Seite erneut Pagination berechnen,
+// damit alle Produkte und Layout-Styles berücksichtigt werden
+window.addEventListener("load", () => {
   updatePagination();
 });
 
