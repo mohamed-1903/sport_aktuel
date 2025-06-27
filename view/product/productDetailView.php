@@ -269,6 +269,7 @@
         <img id="ratingPreview" alt="Vorschau" />
         <button type="button" id="removeImageBtn" aria-label="Bild entfernen">&times;</button>
       </div>
+
       <button type="submit">Bewerten</button>
     </form>
   </div>

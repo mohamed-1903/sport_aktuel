@@ -8,17 +8,18 @@
 }
 
 .rating-stars label {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   color: #ccc;
   cursor: pointer;
   transition: transform 0.2s ease, color 0.2s ease;
-
+  text-shadow: 0 0 2px rgb(0 0 0 / 30%);
 }
+
 
 .rating-stars input:checked ~ label,
 .rating-stars label:hover,
 .rating-stars label:hover ~ label {
-  color: gold;
+  color: #ffd700;
   transform: scale(1.2);
 }
 
@@ -37,8 +38,8 @@
 }
 
 .review {
-  background: #f9f9f9;
-  border: 1px solid #eee;
+  background: linear-gradient(135deg, #fff, #f2f2f2);
+  border-left: 4px solid #ffd700;
   border-radius: 5px;
   padding: 12px 15px;
   margin-bottom: 12px;
@@ -142,6 +143,7 @@
 }
 
 
+
 .review-form button {
   margin-top: 12px;
   background-color: var(--accent-color);
@@ -166,12 +168,13 @@
   width: 100vw;
   height: 100vh;
   background: rgb(0 0 0 / 80%);
+  backdrop-filter: blur(3px);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 5vh;
   z-index: 10000;
   animation: fadeInModal 0.3s ease forwards;
-
 }
 
 .review-modal-content {
@@ -195,7 +198,13 @@
   background: none;
   border: none;
   font-size: 24px;
+  color: #888;
   cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.review-modal-content .review-close:hover {
+  color: #000;
 }
 
 body.modal-open {
@@ -228,12 +237,7 @@ body.modal-open {
 }
 
 /* fancy enhancements */
-.review {
-  background: linear-gradient(135deg, #fff, #f2f2f2);
-  border-left: 4px solid #ffd700;
-  padding: 15px 15px 15px 40px;
-  position: relative;
-}
+
 
 .review::before {
   content: '★';
@@ -285,3 +289,12 @@ body.modal-open {
   from { transform: scale(0.8); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
+.review-modal.hide {
+  animation: fadeOutModal 0.3s ease forwards;
+}
+
+@keyframes fadeOutModal {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+

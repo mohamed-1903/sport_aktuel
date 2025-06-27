@@ -63,8 +63,6 @@ window.applyFilter = function () {
       preis <= filterWerte.maxPreis;
 
 
-
-
     // leeres Display lässt die ursprüngliche Flex-Darstellung erhalten
     produkt.style.display = sichtbar ? "" : "none";
   });
@@ -171,6 +169,9 @@ document.addEventListener("DOMContentLoaded", () => {
   if (priceSel) priceSel.addEventListener("change", applyFilter);
   updateActiveFilters();
 });
+
+
+
 
 
 // 🔽 PRODUKTE LADEN
@@ -482,7 +483,6 @@ function updateActiveFilters() {
   const priceActive = priceSel && priceSel.selectedIndex > 0;
   if (priceSel) priceSel.classList.toggle("active", priceActive);
 }
-
 
 // Ein/Ausblenden der Filterleiste
 window.toggleFilterBar = function () {
