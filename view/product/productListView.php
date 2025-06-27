@@ -58,6 +58,7 @@
           </div>
         </div>
       </div>
+
       <select id="filter-mannschaft" onchange="applyFilter()">
         <option value="">Alle Mannschaften</option>
         <option value="Bayern">Bayern</option>

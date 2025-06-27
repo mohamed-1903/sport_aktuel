@@ -21,9 +21,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <link rel="stylesheet" href="css/product.css">
     <!-- Styles für Filterbar und weitere Extras -->
     <link rel="stylesheet" href="css/extras.css">
-
     <link rel="stylesheet" href="css/customize.css">
-
     <link rel="stylesheet" href="css/rating.css">
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/themes.css">
@@ -81,7 +79,6 @@ if (session_status() === PHP_SESSION_NONE) {
         <div id="watchlist-preview-popup" class="watchlist-preview-popup"></div>
         <div id="watch-popup" class="watchlist-preview-popup"></div>
         <div id="popup-stack" class="popup-stack-container"></div>
-
         <nav>
             <ul class="nav-menu">
                 <li class="dropdown">
@@ -124,3 +121,4 @@ if (session_status() === PHP_SESSION_NONE) {
         </div>
 
     </header>
+</body>

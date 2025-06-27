@@ -75,20 +75,19 @@ $total = 0;
                 <form action="index.php?page=cart&action=update" method="post">
                   <input type="hidden" name="id" value="<?= (int)$item['product_id'] ?>">
                   <input type="hidden" name="size" value="<?= htmlspecialchars($item['size']) ?>">
-                  <select
+                  <input
+                    type="number"
                     name="quantity"
-                    class="qty-select"
+                    class="qty-input"
                     data-id="<?= (int)$item['product_id'] ?>"
                     data-size="<?= htmlspecialchars($item['size']) ?>"
                     data-price="<?= number_format($einzelpreis, 2, '.', '') ?>"
-                  >
-
-                    <?php for ($i = 1; $i <= 10; $i++): ?>
-                      <option value="<?= $i ?>" <?= $i == (int)$item['quantity'] ? 'selected' : '' ?>><?= $i ?></option>
-                    <?php endfor; ?>
-                  </select>
+                    value="<?= (int)$item['quantity'] ?>"
+                    min="1"
+                  />
                 </form>
               </td>
+
               <td><?= number_format($einzelpreis, 2, ',', '.') ?> €</td>
               <td><?= number_format($sum, 2, ',', '.') ?> €</td>
               <td>
