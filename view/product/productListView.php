@@ -48,12 +48,14 @@
         <button type="button" class="price-toggle" onclick="togglePriceDropdown()">PREIS</button>
         <div id="price-dropdown" class="price-menu">
           <div class="price-field">
-            <input type="number" id="filter-price-min" placeholder="Min" min="0" step="1" onchange="applyFilter()">
+            <select id="filter-price-min" onchange="applyFilter()"></select>
+
             <span class="currency">€</span>
           </div>
           <hr>
           <div class="price-field">
-            <input type="number" id="filter-price-max" placeholder="Max" min="0" step="1" onchange="applyFilter()">
+            <select id="filter-price-max" onchange="applyFilter()"></select>
+
             <span class="currency">€</span>
           </div>
         </div>
