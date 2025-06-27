@@ -47,6 +47,7 @@
 
     <label>Beschreibung:
       <textarea name="description" rows="5" style="width: 100%;"></textarea>
+
     </label>
 
     <button type="submit" class="btn-checkout">✅ Produkt speichern</button>
