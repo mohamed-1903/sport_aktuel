@@ -611,6 +611,12 @@ document.addEventListener("DOMContentLoaded", () => {
   updatePagination();
 });
 
+// Nach dem kompletten Laden der Seite erneut Pagination berechnen,
+// damit alle Produkte und Layout-Styles berücksichtigt werden
+window.addEventListener("load", () => {
+  updatePagination();
+});
+
 
 window.addEventListener("resize", () => {
   updatePagination();
