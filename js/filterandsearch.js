@@ -41,11 +41,18 @@ window.applyFilter = function () {
     const p = produkt.dataset;
     const preis = parseFloat(p.preis);
     const sichtbar =
-      (!filterWerte.marke || p.marke === filterWerte.marke) &&
-      (!filterWerte.farbe || p.farbe === filterWerte.farbe) &&
-      (!filterWerte.mannschaft || p.mannschaft === filterWerte.mannschaft) &&
-      (!filterWerte.geschlecht || p.geschlecht === filterWerte.geschlecht) &&
-      preis >= filterWerte.minPreis && preis <= filterWerte.maxPreis;
+      (!filterWerte.marke ||
+        (p.marke || "").toLowerCase() === filterWerte.marke.toLowerCase()) &&
+      (!filterWerte.farbe ||
+        (p.farbe || "").toLowerCase() === filterWerte.farbe.toLowerCase()) &&
+      (!filterWerte.mannschaft ||
+        (p.mannschaft || "").toLowerCase() ===
+          filterWerte.mannschaft.toLowerCase()) &&
+      (!filterWerte.geschlecht ||
+        (p.geschlecht || "").toLowerCase() ===
+          filterWerte.geschlecht.toLowerCase()) &&
+      preis >= filterWerte.minPreis &&
+      preis <= filterWerte.maxPreis;
 
     // leeres Display lässt die ursprüngliche Flex-Darstellung erhalten
     produkt.style.display = sichtbar ? "" : "none";
@@ -148,6 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
     prodContainer.classList.remove("einzelprodukt-grid");
   }
   updateLayoutToggle(savedLayout === "list" ? "list" : "grid");
+  populateFilterOptions();
   const minInput = document.getElementById("filter-price-min");
   const maxInput = document.getElementById("filter-price-max");
   [minInput, maxInput].forEach((el) => el && el.addEventListener("change", applyFilter));
@@ -305,7 +313,7 @@ function colorEmoji(name) {
 
 
 
-function populateFilterOptions() {
+window.populateFilterOptions = function () {
   const container = document.getElementById("produktContainer");
   if (!container) return;
 
@@ -603,6 +611,7 @@ function updatePagination() {
 document.addEventListener("DOMContentLoaded", () => {
   // Stelle sicher, dass beim Laden der Seite keine Filter aktiv sind
   resetFilter();
+  updatePagination();
 });
 
 
