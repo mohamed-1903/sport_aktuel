@@ -665,6 +665,25 @@ body.form-page {
   transition: border-color 0.3s, box-shadow 0.3s;
 }
 
+/* Textareas in forms use the same styling so light/dark mode works */
+.form-wrapper textarea {
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 2px solid #444;
+  background-color: #2a2a2a;
+  color: #fff;
+  font-size: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-wrapper textarea:focus {
+  outline: none;
+  border-color: #ffd700;
+  box-shadow: 0 0 5px #ffd70080;
+}
+
 .form-wrapper input:focus {
   outline: none;
   border-color: #ffd700;
@@ -817,6 +836,12 @@ div {
 }
 
 body.light-mode .form-wrapper input {
+  background-color: #f8f8f8;
+  color: #000;
+  border-color: #ccc;
+}
+
+body.light-mode .form-wrapper textarea {
   background-color: #f8f8f8;
   color: #000;
   border-color: #ccc;

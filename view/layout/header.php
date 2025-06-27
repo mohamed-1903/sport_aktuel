@@ -2,6 +2,12 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+require_once 'model/watchlistModel.php';
+require_once 'model/cartModel.php';
+
+$uid = $_SESSION['user_id'] ?? null;
+$watchlistCount = $uid ? countWatchlistItems($uid) : 0;
+$cartCount = $uid ? countCartItems($uid) : 0;
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -41,9 +47,9 @@ if (session_status() === PHP_SESSION_NONE) {
                 <ul id="such-vorschlaege" class="autocomplete-liste"></ul>
             </div>
             <div class="action-buttons">
-                <a href="index.php?page=watchlist&action=view" title="Favoriten">
-                    <button type="button" id="watchlist-button">&#10084;</button>
-                </a>
+                    <a href="index.php?page=watchlist&action=view" title="Favoriten">
+                        <button type="button" id="watchlist-button">&#10084; (<?= $watchlistCount ?>)</button>
+                    </a>
                 <div class="dropdown-konto">
                     <button type="button" aria-haspopup="true" aria-expanded="false">👤</button>
                     <div class="konto-popup">
@@ -62,14 +68,11 @@ if (session_status() === PHP_SESSION_NONE) {
                             <?php endif; ?>
                             <a href="index.php?page=auth&action=logout">Abmelden</a>
                         <?php endif; ?>
-                        <hr>
-                        <a href="#">Passwort vergessen?</a>
-                        <a href="index.php?page=return&action=form">Retoure anmelden?</a>
                     </div>
                 </div>
-                <a href="index.php?page=cart&action=view" title="Warenkorb">
-                    <button type="button" id="cart-button">&#128722;</button>
-                </a>
+                    <a href="index.php?page=cart&action=view" title="Warenkorb">
+                        <button type="button" id="cart-button">&#128722; (<?= $cartCount ?>)</button>
+                    </a>
                 <button id="theme-toggle" title="Design wechseln">&#127769;</button>
             </div>
         </div>

@@ -45,6 +45,41 @@ nav {
   color: #000;
   border-radius: 5px;
 }
+
+/* Standard-Design*/
+.konto-popup a {
+  display: block;
+  margin: 0.5em 0;
+  text-decoration: none;
+  color: var(--text-color);
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover-Stil – universell */
+.konto-popup a:hover {
+  background-color: var(--accent-color);
+  color: #000;
+}
+
+/* Dark Mode */
+body.dark-mode .konto-popup {
+  background-color: #1c1c1c;
+  color: #fff;
+  border: 1px solid #333;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+body.dark-mode .konto-popup a {
+  color: #f0f0f0;
+}
+
+body.dark-mode .konto-popup a:hover {
+  background-color: var(--accent-color);
+  color: #000;
+}
+
 /* Dunkles Design */
 body.dark-mode .gutschein-banner {
   background: linear-gradient(to right, #222, #333);
