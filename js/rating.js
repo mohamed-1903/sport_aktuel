@@ -25,6 +25,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const preview = document.getElementById('ratingPreview');
   const removeBtn = document.getElementById('removeImageBtn');
   if (imageInput && preview && previewContainer) {
+
     imageInput.addEventListener('change', () => {
       const file = imageInput.files[0];
       if (file) {
@@ -66,12 +67,22 @@ window.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.rating-stars input').forEach(rad => {
     rad.addEventListener('change', () => showSuggestions(rad.value));
   });
+
 });
 
 function closeRatingModal() {
   const modal = document.getElementById('ratingModal');
   if (modal) {
-    modal.classList.add('hidden');
+    modal.classList.add('hide');
+    modal.addEventListener(
+      'animationend',
+      () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('hide');
+      },
+      { once: true }
+    );
+
     document.body.classList.remove('modal-open');
   }
 }
