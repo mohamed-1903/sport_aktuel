@@ -63,9 +63,9 @@
 /* Container für die Steuerelemente */
 .filter-controls {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
   max-width: 1200px;
@@ -137,7 +137,7 @@
   display: flex;
   flex-direction: row;     /* horizontal anordnen */
   flex-wrap: nowrap;
-  gap: 0.25rem;
+  gap: 0.5rem;
   align-items: center;
   justify-content: flex-start; /* Filter linksbündig */
   overflow-x: auto;        /* bei Bedarf horizontal scrollen */
@@ -308,10 +308,10 @@
 }
 
 .einzelprodukt-grid .produkt-info {
-  text-align: center;
+  text-align: left;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .einzelprodukt-grid .produkt-info h3 {
@@ -350,10 +350,10 @@
 }
 
 .einzelprodukt-grid .produkt-info {
-  text-align: center;
+  text-align: left;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 }
 .einzelprodukt-grid .produkt-info h3 {
   margin: 0 0 0.25rem;
@@ -1602,10 +1602,10 @@ body.light-mode .welcome-overlay {
 
 .einzelprodukt-list .produkt-info {
   flex: 1;
-  text-align: center;
+  text-align: left;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 
@@ -1624,3 +1624,4 @@ body.light-mode .welcome-overlay {
   gap: 10px;
   margin-top: 10px;
 }
+
