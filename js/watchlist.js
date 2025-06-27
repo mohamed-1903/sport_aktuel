@@ -45,13 +45,13 @@ function toggleWatchlist(iid, btn = null, info = {}) {
           }
           // Gestapeltes Popup statt Einzel-Popup
           const buttons = `
+            <button class="remove-watch-btn" data-id="${iid}">Entfernen</button>
+            <a href="index.php?page=watchlist&action=view">Merkliste</a>
             ${
               !isOnProductDetailPageWatch
                 ? `<a href="index.php?page=product&action=detail&id=${iid}" class="show-btn">Anzeigen</a>`
                 : ""
-            }
-            <button class="remove-watch-btn" data-id="${iid}">Entfernen</button>
-            <a href="index.php?page=watchlist&action=view">Merkliste</a>`;
+            }`;
           zeigeGestapeltesPopup({
             name,
             image,
