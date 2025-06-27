@@ -1103,6 +1103,7 @@ body.light-mode .zoom-close {
   color: var(--popup-text); /* Dynamische Textfarbe */
   border-radius: 12px;
   padding: 1.5rem;
+  vertical-align: middle;
   box-shadow: var(--popup-shadow); /* Tiefe Schatten für Wow-Effekt */
   border: 1px solid var(--popup-border);
   display: none;
