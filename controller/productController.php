@@ -45,6 +45,14 @@ switch ($action) {
         $allProducts = getAllProducts();
         $currentId = $productsToShow[0]['id'];
 
+        // Vorschläge für die Bewertungsleiste laden
+        $suggestionsFile = 'data/review_suggestions.json';
+        $reviewSuggestions = [];
+        if (is_file($suggestionsFile)) {
+            $json = file_get_contents($suggestionsFile);
+            $reviewSuggestions = json_decode($json, true) ?: [];
+        }
+
         require 'view/product/productDetailView.php';
         break;
     case 'search':
