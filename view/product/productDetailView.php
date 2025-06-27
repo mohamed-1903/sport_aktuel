@@ -192,7 +192,7 @@
         <?php endif; ?>
       <?php endforeach; ?>
     </datalist>
-    <button id="compareBtn" class="btn-compare">⚖️ Vergleichen</button>
+    <button id="compareBtn" class="btn-compare">Produkte zum vergleichen</button>
   </div>
 
 
