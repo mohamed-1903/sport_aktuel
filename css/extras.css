@@ -38,35 +38,23 @@
   width: 100%;
 }
 
-.filter-toggle,
-.layout-toggle,
-.reset-filter {
-  border: 1px solid #555;
-  border-radius: 6px;
-  background-color: var(--card-bg);
-  color: var(--text-color);
-  font-size: 14px;
-  padding: 6px 10px;
-  cursor: pointer;
-}
-
-.filter-toggle:hover,
-.layout-toggle:hover,
-.reset-filter:hover {
-  background-color: var(--accent-color);
-  color: #000;
-}
-
-/* Filterbar selbst */
 .filterbar {
   display: flex;
-  justify-content: center;
+  flex-direction: row;      /* horizontal ausrichten */
+  flex-wrap: nowrap;        /* Elemente in einer Zeile anzeigen */
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
   background-color: var(--card-bg);
-  padding: 1rem;
+  padding: 0.25rem 0.5rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   overflow-x: auto;
+  justify-content: flex-start; /* linksbündig */
+  text-align: left;
 }
+
+
 
 .filterbar.hidden {
   display: none;
@@ -83,25 +71,29 @@
   max-width: 1200px;
 }
 
-/* Selects, Range-Slider, Buttons */
 .filterbar select,
 .filterbar input[type="range"],
 .filter-tools button {
+  display: inline-block;
+  width: auto;
   border: 1px solid #555;
   border-radius: 6px;
   background-color: var(--card-bg);
   color: var(--text-color);
   font-size: 14px;
   padding: 6px 8px;
-  margin-bottom: 0;
-  flex: 0 0 auto;
-  max-width: 200px;
+  margin-bottom: 0; /* Buttons ohne Abstand darunter */
+  flex: 0 0 auto; /* verhindert, dass die Elemente die volle Breite einnehmen */
 }
-.filter-controls select,
-.filter-controls .range-filter {
-  width: auto;
-  min-width: 150px;
+
+/* Einheitliche Breite für alle Filterelemente */
+.filterbar select,
+.filterbar input[type="range"] {
+  width: 140px;
 }
+
+
+
 
 
 /* Select Dropdown-Pfeil optisch gestalten */
@@ -126,13 +118,110 @@
 .range-filter {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.25rem;
   border: 1px solid #555;
   border-radius: 6px;
   background-color: var(--card-bg);
   color: var(--text-color);
-  padding: 5px 10px;
+  padding: 2px 6px;
 }
+
+.range-filter.active {
+  border-color: var(--accent-color);
+  background-color: var(--accent-color);
+  color: #000;
+}
+
+/* Filterelemente innerhalb der Leiste */
+.filter-controls {
+  display: flex;
+  flex-direction: row;     /* horizontal anordnen */
+  flex-wrap: nowrap;
+  gap: 0.25rem;
+  align-items: center;
+  justify-content: flex-start; /* Filter linksbündig */
+  overflow-x: auto;        /* bei Bedarf horizontal scrollen */
+}
+
+
+
+.filter-controls.hidden {
+  display: none;
+}
+
+.price-label {
+  margin-left: 0.25rem;
+  min-width: 70px;
+  display: inline-block;
+  text-align: center;
+}
+
+.range-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  padding: 2px 6px;
+}
+
+.range-filter.active {
+  border-color: var(--accent-color);
+  background-color: var(--accent-color);
+  color: #000;
+}
+
+/* Buttons oberhalb der Filterleiste */
+.filter-tools {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+.price-label {
+  margin-left: 0.25rem;
+  min-width: 70px;
+  display: inline-block;
+  text-align: center;
+}
+
+.range-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  padding: 2px 6px;
+}
+
+.range-filter.active {
+  border-color: var(--accent-color);
+  background-color: var(--accent-color);
+  color: #000;
+}
+
+.filter-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.price-label {
+  margin-left: 0.5rem;
+  min-width: 80px;
+  display: inline-block;
+  text-align: left;
+}
+
 
 .range-filter input[type="range"] {
   width: 140px;
@@ -174,14 +263,14 @@
   margin-left: 0.5rem;
   min-width: 80px;
   display: inline-block;
-  text-align: center;
+  text-align: left;
 }
 
 .price-label {
   margin-left: 0.5rem;
   min-width: 80px;
   display: inline-block;
-  text-align: center;
+  text-align: left;
 }
 
 .layout-toggle {
@@ -728,7 +817,7 @@ body.light-mode .zoom-close {
 }
 
 .cart-table td:first-child {
-  text-align: left;
+  text-align: center;
 }
 
 .cart-table td img {
@@ -736,7 +825,24 @@ body.light-mode .zoom-close {
   height: auto;
   object-fit: contain;
   border-radius: 8px;
+  display: block;
+  margin: 0 auto;
 }
+
+.qty-select {
+  width: 60px;
+  padding: 4px;
+  text-align: center;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--text-color);
+}
+
+
+
+
+
 
 /* Entfernen-Button */
 .remove-btn {
@@ -955,6 +1061,7 @@ body.light-mode .zoom-close {
   top: auto;
   right: auto;
   max-width: 480px;
+
   background-color: var(--popup-bg);
   color: var(--popup-text);
   border-radius: 12px;
@@ -968,6 +1075,7 @@ body.light-mode .zoom-close {
   opacity: 1;
   pointer-events: auto;
   width: 480px; /* 👈 oder jede gewünschte feste Breite */
+
   min-height: 110px; /* 👈 feste Höhe für Einheitlichkeit */
   display: flex;
   align-items: center;
@@ -989,6 +1097,7 @@ body.light-mode .zoom-close {
   top: 100px;
   right: 30px;
   max-width: 480px;
+
   z-index: 9999;
   background-color: var(--popup-bg); /* Dynamischer Hintergrund */
   color: var(--popup-text); /* Dynamische Textfarbe */
@@ -1131,6 +1240,7 @@ body.light-mode .zoom-close {
   box-shadow: 0 2px 6px rgb(0 0 0 / 15%);
   transition: background-color 0.3s ease, transform 0.2s ease,
     box-shadow 0.3s ease;
+
 }
 
 .popup-buttons button:hover,

@@ -52,6 +52,7 @@ function toggleWatchlist(iid, btn = null, info = {}) {
                 ? `<a href="index.php?page=product&action=detail&id=${iid}" class="show-btn">Anzeigen</a>`
                 : ""
             }`;
+
           zeigeGestapeltesPopup({
             name,
             image,
