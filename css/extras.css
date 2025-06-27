@@ -1071,24 +1071,40 @@ body.light-mode .zoom-close {
   position: fixed;
   bottom: 30px;
   left: 50%;
-  transform: translateX(-50%);
-  background-color: #333;
-  color: #fff;
-  padding: 14px 24px;
-  border-radius: 8px;
-  font-size: 16px;
+  transform: translate(-50%, 40px);
+  background: var(--toast-bg);
+  color: var(--toast-text);
+  padding: 16px 28px;
+  border-radius: 10px;
+  font-size: 15px;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   z-index: 9999;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition: transform 0.4s ease, opacity 0.4s ease;
   max-width: 90%;
-  box-shadow: 0 6px 20px rgb(0 0 0 / 25%);
+  box-shadow: var(--toast-shadow);
+  border: 1px solid var(--toast-border);
+  backdrop-filter: blur(var(--toast-blur)) saturate(160%);
 }
 
 .toast-popup.show {
   opacity: 1;
   pointer-events: auto;
-  transform: translateX(-50%) translateY(0);
+  transform: translate(-50%, 0);
+}
+
+.toast-popup .close-toast {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: auto;
+  line-height: 1;
 }
 
 /* === Universelles Popup-Styling für Warenkorb & Watchlist === */
@@ -1255,6 +1271,11 @@ body.light-mode .zoom-close {
   --popup-button-active: #d1d1d1;
   --accent-color: #ffd700;
   --text-muted: #888;
+  --toast-bg: linear-gradient(to right, #f8e081, #f7ca00);
+  --toast-text: #000;
+  --toast-border: rgb(0 0 0 / 12%);
+  --toast-shadow: 0 8px 24px rgb(0 0 0 / 25%);
+  --toast-blur: 8px;
 }
 
 [data-theme="dark"] {
@@ -1267,6 +1288,11 @@ body.light-mode .zoom-close {
   --popup-button-text: #f0f0f0;
   --popup-button-hover: #444;
   --popup-button-active: #555;
+  --toast-bg: linear-gradient(to right, #ffd700, #caa000);
+  --toast-text: #000;
+  --toast-border: rgb(255 255 255 / 20%);
+  --toast-shadow: 0 8px 24px rgb(0 0 0 / 50%);
+  --toast-blur: 8px;
 }
 
 /* === Buttons für Popups === */
