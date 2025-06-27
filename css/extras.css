@@ -50,6 +50,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   overflow-x: auto;
   justify-content: flex-start; /* linksbündig */
+  text-align: left;
 }
 
 
@@ -85,6 +86,12 @@
   padding: 6px 8px;
   margin-bottom: 0; /* Buttons ohne Abstand darunter */
   flex: 0 0 auto; /* verhindert, dass die Elemente die volle Breite einnehmen */
+}
+
+/* Einheitliche Breite für alle Filterelemente */
+.filterbar select,
+.filterbar input[type="range"] {
+  width: 140px;
 }
 
 /* optisch ansprechende Selectboxen */
@@ -254,7 +261,7 @@
   margin-left: 0.5rem;
   min-width: 80px;
   display: inline-block;
-  text-align: center;
+  text-align: left;
 }
 
 .range-filter {
@@ -332,14 +339,14 @@
   margin-left: 0.5rem;
   min-width: 80px;
   display: inline-block;
-  text-align: center;
+  text-align: left;
 }
 
 .price-label {
   margin-left: 0.5rem;
   min-width: 80px;
   display: inline-block;
-  text-align: center;
+  text-align: left;
 }
 
 .layout-toggle {
