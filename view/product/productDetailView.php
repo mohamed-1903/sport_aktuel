@@ -16,6 +16,9 @@
 <?php endif; ?>
 
 
+
+
+
 <main class="produkte">
   <!-- 🔍 Zoom Modal -->
   <div id="zoomModal" class="zoom-modal hidden">
@@ -225,6 +228,7 @@
         <p class="no-reviews">Noch keine Bewertungen.</p>
       <?php endif; ?>
       <?php foreach ($ratings as $r): ?>
+
         <div class="review">
           <strong><?= htmlspecialchars($r['username']) ?></strong>
           <span class="rating-stars" style="pointer-events:none;">
@@ -277,6 +281,7 @@
     </form>
   </div>
 </div>
+
 <script>
   document.getElementById('compareBtn').addEventListener('click', () => {
     const input = document.getElementById('compareInput').value.trim();
