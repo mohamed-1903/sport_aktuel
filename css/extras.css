@@ -728,7 +728,7 @@ body.light-mode .zoom-close {
 }
 
 .cart-table td:first-child {
-  text-align: left;
+  text-align: center;
 }
 
 .cart-table td img {
@@ -736,6 +736,18 @@ body.light-mode .zoom-close {
   height: auto;
   object-fit: contain;
   border-radius: 8px;
+  display: block;
+  margin: 0 auto;
+}
+
+.qty-input {
+  width: 60px;
+  padding: 4px;
+  text-align: center;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--text-color);
 }
 
 /* Entfernen-Button */
