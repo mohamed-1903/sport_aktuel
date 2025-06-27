@@ -16,6 +16,7 @@
 <?php endif; ?>
 
 
+
 <main class="produkte">
   <!-- 🔍 Zoom Modal -->
   <div id="zoomModal" class="zoom-modal hidden">
@@ -245,6 +246,7 @@
           <?php endif; ?>
         </div>
       <?php endforeach; ?>
+
       <?php if (isset($_SESSION['user_id'])): ?>
         <button type="button" class="open-review-modal btn-review" data-product-id="<?= (int)$product['id'] ?>">Bewertung schreiben</button>
       <?php else: ?>
@@ -261,6 +263,7 @@
       <input type="hidden" name="product_id" id="ratingProductId" value="">
       <input type="text" name="display_name" id="displayName" placeholder="Dein Name" value="<?= htmlspecialchars($_SESSION['username'] ?? '') ?>" required>
       <div class="rating-stars">
+
         <?php for ($s = 5; $s >= 1; $s--): ?>
           <input type="radio" id="modal-star<?= $s ?>" name="stars" value="<?= $s ?>" <?= $s == 5 ? ' checked' : '' ?>>
           <label for="modal-star<?= $s ?>">★</label>
@@ -285,6 +288,7 @@
     </form>
   </div>
 </div>
+
 <script>
   document.getElementById('compareBtn').addEventListener('click', () => {
     const input = document.getElementById('compareInput').value.trim();

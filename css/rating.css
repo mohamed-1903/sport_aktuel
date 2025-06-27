@@ -8,17 +8,18 @@
 }
 
 .rating-stars label {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   color: #ccc;
   cursor: pointer;
   transition: transform 0.2s ease, color 0.2s ease;
-
+  text-shadow: 0 0 2px rgb(0 0 0 / 30%);
 }
+
 
 .rating-stars input:checked ~ label,
 .rating-stars label:hover,
 .rating-stars label:hover ~ label {
-  color: gold;
+  color: var(--accent-color);
   transform: scale(1.2);
 }
 
@@ -28,7 +29,7 @@
 
 .reviews {
   margin-top: 2rem;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid var(--popup-border);
   padding-top: 1rem;
 }
 
@@ -43,6 +44,7 @@
   padding: 12px 15px;
   margin-bottom: 12px;
   color: var(--text-color);
+
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -206,12 +208,13 @@
   width: 100vw;
   height: 100vh;
   background: var(--overlay-bg);
+
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 5vh;
   z-index: 10000;
   animation: fadeInModal 0.3s ease forwards;
-
 }
 
 .review-modal-content {
@@ -235,7 +238,13 @@
   background: none;
   border: none;
   font-size: 24px;
+  color: #888;
   cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.review-modal-content .review-close:hover {
+  color: #000;
 }
 
 body.modal-open {
@@ -243,7 +252,7 @@ body.modal-open {
 }
 
 .btn-review {
-  background: #ffd700;
+  background: var(--accent-color);
   border: none;
   border-radius: 25px;
   padding: 8px 18px;
@@ -283,19 +292,14 @@ body.modal-open {
 }
 
 /* fancy enhancements */
-.review {
-  background: linear-gradient(135deg, #fff, #f2f2f2);
-  border-left: 4px solid #ffd700;
-  padding: 15px 15px 15px 40px;
-  position: relative;
-}
+
 
 .review::before {
   content: '★';
   position: absolute;
   left: 10px;
   top: 10px;
-  color: #ffd700;
+  color: var(--accent-color);
 }
 
 .review img {
@@ -329,6 +333,7 @@ body.modal-open {
 .no-reviews {
   font-style: italic;
   color: var(--text-muted);
+
   margin: 8px 0;
 }
 
@@ -340,3 +345,12 @@ body.modal-open {
   from { transform: scale(0.8); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
+.review-modal.hide {
+  animation: fadeOutModal 0.3s ease forwards;
+}
+
+@keyframes fadeOutModal {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
