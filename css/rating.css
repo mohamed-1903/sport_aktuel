@@ -8,8 +8,9 @@
 }
 
 .rating-stars label {
-  font-size: 1.6rem;
-  color: #ccc;
+  font-size: 1.4rem;
+  color: #ffd700;
+
   cursor: pointer;
   transition: transform 0.2s ease, color 0.2s ease;
   text-shadow: 0 0 2px rgb(0 0 0 / 30%);
@@ -38,6 +39,8 @@
 }
 
 .review {
+  text-align: left;
+
   background: var(--card-bg);
   border: 1px solid var(--popup-border);
   border-radius: 5px;
@@ -318,6 +321,14 @@ body.modal-open {
 .review strong {
   font-size: 1.1rem;
   display: block;
+  margin-bottom: 4px;
+}
+
+.rating-date {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: -2px;
   margin-bottom: 4px;
 }
 

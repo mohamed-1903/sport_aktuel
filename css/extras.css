@@ -1106,6 +1106,17 @@ body.light-mode .zoom-close {
 }
 
 
+.toast-popup .close-toast {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: auto;
+  line-height: 1;
+}
+
+
 /* === Universelles Popup-Styling für Warenkorb & Watchlist === */
 .popup-stack-container {
   position: fixed;
@@ -1291,6 +1302,7 @@ body.light-mode .zoom-close {
   --toast-blur: 8px;
   --overlay-bg: rgb(0 0 0 / 80%);
 }
+
 
 
 /* === Buttons für Popups === */
@@ -1709,6 +1721,7 @@ body.light-mode .welcome-overlay {
   background: linear-gradient(45deg, var(--accent-color), #ffe259);
   transform: scale(1.05);
 }
+
 
 /* Listenansicht für Produktübersicht */
 /* Listenansicht für Produktübersicht */
