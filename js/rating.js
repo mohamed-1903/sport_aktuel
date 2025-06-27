@@ -3,7 +3,6 @@ window.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('ratingModal');
   if (!modal) return;
 
-
   document.querySelectorAll('.open-review-modal').forEach(btn => {
     btn.addEventListener('click', () => {
       document.body.classList.add('modal-open');
