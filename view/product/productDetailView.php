@@ -17,6 +17,7 @@
 
 
 
+
 <main class="produkte">
   <!-- 🔍 Zoom Modal -->
   <div id="zoomModal" class="zoom-modal hidden">
@@ -228,6 +229,9 @@
       <?php foreach ($ratings as $r): ?>
         <div class="review">
           <strong><?= htmlspecialchars($r['display_name'] ?: $r['username']) ?></strong>
+          <small class="rating-date">
+            <?= date('d.m.Y H:i', strtotime($r['created_at'])) ?>
+          </small>
           <span class="rating-stars" style="pointer-events:none;">
             <?php for ($s = 5; $s >= 1; $s--): ?>
               <label><?= $s <= $r['stars'] ? '★' : '☆' ?></label>
