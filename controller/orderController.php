@@ -88,7 +88,7 @@ switch ($action) {
             exit;
         }
 
-        $allowedStatuses = ['neu', 'in_bearbeitung', 'abgelehnt', 'abgeschlossen', 'storniert'];
+        $allowedStatuses = ['neu', 'bestellt', 'versandt_nicht_erhalten', 'in_bearbeitung', 'abgelehnt', 'abgeschlossen', 'storniert'];
         $statusFilter = $_GET['status'] ?? 'neu';
         if (!in_array($statusFilter, $allowedStatuses, true)) {
             $statusFilter = 'neu';
@@ -107,10 +107,11 @@ switch ($action) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $orderId = (int)($_POST['order_id'] ?? 0);
             $status = $_POST['status'] ?? '';
-            $allowed = ['neu', 'in_bearbeitung', 'abgelehnt', 'abgeschlossen', 'storniert'];
+            $reason = $_POST['reason'] ?? null;
+            $allowed = ['neu', 'bestellt', 'versandt_nicht_erhalten', 'in_bearbeitung', 'abgelehnt', 'abgeschlossen', 'storniert'];
 
             if ($orderId && in_array($status, $allowed, true)) {
-                updateOrderStatus($orderId, $status);
+                updateOrderStatus($orderId, $status, $reason);
             }
 
             $redirect = $_POST['redirect'] ?? 'neu';
