@@ -1652,13 +1652,36 @@ body.light-mode .welcome-overlay {
   box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
 }
 
-.compare-section input {
+.compare-search {
+  position: relative;
+  max-width: 320px;
+  width: 100%;
+}
+
+.compare-search input#compareInput {
   padding: 8px 12px;
-  border-radius: 20px;
   border: 1px solid #555;
+  border-radius: 20px;
   background: var(--bg-color);
   color: var(--text-color);
-  min-width: 180px;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.compare-search input.compare-shadow {
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: transparent;
+  color: rgb(255 255 255 / 30%);
+  pointer-events: none;
+
 }
 
 .compare-section button {
