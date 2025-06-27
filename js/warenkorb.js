@@ -271,6 +271,19 @@ function loadList() {
       document.querySelectorAll(".qty-input").forEach((input) => {
         input.addEventListener("input", () => handleQtyChange(input, false));
         input.addEventListener("change", () => handleQtyChange(input));
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            handleQtyChange(input);
+            input.blur();
+          }
+        });
+        if (input.form) {
+          input.form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            handleQtyChange(input);
+          });
+        }
 
       });
     });
