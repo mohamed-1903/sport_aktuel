@@ -52,9 +52,6 @@
   text-align: left;
 }
 
-
-
-
 .image-wrapper img {
   max-height: 100%;
   max-width: 100%;
@@ -121,17 +118,19 @@
 
 .button-reihe {
   display: flex;
-  gap: 10px;
-  margin-top: 10px;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: nowrap;
   width: 100%;
 }
 
 .button-row {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   gap: 10px;
   margin-top: 15px;
@@ -160,7 +159,6 @@
 .button-reihe a button:hover {
   background-color: #e6c200;
 }
-
 
 button {
   margin-bottom: 25px;
@@ -293,9 +291,6 @@ button {
   margin: 0 auto 20px;
 }
 
-
-
-
 .zoom-bg-container img {
   display: block;
   width: 100%;
@@ -322,7 +317,6 @@ button {
   transform: scale(1.2);
   vertical-align: middle;
 }
-
 
 /* zweispaltiges Layout für die Produktdetailseite */
 .detail-grid {

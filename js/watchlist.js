@@ -45,13 +45,14 @@ function toggleWatchlist(iid, btn = null, info = {}) {
           }
           // Gestapeltes Popup statt Einzel-Popup
           const buttons = `
+            <button class="remove-watch-btn" data-id="${iid}">Entfernen</button>
+            <a href="index.php?page=watchlist&action=view">Merkliste</a>
             ${
               !isOnProductDetailPageWatch
-                ? `<a href="index.php?page=product&action=detail&id=${iid}" class="show-btn">🔍 Anzeigen</a>`
+                ? `<a href="index.php?page=product&action=detail&id=${iid}" class="show-btn">Anzeigen</a>`
                 : ""
-            }
-            <button class="remove-watch-btn" data-id="${iid}">🗑 Entfernen</button>
-            <a href="index.php?page=watchlist&action=view">Merkliste</a>`;
+            }`;
+
           zeigeGestapeltesPopup({
             name,
             image,
@@ -263,7 +264,7 @@ function zeigeWatchPreview({ name, image, price, productId }) {
           <a href="index.php?page=watchlist&action=view">Merkliste</a>
           ${
             !isOnProductDetailPageWatch
-              ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
+              ? `<a href="index.php?page=product&action=detail&id=${productId}">Anzeigen</a>`
               : ""
           }
         </div>
@@ -290,12 +291,12 @@ function zeigeWatchRemovePreview({ name, image, productId, price = 0 }) {
     productId,
     icon: "💔",
     buttons: `
-      <button class="undo-btn">↩️ Rückgängig</button>
+      <button class="undo-btn">Rückgängig</button>
       <a href="index.php?page=watchlist&action=view">Merkliste</a>
 
       ${
         !isDetailPage
-          ? `<a href="index.php?page=product&action=detail&id=${productId}" class="show-btn">🔍 Anzeigen</a>`
+          ? `<a href="index.php?page=product&action=detail&id=${productId}" class="show-btn">Anzeigen</a>`
           : ""
       }
     `,

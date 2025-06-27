@@ -48,6 +48,9 @@ switch ($page) {
     case 'user':
         require_once 'controller/userController.php';
         break;
+    case 'user':
+        require_once 'controller/userController.php';
+        break;
     case 'static':
         $staticAction = $_GET['action'] ?? 'index';
         switch ($staticAction) {
@@ -63,8 +66,20 @@ switch ($page) {
             case 'kontakt':
                 require 'view/static/kontaktView.php';
                 break;
-            case 'customize':
-                require 'view/static/customizeView.php';
+            case 'faq':
+                require 'view/static/faqView.php';
+                break;
+            case 'versand':
+                require 'view/static/versandView.php';
+                break;
+            case 'agb':
+                require 'view/static/agbView.php';
+                break;
+            case 'rückgabe':
+                require 'view/static/rückgabeView.php';
+                break;
+            case 'newsletter':
+                require 'view/static/newsletterView.php';
                 break;
             default:
                 require 'view/static/indexView.php';
