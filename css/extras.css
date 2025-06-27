@@ -1091,7 +1091,9 @@ body.light-mode .zoom-close {
   pointer-events: none;
   transition: transform 0.4s ease, opacity 0.4s ease;
   max-width: 90%;
-  box-shadow: 0 8px 24px rgb(0 0 0 / 30%);
+  box-shadow: var(--toast-shadow);
+  border: 1px solid var(--toast-border);
+  backdrop-filter: blur(var(--toast-blur)) saturate(160%);
 }
 
 .toast-popup.show {
@@ -1099,6 +1101,17 @@ body.light-mode .zoom-close {
   pointer-events: auto;
   transform: translate(-50%, 0);
 }
+
+.toast-popup .close-toast {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: auto;
+  line-height: 1;
+}
+
 
 .toast-popup .close-toast {
   background: none;
@@ -1277,11 +1290,15 @@ body.light-mode .zoom-close {
   --text-muted: #888;
   --toast-bg: linear-gradient(to right, #f8e081, #f7ca00);
   --toast-text: #000;
+  --toast-border: rgb(0 0 0 / 12%);
+  --toast-shadow: 0 8px 24px rgb(0 0 0 / 25%);
+  --toast-blur: 8px;
 }
 
 [data-theme="dark"] {
   --popup-bg: rgb(32 32 32 / 90%);
   --popup-text: #f0f0f0;
+
   --popup-border: rgb(255 255 255 / 15%);
   --popup-shadow: 0 12px 32px rgb(0 0 0 / 40%);
   --popup-blur: 12px;
@@ -1291,7 +1308,11 @@ body.light-mode .zoom-close {
   --popup-button-active: #555;
   --toast-bg: linear-gradient(to right, #ffd700, #caa000);
   --toast-text: #000;
+  --toast-border: rgb(255 255 255 / 20%);
+  --toast-shadow: 0 8px 24px rgb(0 0 0 / 50%);
+  --toast-blur: 8px;
 }
+
 
 /* === Buttons für Popups === */
 .popup-buttons {
