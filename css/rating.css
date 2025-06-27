@@ -8,17 +8,18 @@
 }
 
 .rating-stars label {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   color: #ccc;
   cursor: pointer;
   transition: transform 0.2s ease, color 0.2s ease;
-
+  text-shadow: 0 0 2px rgb(0 0 0 / 30%);
 }
+
 
 .rating-stars input:checked ~ label,
 .rating-stars label:hover,
 .rating-stars label:hover ~ label {
-  color: gold;
+  color: #ffd700;
   transform: scale(1.2);
 }
 
@@ -37,11 +38,12 @@
 }
 
 .review {
-  background: #f9f9f9;
-  border: 1px solid #eee;
+  background: linear-gradient(135deg, #fff, #f2f2f2);
+  border-left: 4px solid #ffd700;
   border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 12px 15px;
+  margin-bottom: 12px;
+
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -77,24 +79,26 @@
   width: 100vw;
   height: 100vh;
   background: rgb(0 0 0 / 80%);
+  backdrop-filter: blur(3px);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 5vh;
   z-index: 10000;
   animation: fadeInModal 0.3s ease forwards;
-
 }
 
 .review-modal-content {
-  background: #fff;
+  background: linear-gradient(180deg, #ffffff 0%, #f0f3ff 100%);
   color: #000;
-  padding: 20px;
-  border-radius: 8px;
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
   max-width: 500px;
   width: 90%;
   position: relative;
-  animation: slideDown 0.3s ease forwards;
-
+  animation: popIn 0.4s ease forwards;
+  box-shadow: 0 6px 15px rgb(0 0 0 / 20%);
 }
 
 .review-modal-content .review-close {
@@ -104,7 +108,13 @@
   background: none;
   border: none;
   font-size: 24px;
+  color: #888;
   cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.review-modal-content .review-close:hover {
+  color: #000;
 }
 
 body.modal-open {
@@ -134,5 +144,68 @@ body.modal-open {
 @keyframes slideDown {
   from { transform: translateY(-20px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
+}
+
+/* fancy enhancements */
+
+
+.review::before {
+  content: '★';
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  color: #ffd700;
+}
+
+.review img {
+  max-width: 150px;
+  display: block;
+  margin-top: 5px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
+  transition: transform 0.2s ease;
+}
+
+.review img:hover {
+  transform: scale(1.05);
+}
+
+.review strong {
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.review p {
+  margin: 6px 0;
+  line-height: 1.4;
+}
+
+.rating-stars {
+  margin-bottom: 4px;
+}
+
+.no-reviews {
+  font-style: italic;
+  color: #666;
+  margin: 8px 0;
+}
+
+
+.review-modal-content {
+  box-shadow: 0 4px 8px rgb(0 0 0 / 20%);
+}
+
+@keyframes popIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.review-modal.hide {
+  animation: fadeOutModal 0.3s ease forwards;
+}
+
+@keyframes fadeOutModal {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 

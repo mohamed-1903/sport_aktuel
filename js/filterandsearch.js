@@ -169,6 +169,9 @@ document.addEventListener("DOMContentLoaded", () => {
   updateActiveFilters();
 });
 
+
+
+
 // 🔽 PRODUKTE LADEN
 function ladeProdukte(containerId, urls) {
   const container = document.getElementById(containerId);
@@ -321,6 +324,7 @@ function colorEmoji(name) {
 
 
 window.populateFilterOptions = function () {
+
   const container = document.getElementById("produktContainer");
   if (!container) return;
 
@@ -392,6 +396,8 @@ window.populateFilterOptions = function () {
   }
 }
 
+
+
 // 🔄 Alle Filter zurücksetzen und erneut anwenden
 window.resetFilter = function () {
   document.querySelectorAll(".filterbar select").forEach((sel) => {
@@ -400,6 +406,7 @@ window.resetFilter = function () {
   populateFilterOptions();
   const priceSel = document.getElementById("filter-price");
   if (priceSel) priceSel.selectedIndex = 0;
+
   const suche = document.getElementById("produktsuche");
   if (suche) {
     suche.value = "";
@@ -464,6 +471,7 @@ window.restoreOriginalOrder = function () {
 };
 
 function updateActiveFilters() {
+
   document.querySelectorAll(".filterbar select").forEach((sel) => {
     if (sel.id === "sort-select") {
       sel.classList.toggle("active", sel.value !== "default");
@@ -475,7 +483,6 @@ function updateActiveFilters() {
   const priceActive = priceSel && priceSel.selectedIndex > 0;
   if (priceSel) priceSel.classList.toggle("active", priceActive);
 }
-
 
 // Ein/Ausblenden der Filterleiste
 window.toggleFilterBar = function () {
@@ -603,8 +610,6 @@ document.addEventListener("DOMContentLoaded", () => {
   resetFilter();
   updatePagination();
 });
-
-
 
 window.addEventListener("resize", () => {
   updatePagination();

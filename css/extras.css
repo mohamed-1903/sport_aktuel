@@ -40,8 +40,8 @@
 
 .filterbar {
   display: flex;
-  flex-direction: row;      /* horizontal ausrichten */
-  flex-wrap: nowrap;        /* Elemente in einer Zeile anzeigen */
+  flex-direction: row; /* horizontal ausrichten */
+  flex-wrap: nowrap; /* Elemente in einer Zeile anzeigen */
   align-items: center;
   gap: 0.25rem;
   margin-bottom: 1rem;
@@ -95,6 +95,11 @@
 
 
 
+/* Einheitliche Breite für alle Filterelemente */
+.filterbar select,
+.filterbar input[type="range"] {
+  width: 140px;
+}
 
 /* Select Dropdown-Pfeil optisch gestalten */
 .filterbar select {
@@ -114,7 +119,7 @@
   color: #000;
 }
 
-/* Preis-Slider + Label */
+
 .range-filter {
   display: flex;
   align-items: center;
@@ -153,7 +158,7 @@
   margin-left: 0.25rem;
   min-width: 70px;
   display: inline-block;
-  text-align: center;
+  text-align: left;
 }
 
 .range-filter {
@@ -188,7 +193,19 @@
   margin-left: 0.25rem;
   min-width: 70px;
   display: inline-block;
-  text-align: center;
+  text-align: left;
+}
+
+.range-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+.price-label {
+  margin-left: 0.25rem;
+  min-width: 70px;
+  display: inline-block;
+  text-align: left;
 }
 
 .range-filter {
@@ -216,7 +233,7 @@
 }
 
 .price-label {
-  margin-left: 0.5rem;
+  margin-left: 0.25rem;
   min-width: 80px;
   display: inline-block;
   text-align: left;
@@ -235,18 +252,23 @@
 }
 
 .price-label {
+  margin-left: 0.25rem;
   min-width: 80px;
   display: inline-block;
-  text-align: center;
-  margin-left: 0.5rem;
+  text-align: left;
 }
 
-/* Responsives Verhalten */
-@media (max-width: 768px) {
-  .filter-controls {
-    flex-direction: column;
-    align-items: stretch;
-  }
+.range-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  padding: 2px 6px;
+}
+
 
   .filterbar {
     justify-content: flex-start;
@@ -260,18 +282,19 @@
 }
 
 .price-label {
-  margin-left: 0.5rem;
+  margin-left: 0.25rem;
   min-width: 80px;
   display: inline-block;
   text-align: left;
 }
 
 .price-label {
-  margin-left: 0.5rem;
+  margin-left: 0.25rem;
   min-width: 80px;
   display: inline-block;
   text-align: left;
 }
+
 
 .layout-toggle {
   min-width: 140px;
@@ -314,6 +337,7 @@
   align-items: flex-start;
 }
 
+
 .einzelprodukt-grid .produkt-info h3 {
   margin: 0 0 0.25rem;
 }
@@ -355,6 +379,7 @@
   flex-direction: column;
   align-items: flex-start;
 }
+
 .einzelprodukt-grid .produkt-info h3 {
   margin: 0 0 0.25rem;
 }
@@ -706,12 +731,29 @@ body.light-mode .zoom-close {
 
 /* Button-Wrapper am Ende der Karte fixieren */
 .watchlist-card .button-group {
-  margin-top: auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: row; /* ✅ Buttons nebeneinander */
+  justify-content: center;
+  align-items: center;
   gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap; /* Optional für kleine Bildschirme */
 }
-
+.watchlist-card .button-group button {
+  background-color: var(--accent-color);
+  color: #000;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.9rem;
+  line-height: 1; /* ❗ verhindert vertikales Ungleichgewicht */
+  display: flex; /* ❗ für zentrierten Inhalt */
+  align-items: center; /* ❗ vertikal zentriert */
+  justify-content: center; /* ❗ horizontal zentriert */
+  height: 42px; /* ❗ gleiche Höhe erzwingen */
+}
 .watchlist-card button,
 .watchlist-card a button {
   background-color: var(--accent-color);
@@ -829,8 +871,8 @@ body.light-mode .zoom-close {
   margin: 0 auto;
 }
 
-.qty-select {
-  width: 60px;
+.qty-input {
+  width: 50px;
   padding: 4px;
   text-align: center;
   border: 1px solid #555;
@@ -840,6 +882,21 @@ body.light-mode .zoom-close {
 }
 
 
+.qty-btn {
+  width: 26px;
+  height: 26px;
+  line-height: 24px;
+  text-align: center;
+  border: 1px solid #555;
+  background: var(--card-bg);
+  color: var(--text-color);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.qty-btn:hover {
+  background: #555;
+}
 
 
 
@@ -1019,24 +1076,39 @@ body.light-mode .zoom-close {
   position: fixed;
   bottom: 30px;
   left: 50%;
-  transform: translateX(-50%);
-  background-color: #333;
+  transform: translate(-50%, 40px);
+  background: rgba(40, 40, 40, 0.85);
+  backdrop-filter: blur(6px);
   color: #fff;
-  padding: 14px 24px;
-  border-radius: 8px;
-  font-size: 16px;
+  padding: 16px 28px;
+  border-radius: 10px;
+  font-size: 15px;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   z-index: 9999;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition: transform 0.4s ease, opacity 0.4s ease;
   max-width: 90%;
-  box-shadow: 0 6px 20px rgb(0 0 0 / 25%);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 30%);
 }
 
 .toast-popup.show {
   opacity: 1;
   pointer-events: auto;
-  transform: translateX(-50%) translateY(0);
+  transform: translate(-50%, 0);
+}
+
+.toast-popup .close-toast {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: auto;
+  line-height: 1;
 }
 
 /* === Universelles Popup-Styling für Warenkorb & Watchlist === */
@@ -1056,11 +1128,13 @@ body.light-mode .zoom-close {
   pointer-events: none;
 }
 
+
+
 .popup-stack-container .popup-instance {
   position: relative;
   top: auto;
   right: auto;
-  max-width: 480px;
+  max-width: 380px;
 
   background-color: var(--popup-bg);
   color: var(--popup-text);
@@ -1072,10 +1146,11 @@ body.light-mode .zoom-close {
   backdrop-filter: blur(var(--popup-blur)) saturate(160%);
   transform: scale(1);
   transition: all 0.3s ease-out;
+
+
   opacity: 1;
   pointer-events: auto;
-  width: 480px; /* 👈 oder jede gewünschte feste Breite */
-
+  width: 380px; /* 👈 oder jede gewünschte feste Breite */
   min-height: 110px; /* 👈 feste Höhe für Einheitlichkeit */
   display: flex;
   align-items: center;
@@ -1124,6 +1199,8 @@ body.light-mode .zoom-close {
   justify-content: center; /* Bild und Text mittig ausrichten */
   gap: 15px;
 }
+
+
 
 .popup-content-flex img {
   width: 80px;
@@ -1237,11 +1314,15 @@ body.light-mode .zoom-close {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  vertical-align: middle;
+  height: 36px; /* gleiche Knopfhöhe für saubere Ausrichtung */
+  margin: 0; /* Standard-Margen entfernen */
+  box-sizing: border-box;
   box-shadow: 0 2px 6px rgb(0 0 0 / 15%);
   transition: background-color 0.3s ease, transform 0.2s ease,
     box-shadow 0.3s ease;
-
 }
+
 
 .popup-buttons button:hover,
 .popup-buttons a:hover {
@@ -1402,7 +1483,7 @@ body:not(.light-mode) .error {
 
 .welcome {
   position: relative;
-  background: url('img/hintergrund.png') center center no-repeat;
+  background: url("img/hintergrund.png") center center no-repeat;
   background-size: cover;
   color: #fff;
   text-align: center;
@@ -1432,7 +1513,7 @@ body:not(.light-mode) .error {
 .welcome h1 {
   font-size: 3rem;
   font-weight: 800;
-  color: #FFD700;
+  color: #ffd700;
   text-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
   z-index: 1;
   margin-bottom: 10px;
@@ -1447,7 +1528,7 @@ body:not(.light-mode) .error {
 }
 
 .welcome .cta-button {
-  background-color: #FFD700;
+  background-color: #ffd700;
   color: #000;
   padding: 14px 32px;
   font-size: 1rem;
@@ -1608,6 +1689,7 @@ body.light-mode .welcome-overlay {
   align-items: flex-start;
   justify-content: center;
 }
+
 
 .einzelprodukt-list .produkt-info h3 {
   font-size: 1.2rem;

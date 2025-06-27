@@ -47,6 +47,7 @@
       <select id="filter-price" onchange="applyFilter()">
         <option value="">Alle Preise</option>
       </select>
+
       <select id="filter-mannschaft" onchange="applyFilter()">
         <option value="">Alle Mannschaften</option>
         <option value="Bayern">Bayern</option>
@@ -91,6 +92,9 @@
             data-preis="<?= $preis ?>"
             data-mannschaft="<?= $mannschaft ?>"
             data-geschlecht="<?= htmlspecialchars($geschlecht) ?>">
+
+
+
 
             <div class="image-wrapper">
               <img src="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>"
