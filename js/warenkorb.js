@@ -229,13 +229,13 @@ function loadList() {
             </div>
           </td>
           <td>
-            <select class="qty-select" data-id="${
-              item.product_id
-            }" data-size="${item.size}" data-price="${einzelfpreis.toFixed(2)}">
-              ${Array.from({ length: 25 }, (_, i) => `<option value="${
-                i + 1
-              }"${menge === i + 1 ? " selected" : ""}>${i + 1}</option>`).join("")}
-            </select>
+            <div class="qty-control">
+              <button type="button" class="qty-btn qty-minus">-</button>
+              <input type="number" class="qty-input" data-id="${
+                item.product_id
+              }" data-size="${item.size}" data-price="${einzelfpreis.toFixed(2)}" value="${menge}" min="1" max="25" />
+              <button type="button" class="qty-btn qty-plus">+</button>
+            </div>
 
           </td>
           <td>${einzelfpreis.toFixed(2)} €</td>
@@ -272,9 +272,25 @@ function loadList() {
       });
 
       // 🆙 Menge ändern
-      document.querySelectorAll(".qty-select").forEach((sel) => {
-        sel.addEventListener("change", () => {
-          handleQtyChange(sel);
+      document.querySelectorAll(".qty-input").forEach((input) => {
+        input.addEventListener("change", () => handleQtyChange(input));
+      });
+      document.querySelectorAll(".qty-minus").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const input = btn.parentElement.querySelector(".qty-input");
+          if (input) {
+            input.stepDown();
+            handleQtyChange(input);
+          }
+        });
+      });
+      document.querySelectorAll(".qty-plus").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const input = btn.parentElement.querySelector(".qty-input");
+          if (input) {
+            input.stepUp();
+            handleQtyChange(input);
+          }
 
         });
       });
@@ -326,20 +342,20 @@ function updateCartQuantity(productId, size, quantity, reload = true) {
     .catch((err) => console.error("Fehler beim Aktualisieren:", err));
 }
 
-function handleQtyChange(sel) {
-  let qty = parseInt(sel.value);
+function handleQtyChange(el) {
+  let qty = parseInt(el.value);
   if (!qty || qty < 1) {
     qty = 1;
-    sel.value = 1;
+    el.value = 1;
   }
   if (qty > 25) {
     qty = 25;
-    sel.value = 25;
+    el.value = 25;
   }
-
-  let price = parseFloat(sel.dataset.price);
+  let price = parseFloat(el.dataset.price);
   if (isNaN(price)) {
-    const priceCell = sel.closest("tr")?.querySelector("td:nth-child(3)");
+    const priceCell = el.closest("tr")?.querySelector("td:nth-child(3)");
+
     if (priceCell) {
       price = parseFloat(
         priceCell.textContent.replace(/[^0-9,.-]/g, "").replace(",", ".")
@@ -347,11 +363,12 @@ function handleQtyChange(sel) {
     }
   }
   price = isNaN(price) ? 0 : price;
-  const sumCell = sel.closest("tr").querySelector(".summe-cell");
+  const sumCell = el.closest("tr").querySelector(".summe-cell");
   if (sumCell) sumCell.textContent = `${(price * qty).toFixed(2)} €`;
   recalculateTotals();
-  const id = sel.dataset.id;
-  const size = sel.dataset.size;
+  const id = el.dataset.id;
+  const size = el.dataset.size;
+
   updateCartQuantity(id, size, qty, false);
 }
 

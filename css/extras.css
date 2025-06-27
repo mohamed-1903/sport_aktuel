@@ -883,8 +883,15 @@ body.light-mode .zoom-close {
   margin: 0 auto;
 }
 
-.qty-select {
-  width: 60px;
+.qty-control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.qty-input {
+  width: 50px;
   padding: 4px;
   text-align: center;
   border: 1px solid #555;
@@ -892,6 +899,23 @@ body.light-mode .zoom-close {
   background: var(--card-bg);
   color: var(--text-color);
 }
+
+.qty-btn {
+  width: 26px;
+  height: 26px;
+  line-height: 24px;
+  text-align: center;
+  border: 1px solid #555;
+  background: var(--card-bg);
+  color: var(--text-color);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.qty-btn:hover {
+  background: #555;
+}
+
 
 
 
