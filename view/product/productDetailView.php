@@ -15,6 +15,7 @@
   <?php unset($_SESSION['message']); ?>
 <?php endif; ?>
 
+
 <main class="produkte">
   <!-- 🔍 Zoom Modal -->
   <div id="zoomModal" class="zoom-modal hidden">
@@ -224,9 +225,8 @@
         <p class="no-reviews">Noch keine Bewertungen.</p>
       <?php endif; ?>
       <?php foreach ($ratings as $r): ?>
-
         <div class="review">
-          <strong><?= htmlspecialchars($r['username']) ?></strong>
+          <strong><?= htmlspecialchars($r['display_name'] ?: $r['username']) ?></strong>
           <span class="rating-stars" style="pointer-events:none;">
             <?php for ($s = 5; $s >= 1; $s--): ?>
               <label><?= $s <= $r['stars'] ? '★' : '☆' ?></label>
@@ -236,8 +236,16 @@
           <?php if (!empty($r['image_path'])): ?>
             <img src="<?= htmlspecialchars($r['image_path']) ?>" alt="Bild zur Bewertung">
           <?php endif; ?>
+          <?php if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == $r['user_id'] || !empty($_SESSION['is_admin']))): ?>
+            <form class="delete-rating-form" method="post" action="index.php?page=community&action=deleteRating" onsubmit="return confirm('Bewertung löschen?');">
+              <input type="hidden" name="rating_id" value="<?= (int)$r['id'] ?>">
+              <input type="hidden" name="product_id" value="<?= (int)$product['id'] ?>">
+              <button type="submit" class="btn-delete-rating">Löschen</button>
+            </form>
+          <?php endif; ?>
         </div>
       <?php endforeach; ?>
+
       <?php if (isset($_SESSION['user_id'])): ?>
         <button type="button" class="open-review-modal btn-review" data-product-id="<?= (int)$product['id'] ?>">Bewertung schreiben</button>
       <?php else: ?>
@@ -252,6 +260,7 @@
     <button type="button" class="review-close" onclick="closeRatingModal()">&times;</button>
     <form id="ratingForm" class="review-form" action="index.php?page=community&action=addRating" method="post" enctype="multipart/form-data">
       <input type="hidden" name="product_id" id="ratingProductId" value="">
+      <input type="text" name="display_name" id="displayName" placeholder="Dein Name" value="<?= htmlspecialchars($_SESSION['username'] ?? '') ?>" required>
       <div class="rating-stars">
         <?php for ($s = 5; $s >= 1; $s--): ?>
           <input type="radio" id="modal-star<?= $s ?>" name="stars" value="<?= $s ?>" <?= $s == 5 ? ' checked' : '' ?>>
