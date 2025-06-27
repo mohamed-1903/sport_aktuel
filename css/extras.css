@@ -97,6 +97,7 @@
 
 
 
+
 /* Einheitliche Breite für alle Filterelemente */
 .filterbar select,
 .filterbar input[type="range"] {
@@ -126,6 +127,7 @@
   background-color: var(--accent-color);
   color: #000;
 }
+
 
 
 
@@ -170,6 +172,7 @@
   justify-content: flex-start; /* Filter linksbündig */
   overflow-x: auto;        /* bei Bedarf horizontal scrollen */
 }
+
 
 
 .filter-controls.hidden {
