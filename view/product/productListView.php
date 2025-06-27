@@ -44,12 +44,9 @@
         <option value="Blau">Blau</option>
         <option value="Rot">Rot</option>
       </select>
-      <div class="range-filter">
-        <label for="filter-preis">Preis:</label>
-        <input type="range" id="filter-preis" min="0" value="0" step="10"
-               oninput="updatePriceLabel(this.value)" onchange="applyFilter()">
-        <span id="price-label" class="price-label">Kein Limit</span>
-      </div>
+      <select id="filter-price" onchange="applyFilter()">
+        <option value="">Alle Preise</option>
+      </select>
       <select id="filter-mannschaft" onchange="applyFilter()">
         <option value="">Alle Mannschaften</option>
         <option value="Bayern">Bayern</option>
@@ -88,6 +85,7 @@
           $geschlecht = $produkt["geschlecht"] ?? "Unbekannt";
           ?>
           <li class="einzelprodukt"
+            data-id="<?= (int)$produkt['iid'] ?>"
             data-marke="<?= htmlspecialchars($marke) ?>"
             data-farbe="<?= htmlspecialchars($farbe) ?>"
             data-preis="<?= $preis ?>"
