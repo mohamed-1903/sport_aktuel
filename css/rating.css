@@ -8,8 +8,9 @@
 }
 
 .rating-stars label {
-  font-size: 1.6rem;
-  color: #ccc;
+  font-size: 1.4rem;
+  color: #ffd700;
+
   cursor: pointer;
   transition: transform 0.2s ease, color 0.2s ease;
   text-shadow: 0 0 2px rgb(0 0 0 / 30%);
@@ -19,7 +20,7 @@
 .rating-stars input:checked ~ label,
 .rating-stars label:hover,
 .rating-stars label:hover ~ label {
-  color: #ffd700;
+  color: var(--accent-color);
   transform: scale(1.2);
 }
 
@@ -29,7 +30,7 @@
 
 .reviews {
   margin-top: 2rem;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid var(--popup-border);
   padding-top: 1rem;
 }
 
@@ -38,11 +39,15 @@
 }
 
 .review {
-  background: linear-gradient(135deg, #fff, #f2f2f2);
-  border-left: 4px solid #ffd700;
+  text-align: left;
+
+  background: var(--card-bg);
+  border: 1px solid var(--popup-border);
   border-radius: 5px;
   padding: 12px 15px;
   margin-bottom: 12px;
+  color: var(--text-color);
+
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -76,6 +81,24 @@
   box-shadow: inset 0 1px 3px rgb(0 0 0 / 15%);
 }
 
+.review-form input[type="text"] {
+  width: 100%;
+  margin: 8px 0;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 2px solid var(--popup-border);
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.review-form input[type="text"]:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 6px rgb(255 215 0 / 50%);
+}
+
 
 .review-form textarea:focus {
   outline: none;
@@ -98,9 +121,28 @@
 
 .suggestion-bar {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 6px;
   margin-bottom: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+}
+
+.suggestions-set {
+  display: flex;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+
+.suggestion-bar::-webkit-scrollbar {
+  height: 6px;
+}
+
+.suggestion-bar::-webkit-scrollbar-thumb {
+  background-color: var(--popup-border);
+  border-radius: 3px;
 }
 
 .suggest-btn {
@@ -110,6 +152,8 @@
   border-radius: 20px;
   padding: 4px 10px;
   font-size: 14px;
+  white-space: nowrap;
+  flex: 0 0 auto;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
@@ -143,7 +187,6 @@
 }
 
 
-
 .review-form button {
   margin-top: 12px;
   background-color: var(--accent-color);
@@ -167,8 +210,8 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgb(0 0 0 / 80%);
-  backdrop-filter: blur(3px);
+  background: var(--overlay-bg);
+
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -212,7 +255,7 @@ body.modal-open {
 }
 
 .btn-review {
-  background: #ffd700;
+  background: var(--accent-color);
   border: none;
   border-radius: 25px;
   padding: 8px 18px;
@@ -224,6 +267,21 @@ body.modal-open {
 .btn-review:hover {
   background: #e6c200;
   transform: translateY(-2px);
+}
+
+.btn-delete-rating {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 4px;
+  padding: 0;
+}
+
+.btn-delete-rating:hover {
+  text-decoration: underline;
+  color: #c00;
 }
 
 @keyframes fadeInModal {
@@ -244,7 +302,7 @@ body.modal-open {
   position: absolute;
   left: 10px;
   top: 10px;
-  color: #ffd700;
+  color: var(--accent-color);
 }
 
 .review img {
@@ -266,6 +324,14 @@ body.modal-open {
   margin-bottom: 4px;
 }
 
+.rating-date {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: -2px;
+  margin-bottom: 4px;
+}
+
 .review p {
   margin: 6px 0;
   line-height: 1.4;
@@ -277,7 +343,8 @@ body.modal-open {
 
 .no-reviews {
   font-style: italic;
-  color: #666;
+  color: var(--text-muted);
+
   margin: 8px 0;
 }
 

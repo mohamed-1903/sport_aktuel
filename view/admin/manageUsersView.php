@@ -1,8 +1,7 @@
 <?php include __DIR__ . '/../layout/header.php'; ?>
 
-<main class="main-content">
+<section class="form-wrapper" style="padding: 2em; max-width: 1000px; margin-top: 15px;">
   <h1 style="text-align: center;">👥 Benutzerverwaltung</h1>
-
   <?php if (empty($allUsers)): ?>
     <p style="text-align: center;">Es wurden keine Benutzer gefunden.</p>
   <?php else: ?>
@@ -35,7 +34,7 @@
       </tbody>
     </table>
   <?php endif; ?>
-</main>
+</section>
 
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
 <?php include __DIR__ . '/../layout/footer.php'; ?>

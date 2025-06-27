@@ -44,14 +44,28 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  document.querySelectorAll('.suggest-btn').forEach(btn => {
+  const commentField = document.querySelector('#ratingForm textarea[name="comment"]');
+
+  function showSuggestions(rating) {
+    document.querySelectorAll('#ratingForm .suggestions-set').forEach(set => {
+      set.classList.toggle('hidden', set.dataset.rating !== rating);
+    });
+  }
+
+  document.querySelectorAll('#ratingForm .suggest-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const textarea = document.querySelector('#ratingForm textarea[name="comment"]');
-      if (textarea) {
-        textarea.value = btn.textContent;
-        textarea.focus();
+      if (commentField) {
+        commentField.value = btn.textContent;
+        commentField.focus();
       }
     });
+  });
+
+  const checked = document.querySelector('.rating-stars input:checked');
+  showSuggestions(checked ? checked.value : '5');
+
+  document.querySelectorAll('.rating-stars input').forEach(rad => {
+    rad.addEventListener('change', () => showSuggestions(rad.value));
   });
 
 });
