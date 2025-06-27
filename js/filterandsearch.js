@@ -62,10 +62,6 @@ window.applyFilter = function () {
       preis >= filterWerte.minPreis &&
       preis <= filterWerte.maxPreis;
 
-
-
-
-
     // leeres Display lässt die ursprüngliche Flex-Darstellung erhalten
     produkt.style.display = sichtbar ? "" : "none";
   });
@@ -172,6 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (priceSel) priceSel.addEventListener("change", applyFilter);
   updateActiveFilters();
 });
+
 
 
 
@@ -400,6 +397,7 @@ window.populateFilterOptions = function () {
 }
 
 
+
 // 🔄 Alle Filter zurücksetzen und erneut anwenden
 window.resetFilter = function () {
   document.querySelectorAll(".filterbar select").forEach((sel) => {
@@ -485,7 +483,6 @@ function updateActiveFilters() {
   const priceActive = priceSel && priceSel.selectedIndex > 0;
   if (priceSel) priceSel.classList.toggle("active", priceActive);
 }
-
 
 // Ein/Ausblenden der Filterleiste
 window.toggleFilterBar = function () {
@@ -613,8 +610,6 @@ document.addEventListener("DOMContentLoaded", () => {
   resetFilter();
   updatePagination();
 });
-
-
 
 window.addEventListener("resize", () => {
   updatePagination();
