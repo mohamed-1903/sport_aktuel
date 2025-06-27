@@ -54,6 +54,8 @@
   text-align: left;
 }
 
+
+
 .filterbar.hidden {
   display: none;
 }
@@ -90,6 +92,13 @@
   width: 140px;
 }
 
+
+/* Einheitliche Breite für alle Filterelemente */
+.filterbar select,
+.filterbar input[type="range"] {
+  width: 140px;
+}
+
 /* Select Dropdown-Pfeil optisch gestalten */
 .filterbar select {
   appearance: none;
@@ -108,7 +117,20 @@
   color: #000;
 }
 
-/* Preis-Slider + Label */
+.filterbar button:hover,
+.filter-tools button:hover {
+  background-color: var(--accent-color);
+  color: #000;
+}
+
+.price-label {
+  margin-left: 0.25rem;
+  min-width: 70px;
+  display: inline-block;
+  text-align: left;
+}
+
+
 .range-filter {
   display: flex;
   align-items: center;
@@ -137,6 +159,8 @@
   overflow-x: auto; /* bei Bedarf horizontal scrollen */
 }
 
+
+
 .filter-controls.hidden {
   display: none;
 }
@@ -145,7 +169,7 @@
   margin-left: 0.25rem;
   min-width: 70px;
   display: inline-block;
-  text-align: center;
+  text-align: left;
 }
 
 .range-filter {
@@ -180,7 +204,19 @@
   margin-left: 0.25rem;
   min-width: 70px;
   display: inline-block;
-  text-align: center;
+  text-align: left;
+}
+
+.range-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+.price-label {
+  margin-left: 0.25rem;
+  min-width: 70px;
+  display: inline-block;
+  text-align: left;
 }
 
 .range-filter {
@@ -208,11 +244,12 @@
 }
 
 .price-label {
-  margin-left: 0.5rem;
+  margin-left: 0.25rem;
   min-width: 80px;
   display: inline-block;
   text-align: left;
 }
+
 
 .range-filter input[type="range"] {
   width: 140px;
@@ -226,18 +263,23 @@
 }
 
 .price-label {
+  margin-left: 0.25rem;
   min-width: 80px;
   display: inline-block;
-  text-align: center;
-  margin-left: 0.5rem;
+  text-align: left;
 }
 
-/* Responsives Verhalten */
-@media (max-width: 768px) {
-  .filter-controls {
-    flex-direction: column;
-    align-items: stretch;
-  }
+.range-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  padding: 2px 6px;
+}
+
 
   .filterbar {
     justify-content: flex-start;
@@ -251,18 +293,19 @@
 }
 
 .price-label {
-  margin-left: 0.5rem;
+  margin-left: 0.25rem;
   min-width: 80px;
   display: inline-block;
   text-align: left;
 }
 
 .price-label {
-  margin-left: 0.5rem;
+  margin-left: 0.25rem;
   min-width: 80px;
   display: inline-block;
   text-align: left;
 }
+
 
 .layout-toggle {
   min-width: 140px;
