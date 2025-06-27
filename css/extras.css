@@ -1681,7 +1681,6 @@ body.light-mode .welcome-overlay {
   background: transparent;
   color: rgb(255 255 255 / 30%);
   pointer-events: none;
-
 }
 
 .compare-section button {
