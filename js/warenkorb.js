@@ -201,7 +201,7 @@ function loadList() {
 
         const tr = document.createElement("tr");
         tr.innerHTML = `
-          <td style="text-align:left;">
+          <td>
             <div style="display:flex; align-items:center; gap:10px;">
               <img src="${item.image_main}" alt="Bild" width="60" />
               <div>
@@ -274,12 +274,23 @@ function loadList() {
       document.querySelectorAll(".qty-select").forEach((sel) => {
         sel.addEventListener("change", () => {
           let qty = parseInt(sel.value);
-
           if (!qty || qty < 1) {
             qty = 1;
             sel.value = 1;
           }
-          const price = parseFloat(sel.dataset.price) || 0;
+          let price = parseFloat(sel.dataset.price);
+          if (isNaN(price)) {
+            const priceCell = sel.closest("tr")?.querySelector("td:nth-child(3)");
+            if (priceCell) {
+              price = parseFloat(
+                priceCell.textContent
+                  .replace(/[^0-9,.-]/g, "")
+                  .replace(",", ".")
+              );
+            }
+          }
+          price = isNaN(price) ? 0 : price;
+
           const sumCell = sel.closest("tr").querySelector(".summe-cell");
           if (sumCell) sumCell.textContent = `${(price * qty).toFixed(2)} €`;
           recalculateTotals();
