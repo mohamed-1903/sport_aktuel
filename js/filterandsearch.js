@@ -63,6 +63,10 @@ window.applyFilter = function () {
       preis <= filterWerte.maxPreis;
 
 
+    // Sichtbarkeit sowohl per Display-Style als auch Flag merken
+    // Das Flag erlaubt der Pagination alle passenden Elemente zu zählen,
+    // selbst wenn sie aufgrund der Seitennummer gerade ausgeblendet sind
+    produkt.dataset.visible = sichtbar ? "1" : "0";
     // leeres Display lässt die ursprüngliche Flex-Darstellung erhalten
     produkt.style.display = sichtbar ? "" : "none";
   });
@@ -109,7 +113,7 @@ function produktSuche() {
 let alleProdukte = [];
 let fokusIndex = -1;
 
-document.addEventListener("DOMContentLoaded", () => {
+function initFilterAndSearch() {
   const input = document.getElementById("produktsuche");
   const shadow = document.getElementById("autocomplete-shadow");
   const liste = document.getElementById("such-vorschlaege");
@@ -168,7 +172,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const priceSel = document.getElementById("filter-price");
   if (priceSel) priceSel.addEventListener("change", applyFilter);
   updateActiveFilters();
-});
+
+  // alle Filter zurücksetzen und Pagination initial erstellen
+  resetFilter();
+  updatePagination();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initFilterAndSearch);
+} else {
+  initFilterAndSearch();
+}
 
 
 
@@ -197,6 +211,7 @@ function ladeProdukte(containerId, urls) {
         container.querySelectorAll(".einzelprodukt")
       );
     }
+    updatePagination();
   });
 }
 
@@ -593,9 +608,11 @@ function renderPagination(total) {
 function updatePagination() {
   const container = document.getElementById("produktContainer");
   if (!container) return;
+  // Nur Elemente berücksichtigen, die nicht durch Filter ausgeblendet wurden
+  // (data-visible="1"), unabhängig von der aktuellen Seitennummer
   paginatedItems = Array.from(
-    container.querySelectorAll(".einzelprodukt")
-  ).filter((el) => el.style.display !== "none");
+    container.querySelectorAll('.einzelprodukt')
+  ).filter((el) => el.dataset.visible !== "0");
   const itemsPerPage = getItemsPerPage();
   const totalPages = Math.max(
     1,
@@ -605,9 +622,11 @@ function updatePagination() {
   renderPagination(totalPages);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  // Stelle sicher, dass beim Laden der Seite keine Filter aktiv sind
-  resetFilter();
+
+
+// Nach dem kompletten Laden der Seite erneut Pagination berechnen,
+// damit alle Produkte und Layout-Styles berücksichtigt werden
+window.addEventListener("load", () => {
   updatePagination();
 });
 
