@@ -31,10 +31,12 @@ window.addEventListener('DOMContentLoaded', () => {
     imageInput.files = dt.files;
   }
 
+
   function renderPreviews() {
     if (!previewList) return;
     previewList.innerHTML = '';
     selectedFiles.forEach((file, idx) => {
+
       const wrapper = document.createElement('div');
       wrapper.className = 'image-preview';
       const img = document.createElement('img');
@@ -45,6 +47,7 @@ window.addEventListener('DOMContentLoaded', () => {
       btn.addEventListener('click', () => {
         selectedFiles.splice(idx, 1);
         syncInput();
+
         renderPreviews();
       });
       wrapper.appendChild(img);
@@ -52,6 +55,7 @@ window.addEventListener('DOMContentLoaded', () => {
       previewList.appendChild(wrapper);
     });
     previewList.classList.toggle('hidden', selectedFiles.length === 0);
+
   }
 
   if (imageInput && previewList) {
@@ -61,6 +65,7 @@ window.addEventListener('DOMContentLoaded', () => {
       });
       syncInput();
       renderPreviews();
+
     });
   }
 
@@ -96,6 +101,7 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     });
   });
+
 });
 
 function openImageGallery(images, start) {
@@ -115,7 +121,16 @@ function openImageGallery(images, start) {
 function closeRatingModal() {
   const modal = document.getElementById('ratingModal');
   if (modal) {
-    modal.classList.add('hidden');
+    modal.classList.add('hide');
+    modal.addEventListener(
+      'animationend',
+      () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('hide');
+      },
+      { once: true }
+    );
+
     document.body.classList.remove('modal-open');
   }
 }
