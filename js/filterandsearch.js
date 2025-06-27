@@ -23,16 +23,24 @@ function getItemsPerPage() {
 }
 
 window.applyFilter = function () {
-  const priceInput = document.getElementById("filter-preis");
-  const priceMax = priceInput && priceInput.dataset.max
-    ? parseFloat(priceInput.dataset.max)
-    : Infinity;
-  const priceVal = parseFloat(priceInput?.value || priceMax);
+  const priceSel = document.getElementById("filter-price");
+  let minVal = 0;
+  let maxVal = Infinity;
+  if (priceSel && priceSel.value) {
+    if (priceSel.value.includes("-")) {
+      const [mi, ma] = priceSel.value.split("-");
+      minVal = parseFloat(mi) || 0;
+      maxVal = parseFloat(ma) || Infinity;
+    } else if (priceSel.value.endsWith("+")) {
+      minVal = parseFloat(priceSel.value) || 0;
+    }
+  }
 
   const filterWerte = {
     marke: document.getElementById("filter-marke")?.value || "",
     farbe: document.getElementById("filter-farbe")?.value || "",
-    maxPreis: priceVal >= priceMax ? Infinity : priceVal,
+    minPreis: isNaN(minVal) ? 0 : minVal,
+    maxPreis: isNaN(maxVal) ? Infinity : maxVal,
     mannschaft: document.getElementById("filter-mannschaft")?.value || "",
     geschlecht: document.getElementById("filter-geschlecht")?.value || "",
   };
@@ -41,10 +49,17 @@ window.applyFilter = function () {
     const p = produkt.dataset;
     const preis = parseFloat(p.preis);
     const sichtbar =
-      (!filterWerte.marke || p.marke === filterWerte.marke) &&
-      (!filterWerte.farbe || p.farbe === filterWerte.farbe) &&
-      (!filterWerte.mannschaft || p.mannschaft === filterWerte.mannschaft) &&
-      (!filterWerte.geschlecht || p.geschlecht === filterWerte.geschlecht) &&
+      (!filterWerte.marke ||
+        (p.marke || "").toLowerCase() === filterWerte.marke.toLowerCase()) &&
+      (!filterWerte.farbe ||
+        (p.farbe || "").toLowerCase() === filterWerte.farbe.toLowerCase()) &&
+      (!filterWerte.mannschaft ||
+        (p.mannschaft || "").toLowerCase() ===
+          filterWerte.mannschaft.toLowerCase()) &&
+      (!filterWerte.geschlecht ||
+        (p.geschlecht || "").toLowerCase() ===
+          filterWerte.geschlecht.toLowerCase()) &&
+      preis >= filterWerte.minPreis &&
       preis <= filterWerte.maxPreis;
 
     // leeres Display lässt die ursprüngliche Flex-Darstellung erhalten
@@ -148,11 +163,9 @@ document.addEventListener("DOMContentLoaded", () => {
     prodContainer.classList.remove("einzelprodukt-grid");
   }
   updateLayoutToggle(savedLayout === "list" ? "list" : "grid");
-  const priceInput = document.getElementById("filter-preis");
-  if (priceInput) {
-    priceInput.addEventListener("input", () => updatePriceLabel(priceInput.value));
-    updatePriceLabel(priceInput.value);
-  }
+  populateFilterOptions();
+  const priceSel = document.getElementById("filter-price");
+  if (priceSel) priceSel.addEventListener("change", applyFilter);
   updateActiveFilters();
 });
 
@@ -307,7 +320,7 @@ function colorEmoji(name) {
 
 
 
-function populateFilterOptions() {
+window.populateFilterOptions = function () {
   const container = document.getElementById("produktContainer");
   if (!container) return;
 
@@ -344,22 +357,38 @@ function populateFilterOptions() {
   setOptions("filter-mannschaft", collect("mannschaft"), "Alle Mannschaften");
   setOptions("filter-geschlecht", collect("geschlecht"), "Alle Geschlechter");
 
-  const priceInput = document.getElementById("filter-preis");
-  const priceLabel = document.getElementById("price-label");
-  if (priceInput) {
-    const max = Math.max(
-      0,
-      ...products.map((p) => parseFloat(p.dataset.preis) || 0)
-    );
-    const roundedMax = Math.ceil(max);
-    priceInput.max = roundedMax;
-    priceInput.dataset.max = roundedMax;
-    if (!priceInput.value || parseFloat(priceInput.value) > roundedMax) {
-      priceInput.value = roundedMax;
+  const priceSel = document.getElementById("filter-price");
+  if (priceSel) {
+    const prices = products
+      .map((p) => parseFloat(p.dataset.preis) || 0)
+      .filter((n) => !isNaN(n));
+    const minPrice = Math.min(...prices);
+    const maxPrice = Math.max(...prices);
+    const step = 50;
+    const current = priceSel.value;
+    priceSel.innerHTML = "";
+    const allOpt = document.createElement("option");
+    allOpt.value = "";
+    allOpt.textContent = "Alle Preise";
+    priceSel.appendChild(allOpt);
+    for (
+      let p = Math.floor(minPrice / step) * step;
+      p < maxPrice;
+      p += step
+    ) {
+      const opt = document.createElement("option");
+      if (p + step >= maxPrice) {
+        opt.value = `${p}+`;
+        opt.textContent = `ab ${p} €`;
+        priceSel.appendChild(opt);
+        break;
+      } else {
+        opt.value = `${p}-${p + step}`;
+        opt.textContent = `${p}–${p + step} €`;
+        priceSel.appendChild(opt);
+      }
     }
-    if (priceLabel) {
-      updatePriceLabel(priceInput.value);
-    }
+    if (current) priceSel.value = current;
   }
 }
 
@@ -369,11 +398,8 @@ window.resetFilter = function () {
     sel.selectedIndex = 0;
   });
   populateFilterOptions();
-  const priceInput = document.getElementById("filter-preis");
-  if (priceInput) {
-    priceInput.value = priceInput.dataset.max || priceInput.max || 0;
-    updatePriceLabel(priceInput.value);
-  }
+  const priceSel = document.getElementById("filter-price");
+  if (priceSel) priceSel.selectedIndex = 0;
   const suche = document.getElementById("produktsuche");
   if (suche) {
     suche.value = "";
@@ -427,8 +453,14 @@ window.sortProducts = function (order) {
 // Setzt die Produkte in ihre ursprüngliche Reihenfolge zurück
 window.restoreOriginalOrder = function () {
   const container = document.getElementById("produktContainer");
-  if (!container || !window.originalProductOrder) return;
-  window.originalProductOrder.forEach((el) => container.appendChild(el));
+  if (!container) return;
+  const items = Array.from(container.querySelectorAll(".einzelprodukt"));
+  items.sort((a, b) => {
+    const ia = parseInt(a.dataset.id, 10) || 0;
+    const ib = parseInt(b.dataset.id, 10) || 0;
+    return ia - ib;
+  });
+  items.forEach((el) => container.appendChild(el));
 };
 
 function updateActiveFilters() {
@@ -439,25 +471,11 @@ function updateActiveFilters() {
       sel.classList.toggle("active", sel.selectedIndex > 0);
     }
   });
-  const priceInput = document.getElementById("filter-preis");
-  if (priceInput) {
-    const max = parseFloat(priceInput.dataset.max || priceInput.max || 0);
-    const active = parseFloat(priceInput.value) < max;
-    priceInput.classList.toggle("active", active);
-    const rangeWrapper = document.querySelector(".range-filter");
-    if (rangeWrapper) rangeWrapper.classList.toggle("active", active);
-  }
+  const priceSel = document.getElementById("filter-price");
+  const priceActive = priceSel && priceSel.selectedIndex > 0;
+  if (priceSel) priceSel.classList.toggle("active", priceActive);
 }
 
-window.updatePriceLabel = function (value) {
-  const priceInput = document.getElementById("filter-preis");
-  const label = document.getElementById("price-label");
-  if (!priceInput || !label) return;
-  const max = parseFloat(priceInput.dataset.max || priceInput.max || value);
-  const val = parseFloat(value);
-  label.textContent = val >= max ? "Kein Limit" : `Bis ${val} €`;
-  updateActiveFilters();
-};
 
 // Ein/Ausblenden der Filterleiste
 window.toggleFilterBar = function () {
@@ -583,6 +601,7 @@ function updatePagination() {
 document.addEventListener("DOMContentLoaded", () => {
   // Stelle sicher, dass beim Laden der Seite keine Filter aktiv sind
   resetFilter();
+  updatePagination();
 });
 
 
