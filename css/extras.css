@@ -39,7 +39,8 @@
 
 .filterbar {
   display: flex;
-  flex-wrap: nowrap; /* Elemente in einer Zeile anzeigen */
+  flex-direction: row;      /* horizontal ausrichten */
+  flex-wrap: nowrap;        /* Elemente in einer Zeile anzeigen */
   align-items: center;
   gap: 0.25rem;
   margin-bottom: 1rem;
@@ -74,6 +75,8 @@
 .filterbar select,
 .filterbar input[type="range"],
 .filter-tools button {
+  display: inline-block;
+  width: auto;
   border: 1px solid #555;
   border-radius: 6px;
   background-color: var(--card-bg);
@@ -139,11 +142,12 @@
 /* Filterelemente innerhalb der Leiste */
 .filter-controls {
   display: flex;
+  flex-direction: row;     /* horizontal anordnen */
   flex-wrap: nowrap;
   gap: 0.25rem;
   align-items: center;
   justify-content: flex-start; /* Filter linksbündig */
-  overflow-x: auto;            /* bei Bedarf horizontal scrollen */
+  overflow-x: auto;        /* bei Bedarf horizontal scrollen */
 }
 
 
