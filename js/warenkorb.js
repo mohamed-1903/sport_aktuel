@@ -392,6 +392,7 @@ function zeigeToast(text, farbe = "") {
   el.style.background = farbe || "";
   const closeBtn = el.querySelector(".close-toast");
   if (closeBtn) closeBtn.onclick = () => el.classList.remove("show");
+
   el.classList.add("show");
 
   clearTimeout(el._hideTimer);
