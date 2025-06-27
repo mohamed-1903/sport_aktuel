@@ -61,6 +61,7 @@ switch ($action) {
                         'size' => trim($size),
                         'quantity' => max(1, (int)$quantity),
                         'discount' => isset($data['discount']) ? (int)$data['discount'] : 0,
+                        'discount_code' => $data['discount_code'] ?? null,
                         'gift' => !empty($data['gift']),
                         'custom_name' => $data['custom_name'] ?? null,
                         'custom_number' => $data['custom_number'] ?? null,
@@ -187,6 +188,9 @@ switch ($action) {
             if (
                 $item['product_id'] == $data['product_id'] &&
                 $item['size'] == $data['size'] &&
+                ($item['discount'] ?? 0) == ($data['discount'] ?? 0) &&
+                ($item['discount_code'] ?? null) == ($data['discount_code'] ?? null) &&
+                ($item['gift'] ?? 0) == (!empty($data['gift']) ? 1 : 0) &&
                 ($item['custom_name'] ?? null) == ($data['custom_name'] ?? null) &&
                 ($item['custom_number'] ?? null) == ($data['custom_number'] ?? null) &&
                 ((float)($item['custom_fee'] ?? 0)) == (float)($data['custom_fee'] ?? 0)
@@ -203,6 +207,7 @@ switch ($action) {
                 'size' => trim($data['size']),
                 'quantity' => (int)$data['qty'],
                 'discount' => isset($data['discount']) ? (int)$data['discount'] : 0,
+                'discount_code' => $data['discount_code'] ?? null,
                 'gift' => !empty($data['gift']),
                 'custom_name' => $data['custom_name'] ?? null,
                 'custom_number' => $data['custom_number'] ?? null,
