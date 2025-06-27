@@ -16,6 +16,9 @@
 <?php endif; ?>
 
 
+
+
+
 <main class="produkte">
   <!-- 🔍 Zoom Modal -->
   <div id="zoomModal" class="zoom-modal hidden">
@@ -225,6 +228,7 @@
         <p class="no-reviews">Noch keine Bewertungen.</p>
       <?php endif; ?>
       <?php foreach ($ratings as $r): ?>
+
         <div class="review">
           <strong><?= htmlspecialchars($r['username']) ?></strong>
           <span class="rating-stars" style="pointer-events:none;">
@@ -259,9 +263,13 @@
         <?php endfor; ?>
       </div>
       <textarea name="comment" required placeholder="Deine Meinung..."></textarea>
-      <div class="suggestion-bar">
-        <?php foreach ($reviewSuggestions as $sg): ?>
-          <button type="button" class="suggest-btn"><?= htmlspecialchars($sg) ?></button>
+      <div class="suggestion-bar" id="suggestionBar">
+        <?php foreach ($reviewSuggestions as $rating => $texts): ?>
+          <div class="suggestions-set <?= $rating == 5 ? '' : 'hidden' ?>" data-rating="<?= (int)$rating ?>">
+            <?php foreach ($texts as $text): ?>
+              <button type="button" class="suggest-btn"><?= htmlspecialchars($text) ?></button>
+            <?php endforeach; ?>
+          </div>
         <?php endforeach; ?>
       </div>
       <input type="file" name="image" id="ratingImage" accept="image/*">
@@ -269,11 +277,11 @@
         <img id="ratingPreview" alt="Vorschau" />
         <button type="button" id="removeImageBtn" aria-label="Bild entfernen">&times;</button>
       </div>
-
       <button type="submit">Bewerten</button>
     </form>
   </div>
 </div>
+
 <script>
   document.getElementById('compareBtn').addEventListener('click', () => {
     const input = document.getElementById('compareInput').value.trim();
