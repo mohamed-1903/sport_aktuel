@@ -37,6 +37,16 @@ switch ($action) {
         header("Location: index.php?page=admin&action=manageUsers");
         exit;
 
+    case 'toggleUserStatus':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'])) {
+            $userId = (int)$_POST['user_id'];
+            if ($userId !== 1) {
+                toggleUserStatus($userId);
+            }
+        }
+        header("Location: index.php?page=admin&action=manageUsers");
+        exit;
+
     case 'addProduct':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $product = [
