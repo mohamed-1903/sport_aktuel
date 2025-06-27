@@ -57,13 +57,26 @@ function addToCart(int $userId, array $item): void
     $cartId = ensureCart($userId);
 
     // Prüfen ob Eintrag schon existiert
-    $stmt = $db->prepare("SELECT id, quantity FROM cart_items WHERE cart_id = ? AND product_id = ? AND size = ? AND custom_name <=> ? AND custom_number <=> ? AND custom_fee = ?");
-    $stmt->execute([$cartId, $item['id'], $item['size'], $item['custom_name'] ?? null, $item['custom_number'] ?? null, $item['custom_fee'] ?? 0]);
-    $existing = $stmt->fetch();
-
     $gift = !empty($item['gift']) ? 1 : 0;
     $discount = isset($item['discount']) ? (int)$item['discount'] : 0;
     $customFee = isset($item['custom_fee']) ? (float)$item['custom_fee'] : 0;
+
+    $stmt = $db->prepare(
+        "SELECT id, quantity FROM cart_items
+         WHERE cart_id = ? AND product_id = ? AND size = ? AND discount = ? AND gift = ?
+           AND custom_name <=> ? AND custom_number <=> ? AND custom_fee = ?"
+    );
+    $stmt->execute([
+        $cartId,
+        $item['id'],
+        $item['size'],
+        $discount,
+        $gift,
+        $item['custom_name'] ?? null,
+        $item['custom_number'] ?? null,
+        $customFee,
+    ]);
+    $existing = $stmt->fetch();
 
     if ($existing) {
         $newQty = $existing['quantity'] + $item['quantity'];
