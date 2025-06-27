@@ -19,18 +19,24 @@ switch ($action) {
                 header('Location: index.php?page=product&action=detail&id=' . $productId);
                 exit;
             }
-            $imagePath = null;
-            if (!empty($_FILES['image']['name']) && is_uploaded_file($_FILES['image']['tmp_name'])) {
+            $imagePaths = [];
+            if (!empty($_FILES['images']['name'][0])) {
                 $dir = 'uploads/ratings';
                 if (!is_dir($dir)) {
                     mkdir($dir, 0777, true);
                 }
-                $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-                $filename = uniqid('rating_', true) . '.' . $ext;
-                move_uploaded_file($_FILES['image']['tmp_name'], "$dir/$filename");
-                $imagePath = "$dir/$filename";
+                $count = min(count($_FILES['images']['name']), 5);
+                for ($i = 0; $i < $count; $i++) {
+                    if (is_uploaded_file($_FILES['images']['tmp_name'][$i])) {
+                        $ext = pathinfo($_FILES['images']['name'][$i], PATHINFO_EXTENSION);
+                        $filename = uniqid('rating_', true) . '.' . $ext;
+                        move_uploaded_file($_FILES['images']['tmp_name'][$i], "$dir/$filename");
+                        $imagePaths[] = "$dir/$filename";
+                    }
+                }
             }
-            addRating($productId, $userId, $displayName ?: ($_SESSION['username'] ?? ''), $stars, $comment, $imagePath);
+            addRating($productId, $userId, $displayName ?: ($_SESSION['username'] ?? ''), $stars, $comment, $imagePaths);
+
             $_SESSION['message'] = 'Danke für deine Bewertung!';
 
             header('Location: index.php?page=product&action=detail&id=' . $productId);

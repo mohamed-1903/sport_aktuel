@@ -15,8 +15,6 @@
   <?php unset($_SESSION['message']); ?>
 <?php endif; ?>
 
-
-
 <main class="produkte">
   <!-- 🔍 Zoom Modal -->
   <div id="zoomModal" class="zoom-modal hidden">
@@ -175,16 +173,6 @@
     </section>
   <?php endforeach; ?>
 
-
-  <!-- 💰 Steuerberechnung + Rabattcode -->
-  <section class="preis-container">
-    <label for="netto">Preis ohne Steuern (€):</label>
-    <input class="size-dropdown" type="number" id="netto">
-    <button onclick="zeigePreis()">Berechne Bruttopreis</button>
-    <div id="priceResults">
-      <p id="bruttoErgebnis"></p>
-    </div>
-  </section>
   <button id="showCompareBtn" class="compare-toggle-btn" aria-label="Vergleich öffnen">+</button>
   <div id="compareSection" class="compare-section hidden">
     <label for="compareInput">Produkt zum Vergleichen auswählen:</label>
@@ -234,14 +222,21 @@
       <?php foreach ($ratings as $r): ?>
         <div class="review">
           <strong><?= htmlspecialchars($r['display_name'] ?: $r['username']) ?></strong>
+          <small class="rating-date">
+            <?= date('d.m.Y H:i', strtotime($r['created_at'])) ?>
+          </small>
           <span class="rating-stars" style="pointer-events:none;">
             <?php for ($s = 5; $s >= 1; $s--): ?>
               <label><?= $s <= $r['stars'] ? '★' : '☆' ?></label>
             <?php endfor; ?>
           </span>
           <p><?= nl2br(htmlspecialchars($r['comment'])) ?></p>
-          <?php if (!empty($r['image_path'])): ?>
-            <img src="<?= htmlspecialchars($r['image_path']) ?>" alt="Bild zur Bewertung">
+          <?php if (!empty($r['image_paths'])): ?>
+            <div class="review-images" data-images='<?= json_encode($r['image_paths']) ?>'>
+              <?php foreach ($r['image_paths'] as $idx => $img): ?>
+                <img src="<?= htmlspecialchars($img) ?>" data-idx="<?= $idx ?>" alt="Bild zur Bewertung">
+              <?php endforeach; ?>
+            </div>
           <?php endif; ?>
           <?php if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == $r['user_id'] || !empty($_SESSION['is_admin']))): ?>
             <form class="delete-rating-form" method="post" action="index.php?page=community&action=deleteRating" onsubmit="return confirm('Bewertung löschen?');">
@@ -285,11 +280,8 @@
           </div>
         <?php endforeach; ?>
       </div>
-      <input type="file" name="image" id="ratingImage" accept="image/*">
-      <div id="imagePreviewContainer" class="image-preview hidden">
-        <img id="ratingPreview" alt="Vorschau" />
-        <button type="button" id="removeImageBtn" aria-label="Bild entfernen">&times;</button>
-      </div>
+      <input type="file" name="images[]" id="ratingImages" accept="image/*" multiple>
+      <div id="imagePreviewList" class="image-preview-list hidden"></div>
       <button type="submit">Bewerten</button>
     </form>
   </div>
@@ -414,6 +406,7 @@
     const params = allIds.map((v, i) => `id${i === 0 ? '' : i + 1}=${v}`).join('&');
     window.location.href = `index.php?page=product&action=detail&${params}`;
   });
+
 
   document.querySelectorAll('.remove-product').forEach(btn => {
     btn.addEventListener('click', () => {
