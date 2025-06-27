@@ -87,6 +87,7 @@ $total = 0;
                   />
                 </form>
               </td>
+
               <td><?= number_format($einzelpreis, 2, ',', '.') ?> €</td>
               <td><?= number_format($sum, 2, ',', '.') ?> €</td>
               <td>

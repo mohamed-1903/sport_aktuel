@@ -33,6 +33,7 @@ document.addEventListener("click", (e) => {
   const size = sizeSelect ? sizeSelect.value : "M";
   let quantity = parseInt(quantityInput?.value) || 1;
 
+
   if (sizeSelect && !size) {
     alert("❗ Bitte eine Größe auswählen.");
     return;
@@ -87,13 +88,14 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
           const price = parseFloat(btn.dataset.price) || 0;
           // Gestapeltes Popup anzeigen
           const buttons = `
+            <button class="remove-cart-btn" data-id="${iid}" data-size="${size}">Entfernen</button>
+            <a href="index.php?page=cart&action=view">Warenkorb</a>
             ${
               !isOnProductDetailPageCart
-                ? `<a href="index.php?page=product&action=detail&id=${iid}" class="show-btn">🔍 Anzeigen</a>`
+                ? `<a href="index.php?page=product&action=detail&id=${iid}" class="show-btn">Anzeigen</a>`
                 : ""
-            }
-            <button class="remove-cart-btn" data-id="${iid}" data-size="${size}">🗑 Entfernen</button>
-            <a href="index.php?page=cart&action=view">Zum Warenkorb</a>`;
+            }`;
+
           zeigeGestapeltesPopup({
             name,
             image,
@@ -230,6 +232,7 @@ function loadList() {
             <input type="number" class="qty-input" data-id="${
               item.product_id
             }" data-size="${item.size}" data-price="${einzelfpreis.toFixed(2)}" value="${menge}" min="1" />
+
           </td>
           <td>${einzelfpreis.toFixed(2)} €</td>
           <td class="summe-cell">${gesamt.toFixed(2)} €</td>
@@ -267,6 +270,7 @@ function loadList() {
       // 🆙 Menge ändern
       document.querySelectorAll(".qty-input").forEach((input) => {
         input.addEventListener("change", () => handleQtyChange(input));
+
       });
     });
 }
@@ -310,6 +314,7 @@ function updateCartQuantity(productId, size, quantity, reload = true) {
       } else {
         recalculateTotals();
       }
+
       updateCartCount();
     })
     .catch((err) => console.error("Fehler beim Aktualisieren:", err));
@@ -324,6 +329,7 @@ function handleQtyChange(el) {
   let price = parseFloat(el.dataset.price);
   if (isNaN(price)) {
     const priceCell = el.closest("tr")?.querySelector("td:nth-child(3)");
+
     if (priceCell) {
       price = parseFloat(
         priceCell.textContent.replace(/[^0-9,.-]/g, "").replace(",", ".")
@@ -336,6 +342,7 @@ function handleQtyChange(el) {
   recalculateTotals();
   const id = el.dataset.id;
   const size = el.dataset.size;
+
   updateCartQuantity(id, size, qty, false);
 }
 
@@ -351,6 +358,7 @@ function recalculateTotals() {
       .replace(/[^0-9,.-]/g, "")
       .replace(',', '.');
     const val = parseFloat(raw);
+
     if (!isNaN(val)) total += val;
   });
   const netto = total / 1.19;
@@ -400,7 +408,7 @@ function zeigeGestapeltesPopup({
           ${
             buttons ||
             (productId
-              ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
+              ? `<a href="index.php?page=product&action=detail&id=${productId}">Anzeigen</a>`
               : "")
           }
         </div>
@@ -433,10 +441,10 @@ function zeigeProduktPreview({ name, image, price, productId }) {
         <small>🛒 In den Warenkorb gelegt</small>
         <small>${price.toFixed(2)} €</small>
         <div class="popup-buttons">
-          <a href="index.php?page=cart&action=view">Zum Warenkorb</a>
+          <a href="index.php?page=cart&action=view">Warenkorb</a>
           ${
             !isOnProductDetailPageCart
-              ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
+              ? `<a href="index.php?page=product&action=detail&id=${productId}">Anzeigen</a>`
               : ""
           }
         </div>
@@ -466,7 +474,7 @@ function zeigeCartRemovePreview({ name, image, productId }) {
       <a href="index.php?page=cart&action=view">Warenkorb</a>
       ${
         !isDetailPage
-          ? `<a href="index.php?page=product&action=detail&id=${productId}" class="show-btn">🔍 Anzeigen</a>`
+          ? `<a href="index.php?page=product&action=detail&id=${productId}" class="show-btn">Anzeigen</a>`
           : ""
       }
     `,
