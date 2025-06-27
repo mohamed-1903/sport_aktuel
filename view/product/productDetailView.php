@@ -2,11 +2,11 @@
 <?php if (!empty($_SESSION['message'])): ?>
   <div class="toast-popup show" id="toastMessage">
     <?= htmlspecialchars($_SESSION['message']) ?>
+    <button type="button" class="close-toast" onclick="this.parentElement.classList.remove('show')">&times;</button>
   </div>
   <script>
     const toast = document.getElementById('toastMessage');
     if (toast) {
-      toast.classList.add('show');
       setTimeout(() => {
         toast.classList.remove('show');
       }, 3000);
@@ -221,6 +221,9 @@
       <?php if ($avgRating): ?>
         <p>Durchschnittliche Bewertung: <?= number_format($avgRating, 1) ?>/5</p>
       <?php endif; ?>
+      <?php if (empty($ratings)): ?>
+        <p class="no-reviews">Noch keine Bewertungen.</p>
+      <?php endif; ?>
       <?php foreach ($ratings as $r): ?>
         <div class="review">
           <strong><?= htmlspecialchars($r['username']) ?></strong>
@@ -256,7 +259,8 @@
         <?php endfor; ?>
       </div>
       <textarea name="comment" required placeholder="Deine Meinung..."></textarea>
-      <input type="file" name="image" accept="image/*">
+      <input type="file" name="image" id="ratingImage" accept="image/*">
+      <img id="ratingPreview" class="hidden" alt="Vorschau" />
       <button type="submit">Bewerten</button>
     </form>
   </div>
