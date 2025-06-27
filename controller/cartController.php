@@ -12,6 +12,21 @@ require_once 'model/productModel.php';
 
 $action = $_GET['action'] ?? 'view';
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['gutschein'])) {
+  $code = strtoupper(trim($_POST['gutschein']));
+  $validCodes = ['SPORT20' => 20];
+
+  if (array_key_exists($code, $validCodes)) {
+    $_SESSION['discount_code'] = $code;
+    $_SESSION['discount_percent'] = $validCodes[$code];
+  } else {
+    unset($_SESSION['discount_code'], $_SESSION['discount_percent']);
+  }
+
+  header('Location: index.php?page=cart&action=view');
+  exit;
+}
+
 switch ($action) {
     case 'add':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
