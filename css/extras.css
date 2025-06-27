@@ -95,9 +95,6 @@
 }
 
 
-
-
-
 /* Einheitliche Breite für alle Filterelemente */
 .filterbar select,
 .filterbar input[type="range"] {
@@ -129,22 +126,6 @@
 }
 
 
-
-
-.filterbar button:hover,
-.filter-tools button:hover {
-  background-color: var(--accent-color);
-  color: #000;
-}
-
-.price-label {
-  margin-left: 0.25rem;
-  min-width: 70px;
-  display: inline-block;
-  text-align: left;
-}
-
-
 .range-filter {
   display: flex;
   align-items: center;
@@ -172,8 +153,6 @@
   justify-content: flex-start; /* Filter linksbündig */
   overflow-x: auto;        /* bei Bedarf horizontal scrollen */
 }
-
-
 
 .filter-controls.hidden {
   display: none;

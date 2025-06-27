@@ -97,6 +97,7 @@
           $geschlecht = $produkt["geschlecht"] ?? "Unbekannt";
           ?>
           <li class="einzelprodukt"
+            data-id="<?= (int)$produkt['iid'] ?>"
             data-marke="<?= htmlspecialchars($marke) ?>"
             data-farbe="<?= htmlspecialchars($farbe) ?>"
             data-preis="<?= $preis ?>"

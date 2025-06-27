@@ -55,6 +55,7 @@ window.applyFilter = function () {
       preis <= filterWerte.maxPreis;
 
 
+
     // leeres Display lässt die ursprüngliche Flex-Darstellung erhalten
     produkt.style.display = sichtbar ? "" : "none";
   });
@@ -162,9 +163,6 @@ document.addEventListener("DOMContentLoaded", () => {
   [minInput, maxInput].forEach((el) => el && el.addEventListener("change", applyFilter));
   updateActiveFilters();
 });
-
-
-
 
 // 🔽 PRODUKTE LADEN
 function ladeProdukte(containerId, urls) {
@@ -318,6 +316,7 @@ function colorEmoji(name) {
 
 
 window.populateFilterOptions = function () {
+
   const container = document.getElementById("produktContainer");
   if (!container) return;
 
@@ -388,6 +387,7 @@ window.populateFilterOptions = function () {
 
 
 
+
 // 🔄 Alle Filter zurücksetzen und erneut anwenden
 window.resetFilter = function () {
   document.querySelectorAll(".filterbar select").forEach((sel) => {
@@ -452,8 +452,14 @@ window.sortProducts = function (order) {
 // Setzt die Produkte in ihre ursprüngliche Reihenfolge zurück
 window.restoreOriginalOrder = function () {
   const container = document.getElementById("produktContainer");
-  if (!container || !window.originalProductOrder) return;
-  window.originalProductOrder.forEach((el) => container.appendChild(el));
+  if (!container) return;
+  const items = Array.from(container.querySelectorAll(".einzelprodukt"));
+  items.sort((a, b) => {
+    const ia = parseInt(a.dataset.id, 10) || 0;
+    const ib = parseInt(b.dataset.id, 10) || 0;
+    return ia - ib;
+  });
+  items.forEach((el) => container.appendChild(el));
 };
 
 function updateActiveFilters() {
@@ -495,10 +501,6 @@ window.togglePriceDropdown = function () {
     document.removeEventListener("click", outside);
   }
 };
-
-
-
-
 
 // Ein/Ausblenden der Filterleiste
 window.toggleFilterBar = function () {
@@ -626,8 +628,6 @@ document.addEventListener("DOMContentLoaded", () => {
   resetFilter();
   updatePagination();
 });
-
-
 
 window.addEventListener("resize", () => {
   updatePagination();
