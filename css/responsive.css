@@ -165,7 +165,10 @@
     margin-top: 40px;
   }
 }
-
+/* Hide trophy in header logo on smaller screens */
+.logo .trophy-icon {
+  display: none;
+}
 /* max-width: 1024px (Nav-Menü) */
 @media (max-width: 1024px) {
   .nav-menu {

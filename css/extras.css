@@ -54,8 +54,6 @@
   text-align: left;
 }
 
-
-
 .filterbar.hidden {
   display: none;
 }
@@ -92,10 +90,6 @@
   width: 140px;
 }
 
-
-
-
-
 /* Einheitliche Breite für alle Filterelemente */
 .filterbar select,
 .filterbar input[type="range"] {
@@ -120,7 +114,6 @@
   color: #000;
 }
 
-
 .range-filter {
   display: flex;
   align-items: center;
@@ -141,16 +134,13 @@
 /* Filterelemente innerhalb der Leiste */
 .filter-controls {
   display: flex;
-  flex-direction: row;     /* horizontal anordnen */
+  flex-direction: row; /* horizontal anordnen */
   flex-wrap: nowrap;
   gap: 0.5rem;
   align-items: center;
   justify-content: flex-start; /* Filter linksbündig */
-  overflow-x: auto;        /* bei Bedarf horizontal scrollen */
+  overflow-x: auto; /* bei Bedarf horizontal scrollen */
 }
-
-
-
 
 .filter-controls.hidden {
   display: none;
@@ -203,74 +193,72 @@
   align-items: center;
   gap: 0.25rem;
 
-.price-label {
-  margin-left: 0.25rem;
-  min-width: 70px;
-  display: inline-block;
-  text-align: left;
-}
+  .price-label {
+    margin-left: 0.25rem;
+    min-width: 70px;
+    display: inline-block;
+    text-align: left;
+  }
 
-.range-filter {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
+  .range-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
 
-  border: 1px solid #555;
-  border-radius: 6px;
-  background-color: var(--card-bg);
-  color: var(--text-color);
-  padding: 2px 6px;
-}
+    border: 1px solid #555;
+    border-radius: 6px;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    padding: 2px 6px;
+  }
 
-.range-filter.active {
-  border-color: var(--accent-color);
-  background-color: var(--accent-color);
-  color: #000;
-}
+  .range-filter.active {
+    border-color: var(--accent-color);
+    background-color: var(--accent-color);
+    color: #000;
+  }
 
-.filter-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
+  .filter-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
 
-.price-label {
-  margin-left: 0.25rem;
-  min-width: 80px;
-  display: inline-block;
-  text-align: left;
-}
+  .price-label {
+    margin-left: 0.25rem;
+    min-width: 80px;
+    display: inline-block;
+    text-align: left;
+  }
 
+  .range-filter input[type="range"] {
+    width: 140px;
+    accent-color: var(--accent-color);
+  }
 
-.range-filter input[type="range"] {
-  width: 140px;
-  accent-color: var(--accent-color);
-}
+  .range-filter.active {
+    border-color: var(--accent-color);
+    background-color: var(--accent-color);
+    color: #000;
+  }
 
-.range-filter.active {
-  border-color: var(--accent-color);
-  background-color: var(--accent-color);
-  color: #000;
-}
+  .price-label {
+    margin-left: 0.25rem;
+    min-width: 80px;
+    display: inline-block;
+    text-align: left;
+  }
 
-.price-label {
-  margin-left: 0.25rem;
-  min-width: 80px;
-  display: inline-block;
-  text-align: left;
-}
-
-.range-filter {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  border: 1px solid #555;
-  border-radius: 6px;
-  background-color: var(--card-bg);
-  color: var(--text-color);
-  padding: 2px 6px;
-}
-
+  .range-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    border: 1px solid #555;
+    border-radius: 6px;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    padding: 2px 6px;
+  }
 
   .filterbar {
     justify-content: flex-start;
@@ -297,9 +285,14 @@
   text-align: left;
 }
 
-
 .layout-toggle {
   min-width: 140px;
+  cursor: pointer;
+}
+
+.layout-toggle:hover {
+  background: var(--accent-color);
+  color: #000;
 }
 
 .einzelprodukt-grid {
@@ -339,8 +332,6 @@
   flex-direction: column;
   align-items: flex-start;
 }
-
-
 
 .einzelprodukt-grid .produkt-info h3 {
   margin: 0 0 0.25rem;
@@ -398,7 +389,6 @@
   gap: 10px;
   width: 100%;
 }
-
 
 .sidebar {
   width: 220px;
@@ -862,6 +852,7 @@ body.light-mode .zoom-close {
   text-align: center;
   border-bottom: 1px solid #444;
   font-size: 16px;
+  color: var(--text-color); /* adapt text to theme */
 }
 
 .cart-table td:first-child {
@@ -887,7 +878,6 @@ body.light-mode .zoom-close {
   color: var(--text-color);
 }
 
-
 .qty-btn {
   width: 26px;
   height: 26px;
@@ -903,9 +893,6 @@ body.light-mode .zoom-close {
 .qty-btn:hover {
   background: #555;
 }
-
-
-
 
 /* Entfernen-Button */
 .remove-btn {
@@ -1119,6 +1106,17 @@ body.light-mode .zoom-close {
 }
 
 
+.toast-popup .close-toast {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: auto;
+  line-height: 1;
+}
+
+
 /* === Universelles Popup-Styling für Warenkorb & Watchlist === */
 .popup-stack-container {
   position: fixed;
@@ -1136,8 +1134,6 @@ body.light-mode .zoom-close {
   pointer-events: none;
 }
 
-
-
 .popup-stack-container .popup-instance {
   position: relative;
   top: auto;
@@ -1154,7 +1150,6 @@ body.light-mode .zoom-close {
   backdrop-filter: blur(var(--popup-blur)) saturate(160%);
   transform: scale(1);
   transition: all 0.3s ease-out;
-
 
   opacity: 1;
   pointer-events: auto;
@@ -1207,8 +1202,6 @@ body.light-mode .zoom-close {
   justify-content: center; /* Bild und Text mittig ausrichten */
   gap: 15px;
 }
-
-
 
 .popup-content-flex img {
   width: 80px;
@@ -1288,6 +1281,7 @@ body.light-mode .zoom-close {
   --toast-border: rgb(0 0 0 / 12%);
   --toast-shadow: 0 8px 24px rgb(0 0 0 / 25%);
   --toast-blur: 8px;
+  --overlay-bg: rgb(0 0 0 / 70%);
 }
 
 [data-theme="dark"] {
@@ -1306,7 +1300,9 @@ body.light-mode .zoom-close {
   --toast-border: rgb(255 255 255 / 20%);
   --toast-shadow: 0 8px 24px rgb(0 0 0 / 50%);
   --toast-blur: 8px;
+  --overlay-bg: rgb(0 0 0 / 80%);
 }
+
 
 
 /* === Buttons für Popups === */
@@ -1342,7 +1338,6 @@ body.light-mode .zoom-close {
   transition: background-color 0.3s ease, transform 0.2s ease,
     box-shadow 0.3s ease;
 }
-
 
 .popup-buttons button:hover,
 .popup-buttons a:hover {
@@ -1644,33 +1639,89 @@ body.light-mode .welcome-overlay {
   color: #000;
 }
 
-.compare-section {
-  margin: 20px 0;
+.compare-toggle-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  color: #000;
+  border: none;
+  font-size: 32px;
   display: flex;
-  gap: 10px;
   align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
-.compare-section input {
-  padding: 5px;
-  border-radius: 5px;
-  border: 1px solid #555;
+.compare-toggle-btn:hover {
+  background: #e6c200;
+  transform: scale(1.1);
+}
+
+.compare-section {
+  margin: 30px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+  padding: 12px 16px;
   background: var(--card-bg);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+}
+
+.compare-search {
+  position: relative;
+  max-width: 320px;
+  width: 100%;
+}
+
+.compare-search input#compareInput {
+  padding: 8px 12px;
+  border: 1px solid #555;
+  border-radius: 20px;
+  background: var(--bg-color);
   color: var(--text-color);
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.compare-search input.compare-shadow {
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: transparent;
+  color: rgb(255 255 255 / 30%);
+  pointer-events: none;
 }
 
 .compare-section button {
-  background: var(--accent-color);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(45deg, #ffe259, var(--accent-color));
   color: #000;
-  padding: 8px 12px;
+  padding: 10px 20px;
   border: none;
   border-radius: 25px;
+  font-weight: bold;
   cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
 }
 
 .compare-section button:hover {
-  background: #e6c200;
+  background: linear-gradient(45deg, var(--accent-color), #ffe259);
+  transform: scale(1.05);
 }
+
 
 /* Listenansicht für Produktübersicht */
 /* Listenansicht für Produktübersicht */
@@ -1710,8 +1761,6 @@ body.light-mode .welcome-overlay {
   justify-content: center;
 }
 
-
-
 .einzelprodukt-list .produkt-info h3 {
   font-size: 1.2rem;
   margin: 0 0 5px;
@@ -1741,4 +1790,3 @@ body.light-mode .welcome-overlay {
   margin: 0;
   text-align: left;
 }
-

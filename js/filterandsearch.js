@@ -71,6 +71,7 @@ window.applyFilter = function () {
     produkt.style.display = sichtbar ? "" : "none";
   });
 
+
   currentPage = 1;
   updatePagination();
   updateActiveFilters();
@@ -147,8 +148,7 @@ function initFilterAndSearch() {
     }
   });
 
-  // Produktdaten aus JSON-Datei laden
-  // Pfad relativ zum Projektstamm
+  // Produktdaten laden
   fetch("data/products.json")
     .then((res) => res.json())
     .then((data) => {
@@ -183,9 +183,6 @@ if (document.readyState === "loading") {
 } else {
   initFilterAndSearch();
 }
-
-
-
 
 
 // 🔽 PRODUKTE LADEN
@@ -320,7 +317,7 @@ function colorEmoji(name) {
   const map = {
     schwarz: "⬛",
     weiss: "⬜",
-    "weiß": "⬜",
+    weiß: "⬜",
     blau: "🟦",
     rot: "🟥",
     gelb: "🟨",
@@ -338,10 +335,7 @@ function colorEmoji(name) {
   return map[base] || "⬛";
 }
 
-
-
 window.populateFilterOptions = function () {
-
   const container = document.getElementById("produktContainer");
   if (!container) return;
 
@@ -372,7 +366,6 @@ window.populateFilterOptions = function () {
     if (values.includes(current)) sel.value = current;
   };
 
-
   setOptions("filter-marke", collect("marke"), "Alle Marken");
   setOptions("filter-farbe", collect("farbe"), "Alle Farben");
   setOptions("filter-mannschaft", collect("mannschaft"), "Alle Mannschaften");
@@ -392,11 +385,7 @@ window.populateFilterOptions = function () {
     allOpt.value = "";
     allOpt.textContent = "Alle Preise";
     priceSel.appendChild(allOpt);
-    for (
-      let p = Math.floor(minPrice / step) * step;
-      p < maxPrice;
-      p += step
-    ) {
+    for (let p = Math.floor(minPrice / step) * step; p < maxPrice; p += step) {
       const opt = document.createElement("option");
       if (p + step >= maxPrice) {
         opt.value = `${p}+`;
@@ -411,7 +400,7 @@ window.populateFilterOptions = function () {
     }
     if (current) priceSel.value = current;
   }
-}
+};
 
 // 🔄 Alle Filter zurücksetzen und erneut anwenden
 window.resetFilter = function () {
@@ -459,7 +448,9 @@ window.sortProducts = function (order) {
       if (order === "name-asc" || order === "name-desc") {
         const na = a.querySelector("h3")?.textContent.trim() || "";
         const nb = b.querySelector("h3")?.textContent.trim() || "";
-        return order === "name-asc" ? na.localeCompare(nb) : nb.localeCompare(na);
+        return order === "name-asc"
+          ? na.localeCompare(nb)
+          : nb.localeCompare(na);
       }
       return 0;
     });
@@ -470,7 +461,6 @@ window.sortProducts = function (order) {
   updatePagination();
   updateActiveFilters();
 };
-
 
 // Setzt die Produkte in ihre ursprüngliche Reihenfolge zurück
 window.restoreOriginalOrder = function () {
@@ -486,7 +476,6 @@ window.restoreOriginalOrder = function () {
 };
 
 function updateActiveFilters() {
-
   document.querySelectorAll(".filterbar select").forEach((sel) => {
     if (sel.id === "sort-select") {
       sel.classList.toggle("active", sel.value !== "default");
@@ -621,9 +610,6 @@ function updatePagination() {
   if (currentPage > totalPages) currentPage = totalPages;
   renderPagination(totalPages);
 }
-
-
-
 // Nach dem kompletten Laden der Seite erneut Pagination berechnen,
 // damit alle Produkte und Layout-Styles berücksichtigt werden
 window.addEventListener("load", () => {
@@ -634,3 +620,4 @@ window.addEventListener("load", () => {
 window.addEventListener("resize", () => {
   updatePagination();
 });
+

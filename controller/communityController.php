@@ -13,6 +13,7 @@ switch ($action) {
             $userId = $_SESSION['user_id'] ?? null;
             $productId = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
             $stars = isset($_POST['stars']) ? (int)$_POST['stars'] : 0;
+            $displayName = trim($_POST['display_name'] ?? '');
             $comment = trim($_POST['comment'] ?? '');
             if (!$userId || $productId <= 0 || $stars < 1 || $stars > 5) {
                 header('Location: index.php?page=product&action=detail&id=' . $productId);
@@ -29,9 +30,22 @@ switch ($action) {
                 move_uploaded_file($_FILES['image']['tmp_name'], "$dir/$filename");
                 $imagePath = "$dir/$filename";
             }
-            addRating($productId, $userId, $stars, $comment, $imagePath);
+            addRating($productId, $userId, $displayName ?: ($_SESSION['username'] ?? ''), $stars, $comment, $imagePath);
             $_SESSION['message'] = 'Danke für deine Bewertung!';
 
+            header('Location: index.php?page=product&action=detail&id=' . $productId);
+            exit;
+        }
+        break;
+    case 'deleteRating':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $ratingId = isset($_POST['rating_id']) ? (int)$_POST['rating_id'] : 0;
+            $productId = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
+            $userId = $_SESSION['user_id'] ?? 0;
+            $isAdmin = !empty($_SESSION['is_admin']);
+            if ($ratingId > 0 && $productId > 0) {
+                deleteRating($ratingId, $userId, $isAdmin);
+            }
             header('Location: index.php?page=product&action=detail&id=' . $productId);
             exit;
         }

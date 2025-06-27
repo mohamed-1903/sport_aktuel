@@ -15,6 +15,9 @@
   <?php unset($_SESSION['message']); ?>
 <?php endif; ?>
 
+
+
+
 <main class="produkte">
   <!-- 🔍 Zoom Modal -->
   <div id="zoomModal" class="zoom-modal hidden">
@@ -173,28 +176,25 @@
     </section>
   <?php endforeach; ?>
 
-
-  <!-- 💰 Steuerberechnung + Rabattcode -->
-  <section class="preis-container">
-    <label for="netto">Preis ohne Steuern (€):</label>
-    <input class="size-dropdown" type="number" id="netto">
-    <button onclick="zeigePreis()">Berechne Bruttopreis</button>
-    <div id="priceResults">
-      <p id="bruttoErgebnis"></p>
-    </div>
-  </section>
-  <div class="compare-section">
+  <button id="showCompareBtn" class="compare-toggle-btn" aria-label="Vergleich öffnen">+</button>
+  <div id="compareSection" class="compare-section hidden">
     <label for="compareInput">Produkt zum Vergleichen auswählen:</label>
-    <input id="compareInput" list="compareOptions" placeholder="Name eingeben">
+    <div class="search-wrapper compare-search">
+      <input type="text" id="compareShadow" class="compare-shadow" readonly tabindex="-1" />
+      <input id="compareInput" list="compareOptions" placeholder="Name eingeben" autocomplete="off">
+      <ul id="compareSuggestions" class="autocomplete-liste"></ul>
+    </div>
+    <?php $selectedIds = array_column($productsToShow, 'id'); ?>
     <datalist id="compareOptions">
       <?php foreach ($allProducts as $p): ?>
-        <?php if ($p['id'] != $currentId): ?>
+        <?php if (!in_array($p['id'], $selectedIds)): ?>
           <option data-id="<?= (int)$p['id'] ?>" value="<?= htmlspecialchars($p['name']) ?>"></option>
         <?php endif; ?>
       <?php endforeach; ?>
     </datalist>
-    <button id="compareBtn">Produkt vergleichen</button>
+    <button id="compareBtn" class="btn-compare">⚖️ Vergleichen</button>
   </div>
+
 
   <!-- 🧠 Ähnliche Produkte statisch -->
   <section class="produkte">
@@ -224,9 +224,11 @@
         <p class="no-reviews">Noch keine Bewertungen.</p>
       <?php endif; ?>
       <?php foreach ($ratings as $r): ?>
-
         <div class="review">
-          <strong><?= htmlspecialchars($r['username']) ?></strong>
+          <strong><?= htmlspecialchars($r['display_name'] ?: $r['username']) ?></strong>
+          <small class="rating-date">
+            <?= date('d.m.Y H:i', strtotime($r['created_at'])) ?>
+          </small>
           <span class="rating-stars" style="pointer-events:none;">
             <?php for ($s = 5; $s >= 1; $s--): ?>
               <label><?= $s <= $r['stars'] ? '★' : '☆' ?></label>
@@ -236,8 +238,16 @@
           <?php if (!empty($r['image_path'])): ?>
             <img src="<?= htmlspecialchars($r['image_path']) ?>" alt="Bild zur Bewertung">
           <?php endif; ?>
+          <?php if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == $r['user_id'] || !empty($_SESSION['is_admin']))): ?>
+            <form class="delete-rating-form" method="post" action="index.php?page=community&action=deleteRating" onsubmit="return confirm('Bewertung löschen?');">
+              <input type="hidden" name="rating_id" value="<?= (int)$r['id'] ?>">
+              <input type="hidden" name="product_id" value="<?= (int)$product['id'] ?>">
+              <button type="submit" class="btn-delete-rating">Löschen</button>
+            </form>
+          <?php endif; ?>
         </div>
       <?php endforeach; ?>
+
       <?php if (isset($_SESSION['user_id'])): ?>
         <button type="button" class="open-review-modal btn-review" data-product-id="<?= (int)$product['id'] ?>">Bewertung schreiben</button>
       <?php else: ?>
@@ -252,7 +262,9 @@
     <button type="button" class="review-close" onclick="closeRatingModal()">&times;</button>
     <form id="ratingForm" class="review-form" action="index.php?page=community&action=addRating" method="post" enctype="multipart/form-data">
       <input type="hidden" name="product_id" id="ratingProductId" value="">
+      <input type="text" name="display_name" id="displayName" placeholder="Dein Name" value="<?= htmlspecialchars($_SESSION['username'] ?? '') ?>" required>
       <div class="rating-stars">
+
         <?php for ($s = 5; $s >= 1; $s--): ?>
           <input type="radio" id="modal-star<?= $s ?>" name="stars" value="<?= $s ?>" <?= $s == 5 ? ' checked' : '' ?>>
           <label for="modal-star<?= $s ?>">★</label>
@@ -279,22 +291,122 @@
 </div>
 
 <script>
-  document.getElementById('compareBtn').addEventListener('click', () => {
-    const input = document.getElementById('compareInput').value.trim();
-    const options = document.querySelectorAll('#compareOptions option');
-    let secondId = null;
-    options.forEach(opt => {
-      if (opt.value === input) secondId = opt.dataset.id;
+  let compareProducts = [];
+  let compareFocus = -1;
+  let selectedCompareId = null;
+  const currentCompareIds = <?= json_encode(array_column($productsToShow, 'id')) ?>;
+
+  const showCompareBtn = document.getElementById('showCompareBtn');
+  const compareSection = document.getElementById('compareSection');
+  if (showCompareBtn) {
+    showCompareBtn.addEventListener('click', () => {
+      compareSection.classList.remove('hidden');
+      showCompareBtn.classList.add('hidden');
+      compareInput.focus();
     });
+  }
+
+  fetch('data/products.json')
+    .then(res => res.json())
+    .then(data => {
+      compareProducts = data.products || [];
+    });
+
+  const compareInput = document.getElementById('compareInput');
+  const compareShadow = document.getElementById('compareShadow');
+  const compareList = document.getElementById('compareSuggestions');
+
+  function updateCompareList() {
+    const val = compareInput.value.toLowerCase().trim();
+    selectedCompareId = null;
+    compareList.innerHTML = '';
+    compareFocus = -1;
+    if (val.length < 1) {
+      compareList.style.display = 'none';
+      compareShadow.value = '';
+      return;
+    }
+    const matches = compareProducts
+      .filter(p => !currentCompareIds.includes(p.iid))
+      .filter(p =>
+        [p.name, p.marke, p.farbe, p.geschlecht, p.category, p.subcategory]
+          .map(s => (s || '').toLowerCase())
+          .join(' ')
+          .includes(val)
+      );
+    if (matches.length) {
+      const match = matches.find(p => (p.name || '').toLowerCase().startsWith(val));
+      compareShadow.value = match?.name || '';
+      matches.forEach(p => {
+        const li = document.createElement('li');
+        li.dataset.id = p.iid;
+        const price = typeof p.priceValue !== 'undefined'
+          ? parseFloat(p.priceValue).toFixed(2) + ' €'
+          : p.price || 'Preis?';
+        li.innerHTML = `<img src="${p.imageMain || ''}" alt="${p.name}" /><div><strong>${p.name}</strong><br><small>${price}</small></div>`;
+        li.addEventListener('click', () => {
+          compareInput.value = p.name;
+          compareShadow.value = '';
+          compareList.style.display = 'none';
+          selectedCompareId = p.iid;
+        });
+        compareList.appendChild(li);
+      });
+      compareList.style.display = 'block';
+    } else {
+      compareList.innerHTML = `<li class="keine-treffer-box"><div class="keine-treffer-icon">🔍</div><div><strong>Keine Treffer</strong></div></li>`;
+      compareList.style.display = 'block';
+      compareShadow.value = '';
+    }
+  }
+
+  function handleCompareNav(e) {
+    const items = compareList.querySelectorAll('li');
+    if (!items.length) return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      compareFocus = (compareFocus + 1) % items.length;
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      compareFocus = (compareFocus - 1 + items.length) % items.length;
+    } else if (e.key === 'Enter' && compareFocus >= 0) {
+      e.preventDefault();
+      items[compareFocus].click();
+    } else if (e.key === 'Tab' && compareShadow.value) {
+      e.preventDefault();
+      compareInput.value = compareShadow.value;
+      compareShadow.value = '';
+      compareList.style.display = 'none';
+    } else if (e.key === 'Escape') {
+      compareList.style.display = 'none';
+      compareShadow.value = '';
+    }
+    items.forEach((li, i) => {
+      li.classList.toggle('focused', i === compareFocus);
+      if (i === compareFocus) li.scrollIntoView({ block: 'nearest' });
+    });
+  }
+
+  compareInput.addEventListener('input', updateCompareList);
+  compareInput.addEventListener('keydown', handleCompareNav);
+
+  document.getElementById('compareBtn').addEventListener('click', () => {
+    const btn = document.getElementById('compareBtn');
+    btn.classList.add('pulse-highlight');
+    setTimeout(() => btn.classList.remove('pulse-highlight'), 1000);
+
+    const inputVal = compareInput.value.trim();
+    let secondId = selectedCompareId;
+    if (!secondId) {
+      const option = Array.from(document.querySelectorAll('#compareOptions option')).find(opt => opt.value === inputVal);
+      if (option) secondId = option.dataset.id;
+    }
     if (!secondId) {
       alert('Produkt nicht gefunden');
       return;
     }
-    const existingIds = <?= json_encode(array_column($productsToShow, 'id')) ?>;
-    const allIds = existingIds.concat(secondId);
-    const params = allIds
-      .map((v, i) => `id${i === 0 ? '' : i + 1}=${v}`)
-      .join('&');
+    const allIds = currentCompareIds.concat(secondId);
+    const params = allIds.map((v, i) => `id${i === 0 ? '' : i + 1}=${v}`).join('&');
     window.location.href = `index.php?page=product&action=detail&${params}`;
   });
 
