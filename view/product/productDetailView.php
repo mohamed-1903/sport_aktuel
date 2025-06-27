@@ -175,17 +175,6 @@
 
     </section>
   <?php endforeach; ?>
-
-
-  <!-- 💰 Steuerberechnung + Rabattcode -->
-  <section class="preis-container">
-    <label for="netto">Preis ohne Steuern (€):</label>
-    <input class="size-dropdown" type="number" id="netto">
-    <button onclick="zeigePreis()">Berechne Bruttopreis</button>
-    <div id="priceResults">
-      <p id="bruttoErgebnis"></p>
-    </div>
-  </section>
   <div class="compare-section">
     <label for="compareInput">Produkt zum Vergleichen auswählen:</label>
     <div class="search-wrapper compare-search">
@@ -202,7 +191,7 @@
       <?php endforeach; ?>
     </datalist>
 
-    <button id="compareBtn" class="btn-compare">⚖️ Vergleichen</button>
+    <button id="compareBtn" class="btn-compare">Produkte zum vergleichen</button>
   </div>
 
   <!-- 🧠 Ähnliche Produkte statisch -->
