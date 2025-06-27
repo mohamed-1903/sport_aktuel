@@ -10,6 +10,7 @@ function ensureRatingSchema(): void {
         product_id INT,
         user_id INT,
         stars INT CHECK (stars BETWEEN 1 AND 5),
+        display_name VARCHAR(255),
         comment TEXT,
         image_path VARCHAR(255),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -22,14 +23,19 @@ function ensureRatingSchema(): void {
     if ($stmt->rowCount() === 0) {
         $db->exec("ALTER TABLE ratings ADD COLUMN image_path VARCHAR(255) AFTER comment");
     }
+
+    $stmt = $db->query("SHOW COLUMNS FROM ratings LIKE 'display_name'");
+    if ($stmt->rowCount() === 0) {
+        $db->exec("ALTER TABLE ratings ADD COLUMN display_name VARCHAR(255) AFTER user_id");
+    }
     $done = true;
 }
 
-function addRating(int $productId, int $userId, int $stars, string $comment, ?string $imagePath): bool {
+function addRating(int $productId, int $userId, string $displayName, int $stars, string $comment, ?string $imagePath): bool {
     ensureRatingSchema();
     global $db;
-    $stmt = $db->prepare("INSERT INTO ratings (product_id, user_id, stars, comment, image_path) VALUES (?, ?, ?, ?, ?)");
-    return $stmt->execute([$productId, $userId, $stars, $comment, $imagePath]);
+    $stmt = $db->prepare("INSERT INTO ratings (product_id, user_id, display_name, stars, comment, image_path) VALUES (?, ?, ?, ?, ?, ?)");
+    return $stmt->execute([$productId, $userId, $displayName, $stars, $comment, $imagePath]);
 }
 
 function getRatingsForProduct(int $productId): array {
@@ -47,4 +53,15 @@ function getAverageRating(int $productId): ?float {
     $stmt->execute([$productId]);
     $avg = $stmt->fetchColumn();
     return $avg ? (float)$avg : null;
+}
+
+function deleteRating(int $ratingId, int $userId, bool $isAdmin): bool {
+    ensureRatingSchema();
+    global $db;
+    if ($isAdmin) {
+        $stmt = $db->prepare('DELETE FROM ratings WHERE id = ?');
+        return $stmt->execute([$ratingId]);
+    }
+    $stmt = $db->prepare('DELETE FROM ratings WHERE id = ? AND user_id = ?');
+    return $stmt->execute([$ratingId, $userId]);
 }
