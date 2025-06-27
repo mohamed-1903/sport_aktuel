@@ -1083,6 +1083,7 @@ body.light-mode .zoom-close {
   }
 
   to {
+  align-items: center;
     opacity: 1;
     transform: scale(1);
   }
