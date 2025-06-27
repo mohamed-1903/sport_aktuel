@@ -33,7 +33,6 @@ document.addEventListener("click", (e) => {
   const size = sizeSelect ? sizeSelect.value : "M";
   let quantity = parseInt(quantityInput?.value) || 1;
 
-
   if (sizeSelect && !size) {
     alert("❗ Bitte eine Größe auswählen.");
     return;
@@ -231,7 +230,9 @@ function loadList() {
           <td>
             <input type="number" class="qty-input" data-id="${
               item.product_id
-            }" data-size="${item.size}" data-price="${einzelfpreis.toFixed(2)}" value="${menge}" min="1" />
+            }" data-size="${item.size}" data-price="${einzelfpreis.toFixed(
+          2
+        )}" value="${menge}" min="1" />
 
           </td>
           <td>${einzelfpreis.toFixed(2)} €</td>
@@ -284,7 +285,6 @@ function loadList() {
             handleQtyChange(input);
           });
         }
-
       });
     });
 }
@@ -369,9 +369,7 @@ function recalculateTotals() {
   const mwstEl = document.getElementById("mwstbetrag");
   let total = 0;
   sumCells.forEach((cell) => {
-    const raw = cell.textContent
-      .replace(/[^0-9,.-]/g, "")
-      .replace(',', '.');
+    const raw = cell.textContent.replace(/[^0-9,.-]/g, "").replace(",", ".");
     const val = parseFloat(raw);
 
     if (!isNaN(val)) total += val;
@@ -388,10 +386,9 @@ function zeigeToast(text, farbe = "") {
   const el = document.getElementById("toast-popup");
   if (!el) return;
 
-  el.innerHTML = `<span>${text}</span><button class="close-toast" aria-label="Schließen">&times;</button>`;
+  // Nur den Text anzeigen und auf ein Schließen-Symbol verzichten
+  el.textContent = text;
   el.style.background = farbe || "";
-  const closeBtn = el.querySelector(".close-toast");
-  if (closeBtn) closeBtn.onclick = () => el.classList.remove("show");
 
   el.classList.add("show");
 
