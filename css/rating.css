@@ -76,6 +76,24 @@
   box-shadow: inset 0 1px 3px rgb(0 0 0 / 15%);
 }
 
+.review-form input[type="text"] {
+  width: 100%;
+  margin: 8px 0;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 2px solid var(--popup-border);
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.review-form input[type="text"]:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 6px rgb(255 215 0 / 50%);
+}
+
 
 .review-form textarea:focus {
   outline: none;
@@ -112,7 +130,6 @@
   gap: 6px;
   flex: 0 0 auto;
 }
-
 
 .suggestion-bar::-webkit-scrollbar {
   height: 6px;
@@ -163,7 +180,6 @@
   cursor: pointer;
   font-size: 16px;
 }
-
 
 .review-form button {
   margin-top: 12px;
@@ -245,6 +261,21 @@ body.modal-open {
 .btn-review:hover {
   background: #e6c200;
   transform: translateY(-2px);
+}
+
+.btn-delete-rating {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 4px;
+  padding: 0;
+}
+
+.btn-delete-rating:hover {
+  text-decoration: underline;
+  color: #c00;
 }
 
 @keyframes fadeInModal {
