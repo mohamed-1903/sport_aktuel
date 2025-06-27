@@ -1184,10 +1184,12 @@ body.light-mode .zoom-close {
   /* Ensure the action buttons inside popups appear next to each other */
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: flex-end;
   gap: 12px;
   margin-top: 20px;
 }
+
 
 
 
