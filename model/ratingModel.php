@@ -16,6 +16,12 @@ function ensureRatingSchema(): void {
         FOREIGN KEY (product_id) REFERENCES products(id),
         FOREIGN KEY (user_id) REFERENCES users(id)
     )");
+
+    // Ensure newer columns exist when the table was created previously
+    $stmt = $db->query("SHOW COLUMNS FROM ratings LIKE 'image_path'");
+    if ($stmt->rowCount() === 0) {
+        $db->exec("ALTER TABLE ratings ADD COLUMN image_path VARCHAR(255) AFTER comment");
+    }
     $done = true;
 }
 
