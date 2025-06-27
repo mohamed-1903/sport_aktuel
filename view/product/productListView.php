@@ -94,6 +94,7 @@
             data-geschlecht="<?= htmlspecialchars($geschlecht) ?>">
 
 
+
             <div class="image-wrapper">
               <img src="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>"
                    alt="<?= htmlspecialchars($produkt["name"]) ?>">
