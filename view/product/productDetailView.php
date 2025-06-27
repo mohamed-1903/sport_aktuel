@@ -192,9 +192,10 @@
       <input id="compareInput" list="compareOptions" placeholder="Name eingeben" autocomplete="off">
       <ul id="compareSuggestions" class="autocomplete-liste"></ul>
     </div>
+    <?php $selectedIds = array_column($productsToShow, 'id'); ?>
     <datalist id="compareOptions">
       <?php foreach ($allProducts as $p): ?>
-        <?php if ($p['id'] != $currentId): ?>
+        <?php if (!in_array($p['id'], $selectedIds)): ?>
           <option data-id="<?= (int)$p['id'] ?>" value="<?= htmlspecialchars($p['name']) ?>"></option>
         <?php endif; ?>
       <?php endforeach; ?>
@@ -297,6 +298,7 @@
   let compareProducts = [];
   let compareFocus = -1;
   let selectedCompareId = null;
+  const currentCompareIds = <?= json_encode(array_column($productsToShow, 'id')) ?>;
 
   fetch('data/products.json')
     .then(res => res.json())
@@ -318,12 +320,14 @@
       compareShadow.value = '';
       return;
     }
-    const matches = compareProducts.filter(p =>
-      [p.name, p.marke, p.farbe, p.geschlecht, p.category, p.subcategory]
-        .map(s => (s || '').toLowerCase())
-        .join(' ')
-        .includes(val)
-    );
+    const matches = compareProducts
+      .filter(p => !currentCompareIds.includes(p.iid))
+      .filter(p =>
+        [p.name, p.marke, p.farbe, p.geschlecht, p.category, p.subcategory]
+          .map(s => (s || '').toLowerCase())
+          .join(' ')
+          .includes(val)
+      );
     if (matches.length) {
       const match = matches.find(p => (p.name || '').toLowerCase().startsWith(val));
       compareShadow.value = match?.name || '';
@@ -395,8 +399,7 @@
       alert('Produkt nicht gefunden');
       return;
     }
-    const existingIds = <?= json_encode(array_column($productsToShow, 'id')) ?>;
-    const allIds = existingIds.concat(secondId);
+    const allIds = currentCompareIds.concat(secondId);
     const params = allIds.map((v, i) => `id${i === 0 ? '' : i + 1}=${v}`).join('&');
     window.location.href = `index.php?page=product&action=detail&${params}`;
   });
