@@ -330,7 +330,7 @@
   text-align: left;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .einzelprodukt-grid .produkt-info h3 {
@@ -342,7 +342,7 @@
 }
 
 .einzelprodukt-grid .button-row {
-  margin-top: 0.5rem;
+  padding-top: 10px;
   display: flex;
   justify-content: flex-start; /* linksbündig */
   gap: 10px;
@@ -367,13 +367,6 @@
   max-width: 100%;
   height: auto;
   object-fit: contain;
-}
-
-.einzelprodukt-grid .produkt-info {
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
 }
 
 .einzelprodukt-grid .produkt-info h3 {
