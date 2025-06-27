@@ -16,6 +16,7 @@
 <?php endif; ?>
 
 
+
 <main class="produkte">
   <!-- 🔍 Zoom Modal -->
   <div id="zoomModal" class="zoom-modal hidden">
@@ -262,12 +263,13 @@
       <input type="hidden" name="product_id" id="ratingProductId" value="">
       <input type="text" name="display_name" id="displayName" placeholder="Dein Name" value="<?= htmlspecialchars($_SESSION['username'] ?? '') ?>" required>
       <div class="rating-stars">
+
         <?php for ($s = 5; $s >= 1; $s--): ?>
           <input type="radio" id="modal-star<?= $s ?>" name="stars" value="<?= $s ?>" <?= $s == 5 ? ' checked' : '' ?>>
           <label for="modal-star<?= $s ?>">★</label>
         <?php endfor; ?>
       </div>
-      <textarea name="comment" required placeholder="Deine Meinung..." style="width: 100%;"></textarea>
+      <textarea name="comment" required placeholder="Deine Meinung..."></textarea>
       <div class="suggestion-bar" id="suggestionBar">
         <?php foreach ($reviewSuggestions as $rating => $texts): ?>
           <div class="suggestions-set <?= $rating == 5 ? '' : 'hidden' ?>" data-rating="<?= (int)$rating ?>">

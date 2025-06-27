@@ -39,10 +39,12 @@
 
 .review {
   background: var(--card-bg);
-  border-left: 4px solid var(--accent-color);
+  border: 1px solid var(--popup-border);
   border-radius: 5px;
   padding: 12px 15px;
   margin-bottom: 12px;
+  color: var(--text-color);
+
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -181,6 +183,7 @@
   font-size: 16px;
 }
 
+
 .review-form button {
   margin-top: 12px;
   background-color: var(--accent-color);
@@ -204,8 +207,8 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgb(0 0 0 / 80%);
-  backdrop-filter: blur(3px);
+  background: var(--overlay-bg);
+
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -329,7 +332,8 @@ body.modal-open {
 
 .no-reviews {
   font-style: italic;
-  color: #666;
+  color: var(--text-muted);
+
   margin: 8px 0;
 }
 

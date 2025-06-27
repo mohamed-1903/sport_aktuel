@@ -1105,6 +1105,7 @@ body.light-mode .zoom-close {
   line-height: 1;
 }
 
+
 /* === Universelles Popup-Styling für Warenkorb & Watchlist === */
 .popup-stack-container {
   position: fixed;
@@ -1269,6 +1270,7 @@ body.light-mode .zoom-close {
   --toast-border: rgb(0 0 0 / 12%);
   --toast-shadow: 0 8px 24px rgb(0 0 0 / 25%);
   --toast-blur: 8px;
+  --overlay-bg: rgb(0 0 0 / 70%);
 }
 
 [data-theme="dark"] {
@@ -1287,7 +1289,9 @@ body.light-mode .zoom-close {
   --toast-border: rgb(255 255 255 / 20%);
   --toast-shadow: 0 8px 24px rgb(0 0 0 / 50%);
   --toast-blur: 8px;
+  --overlay-bg: rgb(0 0 0 / 80%);
 }
+
 
 /* === Buttons für Popups === */
 .popup-buttons {
