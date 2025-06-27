@@ -1129,6 +1129,9 @@ body.light-mode .zoom-close {
   align-items: center;
   justify-content: center;
   vertical-align: middle;
+  height: 36px; /* gleiche Knopfhöhe für saubere Ausrichtung */
+  margin: 0; /* Standard-Margen entfernen */
+  box-sizing: border-box;
   box-shadow: 0 2px 6px rgb(0 0 0 / 15%);
   transition: background-color 0.3s ease, transform 0.2s ease,
     box-shadow 0.3s ease;
