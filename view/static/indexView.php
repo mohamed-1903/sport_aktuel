@@ -6,7 +6,7 @@
         <h1>Willkommen bei SportX!</h1>
         <p>Dein Shop für alles rund um Fußball.</p>
         <a href="index.php?page=product&action=list&category=Sportbekleidung" class="cta-button">Jetzt starten</a>
-
+    </div>
 </section>
 <?php
 $produkte = json_decode(file_get_contents('data/products.json'), true)['products'] ?? [];
