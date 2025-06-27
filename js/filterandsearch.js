@@ -22,10 +22,12 @@ function getItemsPerPage() {
   return 2;
 }
 
+window.applyFilter = function () {
   const minInput = document.getElementById("filter-price-min");
   const maxInput = document.getElementById("filter-price-max");
   const minVal = parseFloat(minInput?.value || "");
   const maxVal = parseFloat(maxInput?.value || "");
+
 
 
   const minVal = parseFloat(minInput?.value || 0);
@@ -378,6 +380,7 @@ function populateFilterOptions() {
 }
 
 
+
 // 🔄 Alle Filter zurücksetzen und erneut anwenden
 window.resetFilter = function () {
   document.querySelectorAll(".filterbar select").forEach((sel) => {
@@ -470,6 +473,7 @@ window.togglePriceDropdown = function () {
   const menu = document.getElementById("price-dropdown");
   if (menu) menu.classList.toggle("show");
 };
+
 
 
 // Ein/Ausblenden der Filterleiste
