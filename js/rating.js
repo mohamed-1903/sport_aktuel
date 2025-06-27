@@ -26,26 +26,21 @@ window.addEventListener('DOMContentLoaded', () => {
   const removeBtn = document.getElementById('removeImageBtn');
   if (imageInput && preview && previewContainer) {
 
-    imageInput.addEventListener('change', () => {
-      const file = imageInput.files[0];
-      if (file) {
-        preview.src = URL.createObjectURL(file);
-        previewContainer.classList.remove('hidden');
-      } else {
-        previewContainer.classList.add('hidden');
+  function showSuggestions(rating) {
+    document.querySelectorAll('#ratingForm .suggestions-set').forEach(set => {
+      set.classList.toggle('hidden', set.dataset.rating !== rating);
+
+  document.querySelectorAll('#ratingForm .suggest-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (commentField) {
+        commentField.value = btn.textContent;
+        commentField.focus();
       }
     });
-  }
-  if (removeBtn) {
-    removeBtn.addEventListener('click', () => {
-      imageInput.value = '';
-      preview.src = '';
-      previewContainer.classList.add('hidden');
-    });
-  }
+  });
 
-  const suggestionBar = document.getElementById('suggestionBar');
-  const suggestionsByRating = suggestionBar ? JSON.parse(suggestionBar.dataset.suggestions || '{}') : {};
+  showSuggestions(checked ? checked.value : '5');
+    rad.addEventListener('change', () => showSuggestions(rad.value));
   const commentField = document.querySelector('#ratingForm textarea[name="comment"]');
 
   function renderSuggestions(rating) {

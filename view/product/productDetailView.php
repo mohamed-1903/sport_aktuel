@@ -234,7 +234,15 @@
               <label><?= $s <= $r['stars'] ? '★' : '☆' ?></label>
             <?php endfor; ?>
           </span>
-          <p><?= nl2br(htmlspecialchars($r['comment'])) ?></p>
+      <div class="suggestion-bar" id="suggestionBar">
+        <?php foreach ($reviewSuggestions as $rating => $texts): ?>
+          <div class="suggestions-set <?= $rating == 5 ? '' : 'hidden' ?>" data-rating="<?= (int)$rating ?>">
+            <?php foreach ($texts as $text): ?>
+              <button type="button" class="suggest-btn"><?= htmlspecialchars($text) ?></button>
+            <?php endforeach; ?>
+          </div>
+        <?php endforeach; ?>
+      </div>
           <?php if (!empty($r['image_path'])): ?>
             <img src="<?= htmlspecialchars($r['image_path']) ?>" alt="Bild zur Bewertung">
           <?php endif; ?>

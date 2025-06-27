@@ -84,6 +84,12 @@
 }
 
 
+.suggestions-set {
+  display: flex;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+
 .review-form input[type="file"] {
   margin: 12px 0;
   padding: 8px 12px;
