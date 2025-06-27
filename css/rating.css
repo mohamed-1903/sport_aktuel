@@ -136,3 +136,40 @@ body.modal-open {
   to { transform: translateY(0); opacity: 1; }
 }
 
+/* fancy enhancements */
+.review {
+  background: linear-gradient(135deg, #fff, #f2f2f2);
+  border-left: 4px solid #ffd700;
+  padding: 15px 15px 15px 40px;
+  position: relative;
+}
+
+.review::before {
+  content: '★';
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  color: #ffd700;
+}
+
+.review img {
+  max-width: 150px;
+  display: block;
+  margin-top: 5px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
+  transition: transform 0.2s ease;
+}
+
+.review img:hover {
+  transform: scale(1.05);
+}
+
+.review-modal-content {
+  box-shadow: 0 4px 8px rgb(0 0 0 / 20%);
+}
+
+@keyframes popIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
