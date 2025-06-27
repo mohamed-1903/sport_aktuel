@@ -267,7 +267,7 @@
           <label for="modal-star<?= $s ?>">★</label>
         <?php endfor; ?>
       </div>
-      <textarea name="comment" required placeholder="Deine Meinung..."></textarea>
+      <textarea name="comment" required placeholder="Deine Meinung..." style="width: 100%;"></textarea>
       <div class="suggestion-bar" id="suggestionBar">
         <?php foreach ($reviewSuggestions as $rating => $texts): ?>
           <div class="suggestions-set <?= $rating == 5 ? '' : 'hidden' ?>" data-rating="<?= (int)$rating ?>">
