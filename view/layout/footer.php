@@ -29,9 +29,9 @@
     <div class="footer-column">
       <h3>Information</h3>
       <ul>
-        <li><a href="index.php?page=about">Über uns</a></li>
-        <li><a href="index.php?page=kontakt">Kontakt</a></li>
-        <li><a href="index.php?page=newsletter">Newsletter</a></li>
+        <li><a href="index.php?page=static&action=about">Über uns</a></li>
+        <li><a href="index.php?page=static&action=kontakt">Kontakt</a></li>
+        <li><a href="index.php?page=static&action=newsletter">Newsletter</a></li>
       </ul>
     </div>
 
@@ -39,9 +39,9 @@
     <div class="footer-column">
       <h3>Kundendienst</h3>
       <ul>
-        <li><a href="#">FAQ</a></li>
-        <li><a href="#">Versand & Lieferung</a></li>
-        <li><a href="#">Rückgabe</a></li>
+        <li><a href="index.php?page=static&action=faq">FAQ</a></li>
+        <li><a href="index.php?page=static&action=versand&lieferung">Versand & Lieferung</a></li>
+        <li><a href="index.php?page=static&action=rückgabe">Rückgabe</a></li>
       </ul>
     </div>
 
@@ -49,28 +49,22 @@
     <div class="footer-column">
       <h3>Rechtliches</h3>
       <ul>
-        <li><a href="index.php?page=impressum">Impressum</a></li>
-        <li><a href="index.php?page=datenschutz">Datenschutz</a></li>
-        <li><a href="index.php?page=agb">AGB</a></li>
+        <li><a href="index.php?page=static&action=impressum">Impressum</a></li>
+        <li><a href="index.php?page=static&action=datenschutz">Datenschutz</a></li>
+        <li><a href="index.php?page=static&action=agb">AGB</a></li>
       </ul>
-    </div>
-
-    <!-- Payment Methods Section -->
-    <div class="footer-column">
-      <h3>Zahlungsmethoden</h3>
-      <div class="payment-methods">
-        <img src="img/paypal" alt="PayPal" />
-        <img src="img/visa-icon.svg" alt="Visa" />
-        <img src="img/mastercard-icon.svg" alt="MasterCard" />
-      </div>
     </div>
 
     <!-- Social Media Section -->
     <div class="footer-column">
       <h3>Folge uns</h3>
       <div class="social-media">
-        <a href="https://instagram.com/" target="_blank"><img src="img/instagram-icon.svg" alt="Instagram" /></a>
-        <a href="https://facebook.com/" target="_blank"><img src="img/facebook-icon.svg" alt="Facebook" /></a>
+        <a href="https://www.instagram.com/thingolstadt_official/?__pwa=1" target="_blank">
+          <p> Instagram </p>
+        </a>
+        <a href="https://www.facebook.com/thingolstadt" target="_blank">
+          <p> Facebook</p>
+        </a>
       </div>
     </div>
   </div>
@@ -82,12 +76,8 @@
 </footer>
 <div id="cookie-banner" class="cookie-banner">
   <p>Diese Seite verwendet Cookies, um Funktionen wie den Warenkorb zu ermöglichen.</p>
-  <div class="cookie-buttons">
-    <button id="cookie-accept">Akzeptieren</button>
-    <button id="cookie-decline">Ablehnen</button>
-  </div>
+  <button id="cookie-accept">OK</button>
 </div>
-<button id="cookie-settings" class="cookie-settings">Cookie-Einstellungen</button>
 <script src="js/cookies.js"></script>
 <script src="js/style_modification.js"></script>
 <script src="js/filterandsearch.js"></script>
@@ -95,4 +85,3 @@
 <script src="js/watchlist.js"></script>
 <script src="js/warenkorb.js"></script>
 <script src="js/burger_menu.js"></script>
-<script src="js/customize.js"></script>

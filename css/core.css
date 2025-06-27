@@ -275,7 +275,6 @@ nav {
   background-color: #ffd700;
   color: #000;
 }
-
 .hero,
 .form-wrapper {
   background: linear-gradient(135deg, var(--card-bg), var(--bg-color));
@@ -308,7 +307,6 @@ nav {
 .cta:hover {
   background-color: #e6c200;
 }
-
 .cta-button {
   background-color: #e6c200;
   color: #000;
@@ -334,8 +332,20 @@ nav {
 }
 
 .produkte {
-  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  color: #fff;
+  padding: 80px 20px;
+}
+.produkte h2 {
+  font-size: 35px;
+  color: #eaeae6;
+  margin-bottom: 20px;
+}
+body.light-mode .produkte h2 {
+  color: #000;
 }
 
 #main-image {

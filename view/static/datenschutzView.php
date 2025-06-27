@@ -1,40 +1,75 @@
-<?php include 'view/layout/header.php'; ?>
+<?php include __DIR__ . '/../layout/header.php'; ?>
 
-<main class="content">
-    <h2>Datenschutzerklärung</h2>
-    <p>
-        Diese Datenschutzerklärung klärt Sie über die Art, den Umfang und Zweck der Verarbeitung personenbezogener Daten
-        (nachfolgend kurz „Daten“) innerhalb unseres Onlineangebotes auf.
-    </p>
+<?php /* datenschutzView.php */ ?>
+<section class="datenschutz-page">
+  <div class="datenschutz-container">
+    <h1>Datenschutzerklärung</h1>
 
-    <h3>Verantwortlicher</h3>
-    <p>
-        SportX Webshop<br>
-        Max Mustermann<br>
-        kontakt@sportx.de
-    </p>
+    <p>Der Schutz deiner persönlichen Daten ist uns ein wichtiges Anliegen. Wir verarbeiten deine Daten ausschließlich auf Grundlage der gesetzlichen Bestimmungen (DSGVO, TMG).</p>
 
+    <h2>1. Verantwortlicher</h2>
+    <p>SportX GmbH<br>Musterstraße 1<br>12345 Berlin<br>E-Mail: <a href="mailto:datenschutz@sportx.de">datenschutz@sportx.de</a></p>
 
-    <h3>Verwendete Technologien</h3>
+    <h2>2. Erhebung und Verarbeitung personenbezogener Daten</h2>
+    <p>Wir erheben, verarbeiten und nutzen personenbezogene Daten nur, soweit sie für die Begründung, inhaltliche Ausgestaltung oder Änderung des Vertragsverhältnisses erforderlich sind.</p>
+
+    <h2>3. Datenweitergabe</h2>
+    <p>Deine Daten werden ohne deine ausdrückliche Zustimmung nicht an Dritte weitergegeben – ausgenommen sind unsere Dienstleister im Rahmen der Bestellabwicklung (z. B. Zahlungsanbieter, Versanddienstleister).</p>
+
+    <h2>4. Cookies</h2>
+    <p>Unsere Website verwendet Cookies, um dir ein besseres Nutzererlebnis zu bieten. Du kannst die Verwendung von Cookies in deinem Browser deaktivieren.</p>
+
+    <h2>5. Newsletter</h2>
+    <p>Wenn du dich für unseren Newsletter anmeldest, verwenden wir deine E-Mail-Adresse ausschließlich für diesen Zweck. Du kannst dich jederzeit über den Abmeldelink im Newsletter abmelden.</p>
+
+    <h2>6. Deine Rechte</h2>
     <ul>
-        <li>Cookies</li>
-        <li>Sessions zur Benutzeridentifikation</li>
-        <li>Keine Drittanbieter-Tracker</li>
+      Auskunft über deine gespeicherten Daten<br>
+      Berichtigung unrichtiger Daten<br>
+      Löschung oder Einschränkung der Verarbeitung<br>
+      Widerspruch gegen die Verarbeitung<br>
+      Datenübertragbarkeit
     </ul>
 
-    <h3>Cookie-Verwendung</h3>
-    <p>
-        Wir setzen ein technisch erforderliches Cookie, um Ihre Zustimmung zur Cookie-Nutzung zu speichern.
-        Dieses Cookie wird nach einem Jahr automatisch gelöscht und speichert keine personenbezogenen Daten.
-        Sie können Ihre Auswahl jederzeit über den Link „Cookie-Einstellungen“ im Footer ändern
-        oder das Setzen von Cookies ablehnen.
-    </p>
+    <p>Bitte sende deine Anfrage schriftlich an <a href="mailto:datenschutz@sportx.de">datenschutz@sportx.de</a>.</p>
 
-    <h3>Ihre Rechte</h3>
-    <p>
-        Sie haben das Recht auf Auskunft, Berichtigung, Löschung oder Einschränkung Ihrer gespeicherten Daten.
-        Bitte wenden Sie sich dazu per E-Mail an <a href="mailto:kontakt@sportx.de">kontakt@sportx.de</a>.
-    </p>
-</main>
+    <h2>7. Kontakt zur Aufsichtsbehörde</h2>
+    <p>Du hast das Recht, dich bei einer Datenschutzaufsichtsbehörde über die Verarbeitung deiner personenbezogenen Daten zu beschweren.</p>
+  </div>
+</section>
 
-<?php include 'view/layout/footer.php'; ?>
+<style>
+.datenschutz-page {
+  max-width: 800px;
+  margin: 60px auto;
+  padding: 20px;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text-color);
+}
+
+.datenschutz-container h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: var(--accent-color);
+}
+
+.datenschutz-container h2 {
+  font-size: 1.3rem;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.datenschutz-container p,
+.datenschutz-container ul {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+.datenschutz-container ul {
+  padding-left: 20px;
+}
+</style>
+
+
+<?php include __DIR__ . '/../layout/footer.php'; ?>

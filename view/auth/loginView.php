@@ -23,11 +23,11 @@ if (!empty($_SESSION['login_error'])) {
     <?php endif; ?>
 
     <form id="loginForm" action="index.php?page=auth&action=login<?php if (isset($_GET['redirect'])) echo '&redirect=' . urlencode($_GET['redirect']); ?>" method="post" autocomplete="on">
-      <label for="loginEmail">E-Mail:</label><br>
+      <label for="loginEmail">E-Mail:</label>
       <input type="email" name="email" id="loginEmail" required><br>
       <small></small><br>
 
-      <label for="loginPassword">Passwort:</label><br>
+      <label for="loginPassword">Passwort:</label>
       <input type="password" name="password" id="loginPassword" required minlength="10"><br>
       <small></small><br>
 

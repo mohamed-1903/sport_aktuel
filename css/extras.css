@@ -27,13 +27,14 @@
   box-sizing: border-box; /* Padding zählt zur Gesamtbreite */
 }
 
+/* Oberer Buttonbereich */
 .filter-tools {
   display: flex;
   flex-direction: row;
-  gap: 0.25rem;
-  margin-bottom: 0.5rem;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  justify-content: flex-start;
   align-items: center;
-  justify-content: flex-start; /* Buttons linksbündig */
   width: 100%;
 }
 
@@ -54,23 +55,20 @@
 }
 
 
+
 .filterbar.hidden {
   display: none;
 }
 
-.filter-toggle {
-  border: 1px solid #555;
-  border-radius: 6px;
-  background-color: var(--card-bg);
-  color: var(--text-color);
-  font-size: 14px;
-  padding: 6px 10px;
-  cursor: pointer;
-}
-
-.filter-toggle:hover {
-  background-color: var(--accent-color);
-  color: #000;
+/* Container für die Steuerelemente */
+.filter-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
 }
 
 .filterbar select,
@@ -94,7 +92,11 @@
   width: 140px;
 }
 
-/* optisch ansprechende Selectboxen */
+
+
+
+
+/* Select Dropdown-Pfeil optisch gestalten */
 .filterbar select {
   appearance: none;
   padding-right: 2rem;
@@ -104,11 +106,7 @@
   background-size: 12px;
 }
 
-.filterbar input[type="range"] {
-  width: 140px;
-  accent-color: var(--accent-color);
-}
-
+/* Aktive Elemente hervorheben */
 .filterbar select.active,
 .filterbar input[type="range"].active {
   border-color: var(--accent-color);
@@ -116,19 +114,7 @@
   color: #000;
 }
 
-.filterbar button:hover,
-.filter-tools button:hover {
-  background-color: var(--accent-color);
-  color: #000;
-}
-
-.price-label {
-  margin-left: 0.25rem;
-  min-width: 70px;
-  display: inline-block;
-  text-align: center;
-}
-
+/* Preis-Slider + Label */
 .range-filter {
   display: flex;
   align-items: center;
@@ -156,6 +142,7 @@
   justify-content: flex-start; /* Filter linksbündig */
   overflow-x: auto;        /* bei Bedarf horizontal scrollen */
 }
+
 
 
 .filter-controls.hidden {
@@ -208,36 +195,7 @@
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  border: 1px solid #555;
-  border-radius: 6px;
-  background-color: var(--card-bg);
-  color: var(--text-color);
-  padding: 2px 6px;
-}
 
-.range-filter.active {
-  border-color: var(--accent-color);
-  background-color: var(--accent-color);
-  color: #000;
-}
-
-.filter-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.price-label {
-  margin-left: 0.25rem;
-  min-width: 70px;
-  display: inline-block;
-  text-align: center;
-}
-
-.range-filter {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
   border: 1px solid #555;
   border-radius: 6px;
   background-color: var(--card-bg);
@@ -264,45 +222,10 @@
   text-align: left;
 }
 
-.range-filter {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  border: 1px solid #555;
-  border-radius: 6px;
-  background-color: var(--card-bg);
-  color: var(--text-color);
-  padding: 4px 8px;
-}
 
-.range-filter.active {
-  border-color: var(--accent-color);
-  background-color: var(--accent-color);
-  color: #000;
-}
-
-.filter-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.price-label {
-  margin-left: 0.5rem;
-  min-width: 80px;
-  display: inline-block;
-  text-align: center;
-}
-
-.range-filter {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  border: 1px solid #555;
-  border-radius: 6px;
-  background-color: var(--card-bg);
-  color: var(--text-color);
-  padding: 5px 10px;
+.range-filter input[type="range"] {
+  width: 140px;
+  accent-color: var(--accent-color);
 }
 
 .range-filter.active {
@@ -312,27 +235,28 @@
 }
 
 .price-label {
-  margin-left: 0.5rem;
   min-width: 80px;
   display: inline-block;
   text-align: center;
+  margin-left: 0.5rem;
 }
 
-.range-filter {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  border: 1px solid #555;
-  border-radius: 6px;
-  background-color: var(--card-bg);
-  color: var(--text-color);
-  padding: 5px 10px;
-}
+/* Responsives Verhalten */
+@media (max-width: 768px) {
+  .filter-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
 
-.range-filter.active {
-  border-color: var(--accent-color);
-  background-color: var(--accent-color);
-  color: #000;
+  .filterbar {
+    justify-content: flex-start;
+    padding: 1rem 0.5rem;
+  }
+
+  .filter-tools {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 .price-label {
@@ -893,7 +817,7 @@ body.light-mode .zoom-close {
 }
 
 .cart-table td:first-child {
-  text-align: left;
+  text-align: center;
 }
 
 .cart-table td img {
@@ -901,7 +825,23 @@ body.light-mode .zoom-close {
   height: auto;
   object-fit: contain;
   border-radius: 8px;
+  display: block;
+  margin: 0 auto;
 }
+
+.qty-select {
+  width: 60px;
+  padding: 4px;
+  text-align: center;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--text-color);
+}
+
+
+
+
 
 /* Entfernen-Button */
 .remove-btn {
@@ -1177,8 +1117,11 @@ body.light-mode .zoom-close {
 .popup-content-flex {
   display: flex;
   align-items: center;
+  justify-content: center; /* Bild und Text mittig ausrichten */
   gap: 15px;
 }
+
+
 
 .popup-content-flex img {
   width: 80px;
@@ -1269,11 +1212,17 @@ body.light-mode .zoom-close {
 
 /* === Buttons für Popups === */
 .popup-buttons {
+  /* Ensure the action buttons inside popups appear next to each other */
   display: flex;
+  flex-direction: row;
+  align-items: center;
   justify-content: flex-end;
   gap: 12px;
   margin-top: 20px;
 }
+
+
+
 
 .popup-buttons button,
 .popup-buttons a {
@@ -1447,35 +1396,90 @@ body:not(.light-mode) .error {
   padding: 120px 20px;
 }
 
+.welcome {
+  position: relative;
+  background: url('img/hintergrund.png') center center no-repeat;
+  background-size: cover;
+  color: #fff;
+  text-align: center;
+  padding: 30px 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcome::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6); /* dunkler Overlay */
+  backdrop-filter: blur(2px); /* weichzeichnen */
+  z-index: 0;
+  border-radius: inherit;
+}
+
 .welcome-logo {
   width: 120px;
-  height: auto;
+  z-index: 1;
   margin-bottom: 20px;
 }
 
 .welcome h1 {
-  font-size: 56px;
+  font-size: 3rem;
+  font-weight: 800;
+  color: #FFD700;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+  z-index: 1;
   margin-bottom: 10px;
 }
 
 .welcome p {
-  font-size: 24px;
-  margin-bottom: 30px;
+  font-size: 1.2rem;
+  color: #f0f0f0;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  margin-bottom: 25px;
+  z-index: 1;
 }
 
-.beliebte {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.welcome .cta-button {
+  background-color: #FFD700;
+  color: #000;
+  padding: 14px 32px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 30px;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  transition: background-color 0.3s ease;
+}
+
+.welcome .cta-button:hover {
+  background-color: #e6c200;
+}
+.welcome-overlay {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  z-index: 1;
+  transition: background 0.4s ease;
+}
+body.light-mode .welcome-overlay {
+  background: rgba(255, 255, 255, 0.4); /* Heller Schleier */
+}
+
+.welcome-content {
+  position: relative;
+  z-index: 2;
   text-align: center;
-  background: linear-gradient(135deg, #ff6f00, #ffa000);
-  color: #fff;
-  padding: 80px 20px;
-}
-
-.beliebte h2 {
-  font-size: 48px;
-  margin-bottom: 20px;
+  padding-top: 100px;
 }
 
 /* ----- Zusätzliche Styles für statische Seiten und Filter ----- */
