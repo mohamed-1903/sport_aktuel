@@ -269,7 +269,21 @@ function loadList() {
 
       // 🆙 Menge ändern
       document.querySelectorAll(".qty-input").forEach((input) => {
+        input.addEventListener("input", () => handleQtyChange(input, false));
         input.addEventListener("change", () => handleQtyChange(input));
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            handleQtyChange(input);
+            input.blur();
+          }
+        });
+        if (input.form) {
+          input.form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            handleQtyChange(input);
+          });
+        }
 
       });
     });
@@ -320,7 +334,7 @@ function updateCartQuantity(productId, size, quantity, reload = true) {
     .catch((err) => console.error("Fehler beim Aktualisieren:", err));
 }
 
-function handleQtyChange(el) {
+function handleQtyChange(el, sendUpdate = true) {
   let qty = parseInt(el.value);
   if (!qty || qty < 1) {
     qty = 1;
@@ -340,10 +354,11 @@ function handleQtyChange(el) {
   const sumCell = el.closest("tr").querySelector(".summe-cell");
   if (sumCell) sumCell.textContent = `${(price * qty).toFixed(2)} €`;
   recalculateTotals();
-  const id = el.dataset.id;
-  const size = el.dataset.size;
-
-  updateCartQuantity(id, size, qty, false);
+  if (sendUpdate) {
+    const id = el.dataset.id;
+    const size = el.dataset.size;
+    updateCartQuantity(id, size, qty, false);
+  }
 }
 
 function recalculateTotals() {
