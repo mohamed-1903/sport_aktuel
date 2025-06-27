@@ -271,29 +271,7 @@ function loadList() {
       // 🆙 Menge ändern
       document.querySelectorAll(".qty-select").forEach((sel) => {
         sel.addEventListener("change", () => {
-          let qty = parseInt(sel.value);
-          if (!qty || qty < 1) {
-            qty = 1;
-            sel.value = 1;
-          }
-          let price = parseFloat(sel.dataset.price);
-          if (isNaN(price)) {
-            const priceCell = sel.closest("tr")?.querySelector("td:nth-child(3)");
-            if (priceCell) {
-              price = parseFloat(
-                priceCell.textContent
-                  .replace(/[^0-9,.-]/g, "")
-                  .replace(",", ".")
-              );
-            }
-          }
-          price = isNaN(price) ? 0 : price;
-          const sumCell = sel.closest("tr").querySelector(".summe-cell");
-          if (sumCell) sumCell.textContent = `${(price * qty).toFixed(2)} €`;
-          recalculateTotals();
-          const id = sel.dataset.id;
-          const size = sel.dataset.size;
-          updateCartQuantity(id, size, qty, false);
+          handleQtyChange(sel);
         });
       });
     });
@@ -341,6 +319,30 @@ function updateCartQuantity(productId, size, quantity, reload = true) {
       updateCartCount();
     })
     .catch((err) => console.error("Fehler beim Aktualisieren:", err));
+}
+
+function handleQtyChange(sel) {
+  let qty = parseInt(sel.value);
+  if (!qty || qty < 1) {
+    qty = 1;
+    sel.value = 1;
+  }
+  let price = parseFloat(sel.dataset.price);
+  if (isNaN(price)) {
+    const priceCell = sel.closest("tr")?.querySelector("td:nth-child(3)");
+    if (priceCell) {
+      price = parseFloat(
+        priceCell.textContent.replace(/[^0-9,.-]/g, "").replace(",", ".")
+      );
+    }
+  }
+  price = isNaN(price) ? 0 : price;
+  const sumCell = sel.closest("tr").querySelector(".summe-cell");
+  if (sumCell) sumCell.textContent = `${(price * qty).toFixed(2)} €`;
+  recalculateTotals();
+  const id = sel.dataset.id;
+  const size = sel.dataset.size;
+  updateCartQuantity(id, size, qty, false);
 }
 
 function recalculateTotals() {
