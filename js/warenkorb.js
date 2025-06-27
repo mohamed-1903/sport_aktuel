@@ -176,7 +176,7 @@ function loadList() {
 
       if (!tbody || !items) return;
 
-      tbody.innerHTML = "";
+          <td>
 
       if (items.length === 0) {
         tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color: gray;">🛒 Dein Warenkorb ist leer.</td></tr>`;
@@ -252,7 +252,18 @@ function loadList() {
         total += gesamt;
       });
 
-      const netto = total / 1.19;
+          let price = parseFloat(sel.dataset.price);
+          if (isNaN(price)) {
+            const priceCell = sel.closest("tr")?.querySelector("td:nth-child(3)");
+            if (priceCell) {
+              price = parseFloat(
+                priceCell.textContent
+                  .replace(/[^0-9,.-]/g, "")
+                  .replace(",", ".")
+              );
+            }
+          }
+          price = isNaN(price) ? 0 : price;
       const mwst = total - netto;
       zwischensummeEl.textContent = `${total.toFixed(2)} €`;
       gesamtsummeEl.textContent = `${total.toFixed(2)} €`;
