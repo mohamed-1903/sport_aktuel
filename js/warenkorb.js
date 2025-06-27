@@ -32,7 +32,6 @@ document.addEventListener("click", (e) => {
     ?.querySelector("input[type=number]");
   const size = sizeSelect ? sizeSelect.value : "M";
   let quantity = parseInt(quantityInput?.value) || 1;
-  if (quantity > 25) quantity = 25;
 
   if (sizeSelect && !size) {
     alert("❗ Bitte eine Größe auswählen.");
@@ -228,13 +227,9 @@ function loadList() {
             </div>
           </td>
           <td>
-            <div class="qty-control">
-              <button type="button" class="qty-btn qty-minus">-</button>
-              <input type="number" class="qty-input" data-id="${
-                item.product_id
-              }" data-size="${item.size}" data-price="${einzelfpreis.toFixed(2)}" value="${menge}" min="1" max="25" />
-              <button type="button" class="qty-btn qty-plus">+</button>
-            </div>
+            <input type="number" class="qty-input" data-id="${
+              item.product_id
+            }" data-size="${item.size}" data-price="${einzelfpreis.toFixed(2)}" value="${menge}" min="1" />
           </td>
           <td>${einzelfpreis.toFixed(2)} €</td>
           <td class="summe-cell">${gesamt.toFixed(2)} €</td>
@@ -272,24 +267,6 @@ function loadList() {
       // 🆙 Menge ändern
       document.querySelectorAll(".qty-input").forEach((input) => {
         input.addEventListener("change", () => handleQtyChange(input));
-      });
-      document.querySelectorAll(".qty-minus").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const input = btn.parentElement.querySelector(".qty-input");
-          if (input) {
-            input.stepDown();
-            handleQtyChange(input);
-          }
-        });
-      });
-      document.querySelectorAll(".qty-plus").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const input = btn.parentElement.querySelector(".qty-input");
-          if (input) {
-            input.stepUp();
-            handleQtyChange(input);
-          }
-        });
       });
     });
 }
@@ -343,10 +320,6 @@ function handleQtyChange(el) {
   if (!qty || qty < 1) {
     qty = 1;
     el.value = 1;
-  }
-  if (qty > 25) {
-    qty = 25;
-    el.value = 25;
   }
   let price = parseFloat(el.dataset.price);
   if (isNaN(price)) {
