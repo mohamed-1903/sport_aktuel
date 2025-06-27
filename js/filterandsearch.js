@@ -22,9 +22,11 @@ function getItemsPerPage() {
   return 2;
 }
 
-window.applyFilter = function () {
   const minInput = document.getElementById("filter-price-min");
   const maxInput = document.getElementById("filter-price-max");
+  const minVal = parseFloat(minInput?.value || "");
+  const maxVal = parseFloat(maxInput?.value || "");
+
 
   const minVal = parseFloat(minInput?.value || 0);
   const maxVal = parseFloat(maxInput?.value || Infinity);
@@ -33,6 +35,7 @@ window.applyFilter = function () {
     farbe: document.getElementById("filter-farbe")?.value || "",
     minPreis: isNaN(minVal) ? 0 : minVal,
     maxPreis: isNaN(maxVal) ? Infinity : maxVal,
+
     mannschaft: document.getElementById("filter-mannschaft")?.value || "",
     geschlecht: document.getElementById("filter-geschlecht")?.value || "",
   };
@@ -46,6 +49,7 @@ window.applyFilter = function () {
       (!filterWerte.mannschaft || p.mannschaft === filterWerte.mannschaft) &&
       (!filterWerte.geschlecht || p.geschlecht === filterWerte.geschlecht) &&
       preis >= filterWerte.minPreis && preis <= filterWerte.maxPreis;
+
 
     // leeres Display lässt die ursprüngliche Flex-Darstellung erhalten
     produkt.style.display = sichtbar ? "" : "none";
@@ -151,9 +155,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const minInput = document.getElementById("filter-price-min");
   const maxInput = document.getElementById("filter-price-max");
   [minInput, maxInput].forEach((el) => el && el.addEventListener("change", applyFilter));
-
   updateActiveFilters();
 });
+
 
 // 🔽 PRODUKTE LADEN
 function ladeProdukte(containerId, urls) {
@@ -371,8 +375,8 @@ function populateFilterOptions() {
 
   fillOptions(minInput, "Min");
   fillOptions(maxInput, "Max");
-
 }
+
 
 // 🔄 Alle Filter zurücksetzen und erneut anwenden
 window.resetFilter = function () {
@@ -454,17 +458,19 @@ function updateActiveFilters() {
   const maxInput = document.getElementById("filter-price-max");
   const minActive = minInput && minInput.selectedIndex > 0;
   const maxActive = maxInput && maxInput.selectedIndex > 0;
-
   if (minInput) minInput.classList.toggle("active", minActive);
   if (maxInput) maxInput.classList.toggle("active", maxActive);
   const menu = document.querySelector(".price-menu");
   if (menu) menu.classList.toggle("active", minActive || maxActive);
+  const btn = document.querySelector(".price-toggle");
+  if (btn) btn.classList.toggle("active", minActive || maxActive);
 }
 
 window.togglePriceDropdown = function () {
   const menu = document.getElementById("price-dropdown");
   if (menu) menu.classList.toggle("show");
 };
+
 
 // Ein/Ausblenden der Filterleiste
 window.toggleFilterBar = function () {
