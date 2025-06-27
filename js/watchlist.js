@@ -164,7 +164,7 @@ function loadWatchlist() {
         card.className = "watchlist-card";
         card.setAttribute("data-iid", item.product_id);
         card.innerHTML = `
-          <div class="image-wrapper"><img src="${item.image_main}" alt="${
+  <div class="image-wrapper"><img src="${item.image_main}" alt="${
           item.name
         }"></div>
           <div class="produkt-info">
@@ -178,6 +178,7 @@ function loadWatchlist() {
             <a href="index.php?page=product&action=detail&id=${
               item.product_id
             }"><button>Anzeigen</button></a>
+
           </div>`;
         container.appendChild(card);
       });
@@ -265,6 +266,7 @@ function zeigeWatchPreview({ name, image, price, productId }) {
           ${
             !isOnProductDetailPageWatch
               ? `<a href="index.php?page=product&action=detail&id=${productId}">Anzeigen</a>`
+
               : ""
           }
         </div>

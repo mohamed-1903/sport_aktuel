@@ -22,17 +22,20 @@ function getItemsPerPage() {
   return 2;
 }
 
-window.applyFilter = function () {
   const minInput = document.getElementById("filter-price-min");
   const maxInput = document.getElementById("filter-price-max");
   const minVal = parseFloat(minInput?.value || "");
   const maxVal = parseFloat(maxInput?.value || "");
 
+
+  const minVal = parseFloat(minInput?.value || 0);
+  const maxVal = parseFloat(maxInput?.value || Infinity);
   const filterWerte = {
     marke: document.getElementById("filter-marke")?.value || "",
     farbe: document.getElementById("filter-farbe")?.value || "",
     minPreis: isNaN(minVal) ? 0 : minVal,
     maxPreis: isNaN(maxVal) ? Infinity : maxVal,
+
     mannschaft: document.getElementById("filter-mannschaft")?.value || "",
     geschlecht: document.getElementById("filter-geschlecht")?.value || "",
   };
@@ -46,6 +49,7 @@ window.applyFilter = function () {
       (!filterWerte.mannschaft || p.mannschaft === filterWerte.mannschaft) &&
       (!filterWerte.geschlecht || p.geschlecht === filterWerte.geschlecht) &&
       preis >= filterWerte.minPreis && preis <= filterWerte.maxPreis;
+
 
     // leeres Display lässt die ursprüngliche Flex-Darstellung erhalten
     produkt.style.display = sichtbar ? "" : "none";
@@ -153,6 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
   [minInput, maxInput].forEach((el) => el && el.addEventListener("change", applyFilter));
   updateActiveFilters();
 });
+
 
 // 🔽 PRODUKTE LADEN
 function ladeProdukte(containerId, urls) {
@@ -372,6 +377,7 @@ function populateFilterOptions() {
   fillOptions(maxInput, "Max");
 }
 
+
 // 🔄 Alle Filter zurücksetzen und erneut anwenden
 window.resetFilter = function () {
   document.querySelectorAll(".filterbar select").forEach((sel) => {
@@ -382,6 +388,7 @@ window.resetFilter = function () {
   const maxInput = document.getElementById("filter-price-max");
   if (minInput) minInput.selectedIndex = 0;
   if (maxInput) maxInput.selectedIndex = 0;
+
   const suche = document.getElementById("produktsuche");
   if (suche) {
     suche.value = "";
@@ -463,6 +470,7 @@ window.togglePriceDropdown = function () {
   const menu = document.getElementById("price-dropdown");
   if (menu) menu.classList.toggle("show");
 };
+
 
 // Ein/Ausblenden der Filterleiste
 window.toggleFilterBar = function () {
