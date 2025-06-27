@@ -4,14 +4,12 @@
 <link rel="stylesheet" href="css/components.css">
 <link rel="stylesheet" href="css/form.css">
 <link rel="stylesheet" href="css/product.css">
-<link rel="stylesheet" href="css/extras.css">
 <link rel="stylesheet" href="css/modal.css">
 <link rel="stylesheet" href="css/themes.css">
 <link rel="stylesheet" href="css/responsive.css">
 <link rel="stylesheet" href="css/components.css">
 <link rel="stylesheet" href="css/cookie.css">
 <link rel="stylesheet" href="css/core.css">
-<link rel="stylesheet" href="css/extras.css">
 <link rel="stylesheet" href="css/footer.css">
 <link rel="stylesheet" href="css/form.css">
 <link rel="stylesheet" href="css/header.css">
