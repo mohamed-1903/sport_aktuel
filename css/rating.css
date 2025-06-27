@@ -40,8 +40,8 @@
   background: #f9f9f9;
   border: 1px solid #eee;
   border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 12px 15px;
+  margin-bottom: 12px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -136,3 +136,61 @@ body.modal-open {
   to { transform: translateY(0); opacity: 1; }
 }
 
+/* fancy enhancements */
+.review {
+  background: linear-gradient(135deg, #fff, #f2f2f2);
+  border-left: 4px solid #ffd700;
+  padding: 15px 15px 15px 40px;
+  position: relative;
+}
+
+.review::before {
+  content: '★';
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  color: #ffd700;
+}
+
+.review img {
+  max-width: 150px;
+  display: block;
+  margin-top: 5px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
+  transition: transform 0.2s ease;
+}
+
+.review img:hover {
+  transform: scale(1.05);
+}
+
+.review strong {
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.review p {
+  margin: 6px 0;
+  line-height: 1.4;
+}
+
+.rating-stars {
+  margin-bottom: 4px;
+}
+
+.no-reviews {
+  font-style: italic;
+  color: #666;
+  margin: 8px 0;
+}
+
+.review-modal-content {
+  box-shadow: 0 4px 8px rgb(0 0 0 / 20%);
+}
+
+@keyframes popIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

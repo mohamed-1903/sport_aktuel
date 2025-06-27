@@ -62,6 +62,10 @@ window.applyFilter = function () {
       preis >= filterWerte.minPreis &&
       preis <= filterWerte.maxPreis;
 
+
+
+
+
     // leeres Display lässt die ursprüngliche Flex-Darstellung erhalten
     produkt.style.display = sichtbar ? "" : "none";
   });
@@ -168,6 +172,8 @@ document.addEventListener("DOMContentLoaded", () => {
   if (priceSel) priceSel.addEventListener("change", applyFilter);
   updateActiveFilters();
 });
+
+
 
 // 🔽 PRODUKTE LADEN
 function ladeProdukte(containerId, urls) {
@@ -321,6 +327,7 @@ function colorEmoji(name) {
 
 
 window.populateFilterOptions = function () {
+
   const container = document.getElementById("produktContainer");
   if (!container) return;
 
@@ -392,6 +399,7 @@ window.populateFilterOptions = function () {
   }
 }
 
+
 // 🔄 Alle Filter zurücksetzen und erneut anwenden
 window.resetFilter = function () {
   document.querySelectorAll(".filterbar select").forEach((sel) => {
@@ -400,6 +408,7 @@ window.resetFilter = function () {
   populateFilterOptions();
   const priceSel = document.getElementById("filter-price");
   if (priceSel) priceSel.selectedIndex = 0;
+
   const suche = document.getElementById("produktsuche");
   if (suche) {
     suche.value = "";
@@ -464,6 +473,7 @@ window.restoreOriginalOrder = function () {
 };
 
 function updateActiveFilters() {
+
   document.querySelectorAll(".filterbar select").forEach((sel) => {
     if (sel.id === "sort-select") {
       sel.classList.toggle("active", sel.value !== "default");
