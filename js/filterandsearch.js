@@ -22,10 +22,18 @@ function getItemsPerPage() {
   return 2;
 }
 
-window.applyFilter = function () {
-  const minInput = document.getElementById("filter-price-min");
-  const maxInput = document.getElementById("filter-price-max");
-  const minVal = parseFloat(minInput?.value || "");
+  const priceSel = document.getElementById("filter-price");
+  let minVal = 0;
+  let maxVal = Infinity;
+  if (priceSel && priceSel.value) {
+    if (priceSel.value.includes("-")) {
+      const [mi, ma] = priceSel.value.split("-");
+      minVal = parseFloat(mi) || 0;
+      maxVal = parseFloat(ma) || Infinity;
+    } else if (priceSel.value.endsWith("+")) {
+      minVal = parseFloat(priceSel.value) || 0;
+    }
+  }
   const maxVal = parseFloat(maxInput?.value || "");
 
   const filterWerte = {
@@ -123,10 +131,9 @@ document.addEventListener("DOMContentLoaded", () => {
           )}`;
           window.location.href = url;
         }
-      } else {
-        handleTastaturNavigation(e, liste, input, shadow);
-      }
-    });
+  const prodContainer = document.getElementById("produktContainer");
+  const priceSel = document.getElementById("filter-price");
+  if (priceSel) priceSel.addEventListener("change", applyFilter);
   }
 
   document.addEventListener("click", (e) => {
@@ -325,38 +332,41 @@ window.populateFilterOptions = function () {
     ...new Set(products.map((p) => p.dataset[attr]).filter(Boolean)),
   ];
 
-  const setOptions = (id, values, label) => {
-    const sel = document.getElementById(id);
-    if (!sel) return;
-    const current = sel.value;
-    sel.innerHTML = "";
+  const priceSel = document.getElementById("filter-price");
+  if (priceSel) {
+    const prices = products
+      .map((p) => parseFloat(p.dataset.preis) || 0)
+      .filter((n) => !isNaN(n));
+    const minPrice = Math.min(...prices);
+    const maxPrice = Math.max(...prices);
+    const step = 50;
+    const current = priceSel.value;
+    priceSel.innerHTML = "";
     const allOpt = document.createElement("option");
     allOpt.value = "";
-    allOpt.textContent = label;
-    sel.appendChild(allOpt);
-    values.forEach((v) => {
-      const opt = document.createElement("option");
-      opt.value = v;
-      if (id === "filter-farbe") {
-        opt.textContent = `${colorEmoji(v)} ${v}`;
+    allOpt.textContent = "Alle Preise";
+    priceSel.appendChild(allOpt);
+    for (
+      let p = Math.floor(minPrice / step) * step;
+      p < maxPrice;
+      p += step
+    ) {
+      if (p + step >= maxPrice) {
+        opt.value = `${p}+`;
+        opt.textContent = `ab ${p} €`;
+        priceSel.appendChild(opt);
+        break;
       } else {
-        opt.textContent = v;
+        opt.value = `${p}-${p + step}`;
+        opt.textContent = `${p}–${p + step} €`;
+        priceSel.appendChild(opt);
       }
-      sel.appendChild(opt);
-    });
-    if (values.includes(current)) sel.value = current;
-  };
+    }
+    if (current) priceSel.value = current;
+  }
 
-
-  setOptions("filter-marke", collect("marke"), "Alle Marken");
-  setOptions("filter-farbe", collect("farbe"), "Alle Farben");
-  setOptions("filter-mannschaft", collect("mannschaft"), "Alle Mannschaften");
-  setOptions("filter-geschlecht", collect("geschlecht"), "Alle Geschlechter");
-
-  const minInput = document.getElementById("filter-price-min");
-  const maxInput = document.getElementById("filter-price-max");
-  const prices = products
-    .map((p) => parseFloat(p.dataset.preis) || 0)
+  const priceSel = document.getElementById("filter-price");
+  if (priceSel) priceSel.selectedIndex = 0;
     .filter((n) => !isNaN(n))
     .sort((a, b) => a - b);
 
@@ -436,35 +446,9 @@ window.sortProducts = function (order) {
       if (order === "name-asc" || order === "name-desc") {
         const na = a.querySelector("h3")?.textContent.trim() || "";
         const nb = b.querySelector("h3")?.textContent.trim() || "";
-        return order === "name-asc" ? na.localeCompare(nb) : nb.localeCompare(na);
-      }
-      return 0;
-    });
-    items.forEach((el) => container.appendChild(el));
-  }
-
-  currentPage = 1;
-  updatePagination();
-  updateActiveFilters();
-};
-
-
-// Setzt die Produkte in ihre ursprüngliche Reihenfolge zurück
-window.restoreOriginalOrder = function () {
-  const container = document.getElementById("produktContainer");
-  if (!container) return;
-  const items = Array.from(container.querySelectorAll(".einzelprodukt"));
-  items.sort((a, b) => {
-    const ia = parseInt(a.dataset.id, 10) || 0;
-    const ib = parseInt(b.dataset.id, 10) || 0;
-    return ia - ib;
-  });
-  items.forEach((el) => container.appendChild(el));
-};
-
-function updateActiveFilters() {
-  document.querySelectorAll(".filterbar select").forEach((sel) => {
-    if (sel.id === "sort-select") {
+  const priceSel = document.getElementById("filter-price");
+  const priceActive = priceSel && priceSel.selectedIndex > 0;
+  if (priceSel) priceSel.classList.toggle("active", priceActive);
       sel.classList.toggle("active", sel.value !== "default");
     } else {
       sel.classList.toggle("active", sel.selectedIndex > 0);
