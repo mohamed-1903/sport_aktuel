@@ -27,19 +27,20 @@
   box-sizing: border-box; /* Padding zählt zur Gesamtbreite */
 }
 
-/* Oberer Buttonbereich */
-.filter-tools {
+.filterbar {
   display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-  justify-content: flex-start;
+  flex-direction: row;      /* horizontal ausrichten */
+  flex-wrap: nowrap;        /* Elemente in einer Zeile anzeigen */
   align-items: center;
-  width: 100%;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+  background-color: var(--card-bg);
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  overflow-x: auto;
+  justify-content: flex-start; /* linksbündig */
 }
-
-.filter-toggle,
-.layout-toggle,
 .reset-filter {
   border: 1px solid #555;
   border-radius: 6px;
@@ -118,14 +119,15 @@
   color: #000;
 }
 
-/* Preis-Slider + Label */
-.range-filter {
+.filter-controls {
   display: flex;
+  flex-direction: row;     /* horizontal anordnen */
+  flex-wrap: nowrap;
+  gap: 0.25rem;
   align-items: center;
-  gap: 0.5rem;
-  border: 1px solid #555;
-  border-radius: 6px;
-  background-color: var(--card-bg);
+  justify-content: flex-start; /* Filter linksbündig */
+  overflow-x: auto;        /* bei Bedarf horizontal scrollen */
+}
   color: var(--text-color);
   padding: 5px 10px;
 }
