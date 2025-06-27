@@ -1104,6 +1104,7 @@ body.light-mode .zoom-close {
 }
 
 
+
 .popup-stack-container .popup-instance {
   position: relative;
   top: auto;
@@ -1120,6 +1121,7 @@ body.light-mode .zoom-close {
   backdrop-filter: blur(var(--popup-blur)) saturate(160%);
   transform: scale(1);
   transition: all 0.3s ease-out;
+
 
   opacity: 1;
   pointer-events: auto;
@@ -1172,6 +1174,7 @@ body.light-mode .zoom-close {
   justify-content: center; /* Bild und Text mittig ausrichten */
   gap: 15px;
 }
+
 
 
 .popup-content-flex img {
@@ -1287,11 +1290,14 @@ body.light-mode .zoom-close {
   align-items: center;
   justify-content: center;
   vertical-align: middle;
+  height: 36px; /* gleiche Knopfhöhe für saubere Ausrichtung */
+  margin: 0; /* Standard-Margen entfernen */
+  box-sizing: border-box;
   box-shadow: 0 2px 6px rgb(0 0 0 / 15%);
   transition: background-color 0.3s ease, transform 0.2s ease,
     box-shadow 0.3s ease;
-
 }
+
 
 .popup-buttons button:hover,
 .popup-buttons a:hover {
