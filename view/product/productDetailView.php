@@ -259,11 +259,7 @@
         <?php endfor; ?>
       </div>
       <textarea name="comment" required placeholder="Deine Meinung..."></textarea>
-      <div class="suggestion-bar">
-        <?php foreach ($reviewSuggestions as $sg): ?>
-          <button type="button" class="suggest-btn"><?= htmlspecialchars($sg) ?></button>
-        <?php endforeach; ?>
-      </div>
+      <div class="suggestion-bar" id="suggestionBar" data-suggestions='<?= htmlspecialchars(json_encode($reviewSuggestions), ENT_QUOTES, 'UTF-8') ?>'></div>
       <input type="file" name="image" id="ratingImage" accept="image/*">
       <div id="imagePreviewContainer" class="image-preview hidden">
         <img id="ratingPreview" alt="Vorschau" />
