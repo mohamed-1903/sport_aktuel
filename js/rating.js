@@ -2,6 +2,7 @@
 window.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('ratingModal');
   if (!modal) return;
+  const closeBtn = modal.querySelector('.review-close');
 
   document.querySelectorAll('.open-review-modal').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -16,29 +17,29 @@ window.addEventListener('DOMContentLoaded', () => {
     if (e.target === modal) closeRatingModal();
   });
 
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeRatingModal();
+  if (closeBtn) closeBtn.addEventListener('click', closeRatingModal);
+
+  window.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+      closeRatingModal();
+    }
   });
 
-  const imageInput = document.getElementById('ratingImage');
-  const preview = document.getElementById('ratingPreview');
-  if (imageInput && preview) {
-    imageInput.addEventListener('change', () => {
-      const file = imageInput.files[0];
-      if (file) {
-        preview.src = URL.createObjectURL(file);
-        preview.classList.remove('hidden');
-      } else {
-        preview.classList.add('hidden');
-      }
-    });
-  }
 });
 
 function closeRatingModal() {
   const modal = document.getElementById('ratingModal');
   if (modal) {
-    modal.classList.add('hidden');
+    modal.classList.add('hide');
+    modal.addEventListener(
+      'animationend',
+      () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('hide');
+      },
+      { once: true }
+    );
+
     document.body.classList.remove('modal-open');
   }
 }
