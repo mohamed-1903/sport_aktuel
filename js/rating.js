@@ -31,7 +31,6 @@ window.addEventListener('DOMContentLoaded', () => {
     imageInput.files = dt.files;
   }
 
-
   function renderPreviews() {
     if (!previewList) return;
     previewList.innerHTML = '';
