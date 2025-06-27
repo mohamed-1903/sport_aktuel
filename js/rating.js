@@ -22,12 +22,21 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const imageInput = document.getElementById('ratingImages');
   const previewList = document.getElementById('imagePreviewList');
-  let dt = new DataTransfer();
+  const selectedFiles = [];
+
+  function syncInput() {
+    if (!imageInput) return;
+    const dt = new DataTransfer();
+    selectedFiles.forEach(f => dt.items.add(f));
+    imageInput.files = dt.files;
+  }
+
 
   function renderPreviews() {
     if (!previewList) return;
     previewList.innerHTML = '';
-    [...dt.files].forEach((file, idx) => {
+    selectedFiles.forEach((file, idx) => {
+
       const wrapper = document.createElement('div');
       wrapper.className = 'image-preview';
       const img = document.createElement('img');
@@ -36,23 +45,25 @@ window.addEventListener('DOMContentLoaded', () => {
       btn.type = 'button';
       btn.innerHTML = '&times;';
       btn.addEventListener('click', () => {
-        dt.items.remove(idx);
-        imageInput.files = dt.files;
+        selectedFiles.splice(idx, 1);
+        syncInput();
+
         renderPreviews();
       });
       wrapper.appendChild(img);
       wrapper.appendChild(btn);
       previewList.appendChild(wrapper);
     });
-    previewList.classList.toggle('hidden', dt.files.length === 0);
+    previewList.classList.toggle('hidden', selectedFiles.length === 0);
+
   }
 
   if (imageInput && previewList) {
     imageInput.addEventListener('change', () => {
       [...imageInput.files].forEach((file) => {
-        if (dt.files.length < 5) dt.items.add(file);
+        if (selectedFiles.length < 5) selectedFiles.push(file);
       });
-      imageInput.files = dt.files;
+      syncInput();
       renderPreviews();
 
     });

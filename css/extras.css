@@ -1104,6 +1104,7 @@ body.light-mode .zoom-close {
 }
 
 
+
 .toast-popup .close-toast {
   background: none;
   border: none;
@@ -1311,6 +1312,7 @@ body.light-mode .zoom-close {
   --toast-blur: 8px;
   --overlay-bg: rgb(0 0 0 / 80%);
 }
+
 
 
 /* === Buttons für Popups === */
