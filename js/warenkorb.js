@@ -386,8 +386,10 @@ function zeigeToast(text, farbe = "") {
   const el = document.getElementById("toast-popup");
   if (!el) return;
 
+  // Nur den Text anzeigen und auf ein Schließen-Symbol verzichten
   el.textContent = text;
-  el.style.backgroundColor = farbe;
+  el.style.background = farbe || "";
+
   el.classList.add("show");
 
   clearTimeout(el._hideTimer);
