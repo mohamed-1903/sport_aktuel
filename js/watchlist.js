@@ -174,10 +174,10 @@ function loadWatchlist() {
               item.product_id
             }" data-name="${item.name}" data-image="${
           item.image_main
-        }" data-price="${parseFloat(item.price)}">🗑️ Entfernen</button>
+        }" data-price="${parseFloat(item.price)}">Entfernen</button>
             <a href="index.php?page=product&action=detail&id=${
               item.product_id
-            }"><button>🔍 Anzeigen</button></a>
+            }"><button>Anzeigen</button></a>
           </div>`;
         container.appendChild(card);
       });

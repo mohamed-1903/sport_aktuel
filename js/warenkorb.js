@@ -399,7 +399,7 @@ function zeigeGestapeltesPopup({
           ${
             buttons ||
             (productId
-              ? `<a href="index.php?page=product&action=detail&id=${productId}">🔍 Anzeigen</a>`
+              ? `<a href="index.php?page=product&action=detail&id=${productId}">Anzeigen</a>`
               : "")
           }
         </div>
