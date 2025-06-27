@@ -24,6 +24,7 @@
 #ratingForm .rating-stars label:hover ~ label {
   color: #ffd700;
   -webkit-text-stroke: 0;
+
   transform: scale(1.2);
 }
 
@@ -33,7 +34,7 @@
 
 .reviews {
   margin-top: 2rem;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid var(--popup-border);
   padding-top: 1rem;
 }
 
@@ -43,12 +44,14 @@
 
 .review {
   text-align: left;
+
   background: var(--card-bg);
   border: 1px solid var(--popup-border);
   border-radius: 5px;
   padding: 12px 15px;
   margin-bottom: 12px;
   color: var(--text-color);
+
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -236,10 +239,10 @@
   background: var(--overlay-bg);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 5vh;
   z-index: 10000;
   animation: fadeInModal 0.3s ease forwards;
-
 }
 
 .review-modal-content {
@@ -263,7 +266,13 @@
   background: none;
   border: none;
   font-size: 24px;
+  color: #888;
   cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.review-modal-content .review-close:hover {
+  color: #000;
 }
 
 body.modal-open {
@@ -271,7 +280,7 @@ body.modal-open {
 }
 
 .btn-review {
-  background: #ffd700;
+  background: var(--accent-color);
   border: none;
   border-radius: 25px;
   padding: 8px 18px;
@@ -311,19 +320,14 @@ body.modal-open {
 }
 
 /* fancy enhancements */
-.review {
-  background: linear-gradient(135deg, #fff, #f2f2f2);
-  border-left: 4px solid #ffd700;
-  padding: 15px 15px 15px 40px;
-  position: relative;
-}
+
 
 .review::before {
   content: '★';
   position: absolute;
   left: 10px;
   top: 10px;
-  color: #ffd700;
+  color: var(--accent-color);
 }
 
 .review img {
@@ -365,6 +369,7 @@ body.modal-open {
 .no-reviews {
   font-style: italic;
   color: var(--text-muted);
+
   margin: 8px 0;
 }
 
@@ -376,3 +381,12 @@ body.modal-open {
   from { transform: scale(0.8); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
+.review-modal.hide {
+  animation: fadeOutModal 0.3s ease forwards;
+}
+
+@keyframes fadeOutModal {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+

@@ -54,6 +54,7 @@ window.addEventListener('DOMContentLoaded', () => {
       });
       imageInput.files = dt.files;
       renderPreviews();
+
     });
   }
 
@@ -89,6 +90,7 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     });
   });
+
 });
 
 function openImageGallery(images, start) {
@@ -108,7 +110,16 @@ function openImageGallery(images, start) {
 function closeRatingModal() {
   const modal = document.getElementById('ratingModal');
   if (modal) {
-    modal.classList.add('hidden');
+    modal.classList.add('hide');
+    modal.addEventListener(
+      'animationend',
+      () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('hide');
+      },
+      { once: true }
+    );
+
     document.body.classList.remove('modal-open');
   }
 }
