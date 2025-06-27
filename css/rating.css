@@ -181,7 +181,8 @@
 
 .review-images {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+
   gap: 8px;
   overflow-x: auto;
   margin-top: 6px;
@@ -212,8 +213,6 @@
   cursor: pointer;
   font-size: 16px;
 }
-
-
 
 .review-form button {
   margin-top: 12px;
