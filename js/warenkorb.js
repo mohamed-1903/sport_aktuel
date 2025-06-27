@@ -94,6 +94,7 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
                 ? `<a href="index.php?page=product&action=detail&id=${iid}" class="show-btn">Anzeigen</a>`
                 : ""
             }`;
+
           zeigeGestapeltesPopup({
             name,
             image,
@@ -227,9 +228,14 @@ function loadList() {
             </div>
           </td>
           <td>
-            <input type="number" class="qty-input" data-id="${
+            <select class="qty-select" data-id="${
               item.product_id
-            }" data-size="${item.size}" value="${menge}" min="1" />
+            }" data-size="${item.size}" data-price="${einzelfpreis.toFixed(2)}">
+              ${Array.from({ length: 10 }, (_, i) => `<option value="${
+                i + 1
+              }"${menge === i + 1 ? " selected" : ""}>${i + 1}</option>`).join("")}
+            </select>
+
           </td>
           <td>${einzelfpreis.toFixed(2)} €</td>
           <td class="summe-cell">${gesamt.toFixed(2)} €</td>
@@ -265,16 +271,22 @@ function loadList() {
       });
 
       // 🆙 Menge ändern
-      document.querySelectorAll(".qty-input").forEach((input) => {
-        input.addEventListener("change", () => {
-          const id = input.dataset.id;
-          const size = input.dataset.size;
-          let qty = parseInt(input.value);
+      document.querySelectorAll(".qty-select").forEach((sel) => {
+        sel.addEventListener("change", () => {
+          let qty = parseInt(sel.value);
+
           if (!qty || qty < 1) {
             qty = 1;
-            input.value = 1;
+            sel.value = 1;
           }
-          updateCartQuantity(id, size, qty);
+          const price = parseFloat(sel.dataset.price) || 0;
+          const sumCell = sel.closest("tr").querySelector(".summe-cell");
+          if (sumCell) sumCell.textContent = `${(price * qty).toFixed(2)} €`;
+          recalculateTotals();
+          const id = sel.dataset.id;
+          const size = sel.dataset.size;
+
+          updateCartQuantity(id, size, qty, false);
         });
       });
     });
@@ -303,7 +315,7 @@ function removeFromCart(productId, size, previewData = null) {
     .catch((err) => console.error("Fehler beim Entfernen:", err));
 }
 
-function updateCartQuantity(productId, size, quantity) {
+function updateCartQuantity(productId, size, quantity, reload = true) {
   fetch("index.php?page=cart&action=update", {
     method: "POST",
     headers: {
@@ -314,10 +326,38 @@ function updateCartQuantity(productId, size, quantity) {
     )}&quantity=${encodeURIComponent(quantity)}`,
   })
     .then(() => {
-      loadList();
+      if (reload) {
+        loadList();
+      } else {
+        recalculateTotals();
+      }
+
       updateCartCount();
     })
     .catch((err) => console.error("Fehler beim Aktualisieren:", err));
+}
+
+function recalculateTotals() {
+  const sumCells = document.querySelectorAll(".summe-cell");
+  const zwischensummeEl = document.getElementById("zwischensumme");
+  const gesamtsummeEl = document.getElementById("gesamtsumme");
+  const nettoEl = document.getElementById("nettosumme");
+  const mwstEl = document.getElementById("mwstbetrag");
+  let total = 0;
+  sumCells.forEach((cell) => {
+    const raw = cell.textContent
+      .replace(/[^0-9,.-]/g, "")
+      .replace(',', '.');
+    const val = parseFloat(raw);
+
+    if (!isNaN(val)) total += val;
+  });
+  const netto = total / 1.19;
+  const mwst = total - netto;
+  if (zwischensummeEl) zwischensummeEl.textContent = `${total.toFixed(2)} €`;
+  if (gesamtsummeEl) gesamtsummeEl.textContent = `${total.toFixed(2)} €`;
+  if (nettoEl) nettoEl.textContent = `${netto.toFixed(2)} €`;
+  if (mwstEl) mwstEl.textContent = `${mwst.toFixed(2)} €`;
 }
 
 function zeigeToast(text, farbe = "#333") {
