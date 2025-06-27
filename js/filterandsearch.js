@@ -28,8 +28,6 @@ window.applyFilter = function () {
   const minVal = parseFloat(minInput?.value || "");
   const maxVal = parseFloat(maxInput?.value || "");
 
-
-
   const minVal = parseFloat(minInput?.value || 0);
   const maxVal = parseFloat(maxInput?.value || Infinity);
   const filterWerte = {
@@ -159,6 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
   [minInput, maxInput].forEach((el) => el && el.addEventListener("change", applyFilter));
   updateActiveFilters();
 });
+
 
 
 // 🔽 PRODUKTE LADEN
@@ -381,6 +380,7 @@ function populateFilterOptions() {
 
 
 
+
 // 🔄 Alle Filter zurücksetzen und erneut anwenden
 window.resetFilter = function () {
   document.querySelectorAll(".filterbar select").forEach((sel) => {
@@ -471,8 +471,24 @@ function updateActiveFilters() {
 
 window.togglePriceDropdown = function () {
   const menu = document.getElementById("price-dropdown");
-  if (menu) menu.classList.toggle("show");
+  const btn = document.querySelector(".price-toggle");
+  if (!menu || !btn) return;
+  const open = menu.classList.toggle("show");
+  btn.classList.toggle("open", open);
+  const outside = (e) => {
+    if (!e.target.closest(".price-filter")) {
+      menu.classList.remove("show");
+      btn.classList.remove("open");
+      document.removeEventListener("click", outside);
+    }
+  };
+  if (open) {
+    document.addEventListener("click", outside);
+  } else {
+    document.removeEventListener("click", outside);
+  }
 };
+
 
 
 
