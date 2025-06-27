@@ -23,10 +23,18 @@ function getItemsPerPage() {
 }
 
 window.applyFilter = function () {
-  const minInput = document.getElementById("filter-price-min");
-  const maxInput = document.getElementById("filter-price-max");
-  const minVal = parseFloat(minInput?.value || "");
-  const maxVal = parseFloat(maxInput?.value || "");
+  const priceSel = document.getElementById("filter-price");
+  let minVal = 0;
+  let maxVal = Infinity;
+  if (priceSel && priceSel.value) {
+    if (priceSel.value.includes("-")) {
+      const [mi, ma] = priceSel.value.split("-");
+      minVal = parseFloat(mi) || 0;
+      maxVal = parseFloat(ma) || Infinity;
+    } else if (priceSel.value.endsWith("+")) {
+      minVal = parseFloat(priceSel.value) || 0;
+    }
+  }
 
   const filterWerte = {
     marke: document.getElementById("filter-marke")?.value || "",
@@ -53,6 +61,8 @@ window.applyFilter = function () {
           filterWerte.geschlecht.toLowerCase()) &&
       preis >= filterWerte.minPreis &&
       preis <= filterWerte.maxPreis;
+
+
 
 
 
@@ -158,11 +168,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   updateLayoutToggle(savedLayout === "list" ? "list" : "grid");
   populateFilterOptions();
-  const minInput = document.getElementById("filter-price-min");
-  const maxInput = document.getElementById("filter-price-max");
-  [minInput, maxInput].forEach((el) => el && el.addEventListener("change", applyFilter));
+  const priceSel = document.getElementById("filter-price");
+  if (priceSel) priceSel.addEventListener("change", applyFilter);
   updateActiveFilters();
 });
+
+
 
 // 🔽 PRODUKTE LADEN
 function ladeProdukte(containerId, urls) {
@@ -353,39 +364,40 @@ window.populateFilterOptions = function () {
   setOptions("filter-mannschaft", collect("mannschaft"), "Alle Mannschaften");
   setOptions("filter-geschlecht", collect("geschlecht"), "Alle Geschlechter");
 
-  const minInput = document.getElementById("filter-price-min");
-  const maxInput = document.getElementById("filter-price-max");
-  const prices = products
-    .map((p) => parseFloat(p.dataset.preis) || 0)
-    .filter((n) => !isNaN(n))
-    .sort((a, b) => a - b);
-
-  const uniquePrices = [...new Set(prices)];
-
-  const fillOptions = (select, placeholder) => {
-    if (!select) return;
-    const current = select.value;
-    select.innerHTML = "";
-    const blank = document.createElement("option");
-    blank.value = "";
-    blank.textContent = placeholder;
-    select.appendChild(blank);
-    uniquePrices.forEach((price) => {
+  const priceSel = document.getElementById("filter-price");
+  if (priceSel) {
+    const prices = products
+      .map((p) => parseFloat(p.dataset.preis) || 0)
+      .filter((n) => !isNaN(n));
+    const minPrice = Math.min(...prices);
+    const maxPrice = Math.max(...prices);
+    const step = 50;
+    const current = priceSel.value;
+    priceSel.innerHTML = "";
+    const allOpt = document.createElement("option");
+    allOpt.value = "";
+    allOpt.textContent = "Alle Preise";
+    priceSel.appendChild(allOpt);
+    for (
+      let p = Math.floor(minPrice / step) * step;
+      p < maxPrice;
+      p += step
+    ) {
       const opt = document.createElement("option");
-      opt.value = price;
-      opt.textContent = `${price} €`;
-      select.appendChild(opt);
-    });
-    if (current) select.value = current;
-  };
-
-  fillOptions(minInput, "Min");
-  fillOptions(maxInput, "Max");
+      if (p + step >= maxPrice) {
+        opt.value = `${p}+`;
+        opt.textContent = `ab ${p} €`;
+        priceSel.appendChild(opt);
+        break;
+      } else {
+        opt.value = `${p}-${p + step}`;
+        opt.textContent = `${p}–${p + step} €`;
+        priceSel.appendChild(opt);
+      }
+    }
+    if (current) priceSel.value = current;
+  }
 }
-
-
-
-
 
 
 // 🔄 Alle Filter zurücksetzen und erneut anwenden
@@ -394,10 +406,8 @@ window.resetFilter = function () {
     sel.selectedIndex = 0;
   });
   populateFilterOptions();
-  const minInput = document.getElementById("filter-price-min");
-  const maxInput = document.getElementById("filter-price-max");
-  if (minInput) minInput.selectedIndex = 0;
-  if (maxInput) maxInput.selectedIndex = 0;
+  const priceSel = document.getElementById("filter-price");
+  if (priceSel) priceSel.selectedIndex = 0;
 
   const suche = document.getElementById("produktsuche");
   if (suche) {
@@ -463,6 +473,7 @@ window.restoreOriginalOrder = function () {
 };
 
 function updateActiveFilters() {
+
   document.querySelectorAll(".filterbar select").forEach((sel) => {
     if (sel.id === "sort-select") {
       sel.classList.toggle("active", sel.value !== "default");
@@ -470,37 +481,11 @@ function updateActiveFilters() {
       sel.classList.toggle("active", sel.selectedIndex > 0);
     }
   });
-  const minInput = document.getElementById("filter-price-min");
-  const maxInput = document.getElementById("filter-price-max");
-  const minActive = minInput && minInput.selectedIndex > 0;
-  const maxActive = maxInput && maxInput.selectedIndex > 0;
-  if (minInput) minInput.classList.toggle("active", minActive);
-  if (maxInput) maxInput.classList.toggle("active", maxActive);
-  const menu = document.querySelector(".price-menu");
-  if (menu) menu.classList.toggle("active", minActive || maxActive);
-  const btn = document.querySelector(".price-toggle");
-  if (btn) btn.classList.toggle("active", minActive || maxActive);
+  const priceSel = document.getElementById("filter-price");
+  const priceActive = priceSel && priceSel.selectedIndex > 0;
+  if (priceSel) priceSel.classList.toggle("active", priceActive);
 }
 
-window.togglePriceDropdown = function () {
-  const menu = document.getElementById("price-dropdown");
-  const btn = document.querySelector(".price-toggle");
-  if (!menu || !btn) return;
-  const open = menu.classList.toggle("show");
-  btn.classList.toggle("open", open);
-  const outside = (e) => {
-    if (!e.target.closest(".price-filter")) {
-      menu.classList.remove("show");
-      btn.classList.remove("open");
-      document.removeEventListener("click", outside);
-    }
-  };
-  if (open) {
-    document.addEventListener("click", outside);
-  } else {
-    document.removeEventListener("click", outside);
-  }
-};
 
 // Ein/Ausblenden der Filterleiste
 window.toggleFilterBar = function () {
@@ -628,6 +613,8 @@ document.addEventListener("DOMContentLoaded", () => {
   resetFilter();
   updatePagination();
 });
+
+
 
 window.addEventListener("resize", () => {
   updatePagination();

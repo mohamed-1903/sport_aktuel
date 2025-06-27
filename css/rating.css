@@ -44,6 +44,7 @@
   padding: 15px 15px 15px 40px;
   margin-bottom: 15px;
   position: relative;
+
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -148,6 +149,7 @@ body.modal-open {
 
 /* fancy enhancements */
 
+
 .review::before {
   content: '★';
   position: absolute;
@@ -169,6 +171,7 @@ body.modal-open {
   transform: scale(1.05);
 }
 
+
 .review-modal-content {
   box-shadow: 0 4px 8px rgb(0 0 0 / 20%);
 }
@@ -177,7 +180,6 @@ body.modal-open {
   from { transform: scale(0.8); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
-
 .review-modal.hide {
   animation: fadeOutModal 0.3s ease forwards;
 }
@@ -186,3 +188,4 @@ body.modal-open {
   from { opacity: 1; }
   to { opacity: 0; }
 }
+

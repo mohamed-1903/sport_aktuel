@@ -3,6 +3,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('ratingModal');
   if (!modal) return;
   const closeBtn = modal.querySelector('.review-close');
+
   document.querySelectorAll('.open-review-modal').forEach(btn => {
     btn.addEventListener('click', () => {
       document.body.classList.add('modal-open');
@@ -23,6 +24,7 @@ window.addEventListener('DOMContentLoaded', () => {
       closeRatingModal();
     }
   });
+
 });
 
 function closeRatingModal() {
@@ -37,6 +39,7 @@ function closeRatingModal() {
       },
       { once: true }
     );
+
     document.body.classList.remove('modal-open');
   }
 }
