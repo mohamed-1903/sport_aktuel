@@ -211,7 +211,7 @@
         <p class="no-reviews">Noch keine Bewertungen.</p>
       <?php endif; ?>
       <?php foreach ($ratings as $r): ?>
-        <div class="review">
+        <div class="review" data-review-id="<?= (int)$r['id'] ?>">
           <div class="review-content">
             <strong><?= htmlspecialchars($r['display_name'] ?: $r['username']) ?></strong>
             <small class="rating-date">
@@ -252,7 +252,7 @@
           <?php if (!empty($r['replies'])): ?>
             <div class="review-replies">
               <?php foreach ($r['replies'] as $reply): ?>
-                <div class="review reply">
+                <div class="review reply" data-review-id="<?= (int)$reply['id'] ?>" data-parent-id="<?= (int)$r['id'] ?>">
                   <strong><?= htmlspecialchars($reply['display_name'] ?: $reply['username']) ?></strong>
                   <small class="rating-date"><?= date('d.m.Y H:i', strtotime($reply['created_at'])) ?></small>
                   <span class="rating-stars" style="pointer-events:none;">
@@ -312,8 +312,13 @@
       <div id="imagePreviewList" class="image-preview-list hidden"></div>
       <button type="submit">Bewerten</button>
     </form>
-  </div>
 </div>
+</div>
+<script>
+  window.isLoggedIn = <?= isset($_SESSION['user_id']) ? 'true' : 'false' ?>;
+  window.currentUserId = <?= isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : 'null' ?>;
+  window.isAdmin = <?= !empty($_SESSION['is_admin']) ? 'true' : 'false' ?>;
+</script>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
