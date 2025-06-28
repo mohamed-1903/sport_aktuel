@@ -1,26 +1,4 @@
-<link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/layout.css">
-<link rel="stylesheet" href="css/typography.css">
-<link rel="stylesheet" href="css/components.css">
-<link rel="stylesheet" href="css/form.css">
-<link rel="stylesheet" href="css/product.css">
-<link rel="stylesheet" href="css/modal.css">
-<link rel="stylesheet" href="css/themes.css">
-<link rel="stylesheet" href="css/responsive.css">
-<link rel="stylesheet" href="css/components.css">
-<link rel="stylesheet" href="css/cookie.css">
-<link rel="stylesheet" href="css/core.css">
 <link rel="stylesheet" href="css/footer.css">
-<link rel="stylesheet" href="css/form.css">
-<link rel="stylesheet" href="css/header.css">
-<link rel="stylesheet" href="css/layout.css">
-<link rel="stylesheet" href="css/mobile_nav.css">
-<link rel="stylesheet" href="css/modal.css">
-<link rel="stylesheet" href="css/product.css">
-<link rel="stylesheet" href="css/responsive.css">
-<link rel="stylesheet" href="css/themes.css">
-<link rel="stylesheet" href="css/typography.css">
-<link rel="stylesheet" href="css/variables.css">
 
 
 <footer>
@@ -86,3 +64,5 @@
 <script src="js/warenkorb.js"></script>
 <script src="js/burger_menu.js"></script>
 <script src="js/rating.js"></script>
+</body>
+</html>

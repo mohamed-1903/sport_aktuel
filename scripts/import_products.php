@@ -3,6 +3,14 @@
 
 require_once __DIR__ . '/../model/db.php'; // Datenbankverbindung
 
+// Sicherstellen, dass die Spalte für Rabatt vorhanden ist
+try {
+    $db->query("SELECT discount FROM products LIMIT 1");
+} catch (PDOException $e) {
+    // Spalte anlegen, falls sie fehlt
+    $db->exec("ALTER TABLE products ADD COLUMN discount INT DEFAULT 0");
+}
+
 define('PRODUCT_JSON', __DIR__ . '/../data/products.json');
 define('LAST_IMPORT_FILE', __DIR__ . '/../data/.last_import_time');
 
@@ -32,10 +40,12 @@ $db->exec("DELETE FROM products");
 
 // Vorbereitete SQL-Anweisung
 $insertStmt = $db->prepare("
-    INSERT INTO products 
-        (id, name, description, price, price_text, image_main, marke, farbe, geschlecht, category, subcategory, sizes, images)
+
+    INSERT INTO products
+        (id, name, description, price, price_text, image_main, marke, farbe, geschlecht, category, subcategory, sizes, images, discount)
     VALUES
-        (:id, :name, :description, :price, :price_text, :image_main, :marke, :farbe, :geschlecht, :category, :subcategory, :sizes, :images)
+        (:id, :name, :description, :price, :price_text, :image_main, :marke, :farbe, :geschlecht, :category, :subcategory, :sizes, :images, :discount)
+
 ");
 
 // Produkte einfügen
@@ -54,7 +64,9 @@ foreach ($data['products'] as $product) {
         ':subcategory'  => $product['subcategory'],
         ':sizes'        => json_encode($product['sizes']),
         ':images'       => json_encode($product['images']),
+        ':discount'     => $product['discount'] ?? 0,
     ]);
+
 }
 
 // Zeitstempel speichern
