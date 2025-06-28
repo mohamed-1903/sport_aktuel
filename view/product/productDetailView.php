@@ -213,6 +213,7 @@
 
   <?php foreach ($productsToShow as $index => $product):
     $ratings = getRatingsForProduct((int)$product['id'], $_SESSION['user_id'] ?? null);
+
     $avgRating = getAverageRating((int)$product['id']);
   ?>
     <section class="reviews" aria-live="polite" aria-atomic="true">
@@ -269,8 +270,6 @@
           </div>
         </div>
       <?php endforeach; ?>
-
-
 
     </section>
     <?php if (isset($_SESSION['user_id'])): ?>
