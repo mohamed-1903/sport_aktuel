@@ -44,7 +44,7 @@
     $sizes = $product['sizes'] ?? range(38, 46);
   ?>
     <!-- 📦 Einzelnes Produkt-Layout -->
-    <section class="Eprodukt untereinander" data-product-index="<?= $index ?>" data-base-price="<?= $salePrice ?>" data-admin-discount="<?= $discount ?>">
+    <section class="Eprodukt untereinander" data-product-index="<?= $index ?>" data-base-price="<?= $price ?>" data-admin-discount="<?= $discount ?>">
 
       <h2 style="text-align:center; margin-bottom: 20px;">
         <?= count($productsToShow) > 1 ? "🛍️ Produkt " . ($index + 1) : "Produktdetails" ?>
@@ -147,7 +147,7 @@
             data-iid="<?= $iid ?>"
             data-name="<?= htmlspecialchars($name) ?>"
             data-price="<?= $salePrice ?>"
-
+            data-discount="<?= $discount ?>"
             data-image="<?= htmlspecialchars($image) ?>">
             🛒 In den Warenkorb
           </button>
@@ -158,6 +158,7 @@
             data-iid="<?= $iid ?>"
             data-name="<?= htmlspecialchars($name) ?>"
             data-price="<?= $salePrice ?>"
+            data-discount="<?= $discount ?>"
             data-image="<?= htmlspecialchars($image) ?>">
             ❤️
           </button>
@@ -197,18 +198,48 @@
     <button id="compareBtn" class="btn-compare">⚖️ Vergleichen</button>
   </div>
 
-  <!-- 🧠 Ähnliche Produkte statisch -->
+  <!-- 🧠 Ähnliche Produkte dynamisch -->
   <section class="produkte similar-products">
     <h2>Ähnliche Produkte</h2>
-    <div class="produkt-grid">
-      <?php for ($i = 1; $i <= 3; $i++): ?>
-        <div class="Eprodukt">
-          <img src="nike-shoe.jpg" alt="Ähnliches Produkt <?= $i ?>" />
-          <h3>Nike Produkt <?= $i ?></h3>
-          <p>€<?= number_format(199.99 - ($i - 1) * 20, 2, ',', '.') ?></p>
-          <button>Details</button>
+    <div class="einzelprodukt-grid">
+
+      <?php foreach ($similarProducts as $sim): ?>
+        <?php
+          $preis = (float)($sim['price'] ?? 0);
+          $discount = (int)($sim['discount'] ?? 0);
+          $salePrice = $discount > 0 ? $preis * (1 - $discount / 100) : $preis;
+        ?>
+        <div class="einzelprodukt">
+          <div class="image-wrapper">
+            <img src="<?= htmlspecialchars($sim['image_main'] ?? 'img/placeholder.jpg') ?>"
+              alt="<?= htmlspecialchars($sim['name']) ?>" />
+          </div>
+          <div class="produkt-info">
+            <h3><?= htmlspecialchars($sim['name']) ?></h3>
+            <?php if ($discount > 0): ?>
+              <p>
+                <del class="old-price">
+                  <?= number_format($preis, 2, ',', '.') ?>€
+                </del>
+                <span><?= number_format($salePrice, 2, ',', '.') ?>€</span>
+                <span class="rabatt">-<?= $discount ?>%</span>
+                <span class="mwst">inkl. Mwst.</span>
+              </p>
+            <?php else: ?>
+              <p>
+                <?= number_format($preis, 2, ',', '.') ?>€
+                <span class="mwst">inkl. Mwst.</span>
+              </p>
+            <?php endif; ?>
+          </div>
+          <div class="button-row">
+            <a href="index.php?page=product&action=detail&id=<?= (int)$sim['id'] ?>">
+              <button>Details</button>
+            </a>
+          </div>
+
         </div>
-      <?php endfor; ?>
+      <?php endforeach; ?>
     </div>
   </section>
 
@@ -273,7 +304,6 @@
       <?php endforeach; ?>
 
 
-
     </section>
     <?php if (isset($_SESSION['user_id'])): ?>
       <button type="button" class="open-review-modal btn-review" data-product-id="<?= (int)$product['id'] ?>">Bewertung schreiben</button>
@@ -290,7 +320,6 @@
     <form id="ratingForm" class="review-form" action="index.php?page=community&action=addRating" method="post" enctype="multipart/form-data">
       <input type="hidden" name="product_id" id="ratingProductId" value="">
       <input type="hidden" name="parent_id" id="ratingParentId" value="">
-      <div id="replyTarget" class="reply-target hidden"></div>
       <label for="displayName">Name:</label>
       <input type="text" name="display_name" id="displayName" placeholder="Dein Name" value="<?= htmlspecialchars($_SESSION['username'] ?? '') ?>" required>
       <fieldset class="rating-stars">
