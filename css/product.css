@@ -326,3 +326,22 @@ button {
   gap: 20px;
   align-items: flex-start; /* Buttons direkt unter dem Bild */
 }
+
+/* ✨ Layout für ähnliche Produkte */
+.similar-products .produkt-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.similar-products .Eprodukt {
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: 15px;
+  transition: transform 0.3s ease;
+}
+
+.similar-products .Eprodukt:hover {
+  transform: translateY(-5px);
+}

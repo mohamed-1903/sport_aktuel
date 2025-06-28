@@ -185,7 +185,7 @@
   </div>
 
   <!-- 🧠 Ähnliche Produkte statisch -->
-  <section class="produkte">
+  <section class="produkte similar-products">
     <h2>Ähnliche Produkte</h2>
     <div class="produkt-grid">
       <?php for ($i = 1; $i <= 3; $i++): ?>
