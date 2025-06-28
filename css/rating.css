@@ -53,8 +53,13 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 320px;
+  min-height: 400px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Inhalt soll nach unten gestreckt werden, damit die Buttons am Ende stehen */
+.review-content {
+  flex-grow: 1;
 }
 
 .review:hover {
@@ -76,6 +81,7 @@
   flex-wrap: wrap; /* optional, falls bei kleineren Bildschirmen umbrechen soll */
   flex-direction: row;
   margin-top: auto; /* schiebt nach unten */
+  padding-top: 40px; /* großer Abstand zwischen Bildern und Buttons */
 }
 .review-actions button,
 .review-actions form {
