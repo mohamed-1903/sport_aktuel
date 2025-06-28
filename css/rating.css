@@ -175,6 +175,12 @@
   margin-top: 1rem;
 }
 
+.review-form label {
+  display: block;
+  margin-top: 8px;
+  font-weight: 600;
+}
+
 .review-form textarea {
   width: 100%;
   min-height: 100px;
@@ -223,6 +229,13 @@
   cursor: pointer;
   width: 100%;
   box-sizing: border-box;
+}
+
+.help-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: -4px;
+  margin-bottom: 8px;
 }
 
 .suggestion-bar {

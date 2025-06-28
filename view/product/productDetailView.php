@@ -304,6 +304,7 @@
     <form id="ratingForm" class="review-form" action="index.php?page=community&action=addRating" method="post" enctype="multipart/form-data">
       <input type="hidden" name="product_id" id="ratingProductId" value="">
       <input type="hidden" name="parent_id" id="ratingParentId" value="">
+      <label for="displayName">Name:</label>
       <input type="text" name="display_name" id="displayName" placeholder="Dein Name" value="<?= htmlspecialchars($_SESSION['username'] ?? '') ?>" required>
       <fieldset class="rating-stars">
         <legend class="sr-only">Sternebewertung</legend>
@@ -312,7 +313,8 @@
           <label for="modal-star<?= $s ?>" aria-label="<?= $s ?> Sterne">★</label>
         <?php endfor; ?>
       </fieldset>
-      <textarea name="comment" required placeholder="Deine Meinung..." aria-label="Kommentar"></textarea>
+      <label for="ratingComment">Kommentar:</label>
+      <textarea id="ratingComment" name="comment" required placeholder="Deine Meinung..."></textarea>
       <div class="suggestion-bar" id="suggestionBar">
         <?php foreach ($reviewSuggestions as $rating => $texts): ?>
           <div class="suggestions-set <?= $rating == 5 ? '' : 'hidden' ?>" data-rating="<?= (int)$rating ?>">
@@ -322,7 +324,9 @@
           </div>
         <?php endforeach; ?>
       </div>
+      <label for="ratingImages">Bilder hochladen:</label>
       <input type="file" name="images[]" id="ratingImages" accept="image/*" multiple aria-label="Bilder zur Bewertung hochladen">
+      <p class="help-text">Maximal 5 Bilder</p>
       <div id="imagePreviewList" class="image-preview-list hidden"></div>
       <button type="submit">Bewerten</button>
     </form>

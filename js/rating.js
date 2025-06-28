@@ -28,14 +28,6 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  document.querySelectorAll('#ratingForm .suggest-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (commentField) {
-        commentField.value = btn.textContent;
-        commentField.focus();
-      }
-    });
-  });
 
   document.querySelectorAll('.rating-stars input').forEach(rad => {
     rad.addEventListener('change', () => showSuggestions(rad.value));
@@ -206,7 +198,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  const commentField = document.querySelector('#ratingForm textarea[name="comment"]');
+  const commentField = document.getElementById('ratingComment');
   document.querySelectorAll('#ratingForm .suggest-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       if (commentField) {
