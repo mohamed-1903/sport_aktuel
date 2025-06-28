@@ -16,7 +16,7 @@
       <button class="btn-checkout">📦 Bestellungen einsehen</button>
     </a>
     <a href="index.php?page=admin&action=manageProducts">
-      <button class="btn-checkout">% Sale verwalten</button>
+      <button class="btn-checkout">🛍️ Produkte verwalten</button>
     </a>
   </div>
 </main>
