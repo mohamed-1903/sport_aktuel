@@ -41,6 +41,8 @@ include __DIR__ . '/../layout/header.php';
     <?php
     $labels = [
       'neu' => '🕓 Neu – noch stornierbar',
+      'bestellt' => '📦 Bestellt',
+      'versandt_nicht_erhalten' => '🚚 Versandt, nicht erhalten',
       'in_bearbeitung' => '🔧 In Bearbeitung',
       'abgeschlossen' => '✅ Abgeschlossen',
       'abgelehnt' => '❌ Abgelehnt',
@@ -55,6 +57,7 @@ include __DIR__ . '/../layout/header.php';
           <th>Datum</th>
           <th>Status</th>
           <th>Details</th>
+          <th>Grund</th>
           <th>Aktion</th>
         </tr>
       </thead>
@@ -62,7 +65,10 @@ include __DIR__ . '/../layout/header.php';
         <tr>
           <td>#<?= (int)$order['id'] ?></td>
           <td><?= date("d.m.Y H:i", strtotime($order['created_at'])) ?></td>
-          <td><?= htmlspecialchars($order['status']) ?></td>
+          <td>
+            <?php $statusKey = $order['status']; ?>
+            <?= htmlspecialchars($labels[$statusKey] ?? $statusKey) ?>
+          </td>
           <td>
             <?php $items = json_decode($order['admin_comment'], true); ?>
             <?php if (is_array($items)): ?>
@@ -74,6 +80,7 @@ include __DIR__ . '/../layout/header.php';
               <em>Keine Details verfügbar</em>
             <?php endif; ?>
           </td>
+          <td><?= htmlspecialchars($order['rejection_reason'] ?? '') ?></td>
           <td>
             <?php if ($order['status'] === 'neu'): ?>
               <form method="post" action="index.php?page=order&action=cancel&id=<?= $order['id'] ?>" onsubmit="return confirm('Wirklich stornieren?');">

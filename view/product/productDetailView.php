@@ -99,12 +99,6 @@
           <label for="quantity-<?= $index ?>">Menge:</label>
           <input type="number" id="quantity-<?= $index ?>" value="1" min="1" class="size-dropdown" />
 
-
-
-
-
-
-
           <div class="button-rows">
             <!-- 🎟 Rabattcode -->
             <label for="pin-<?= $index ?>">Rabatt-PIN eingeben:</label>
@@ -123,10 +117,6 @@
             <button onclick="resetFields(this.closest('.Eprodukt'))">Felder zurücksetzen</button>
           </div>
         </div>
-
-
-
-
 
         <!-- 🧺 Aktionen -->
 
@@ -174,38 +164,34 @@
     </section>
   <?php endforeach; ?>
 
-
-  <!-- 💰 Steuerberechnung + Rabattcode -->
-  <section class="preis-container">
-    <label for="netto">Preis ohne Steuern (€):</label>
-    <input class="size-dropdown" type="number" id="netto">
-    <button onclick="zeigePreis()">Berechne Bruttopreis</button>
-    <div id="priceResults">
-      <p id="bruttoErgebnis"></p>
-    </div>
-  </section>
-  <div class="compare-section">
+  <button id="showCompareBtn" class="compare-toggle-btn" aria-label="Vergleich öffnen">+</button>
+  <div id="compareSection" class="compare-section hidden">
     <label for="compareInput">Produkt zum Vergleichen auswählen:</label>
-    <input id="compareInput" list="compareOptions" placeholder="Name eingeben">
+    <div class="search-wrapper compare-search">
+      <input type="text" id="compareShadow" class="compare-shadow" readonly tabindex="-1" />
+      <input id="compareInput" list="compareOptions" placeholder="Name eingeben" autocomplete="off">
+      <ul id="compareSuggestions" class="autocomplete-liste"></ul>
+    </div>
+    <?php $selectedIds = array_column($productsToShow, 'id'); ?>
     <datalist id="compareOptions">
       <?php foreach ($allProducts as $p): ?>
-        <?php if ($p['id'] != $currentId): ?>
+        <?php if (!in_array($p['id'], $selectedIds)): ?>
           <option data-id="<?= (int)$p['id'] ?>" value="<?= htmlspecialchars($p['name']) ?>"></option>
         <?php endif; ?>
       <?php endforeach; ?>
     </datalist>
-    <button id="compareBtn">Produkt vergleichen</button>
+    <button id="compareBtn" class="btn-compare">Produkte zum vergleichen</button>
   </div>
 
   <!-- 🧠 Ähnliche Produkte statisch -->
-  <section class="produkte">
+  <section class="produkte similar-products">
     <h2>Ähnliche Produkte</h2>
     <div class="produkt-grid">
       <?php for ($i = 1; $i <= 3; $i++): ?>
         <div class="Eprodukt">
           <img src="nike-shoe.jpg" alt="Ähnliches Produkt <?= $i ?>" />
           <h3>Nike Produkt <?= $i ?></h3>
-          <p>€<?= 199.99 - ($i - 1) * 20 ?></p>
+          <p>€<?= number_format(199.99 - ($i - 1) * 20, 2, ',', '.') ?></p>
           <button>Details</button>
         </div>
       <?php endfor; ?>
@@ -284,6 +270,7 @@
             </div>
           <?php endif; ?>
       <?php endforeach; ?>
+
     </section>
 <?php if (isset($_SESSION['user_id'])): ?>
   <button type="button" class="open-review-modal btn-review" data-product-id="<?= (int)$product['id'] ?>">Bewertung schreiben</button>
@@ -301,6 +288,7 @@
       <input type="hidden" name="parent_id" id="ratingParentId" value="">
       <input type="text" name="display_name" id="displayName" placeholder="Dein Name" value="<?= htmlspecialchars($_SESSION['username'] ?? '') ?>" required>
       <div class="rating-stars">
+
         <?php for ($s = 5; $s >= 1; $s--): ?>
           <input type="radio" id="modal-star<?= $s ?>" name="stars" value="<?= $s ?>" <?= $s == 5 ? ' checked' : '' ?>>
           <label for="modal-star<?= $s ?>">★</label>
@@ -322,6 +310,7 @@
     </form>
   </div>
 </div>
+
 <script>
   document.getElementById('compareBtn').addEventListener('click', () => {
     const input = document.getElementById('compareInput').value.trim();
