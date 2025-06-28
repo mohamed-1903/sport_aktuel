@@ -277,6 +277,7 @@ function getRating(int $ratingId, ?int $currentUserId = null): ?array {
              LEFT JOIN users pu ON p.user_id = pu.id
              WHERE r.id = ?'
         );
+
         $stmt->execute([$ratingId]);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
