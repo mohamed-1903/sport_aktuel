@@ -194,11 +194,11 @@
   </div>
 
   <!-- 🧠 Ähnliche Produkte statisch -->
-  <section class="similar-products">
+  <section class="produkte">
     <h2>Ähnliche Produkte</h2>
-    <div class="similar-product-grid">
+    <div class="produkt-grid">
       <?php for ($i = 1; $i <= 3; $i++): ?>
-        <div class="similar-product">
+        <div class="Eprodukt">
           <img src="nike-shoe.jpg" alt="Ähnliches Produkt <?= $i ?>" />
           <h3>Nike Produkt <?= $i ?></h3>
           <p>€<?= number_format(199.99 - ($i - 1) * 20, 2, ',', '.') ?></p>
