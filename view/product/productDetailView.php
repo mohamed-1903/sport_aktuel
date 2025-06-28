@@ -15,8 +15,6 @@
   <?php unset($_SESSION['message']); ?>
 <?php endif; ?>
 
-
-
 <main class="produkte">
   <!-- 🔍 Zoom Modal -->
   <div id="zoomModal" class="zoom-modal hidden">
@@ -231,17 +229,16 @@
               <?php endforeach; ?>
             </div>
           <?php endif; ?>
-          <div class="review-actions">
-            <button type="button" class="like-btn" data-id="<?= (int)$r['id'] ?>">
-              👍 <span><?= (int)$r['likes'] ?></span>
-            </button>
-            <button type="button" class="dislike-btn" data-id="<?= (int)$r['id'] ?>">
-              👎 <span><?= (int)$r['dislikes'] ?></span>
-            </button>
-            <?php if (isset($_SESSION['user_id'])): ?>
-              <button type="button" class="reply-btn" data-id="<?= (int)$r['id'] ?>" data-product-id="<?= (int)$product['id'] ?>">Antworten</button>
-            <?php endif; ?>
-          </div>
+        <div class="review-actions">
+          <button type="button" class="like-btn" data-id="<?= (int)$r['id'] ?>">
+            👍 <span><?= (int)$r['likes'] ?></span>
+          </button>
+          <button type="button" class="dislike-btn" data-id="<?= (int)$r['id'] ?>">
+            👎 <span><?= (int)$r['dislikes'] ?></span>
+          </button>
+          <?php if (isset($_SESSION['user_id'])): ?>
+            <button type="button" class="reply-btn" data-id="<?= (int)$r['id'] ?>" data-product-id="<?= (int)$product['id'] ?>">Antworten</button>
+          <?php endif; ?>
           <?php if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == $r['user_id'] || !empty($_SESSION['is_admin']))): ?>
             <form class="delete-rating-form" method="post" action="index.php?page=community&action=deleteRating" onsubmit="return confirm('Bewertung löschen?');">
               <input type="hidden" name="rating_id" value="<?= (int)$r['id'] ?>">
@@ -272,7 +269,6 @@
               <?php endforeach; ?>
             </div>
           <?php endif; ?>
-        </div>
       <?php endforeach; ?>
 
       <?php if (isset($_SESSION['user_id'])): ?>
@@ -314,6 +310,7 @@
     </form>
   </div>
 </div>
+
 <script>
   document.getElementById('compareBtn').addEventListener('click', () => {
     const input = document.getElementById('compareInput').value.trim();
