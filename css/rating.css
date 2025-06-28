@@ -51,6 +51,8 @@
   padding: 12px 15px;
   margin-bottom: 12px;
   color: var(--text-color);
+  display: flex;
+  flex-direction: column;
 
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -67,9 +69,16 @@
 }
 
 .review-actions {
-  margin-top: 6px;
+  margin-top: auto;
   display: flex;
   gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.review-actions .delete-rating-form {
+  display: inline-block;
+  margin: 0;
 }
 
 .review-actions button {
@@ -222,13 +231,9 @@
 
 .review-images {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   gap: 8px;
-  overflow-x: auto;
-  overflow-y: hidden;
   margin-top: 6px;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
 }
 
 .review-images::-webkit-scrollbar {
@@ -349,7 +354,7 @@ body.modal-open {
   color: var(--text-muted);
   cursor: pointer;
   font-size: 14px;
-  margin-top: 4px;
+  margin-top: 0;
   padding: 0;
 }
 
