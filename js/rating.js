@@ -299,30 +299,42 @@ function addRatingToDom(rating) {
   const reviews = document.querySelector('.reviews');
   if (!reviews || !rating) return;
 
-  const reviewEl = document.createElement('div');
+  const reviewEl = document.createElement('article');
   reviewEl.className = 'review' + (rating.parent_id ? ' reply' : '');
   reviewEl.dataset.reviewId = rating.id;
   if (rating.parent_id) reviewEl.dataset.parentId = rating.parent_id;
+  reviewEl.tabIndex = 0;
+  reviewEl.setAttribute('role', 'article');
 
   const content = document.createElement('div');
   content.className = 'review-content';
+  const header = document.createElement('header');
+  header.className = 'review-header';
+  header.id = 'review-' + rating.id + '-header';
   const name = document.createElement('strong');
+  name.className = 'review-author';
   name.textContent = rating.display_name || rating.username || '';
-  const date = document.createElement('small');
+  const date = document.createElement('time');
   date.className = 'rating-date';
+  date.dateTime = new Date(rating.created_at).toISOString();
   date.textContent = new Date(rating.created_at).toLocaleString('de-DE');
-  const stars = document.createElement('span');
+  header.appendChild(name);
+  header.appendChild(date);
+  const stars = document.createElement('div');
   stars.className = 'rating-stars';
   stars.style.pointerEvents = 'none';
+  stars.setAttribute('role', 'img');
+  stars.setAttribute('aria-label', rating.stars + ' von 5 Sternen');
   for (let s = 5; s >= 1; s--) {
     const lab = document.createElement('label');
     lab.textContent = s <= rating.stars ? '★' : '☆';
+    lab.setAttribute('aria-hidden', 'true');
     stars.appendChild(lab);
   }
   const text = document.createElement('p');
+  text.className = 'review-text';
   text.innerHTML = (rating.comment || '').replace(/\n/g, '<br>');
-  content.appendChild(name);
-  content.appendChild(date);
+  content.appendChild(header);
   content.appendChild(stars);
   content.appendChild(text);
 
@@ -349,11 +361,13 @@ function addRatingToDom(rating) {
   like.type = 'button';
   like.className = 'like-btn';
   like.dataset.id = rating.id;
+  like.setAttribute('aria-label', 'Bewertung positiv bewerten');
   like.innerHTML = '👍 <span>' + (rating.likes || 0) + '</span>';
   const dislike = document.createElement('button');
   dislike.type = 'button';
   dislike.className = 'dislike-btn';
   dislike.dataset.id = rating.id;
+  dislike.setAttribute('aria-label', 'Bewertung negativ bewerten');
   dislike.innerHTML = '👎 <span>' + (rating.dislikes || 0) + '</span>';
   actions.appendChild(like);
   actions.appendChild(dislike);
@@ -363,6 +377,7 @@ function addRatingToDom(rating) {
     reply.className = 'reply-btn';
     reply.dataset.id = rating.id;
     reply.dataset.productId = rating.product_id;
+    reply.setAttribute('aria-label', 'Auf diese Bewertung antworten');
     reply.textContent = 'Antworten';
     actions.appendChild(reply);
   }
@@ -383,6 +398,7 @@ function addRatingToDom(rating) {
     const btnDel = document.createElement('button');
     btnDel.type = 'submit';
     btnDel.className = 'btn-delete-rating';
+    btnDel.setAttribute('aria-label', 'Bewertung löschen');
     btnDel.textContent = 'Löschen';
     form.appendChild(idIn);
     form.appendChild(pidIn);
