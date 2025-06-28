@@ -229,30 +229,30 @@
               <?php endforeach; ?>
             </div>
           <?php endif; ?>
-        <div class="review-actions">
-          <button type="button" class="like-btn" data-id="<?= (int)$r['id'] ?>">
-            👍 <span><?= (int)$r['likes'] ?></span>
-          </button>
-          <button type="button" class="dislike-btn" data-id="<?= (int)$r['id'] ?>">
-            👎 <span><?= (int)$r['dislikes'] ?></span>
-          </button>
-          <?php if (isset($_SESSION['user_id'])): ?>
-            <button type="button" class="reply-btn" data-id="<?= (int)$r['id'] ?>" data-product-id="<?= (int)$product['id'] ?>">Antworten</button>
-          <?php endif; ?>
-          <?php if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == $r['user_id'] || !empty($_SESSION['is_admin']))): ?>
-            <form class="delete-rating-form" method="post" action="index.php?page=community&action=deleteRating" onsubmit="return confirm('Bewertung löschen?');">
-              <input type="hidden" name="rating_id" value="<?= (int)$r['id'] ?>">
-              <input type="hidden" name="product_id" value="<?= (int)$product['id'] ?>">
-              <button type="submit" class="btn-delete-rating">Löschen</button>
-            </form>
-          <?php endif; ?>
-        </div>
-        <?php if (!empty($r['replies'])): ?>
-          <div class="review-replies">
-            <?php foreach ($r['replies'] as $reply): ?>
-              <div class="review reply">
-                <strong><?= htmlspecialchars($reply['display_name'] ?: $reply['username']) ?></strong>
-                <small class="rating-date"><?= date('d.m.Y H:i', strtotime($reply['created_at'])) ?></small>
+          <div class="review-actions">
+              <button type="button" class="like-btn" data-id="<?= (int)$r['id'] ?>">
+                👍 <span><?= (int)$r['likes'] ?></span>
+              </button>
+              <button type="button" class="dislike-btn" data-id="<?= (int)$r['id'] ?>">
+                👎 <span><?= (int)$r['dislikes'] ?></span>
+              </button>
+            <?php if (isset($_SESSION['user_id'])): ?>
+              <button type="button" class="reply-btn" data-id="<?= (int)$r['id'] ?>" data-product-id="<?= (int)$product['id'] ?>">Antworten</button>
+            <?php endif; ?>
+            <?php if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == $r['user_id'] || !empty($_SESSION['is_admin']))): ?>
+              <form class="delete-rating-form" method="post" action="index.php?page=community&action=deleteRating" onsubmit="return confirm('Bewertung löschen?');">
+                <input type="hidden" name="rating_id" value="<?= (int)$r['id'] ?>">
+                <input type="hidden" name="product_id" value="<?= (int)$product['id'] ?>">
+                <button type="submit" class="btn-delete-rating">Löschen</button>
+              </form>
+            <?php endif; ?>
+          </div>
+          <?php if (!empty($r['replies'])): ?>
+            <div class="review-replies">
+              <?php foreach ($r['replies'] as $reply): ?>
+                <div class="review reply">
+                  <strong><?= htmlspecialchars($reply['display_name'] ?: $reply['username']) ?></strong>
+                  <small class="rating-date"><?= date('d.m.Y H:i', strtotime($reply['created_at'])) ?></small>
                   <span class="rating-stars" style="pointer-events:none;">
                     <?php for ($s = 5; $s >= 1; $s--): ?>
                       <label><?= $s <= $reply['stars'] ? '★' : '☆' ?></label>
@@ -266,19 +266,19 @@
                       <?php endforeach; ?>
                     </div>
                   <?php endif; ?>
-              </div>
-            <?php endforeach; ?>
-          </div>
-        <?php endif; ?>
-      </div>
+                </div>
+              <?php endforeach; ?>
+            </div>
+          <?php endif; ?>
+        </div>
       <?php endforeach; ?>
 
     </section>
-<?php if (isset($_SESSION['user_id'])): ?>
-  <button type="button" class="open-review-modal btn-review" data-product-id="<?= (int)$product['id'] ?>">Bewertung schreiben</button>
-<?php else: ?>
-  <p><a href="index.php?page=auth&action=login">Anmelden</a>, um eine Bewertung zu schreiben.</p>
-<?php endif; ?>
+    <?php if (isset($_SESSION['user_id'])): ?>
+      <button type="button" class="open-review-modal btn-review" data-product-id="<?= (int)$product['id'] ?>">Bewertung schreiben</button>
+    <?php else: ?>
+      <p><a href="index.php?page=auth&action=login">Anmelden</a>, um eine Bewertung zu schreiben.</p>
+    <?php endif; ?>
   <?php endforeach; ?>
 </main>
 <div id="ratingModal" class="review-modal hidden">
@@ -334,121 +334,122 @@
       });
     }
 
-  fetch('data/products.json')
-    .then(res => res.json())
-    .then(data => {
-      compareProducts = data.products || [];
-    });
+    fetch('data/products.json')
+      .then(res => res.json())
+      .then(data => {
+        compareProducts = data.products || [];
+      });
 
-  function updateCompareList() {
-    const val = compareInput.value.toLowerCase().trim();
-    selectedCompareId = null;
-    compareList.innerHTML = '';
-    compareFocus = -1;
-    if (val.length < 1) {
-      compareList.style.display = 'none';
-      compareShadow.value = '';
-      return;
-    }
-    const matches = compareProducts
-      .filter(p => !currentCompareIds.includes(p.iid))
-      .filter(p =>
-        [p.name, p.marke, p.farbe, p.geschlecht, p.category, p.subcategory]
+    function updateCompareList() {
+      const val = compareInput.value.toLowerCase().trim();
+      selectedCompareId = null;
+      compareList.innerHTML = '';
+      compareFocus = -1;
+      if (val.length < 1) {
+        compareList.style.display = 'none';
+        compareShadow.value = '';
+        return;
+      }
+      const matches = compareProducts
+        .filter(p => !currentCompareIds.includes(p.iid))
+        .filter(p => [p.name, p.marke, p.farbe, p.geschlecht, p.category, p.subcategory]
           .map(s => (s || '').toLowerCase())
           .join(' ')
           .includes(val)
-      );
-    if (matches.length) {
-      const match = matches.find(p => (p.name || '').toLowerCase().startsWith(val));
-      compareShadow.value = match?.name || '';
-      matches.forEach(p => {
-        const li = document.createElement('li');
-        li.dataset.id = p.iid;
-        const price = typeof p.priceValue !== 'undefined'
-          ? parseFloat(p.priceValue).toFixed(2) + ' €'
-          : p.price || 'Preis?';
-        li.innerHTML = `<img src="${p.imageMain || ''}" alt="${p.name}" /><div><strong>${p.name}</strong><br><small>${price}</small></div>`;
-        li.addEventListener('click', () => {
-          compareInput.value = p.name;
-          compareShadow.value = '';
-          compareList.style.display = 'none';
-          selectedCompareId = p.iid;
+        );
+      if (matches.length) {
+        const match = matches.find(p => (p.name || '').toLowerCase().startsWith(val));
+        compareShadow.value = match?.name || '';
+        matches.forEach(p => {
+          const li = document.createElement('li');
+          li.dataset.id = p.iid;
+          const price = typeof p.priceValue !== 'undefined' ?
+            parseFloat(p.priceValue).toFixed(2) + ' €' :
+            p.price || 'Preis?';
+          li.innerHTML = `<img src="${p.imageMain || ''}" alt="${p.name}" /><div><strong>${p.name}</strong><br><small>${price}</small></div>`;
+          li.addEventListener('click', () => {
+            compareInput.value = p.name;
+            compareShadow.value = '';
+            compareList.style.display = 'none';
+            selectedCompareId = p.iid;
+          });
+          compareList.appendChild(li);
         });
-        compareList.appendChild(li);
+        compareList.style.display = 'block';
+      } else {
+        compareList.innerHTML = `<li class="keine-treffer-box"><div class="keine-treffer-icon">🔍</div><div><strong>Keine Treffer</strong></div></li>`;
+        compareList.style.display = 'block';
+        compareShadow.value = '';
+      }
+    }
+
+    function handleCompareNav(e) {
+      const items = compareList.querySelectorAll('li');
+      if (!items.length) return;
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        compareFocus = (compareFocus + 1) % items.length;
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        compareFocus = (compareFocus - 1 + items.length) % items.length;
+      } else if (e.key === 'Enter' && compareFocus >= 0) {
+        e.preventDefault();
+        items[compareFocus].click();
+      } else if (e.key === 'Tab' && compareShadow.value) {
+        e.preventDefault();
+        compareInput.value = compareShadow.value;
+        compareShadow.value = '';
+        compareList.style.display = 'none';
+      } else if (e.key === 'Escape') {
+        compareList.style.display = 'none';
+        compareShadow.value = '';
+      }
+      items.forEach((li, i) => {
+        li.classList.toggle('focused', i === compareFocus);
+        if (i === compareFocus) li.scrollIntoView({
+          block: 'nearest'
+        });
       });
-      compareList.style.display = 'block';
-    } else {
-      compareList.innerHTML = `<li class="keine-treffer-box"><div class="keine-treffer-icon">🔍</div><div><strong>Keine Treffer</strong></div></li>`;
-      compareList.style.display = 'block';
-      compareShadow.value = '';
     }
-  }
 
-  function handleCompareNav(e) {
-    const items = compareList.querySelectorAll('li');
-    if (!items.length) return;
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      compareFocus = (compareFocus + 1) % items.length;
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      compareFocus = (compareFocus - 1 + items.length) % items.length;
-    } else if (e.key === 'Enter' && compareFocus >= 0) {
-      e.preventDefault();
-      items[compareFocus].click();
-    } else if (e.key === 'Tab' && compareShadow.value) {
-      e.preventDefault();
-      compareInput.value = compareShadow.value;
-      compareShadow.value = '';
-      compareList.style.display = 'none';
-    } else if (e.key === 'Escape') {
-      compareList.style.display = 'none';
-      compareShadow.value = '';
-    }
-    items.forEach((li, i) => {
-      li.classList.toggle('focused', i === compareFocus);
-      if (i === compareFocus) li.scrollIntoView({ block: 'nearest' });
-    });
-  }
+    compareInput.addEventListener('input', updateCompareList);
+    compareInput.addEventListener('keydown', handleCompareNav);
 
-  compareInput.addEventListener('input', updateCompareList);
-  compareInput.addEventListener('keydown', handleCompareNav);
+    document.getElementById('compareBtn').addEventListener('click', () => {
+      const btn = document.getElementById('compareBtn');
+      btn.classList.add('pulse-highlight');
+      setTimeout(() => btn.classList.remove('pulse-highlight'), 1000);
 
-  document.getElementById('compareBtn').addEventListener('click', () => {
-    const btn = document.getElementById('compareBtn');
-    btn.classList.add('pulse-highlight');
-    setTimeout(() => btn.classList.remove('pulse-highlight'), 1000);
-
-    const inputVal = compareInput.value.trim();
-    let secondId = selectedCompareId;
-    if (!secondId) {
-      const option = Array.from(document.querySelectorAll('#compareOptions option')).find(opt => opt.value === inputVal);
-      if (option) secondId = option.dataset.id;
-    }
-    if (!secondId) {
-      alert('Produkt nicht gefunden');
-      return;
-    }
-    const allIds = currentCompareIds.concat(secondId);
-    const params = allIds.map((v, i) => `id${i === 0 ? '' : i + 1}=${v}`).join('&');
-    window.location.href = `index.php?page=product&action=detail&${params}`;
-  });
-
-  document.querySelectorAll('.remove-product').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const idx = parseInt(btn.dataset.removeIndex, 10);
-      const ids = <?= json_encode(array_column($productsToShow, 'id')) ?>;
-      ids.splice(idx, 1);
-      if (ids.length === 0) {
-        window.location.href = 'index.php?page=product&action=list';
+      const inputVal = compareInput.value.trim();
+      let secondId = selectedCompareId;
+      if (!secondId) {
+        const option = Array.from(document.querySelectorAll('#compareOptions option')).find(opt => opt.value === inputVal);
+        if (option) secondId = option.dataset.id;
+      }
+      if (!secondId) {
+        alert('Produkt nicht gefunden');
         return;
       }
-      const params = ids
-        .map((v, i) => `id${i === 0 ? '' : i + 1}=${v}`)
-        .join('&');
+      const allIds = currentCompareIds.concat(secondId);
+      const params = allIds.map((v, i) => `id${i === 0 ? '' : i + 1}=${v}`).join('&');
       window.location.href = `index.php?page=product&action=detail&${params}`;
     });
-  });
+
+    document.querySelectorAll('.remove-product').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.dataset.removeIndex, 10);
+        const ids = <?= json_encode(array_column($productsToShow, 'id')) ?>;
+        ids.splice(idx, 1);
+        if (ids.length === 0) {
+          window.location.href = 'index.php?page=product&action=list';
+          return;
+        }
+        const params = ids
+          .map((v, i) => `id${i === 0 ? '' : i + 1}=${v}`)
+          .join('&');
+        window.location.href = `index.php?page=product&action=detail&${params}`;
+      });
+    });
   });
 </script>
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
