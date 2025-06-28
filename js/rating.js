@@ -28,27 +28,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  document.querySelectorAll('#ratingForm .suggest-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (commentField) {
-        commentField.value = btn.textContent;
-        commentField.focus();
-      }
-    });
-  });
 
-  document.querySelectorAll('.rating-stars input').forEach(rad => {
-    rad.addEventListener('change', () => showSuggestions(rad.value));
-  });
-
-  document.querySelectorAll('.review-images').forEach(container => {
-    const images = JSON.parse(container.dataset.images || '[]');
-    container.querySelectorAll('img').forEach(img => {
-      img.addEventListener('click', () => {
-        openImageGallery(images, parseInt(img.dataset.idx, 10) || 0);
-      });
-    });
-  });
 
   function updateCounts(btn, data) {
     if (!data) return;
@@ -206,7 +186,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  const commentField = document.querySelector('#ratingForm textarea[name="comment"]');
+  const commentField = document.getElementById('ratingComment');
   document.querySelectorAll('#ratingForm .suggest-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       if (commentField) {
@@ -323,6 +303,7 @@ function addRatingToDom(rating) {
   text.innerHTML = (rating.comment || '').replace(/\n/g, '<br>');
   content.appendChild(name);
   content.appendChild(date);
+
   content.appendChild(stars);
   content.appendChild(text);
 
@@ -349,11 +330,13 @@ function addRatingToDom(rating) {
   like.type = 'button';
   like.className = 'like-btn';
   like.dataset.id = rating.id;
+
   like.innerHTML = '👍 <span>' + (rating.likes || 0) + '</span>';
   const dislike = document.createElement('button');
   dislike.type = 'button';
   dislike.className = 'dislike-btn';
   dislike.dataset.id = rating.id;
+
   dislike.innerHTML = '👎 <span>' + (rating.dislikes || 0) + '</span>';
   actions.appendChild(like);
   actions.appendChild(dislike);
@@ -363,6 +346,7 @@ function addRatingToDom(rating) {
     reply.className = 'reply-btn';
     reply.dataset.id = rating.id;
     reply.dataset.productId = rating.product_id;
+
     reply.textContent = 'Antworten';
     actions.appendChild(reply);
   }
@@ -383,6 +367,7 @@ function addRatingToDom(rating) {
     const btnDel = document.createElement('button');
     btnDel.type = 'submit';
     btnDel.className = 'btn-delete-rating';
+
     btnDel.textContent = 'Löschen';
     form.appendChild(idIn);
     form.appendChild(pidIn);

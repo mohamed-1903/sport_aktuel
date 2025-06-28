@@ -192,6 +192,22 @@
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   }
 
+  /* Filter- und Layout-Buttons umbrechen lassen */
+  .filter-tools {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* Filter in mehreren Reihen anzeigen */
+  .filter-controls {
+    flex-wrap: wrap;
+  }
+
+  .filter-tools button,
+  .filterbar select {
+    flex: 1 1 auto;
+  }
+
   .einzelprodukt-list .einzelprodukt {
     flex-direction: column;
     align-items: center;

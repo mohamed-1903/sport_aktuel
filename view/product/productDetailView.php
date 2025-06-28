@@ -202,7 +202,8 @@
     $ratings = getRatingsForProduct((int)$product['id']);
     $avgRating = getAverageRating((int)$product['id']);
   ?>
-    <section class="reviews">
+    <section class="reviews" aria-live="polite" aria-atomic="true">
+
       <h3>Kundenbewertungen zu <?= htmlspecialchars($product['name']) ?></h3>
       <?php if ($avgRating): ?>
         <p>Durchschnittliche Bewertung: <?= number_format($avgRating, 1) ?>/5</p>
@@ -231,21 +232,22 @@
               </div>
             <?php endif; ?>
           </div>
+
           <div class="review-actions">
-              <button type="button" class="like-btn" data-id="<?= (int)$r['id'] ?>">
+              <button type="button" class="like-btn" data-id="<?= (int)$r['id'] ?>" aria-label="Bewertung positiv bewerten">
                 👍 <span><?= (int)$r['likes'] ?></span>
               </button>
-              <button type="button" class="dislike-btn" data-id="<?= (int)$r['id'] ?>">
+              <button type="button" class="dislike-btn" data-id="<?= (int)$r['id'] ?>" aria-label="Bewertung negativ bewerten">
                 👎 <span><?= (int)$r['dislikes'] ?></span>
               </button>
             <?php if (isset($_SESSION['user_id'])): ?>
-              <button type="button" class="reply-btn" data-id="<?= (int)$r['id'] ?>" data-product-id="<?= (int)$product['id'] ?>">Antworten</button>
+              <button type="button" class="reply-btn" data-id="<?= (int)$r['id'] ?>" data-product-id="<?= (int)$product['id'] ?>" aria-label="Auf diese Bewertung antworten">Antworten</button>
             <?php endif; ?>
             <?php if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == $r['user_id'] || !empty($_SESSION['is_admin']))): ?>
               <form class="delete-rating-form" method="post" action="index.php?page=community&action=deleteRating" onsubmit="return confirm('Bewertung löschen?');">
                 <input type="hidden" name="rating_id" value="<?= (int)$r['id'] ?>">
                 <input type="hidden" name="product_id" value="<?= (int)$product['id'] ?>">
-                <button type="submit" class="btn-delete-rating">Löschen</button>
+                <button type="submit" class="btn-delete-rating" aria-label="Bewertung löschen">Löschen</button>
               </form>
             <?php endif; ?>
           </div>
@@ -256,11 +258,15 @@
                   <strong><?= htmlspecialchars($reply['display_name'] ?: $reply['username']) ?></strong>
                   <small class="rating-date"><?= date('d.m.Y H:i', strtotime($reply['created_at'])) ?></small>
                   <span class="rating-stars" style="pointer-events:none;">
+
                     <?php for ($s = 5; $s >= 1; $s--): ?>
-                      <label><?= $s <= $reply['stars'] ? '★' : '☆' ?></label>
+                      <label aria-hidden="true"><?= $s <= $reply['stars'] ? '★' : '☆' ?></label>
                     <?php endfor; ?>
-                  </span>
-                  <p><?= nl2br(htmlspecialchars($reply['comment'])) ?></p>
+                  </div>
+                  <p class="review-text">
+                    <?= nl2br(htmlspecialchars($reply['comment'])) ?>
+                  </p>
+
                   <?php if (!empty($reply['image_paths'])): ?>
                     <div class="review-images" data-images='<?= json_encode($reply['image_paths']) ?>'>
                       <?php foreach ($reply['image_paths'] as $idx => $img): ?>
@@ -268,12 +274,13 @@
                       <?php endforeach; ?>
                     </div>
                   <?php endif; ?>
-                </div>
+                </article>
               <?php endforeach; ?>
             </div>
           <?php endif; ?>
-        </div>
+        </article>
       <?php endforeach; ?>
+
 
     </section>
     <?php if (isset($_SESSION['user_id'])): ?>
@@ -283,22 +290,25 @@
     <?php endif; ?>
   <?php endforeach; ?>
 </main>
-<div id="ratingModal" class="review-modal hidden">
+<div id="ratingModal" class="review-modal hidden" role="dialog" aria-modal="true" aria-labelledby="ratingTitle">
   <div class="review-modal-content">
-    <h2>Bewertung abgeben</h2>
+    <h2 id="ratingTitle">Bewertung abgeben</h2>
+
     <button type="button" class="review-close" onclick="closeRatingModal()">&times;</button>
     <form id="ratingForm" class="review-form" action="index.php?page=community&action=addRating" method="post" enctype="multipart/form-data">
       <input type="hidden" name="product_id" id="ratingProductId" value="">
       <input type="hidden" name="parent_id" id="ratingParentId" value="">
+      <label for="displayName">Name:</label>
       <input type="text" name="display_name" id="displayName" placeholder="Dein Name" value="<?= htmlspecialchars($_SESSION['username'] ?? '') ?>" required>
-      <div class="rating-stars">
-
+      <fieldset class="rating-stars">
+        <legend class="sr-only">Sternebewertung</legend>
         <?php for ($s = 5; $s >= 1; $s--): ?>
           <input type="radio" id="modal-star<?= $s ?>" name="stars" value="<?= $s ?>" <?= $s == 5 ? ' checked' : '' ?>>
-          <label for="modal-star<?= $s ?>">★</label>
+          <label for="modal-star<?= $s ?>" aria-label="<?= $s ?> Sterne">★</label>
         <?php endfor; ?>
-      </div>
-      <textarea name="comment" required placeholder="Deine Meinung..."></textarea>
+      </fieldset>
+      <label for="ratingComment">Kommentar:</label>
+      <textarea id="ratingComment" name="comment" required placeholder="Deine Meinung..."></textarea>
       <div class="suggestion-bar" id="suggestionBar">
         <?php foreach ($reviewSuggestions as $rating => $texts): ?>
           <div class="suggestions-set <?= $rating == 5 ? '' : 'hidden' ?>" data-rating="<?= (int)$rating ?>">
@@ -308,7 +318,9 @@
           </div>
         <?php endforeach; ?>
       </div>
-      <input type="file" name="images[]" id="ratingImages" accept="image/*" multiple>
+      <label for="ratingImages">Bilder hochladen:</label>
+      <input type="file" name="images[]" id="ratingImages" accept="image/*" multiple aria-label="Bilder zur Bewertung hochladen">
+      <p class="help-text">Maximal 5 Bilder</p>
       <div id="imagePreviewList" class="image-preview-list hidden"></div>
       <button type="submit">Bewerten</button>
     </form>
@@ -322,6 +334,7 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+
     let compareProducts = [];
     let compareFocus = -1;
     let selectedCompareId = null;
