@@ -203,6 +203,7 @@
     $avgRating = getAverageRating((int)$product['id']);
   ?>
     <section class="reviews" aria-live="polite" aria-atomic="true">
+
       <h3>Kundenbewertungen zu <?= htmlspecialchars($product['name']) ?></h3>
       <?php if ($avgRating): ?>
         <p>Durchschnittliche Bewertung: <?= number_format($avgRating, 1) ?>/5</p>
@@ -211,24 +212,18 @@
         <p class="no-reviews">Noch keine Bewertungen.</p>
       <?php endif; ?>
       <?php foreach ($ratings as $r): ?>
-        <article class="review" data-review-id="<?= (int)$r['id'] ?>" tabindex="0" role="article">
+        <div class="review" data-review-id="<?= (int)$r['id'] ?>">
           <div class="review-content">
-            <header class="review-header" id="review-<?= (int)$r['id'] ?>-header">
-              <strong class="review-author">
-                <?= htmlspecialchars($r['display_name'] ?: $r['username']) ?>
-              </strong>
-              <time class="rating-date" datetime="<?= date('c', strtotime($r['created_at'])) ?>">
-                <?= date('d.m.Y H:i', strtotime($r['created_at'])) ?>
-              </time>
-            </header>
-            <div class="rating-stars" role="img" aria-label="<?= (int)$r['stars'] ?> von 5 Sternen" style="pointer-events:none;">
+            <strong><?= htmlspecialchars($r['display_name'] ?: $r['username']) ?></strong>
+            <small class="rating-date">
+              <?= date('d.m.Y H:i', strtotime($r['created_at'])) ?>
+            </small>
+            <span class="rating-stars" style="pointer-events:none;">
               <?php for ($s = 5; $s >= 1; $s--): ?>
-                <label aria-hidden="true"><?= $s <= $r['stars'] ? '★' : '☆' ?></label>
+                <label><?= $s <= $r['stars'] ? '★' : '☆' ?></label>
               <?php endfor; ?>
-            </div>
-            <p class="review-text">
-              <?= nl2br(htmlspecialchars($r['comment'])) ?>
-            </p>
+            </span>
+            <p><?= nl2br(htmlspecialchars($r['comment'])) ?></p>
             <?php if (!empty($r['image_paths'])): ?>
               <div class="review-images" data-images='<?= json_encode($r['image_paths']) ?>'>
                 <?php foreach ($r['image_paths'] as $idx => $img): ?>
@@ -237,6 +232,7 @@
               </div>
             <?php endif; ?>
           </div>
+
           <div class="review-actions">
               <button type="button" class="like-btn" data-id="<?= (int)$r['id'] ?>" aria-label="Bewertung positiv bewerten">
                 👍 <span><?= (int)$r['likes'] ?></span>
@@ -258,16 +254,11 @@
           <?php if (!empty($r['replies'])): ?>
             <div class="review-replies">
               <?php foreach ($r['replies'] as $reply): ?>
-                <article class="review reply" data-review-id="<?= (int)$reply['id'] ?>" data-parent-id="<?= (int)$r['id'] ?>" tabindex="0" role="article">
-                  <header class="review-header" id="review-<?= (int)$reply['id'] ?>-header">
-                    <strong class="review-author">
-                      <?= htmlspecialchars($reply['display_name'] ?: $reply['username']) ?>
-                    </strong>
-                    <time class="rating-date" datetime="<?= date('c', strtotime($reply['created_at'])) ?>">
-                      <?= date('d.m.Y H:i', strtotime($reply['created_at'])) ?>
-                    </time>
-                  </header>
-                  <div class="rating-stars" role="img" aria-label="<?= (int)$reply['stars'] ?> von 5 Sternen" style="pointer-events:none;">
+                <div class="review reply" data-review-id="<?= (int)$reply['id'] ?>" data-parent-id="<?= (int)$r['id'] ?>">
+                  <strong><?= htmlspecialchars($reply['display_name'] ?: $reply['username']) ?></strong>
+                  <small class="rating-date"><?= date('d.m.Y H:i', strtotime($reply['created_at'])) ?></small>
+                  <span class="rating-stars" style="pointer-events:none;">
+
                     <?php for ($s = 5; $s >= 1; $s--): ?>
                       <label aria-hidden="true"><?= $s <= $reply['stars'] ? '★' : '☆' ?></label>
                     <?php endfor; ?>
@@ -275,6 +266,7 @@
                   <p class="review-text">
                     <?= nl2br(htmlspecialchars($reply['comment'])) ?>
                   </p>
+
                   <?php if (!empty($reply['image_paths'])): ?>
                     <div class="review-images" data-images='<?= json_encode($reply['image_paths']) ?>'>
                       <?php foreach ($reply['image_paths'] as $idx => $img): ?>
@@ -289,6 +281,7 @@
         </article>
       <?php endforeach; ?>
 
+
     </section>
     <?php if (isset($_SESSION['user_id'])): ?>
       <button type="button" class="open-review-modal btn-review" data-product-id="<?= (int)$product['id'] ?>">Bewertung schreiben</button>
@@ -300,10 +293,12 @@
 <div id="ratingModal" class="review-modal hidden" role="dialog" aria-modal="true" aria-labelledby="ratingTitle">
   <div class="review-modal-content">
     <h2 id="ratingTitle">Bewertung abgeben</h2>
+
     <button type="button" class="review-close" onclick="closeRatingModal()">&times;</button>
     <form id="ratingForm" class="review-form" action="index.php?page=community&action=addRating" method="post" enctype="multipart/form-data">
       <input type="hidden" name="product_id" id="ratingProductId" value="">
       <input type="hidden" name="parent_id" id="ratingParentId" value="">
+      <label for="displayName">Name:</label>
       <input type="text" name="display_name" id="displayName" placeholder="Dein Name" value="<?= htmlspecialchars($_SESSION['username'] ?? '') ?>" required>
       <fieldset class="rating-stars">
         <legend class="sr-only">Sternebewertung</legend>
@@ -312,7 +307,8 @@
           <label for="modal-star<?= $s ?>" aria-label="<?= $s ?> Sterne">★</label>
         <?php endfor; ?>
       </fieldset>
-      <textarea name="comment" required placeholder="Deine Meinung..." aria-label="Kommentar"></textarea>
+      <label for="ratingComment">Kommentar:</label>
+      <textarea id="ratingComment" name="comment" required placeholder="Deine Meinung..."></textarea>
       <div class="suggestion-bar" id="suggestionBar">
         <?php foreach ($reviewSuggestions as $rating => $texts): ?>
           <div class="suggestions-set <?= $rating == 5 ? '' : 'hidden' ?>" data-rating="<?= (int)$rating ?>">
@@ -322,7 +318,9 @@
           </div>
         <?php endforeach; ?>
       </div>
+      <label for="ratingImages">Bilder hochladen:</label>
       <input type="file" name="images[]" id="ratingImages" accept="image/*" multiple aria-label="Bilder zur Bewertung hochladen">
+      <p class="help-text">Maximal 5 Bilder</p>
       <div id="imagePreviewList" class="image-preview-list hidden"></div>
       <button type="submit">Bewerten</button>
     </form>
@@ -336,6 +334,7 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+
     let compareProducts = [];
     let compareFocus = -1;
     let selectedCompareId = null;

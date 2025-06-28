@@ -1,11 +1,9 @@
 <?php include __DIR__ . '/../layout/header.php'; ?>
 
-<sectio class="form-wrapper" style="padding:2em;">
+<section class="form-wrapper" style="padding: 2em; max-width: 1000px; margin: auto;">
   <?php
   $statusTitleMap = [
     'neu' => 'Neue Aufträge',
-    'bestellt' => 'Bestellt',
-    'versandt_nicht_erhalten' => 'Versandt, nicht erhalten',
     'in_bearbeitung' => 'Aufträge in Bearbeitung',
     'abgelehnt' => 'Abgelehnte Aufträge',
     'abgeschlossen' => 'Abgeschlossene Aufträge',
@@ -17,8 +15,6 @@
 
   <nav class="order-nav" style="text-align:center;margin-bottom:1em;">
     <a href="index.php?page=order&action=admin&status=neu" class="<?= $statusFilter === 'neu' ? 'active' : '' ?>">Neu</a> |
-    <a href="index.php?page=order&action=admin&status=bestellt" class="<?= $statusFilter === 'bestellt' ? 'active' : '' ?>">Bestellt</a> |
-    <a href="index.php?page=order&action=admin&status=versandt_nicht_erhalten" class="<?= $statusFilter === 'versandt_nicht_erhalten' ? 'active' : '' ?>">Versandt</a> |
     <a href="index.php?page=order&action=admin&status=in_bearbeitung" class="<?= $statusFilter === 'in_bearbeitung' ? 'active' : '' ?>">In Bearbeitung</a> |
     <a href="index.php?page=order&action=admin&status=abgelehnt" class="<?= $statusFilter === 'abgelehnt' ? 'active' : '' ?>">Abgelehnt</a> |
     <a href="index.php?page=order&action=admin&status=abgeschlossen" class="<?= $statusFilter === 'abgeschlossen' ? 'active' : '' ?>">Abgeschlossen</a>
@@ -35,7 +31,6 @@
           <th>Datum</th>
           <th>Status</th>
           <th>Details</th>
-          <th>Grund</th>
           <th>Aktion</th>
         </tr>
       </thead>
@@ -54,21 +49,17 @@
               <?php endforeach; ?>
             <?php endif; ?>
           </td>
-          <td><?= htmlspecialchars($order['rejection_reason'] ?? '') ?></td>
           <td>
             <form action="index.php?page=order&action=updateStatus" method="post" style="display:flex;gap:0.5em;align-items:center;">
               <input type="hidden" name="order_id" value="<?= (int)$order['id'] ?>">
               <input type="hidden" name="redirect" value="<?= htmlspecialchars($statusFilter) ?>">
               <select name="status">
                 <option value="neu" <?= $order['status'] === 'neu' ? 'selected' : '' ?>>neu</option>
-                <option value="bestellt" <?= $order['status'] === 'bestellt' ? 'selected' : '' ?>>bestellt</option>
-                <option value="versandt_nicht_erhalten" <?= $order['status'] === 'versandt_nicht_erhalten' ? 'selected' : '' ?>>versandt nicht erhalten</option>
                 <option value="in_bearbeitung" <?= $order['status'] === 'in_bearbeitung' ? 'selected' : '' ?>>in Bearbeitung</option>
                 <option value="abgelehnt" <?= $order['status'] === 'abgelehnt' ? 'selected' : '' ?>>abgelehnt</option>
                 <option value="abgeschlossen" <?= $order['status'] === 'abgeschlossen' ? 'selected' : '' ?>>abgeschlossen</option>
                 <option value="storniert" <?= $order['status'] === 'storniert' ? 'selected' : '' ?>>storniert</option>
               </select>
-              <input type="text" name="reason" placeholder="Grund" value="<?= htmlspecialchars($order['rejection_reason'] ?? '') ?>" style="max-width:150px;">
               <button type="submit" class="btn-checkout">Speichern</button>
             </form>
           </td>
@@ -77,7 +68,7 @@
 
     </table>
   <?php endif; ?>
-  </section>
+</section>
 
-  <button id="scrollTopBtn" title="Nach oben">⬆</button>
-  <?php include __DIR__ . '/../layout/footer.php'; ?>
+<button id="scrollTopBtn" title="Nach oben">⬆</button>
+<?php include __DIR__ . '/../layout/footer.php'; ?>

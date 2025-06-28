@@ -172,6 +172,7 @@
     margin-top: 40px;
   } /* Hide trophy in header logo on smaller screens */
   .logo .trophy-icon {
+    display: flex;
     display: none;
   }
 }
@@ -186,15 +187,53 @@
     gap: 15px;
   }
 }
-/* max-width: 600px (Produktansichten) */
 @media (width <= 600px) {
+  .main-content {
+    padding: 1rem;
+  }
+
+  .filter-tools {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filterbar {
+    flex-direction: column;
+  }
+
+  .filter-controls {
+    flex-wrap: wrap;
+  }
+
+  .filterbar select,
+  .filterbar input[type="range"],
+  .filter-tools button {
+    width: 100%;
+  }
+
   .einzelprodukt-grid {
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   }
 
+  /* Filter- und Layout-Buttons umbrechen lassen */
+  .filter-tools {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* Filter in mehreren Reihen anzeigen */
+  .filter-controls {
+    flex-wrap: wrap;
+  }
+
+  .filter-tools button,
+  .filterbar select {
+    flex: 1 1 auto;
+  }
+
   .einzelprodukt-list .einzelprodukt {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
   }
 
   .einzelprodukt-list .image-wrapper {
@@ -205,5 +244,61 @@
   .einzelprodukt-list .image-wrapper img {
     width: 100%;
     max-width: 250px;
+  }
+  /* Produktdetailansicht */
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-grid .image-wrapper {
+    width: 100%;
+    margin-bottom: 15px;
+    align-items: center;
+  }
+
+  .zoom-bg-container {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .zoom-bg-container img {
+    height: auto;
+  }
+
+  .button-reihe {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+/* max-width: 360px (sehr kleine Bildschirme) */
+@media (width <= 360px) {
+  header {
+    padding: 10px;
+    display: flex;
+  }
+
+  .header-bar {
+    gap: 6px;
+    padding: 5px 0;
+    display: flex;
+  }
+
+  .logo {
+    font-size: 22px;
+  }
+
+  .action-buttons button {
+    padding: 4px 8px;
+    font-size: 14px;
+  }
+
+  .search-wrapper input {
+    padding: 6px;
+  }
+
+  .burger-menu {
+    top: 15px;
   }
 }

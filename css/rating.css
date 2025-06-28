@@ -94,11 +94,6 @@
   box-shadow: 0 2px 6px rgb(0 0 0 / 10%);
 }
 
-.review img {
-  max-width: 150px;
-  display: block;
-  margin-top: 5px;
-}
 
 .review-actions {
   display: flex;
@@ -124,15 +119,6 @@
   padding: 2px 10px;
 }
 
-.review-actions .btn-delete-rating {
-  background: var(--popup-button-bg);
-  color: var(--popup-button-text);
-  border: 1px solid var(--popup-border);
-  border-radius: 20px;
-  padding: 2px 10px;
-  font-size: 0.85rem;
-  cursor: pointer;
-}
 .reaction-btns {
   display: flex;
   gap: 12px;
@@ -173,6 +159,12 @@
 
 .review-form {
   margin-top: 1rem;
+}
+
+.review-form label {
+  display: block;
+  margin-top: 8px;
+  font-weight: 600;
 }
 
 .review-form textarea {
@@ -223,6 +215,13 @@
   cursor: pointer;
   width: 100%;
   box-sizing: border-box;
+}
+
+.help-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: -4px;
+  margin-bottom: 8px;
 }
 
 .suggestion-bar {
@@ -496,9 +495,6 @@ body.modal-open {
   margin: 8px 0;
 }
 
-.review-modal-content {
-  box-shadow: 0 4px 8px rgb(0 0 0 / 20%);
-}
 
 @keyframes popIn {
   from {

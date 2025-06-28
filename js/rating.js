@@ -28,27 +28,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  document.querySelectorAll('#ratingForm .suggest-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (commentField) {
-        commentField.value = btn.textContent;
-        commentField.focus();
-      }
-    });
-  });
 
-  document.querySelectorAll('.rating-stars input').forEach(rad => {
-    rad.addEventListener('change', () => showSuggestions(rad.value));
-  });
-
-  document.querySelectorAll('.review-images').forEach(container => {
-    const images = JSON.parse(container.dataset.images || '[]');
-    container.querySelectorAll('img').forEach(img => {
-      img.addEventListener('click', () => {
-        openImageGallery(images, parseInt(img.dataset.idx, 10) || 0);
-      });
-    });
-  });
 
   function updateCounts(btn, data) {
     if (!data) return;
@@ -206,7 +186,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  const commentField = document.querySelector('#ratingForm textarea[name="comment"]');
+  const commentField = document.getElementById('ratingComment');
   document.querySelectorAll('#ratingForm .suggest-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       if (commentField) {
@@ -299,42 +279,31 @@ function addRatingToDom(rating) {
   const reviews = document.querySelector('.reviews');
   if (!reviews || !rating) return;
 
-  const reviewEl = document.createElement('article');
+  const reviewEl = document.createElement('div');
   reviewEl.className = 'review' + (rating.parent_id ? ' reply' : '');
   reviewEl.dataset.reviewId = rating.id;
   if (rating.parent_id) reviewEl.dataset.parentId = rating.parent_id;
-  reviewEl.tabIndex = 0;
-  reviewEl.setAttribute('role', 'article');
 
   const content = document.createElement('div');
   content.className = 'review-content';
-  const header = document.createElement('header');
-  header.className = 'review-header';
-  header.id = 'review-' + rating.id + '-header';
   const name = document.createElement('strong');
-  name.className = 'review-author';
   name.textContent = rating.display_name || rating.username || '';
-  const date = document.createElement('time');
+  const date = document.createElement('small');
   date.className = 'rating-date';
-  date.dateTime = new Date(rating.created_at).toISOString();
   date.textContent = new Date(rating.created_at).toLocaleString('de-DE');
-  header.appendChild(name);
-  header.appendChild(date);
-  const stars = document.createElement('div');
+  const stars = document.createElement('span');
   stars.className = 'rating-stars';
   stars.style.pointerEvents = 'none';
-  stars.setAttribute('role', 'img');
-  stars.setAttribute('aria-label', rating.stars + ' von 5 Sternen');
   for (let s = 5; s >= 1; s--) {
     const lab = document.createElement('label');
     lab.textContent = s <= rating.stars ? '★' : '☆';
-    lab.setAttribute('aria-hidden', 'true');
     stars.appendChild(lab);
   }
   const text = document.createElement('p');
-  text.className = 'review-text';
   text.innerHTML = (rating.comment || '').replace(/\n/g, '<br>');
-  content.appendChild(header);
+  content.appendChild(name);
+  content.appendChild(date);
+
   content.appendChild(stars);
   content.appendChild(text);
 
@@ -361,13 +330,13 @@ function addRatingToDom(rating) {
   like.type = 'button';
   like.className = 'like-btn';
   like.dataset.id = rating.id;
-  like.setAttribute('aria-label', 'Bewertung positiv bewerten');
+
   like.innerHTML = '👍 <span>' + (rating.likes || 0) + '</span>';
   const dislike = document.createElement('button');
   dislike.type = 'button';
   dislike.className = 'dislike-btn';
   dislike.dataset.id = rating.id;
-  dislike.setAttribute('aria-label', 'Bewertung negativ bewerten');
+
   dislike.innerHTML = '👎 <span>' + (rating.dislikes || 0) + '</span>';
   actions.appendChild(like);
   actions.appendChild(dislike);
@@ -377,7 +346,7 @@ function addRatingToDom(rating) {
     reply.className = 'reply-btn';
     reply.dataset.id = rating.id;
     reply.dataset.productId = rating.product_id;
-    reply.setAttribute('aria-label', 'Auf diese Bewertung antworten');
+
     reply.textContent = 'Antworten';
     actions.appendChild(reply);
   }
@@ -398,7 +367,7 @@ function addRatingToDom(rating) {
     const btnDel = document.createElement('button');
     btnDel.type = 'submit';
     btnDel.className = 'btn-delete-rating';
-    btnDel.setAttribute('aria-label', 'Bewertung löschen');
+
     btnDel.textContent = 'Löschen';
     form.appendChild(idIn);
     form.appendChild(pidIn);
@@ -422,6 +391,7 @@ function addRatingToDom(rating) {
     if (noReviews) noReviews.remove();
     reviews.insertBefore(reviewEl, reviews.firstChild);
   }
+
   reviewEl.classList.add('pulse-highlight');
   reviewEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
   setTimeout(() => reviewEl.classList.remove('pulse-highlight'), 1000);
