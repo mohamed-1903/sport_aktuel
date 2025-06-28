@@ -306,6 +306,7 @@
       <input type="hidden" name="parent_id" id="ratingParentId" value="">
       <label for="displayName">Name:</label>
       <input type="text" name="display_name" id="displayName" placeholder="Dein Name" value="<?= htmlspecialchars($_SESSION['username'] ?? '') ?>" required>
+
       <fieldset class="rating-stars">
         <legend class="sr-only">Sternebewertung</legend>
         <?php for ($s = 5; $s >= 1; $s--): ?>
@@ -330,6 +331,7 @@
       <div id="imagePreviewList" class="image-preview-list hidden"></div>
       <button type="submit">Bewerten</button>
     </form>
+
 </div>
 </div>
 <script>
