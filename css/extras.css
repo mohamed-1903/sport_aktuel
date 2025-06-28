@@ -842,6 +842,10 @@ body.light-mode .zoom-close {
   border-collapse: collapse;
 }
 
+.table-responsive {
+  overflow-x: auto;
+}
+
 .cart-table thead {
   background-color: var(--card-bg); /* ✅ dynamisch */
   color: var(--text-color);
@@ -1014,6 +1018,10 @@ body.light-mode .zoom-close {
 
 @media (max-width: 600px) {
   .cart-main {
+    overflow-x: auto;
+  }
+
+  .table-responsive {
     overflow-x: auto;
   }
 
