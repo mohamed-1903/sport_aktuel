@@ -13,16 +13,18 @@ if (!function_exists('customizationSupported')) {
             return $supported;
         }
 
-    global $db;
-    try {
-        $stmt = $db->query("SHOW COLUMNS FROM cart_items LIKE 'custom_name'");
-        $supported = (bool) $stmt->fetch();
-    } catch (PDOException $e) {
-        $supported = false;
-    }
+        global $db;
+        try {
+            $stmt = $db->query("SHOW COLUMNS FROM cart_items LIKE 'custom_name'");
+            $supported = (bool) $stmt->fetch();
+        } catch (PDOException $e) {
+            $supported = false;
+        }
 
-    return $supported;
+        return $supported;
+    }
 }
+
 
 /**
  * Gibt die ID des Warenkorbs für einen Nutzer zurück.
@@ -165,6 +167,16 @@ function getCartItems(int $userId): array
                     ci.custom_number,
                     ci.custom_fee";
     }
+
+    $select = $base . ",
+                    p.name,
+                    p.price,
+                    p.image_main
+             FROM cart_items ci
+             JOIN cart c ON ci.cart_id = c.id
+             JOIN products p ON ci.product_id = p.id
+             WHERE c.user_id = ?";
+
 
     $select = $base . ",
                     p.name,
