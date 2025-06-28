@@ -16,6 +16,7 @@ function ensureRatingSchema(): void {
         image_paths TEXT,
         likes INT DEFAULT 0,
         dislikes INT DEFAULT 0,
+
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (product_id) REFERENCES products(id),
         FOREIGN KEY (user_id) REFERENCES users(id)
@@ -55,6 +56,7 @@ function addRating(int $productId, int $userId, string $displayName, int $stars,
     $json = $imagePaths ? json_encode($imagePaths) : null;
     $stmt = $db->prepare("INSERT INTO ratings (product_id, user_id, display_name, stars, comment, image_paths, parent_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
     return $stmt->execute([$productId, $userId, $displayName, $stars, $comment, $json, $parentId]);
+
 }
 
 function getRatingsForProduct(int $productId): array {
@@ -66,6 +68,7 @@ function getRatingsForProduct(int $productId): array {
 
     $map = [];
     foreach ($rows as $row) {
+
         if (!empty($row['image_paths'])) {
             $row['image_paths'] = json_decode($row['image_paths'], true) ?: [];
         } elseif (!empty($row['image_path'])) {
@@ -110,7 +113,6 @@ function deleteRating(int $ratingId, int $userId, bool $isAdmin): bool {
     $stmt = $db->prepare('DELETE FROM ratings WHERE id = ? AND user_id = ?');
     return $stmt->execute([$ratingId, $userId]);
 }
-
 function likeRating(int $ratingId): array {
     ensureRatingSchema();
     global $db;
@@ -132,3 +134,4 @@ function getRatingVotes(int $ratingId): array {
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row ?: ['likes' => 0, 'dislikes' => 0];
 }
+

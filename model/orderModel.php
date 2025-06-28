@@ -58,8 +58,13 @@ function getOrderById(int $orderId): ?array {
     return $order ?: null;
 }
 
-function updateOrderStatus(int $orderId, string $status): bool {
+function updateOrderStatus(int $orderId, string $status, string $reason = null): bool {
     global $db;
+    if ($status === 'abgelehnt') {
+        $stmt = $db->prepare("UPDATE orders SET status = ?, rejection_reason = ?, updated_at = NOW() WHERE id = ?");
+        return $stmt->execute([$status, $reason, $orderId]);
+    }
+
     $stmt = $db->prepare("UPDATE orders SET status = ?, updated_at = NOW() WHERE id = ?");
     return $stmt->execute([$status, $orderId]);
 }
