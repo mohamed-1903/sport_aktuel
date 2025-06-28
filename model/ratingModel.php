@@ -50,13 +50,13 @@ function ensureRatingSchema(): void {
     $done = true;
 }
 
-function addRating(int $productId, int $userId, string $displayName, int $stars, string $comment, array $imagePaths, ?int $parentId = null): bool {
+function addRating(int $productId, int $userId, string $displayName, int $stars, string $comment, array $imagePaths, ?int $parentId = null): int {
     ensureRatingSchema();
     global $db;
     $json = $imagePaths ? json_encode($imagePaths) : null;
     $stmt = $db->prepare("INSERT INTO ratings (product_id, user_id, display_name, stars, comment, image_paths, parent_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    return $stmt->execute([$productId, $userId, $displayName, $stars, $comment, $json, $parentId]);
-
+    $stmt->execute([$productId, $userId, $displayName, $stars, $comment, $json, $parentId]);
+    return (int)$db->lastInsertId();
 }
 
 function getRatingsForProduct(int $productId): array {
@@ -182,5 +182,22 @@ function getRatingVotes(int $ratingId): array {
     $stmt->execute([$ratingId]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row ?: ['likes' => 0, 'dislikes' => 0];
+}
+
+function getRating(int $ratingId): ?array {
+    ensureRatingSchema();
+    global $db;
+    $stmt = $db->prepare('SELECT r.*, u.username FROM ratings r JOIN users u ON r.user_id = u.id WHERE r.id = ?');
+    $stmt->execute([$ratingId]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!$row) {
+        return null;
+    }
+    if (!empty($row['image_paths'])) {
+        $row['image_paths'] = json_decode($row['image_paths'], true) ?: [];
+    } else {
+        $row['image_paths'] = [];
+    }
+    return $row;
 }
 
