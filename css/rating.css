@@ -81,6 +81,7 @@
   flex-wrap: wrap; /* optional, falls bei kleineren Bildschirmen umbrechen soll */
   flex-direction: row;
   margin-top: auto; /* schiebt nach unten */
+  padding-top: 24px; /* großer Abstand zwischen Bildern und Buttons */
 }
 .review-actions button,
 .review-actions form {
