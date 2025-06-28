@@ -76,7 +76,6 @@ $total = 0;
               </td>
               <td>
                 <form action="index.php?page=cart&action=update" method="post">
-                  <input type="hidden" name="cart_item_id" value="<?= (int)$item['cart_item_id'] ?>">
                   <input type="hidden" name="id" value="<?= (int)$item['product_id'] ?>">
                   <input type="hidden" name="size" value="<?= htmlspecialchars($item['size']) ?>">
                   <input
@@ -85,7 +84,6 @@ $total = 0;
                     class="qty-input"
                     data-id="<?= (int)$item['product_id'] ?>"
                     data-size="<?= htmlspecialchars($item['size']) ?>"
-                    data-cart-item-id="<?= (int)$item['cart_item_id'] ?>"
                     data-price="<?= number_format($einzelpreis, 2, '.', '') ?>"
                     value="<?= (int)$item['quantity'] ?>"
                     min="1" />
@@ -96,10 +94,9 @@ $total = 0;
               <td><?= number_format($sum, 2, ',', '.') ?> €</td>
               <td>
                 <form action="index.php?page=cart&action=remove" method="post" style="display:inline">
-                  <input type="hidden" name="cart_item_id" value="<?= (int)$item['cart_item_id'] ?>">
                   <input type="hidden" name="id" value="<?= (int)$item['product_id'] ?>">
                   <input type="hidden" name="size" value="<?= htmlspecialchars($item['size']) ?>">
-                  <button type="submit" class="remove-btn" data-cart-item-id="<?= (int)$item['cart_item_id'] ?>">❌</button>
+                  <button type="submit" class="remove-btn">❌</button>
                 </form>
               </td>
             </tr>

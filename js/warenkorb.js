@@ -243,7 +243,7 @@ function loadList() {
           <td>
             <input type="number" class="qty-input" data-id="${
               item.product_id
-            }" data-size="${item.size}" data-cart-item-id="${item.cart_item_id}" data-price="${einzelfpreis.toFixed(
+            }" data-size="${item.size}" data-price="${einzelfpreis.toFixed(
           2
         )}" value="${menge}" min="1" />
 
@@ -253,7 +253,7 @@ function loadList() {
           <td>
             <button class="remove-btn" data-id="${
               item.product_id
-            }" data-size="${item.size}" data-cart-item-id="${item.cart_item_id}" data-name="${item.name}" data-image="${
+            }" data-size="${item.size}" data-name="${item.name}" data-image="${
           item.image_main
         }">❌</button>
           </td>
@@ -275,10 +275,9 @@ function loadList() {
         btn.addEventListener("click", () => {
           const id = btn.dataset.id;
           const size = btn.dataset.size;
-          const cartItemId = btn.dataset.cartItemId;
           const name = btn.dataset.name;
           const image = btn.dataset.image;
-          removeFromCart(id, size, { name, image, productId: id }, cartItemId);
+          removeFromCart(id, size, { name, image, productId: id });
         });
       });
 
@@ -302,16 +301,15 @@ function loadList() {
       });
     });
 }
-function removeFromCart(productId, size, previewData = null, cartItemId = null) {
+function removeFromCart(productId, size, previewData = null) {
   fetch("index.php?page=cart&action=remove", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body:
-      cartItemId !== null
-        ? `cart_item_id=${encodeURIComponent(cartItemId)}`
-        : `id=${encodeURIComponent(productId)}&size=${encodeURIComponent(size)}`,
+    body: `id=${encodeURIComponent(productId)}&size=${encodeURIComponent(
+      size
+    )}`,
   })
     .then(() => {
       if (previewData) {
@@ -327,16 +325,15 @@ function removeFromCart(productId, size, previewData = null, cartItemId = null) 
     .catch((err) => console.error("Fehler beim Entfernen:", err));
 }
 
-function updateCartQuantity(productId, size, quantity, reload = true, cartItemId = null) {
+function updateCartQuantity(productId, size, quantity, reload = true) {
   fetch("index.php?page=cart&action=update", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body:
-      cartItemId !== null
-        ? `cart_item_id=${encodeURIComponent(cartItemId)}&quantity=${encodeURIComponent(quantity)}`
-        : `id=${encodeURIComponent(productId)}&size=${encodeURIComponent(size)}&quantity=${encodeURIComponent(quantity)}`,
+    body: `id=${encodeURIComponent(productId)}&size=${encodeURIComponent(
+      size
+    )}&quantity=${encodeURIComponent(quantity)}`,
   })
     .then(() => {
       if (reload) {
@@ -373,8 +370,7 @@ function handleQtyChange(el, sendUpdate = true) {
   if (sendUpdate) {
     const id = el.dataset.id;
     const size = el.dataset.size;
-    const cartItemId = el.dataset.cartItemId;
-    updateCartQuantity(id, size, qty, false, cartItemId);
+    updateCartQuantity(id, size, qty, false);
   }
 }
 
