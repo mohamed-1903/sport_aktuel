@@ -1,24 +1,43 @@
 <?php include __DIR__ . '/../layout/header.php'; ?>
 
 <main class="main-container">
-  <aside class="sidebar">
-    <h2><?= htmlspecialchars($category) ?></h2>
-    <ul>
-      <?php
-      $submap = [
-        "Sportbekleidung" => ["Trikots", "Socken", "Handschuhe", "Trainingsanzüge", "Trainingsjacken", "Trainingshosen", "T-Shirts", "Poloshirts"],
-        "Fußballschuhe" => ["Stollen", "Kunstrasen", "Hallenschuhe"],
-        "Zubehör" => ["Schienbeinschoner", "Fußbälle", "Sporttaschen"],
-        "Sale %" => ["Sportbekleidung", "Fußballschuhe", "Zubehör"]
-      ];
-      foreach ($submap[$category] ?? [] as $sub):
-        $active = (strcasecmp($subcategory, $sub) === 0) ? 'style="font-weight:bold;"' : '';
-        $link = "index.php?page=product&action=list&category=" . urlencode($category) . "&subcategory=" . urlencode($sub);
-        echo "<li><a href='$link' $active>" . htmlspecialchars($sub) . "</a></li>";
-      endforeach;
-      ?>
-    </ul>
-  </aside>
+ <aside class="sidebar">
+  <h2><?= $category === "Alle Produkte" ? "Alle Unterkategorien" : htmlspecialchars($category) ?></h2>
+  <ul>
+    <?php
+    $submap = [
+      "Sportbekleidung" => ["Trikots", "Socken", "Handschuhe", "Trainingsanzüge", "Trainingsjacken", "Trainingshosen", "T-Shirts", "Poloshirts"],
+      "Fußballschuhe" => ["Stollen", "Kunstrasen", "Hallenschuhe"],
+      "Zubehör" => ["Schienbeinschoner", "Fußbälle", "Sporttaschen"],
+      "Sale %" => ["Sportbekleidung", "Fußballschuhe", "Zubehör"]
+    ];
+
+    // 🔍 Nur echte Unterkategorien bei "Alle Produkte"
+    if ($category === "Alle Produkte") {
+      // Alle Werte aus allen Arrays extrahieren (nur die "leaf nodes")
+      $flatSubs = [];
+      foreach ($submap as $key => $subs) {
+        foreach ($subs as $s) {
+          if (!isset($submap[$s])) {
+            $flatSubs[] = $s;
+          }
+        }
+      }
+      $allSubs = array_unique($flatSubs);
+      sort($allSubs);
+    } else {
+      $allSubs = $submap[$category] ?? [];
+    }
+
+    foreach ($allSubs as $sub):
+      $active = (strcasecmp($subcategory, $sub) === 0) ? 'style="font-weight:bold;"' : '';
+      $link = "index.php?page=product&action=list&category=" . urlencode($category) . "&subcategory=" . urlencode($sub);
+      echo "<li><a href='$link' $active>" . htmlspecialchars($sub) . "</a></li>";
+    endforeach;
+    ?>
+  </ul>
+</aside>
+
 
   <main class="main-content">
     <h1><?= htmlspecialchars($displayTitle) ?></h1>
@@ -31,42 +50,42 @@
     </div>
     <section class="filterbar">
       <div class="filter-controls">
-      <select id="filter-marke" onchange="applyFilter()">
-        <option value="">Alle Marken</option>
-        <option value="Nike">Nike</option>
-        <option value="Puma">Puma</option>
-        <option value="Adidas">Adidas</option>
-      </select>
-      <select id="filter-farbe" onchange="applyFilter()">
-        <option value="">Alle Farben</option>
-        <option value="Schwarz">Schwarz</option>
-        <option value="Weiß">Weiß</option>
-        <option value="Blau">Blau</option>
-        <option value="Rot">Rot</option>
-      </select>
-      <select id="filter-price" onchange="applyFilter()">
-        <option value="">Alle Preise</option>
-      </select>
+        <select id="filter-marke" onchange="applyFilter()">
+          <option value="">Alle Marken</option>
+          <option value="Nike">Nike</option>
+          <option value="Puma">Puma</option>
+          <option value="Adidas">Adidas</option>
+        </select>
+        <select id="filter-farbe" onchange="applyFilter()">
+          <option value="">Alle Farben</option>
+          <option value="Schwarz">Schwarz</option>
+          <option value="Weiß">Weiß</option>
+          <option value="Blau">Blau</option>
+          <option value="Rot">Rot</option>
+        </select>
+        <select id="filter-price" onchange="applyFilter()">
+          <option value="">Alle Preise</option>
+        </select>
 
-      <select id="filter-mannschaft" onchange="applyFilter()">
-        <option value="">Alle Mannschaften</option>
-        <option value="Bayern">Bayern</option>
-        <option value="Dortmund">Dortmund</option>
-      </select>
-      <select id="filter-geschlecht" onchange="applyFilter()">
+        <select id="filter-mannschaft" onchange="applyFilter()">
+          <option value="">Alle Mannschaften</option>
+          <option value="Bayern">Bayern</option>
+          <option value="Dortmund">Dortmund</option>
+        </select>
+        <select id="filter-geschlecht" onchange="applyFilter()">
 
-        <option value="">Alle Geschlechter</option>
-        <option value="Herren">Herren</option>
-        <option value="Damen">Damen</option>
-        <option value="Unisex">Unisex</option>
-      </select>
-      <select id="sort-select" onchange="sortProducts(this.value)">
-        <option value="default">Standardsortierung</option>
-        <option value="price-asc">Preis aufsteigend ▲</option>
-        <option value="price-desc">Preis absteigend ▼</option>
-        <option value="name-asc">Name A–Z</option>
-        <option value="name-desc">Name Z–A</option>
-      </select>
+          <option value="">Alle Geschlechter</option>
+          <option value="Herren">Herren</option>
+          <option value="Damen">Damen</option>
+          <option value="Unisex">Unisex</option>
+        </select>
+        <select id="sort-select" onchange="sortProducts(this.value)">
+          <option value="default">Standardsortierung</option>
+          <option value="price-asc">Preis aufsteigend ▲</option>
+          <option value="price-desc">Preis absteigend ▼</option>
+          <option value="name-asc">Name A–Z</option>
+          <option value="name-desc">Name Z–A</option>
+        </select>
       </div>
     </section>
     <ul class="einzelprodukt-grid" id="produktContainer">
@@ -93,13 +112,9 @@
             data-mannschaft="<?= $mannschaft ?>"
             data-geschlecht="<?= htmlspecialchars($geschlecht) ?>">
 
-
-
-
-
             <div class="image-wrapper">
               <img src="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>"
-                   alt="<?= htmlspecialchars($produkt["name"]) ?>">
+                alt="<?= htmlspecialchars($produkt["name"]) ?>">
             </div>
 
             <div class="produkt-info">
@@ -117,18 +132,18 @@
                 </a>
 
                 <button class="btn-add-to-cart"
-                        data-iid="<?= (int)$produkt['iid'] ?>"
-                        data-name="<?= htmlspecialchars($produkt['name']) ?>"
-                        data-price="<?= (float)$produkt['price'] ?? 0 ?>"
-                        data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
+                  data-iid="<?= (int)$produkt['iid'] ?>"
+                  data-name="<?= htmlspecialchars($produkt['name']) ?>"
+                  data-price="<?= (float)$produkt['price'] ?? 0 ?>"
+                  data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
                   🛒
                 </button>
 
                 <button class="btn-add-to-watch"
-                        data-iid="<?= (int)$produkt['iid'] ?>"
-                        data-name="<?= htmlspecialchars($produkt['name']) ?>"
-                        data-price="<?= (float)$produkt['price'] ?? 0 ?>"
-                        data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
+                  data-iid="<?= (int)$produkt['iid'] ?>"
+                  data-name="<?= htmlspecialchars($produkt['name']) ?>"
+                  data-price="<?= (float)$produkt['price'] ?? 0 ?>"
+                  data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
                   🤍
                 </button>
               </div>
