@@ -7,6 +7,10 @@ session_start(); // Startet eine neue oder bestehende Session. Wichtig für Logi
 error_reporting(E_ALL); // Aktiviert die Anzeige aller Fehlermeldungen (nur für Entwicklung empfohlen).
 ini_set("display_errors", 1); // Sorgt dafür, dass Fehler direkt im Browser angezeigt werden.
 
+if ($_SESSION['isAdmin'] ?? false) {
+    require_once 'import_products.php';
+}
+
 // require_once 'config.php'; // Lädt die Konfigurationsdatei (z.B. DB-Zugangsdaten, Konstanten).
 
 $page = $_GET['page'] ?? 'static'; // Liest den 'page'-Parameter aus der URL (?page=...), Standardwert ist 'static', falls nicht gesetzt.
@@ -44,9 +48,6 @@ switch ($page) {
 
     case 'community':
         require_once 'controller/communityController.php';
-        break;
-    case 'user':
-        require_once 'controller/userController.php';
         break;
     case 'user':
         require_once 'controller/userController.php';
