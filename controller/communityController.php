@@ -74,7 +74,7 @@ switch ($action) {
                 }
             }
             $ratingId = addRating($productId, $userId, $displayName ?: ($_SESSION['username'] ?? ''), $stars, $comment, $imagePaths, $parentId);
-            $rating = getRating($ratingId);
+            $rating = getRating($ratingId, $userId);
             header('Content-Type: application/json');
             echo json_encode(['success' => true, 'rating' => $rating]);
             exit;
@@ -96,32 +96,40 @@ switch ($action) {
     case 'likeRating':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ratingId = isset($_POST['rating_id']) ? (int)$_POST['rating_id'] : 0;
+            $uid = $_SESSION['user_id'] ?? null;
+            if (!$uid) { http_response_code(403); echo json_encode(['error' => 'login']); exit; }
             header('Content-Type: application/json');
-            echo json_encode(likeRating($ratingId));
+            echo json_encode(likeRating($ratingId, $uid));
             exit;
         }
         break;
     case 'dislikeRating':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ratingId = isset($_POST['rating_id']) ? (int)$_POST['rating_id'] : 0;
+            $uid = $_SESSION['user_id'] ?? null;
+            if (!$uid) { http_response_code(403); echo json_encode(['error' => 'login']); exit; }
             header('Content-Type: application/json');
-            echo json_encode(dislikeRating($ratingId));
+            echo json_encode(dislikeRating($ratingId, $uid));
             exit;
         }
         break;
     case 'unlikeRating':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ratingId = isset($_POST['rating_id']) ? (int)$_POST['rating_id'] : 0;
+            $uid = $_SESSION['user_id'] ?? null;
+            if (!$uid) { http_response_code(403); echo json_encode(['error' => 'login']); exit; }
             header('Content-Type: application/json');
-            echo json_encode(unlikeRating($ratingId));
+            echo json_encode(unlikeRating($ratingId, $uid));
             exit;
         }
         break;
     case 'undislikeRating':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ratingId = isset($_POST['rating_id']) ? (int)$_POST['rating_id'] : 0;
+            $uid = $_SESSION['user_id'] ?? null;
+            if (!$uid) { http_response_code(403); echo json_encode(['error' => 'login']); exit; }
             header('Content-Type: application/json');
-            echo json_encode(undislikeRating($ratingId));
+            echo json_encode(undislikeRating($ratingId, $uid));
             exit;
         }
         break;
