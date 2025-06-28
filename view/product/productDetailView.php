@@ -199,7 +199,7 @@
   </section>
 
   <?php foreach ($productsToShow as $index => $product):
-    $ratings = getRatingsForProduct((int)$product['id']);
+    $ratings = getRatingsForProduct((int)$product['id'], $_SESSION['user_id'] ?? null);
     $avgRating = getAverageRating((int)$product['id']);
   ?>
     <section class="reviews" aria-live="polite" aria-atomic="true">
@@ -212,8 +212,11 @@
         <p class="no-reviews">Noch keine Bewertungen.</p>
       <?php endif; ?>
       <?php foreach ($ratings as $r): ?>
-        <div class="review" data-review-id="<?= (int)$r['id'] ?>">
+        <div class="review<?= !empty($r['parent_id']) ? ' reply' : '' ?>" data-review-id="<?= (int)$r['id'] ?>"<?php if (!empty($r['parent_id'])): ?> data-parent-id="<?= (int)$r['parent_id'] ?>"<?php endif; ?>>
           <div class="review-content">
+            <?php if (!empty($r['parent_name'])): ?>
+              <small class="reply-info">Antwort auf <?= htmlspecialchars($r['parent_name']) ?></small>
+            <?php endif; ?>
             <strong><?= htmlspecialchars($r['display_name'] ?: $r['username']) ?></strong>
             <small class="rating-date">
               <?= date('d.m.Y H:i', strtotime($r['created_at'])) ?>
@@ -233,11 +236,11 @@
             <?php endif; ?>
           </div>
 
-          <div class="review-actions">
-              <button type="button" class="like-btn" data-id="<?= (int)$r['id'] ?>" aria-label="Bewertung positiv bewerten">
+          <div class="review-actions" data-user-vote="<?= htmlspecialchars($r['user_vote'] ?? '') ?>">
+              <button type="button" class="like-btn<?= ($r['user_vote'] ?? '') === 'like' ? ' active' : '' ?>" data-id="<?= (int)$r['id'] ?>" aria-label="Bewertung positiv bewerten">
                 👍 <span><?= (int)$r['likes'] ?></span>
               </button>
-              <button type="button" class="dislike-btn" data-id="<?= (int)$r['id'] ?>" aria-label="Bewertung negativ bewerten">
+              <button type="button" class="dislike-btn<?= ($r['user_vote'] ?? '') === 'dislike' ? ' active' : '' ?>" data-id="<?= (int)$r['id'] ?>" aria-label="Bewertung negativ bewerten">
                 👎 <span><?= (int)$r['dislikes'] ?></span>
               </button>
             <?php if (isset($_SESSION['user_id'])): ?>
@@ -251,34 +254,7 @@
               </form>
             <?php endif; ?>
           </div>
-          <?php if (!empty($r['replies'])): ?>
-            <div class="review-replies">
-              <?php foreach ($r['replies'] as $reply): ?>
-                <div class="review reply" data-review-id="<?= (int)$reply['id'] ?>" data-parent-id="<?= (int)$r['id'] ?>">
-                  <strong><?= htmlspecialchars($reply['display_name'] ?: $reply['username']) ?></strong>
-                  <small class="rating-date"><?= date('d.m.Y H:i', strtotime($reply['created_at'])) ?></small>
-                  <span class="rating-stars" style="pointer-events:none;">
-
-                    <?php for ($s = 5; $s >= 1; $s--): ?>
-                      <label aria-hidden="true"><?= $s <= $reply['stars'] ? '★' : '☆' ?></label>
-                    <?php endfor; ?>
-                  </div>
-                  <p class="review-text">
-                    <?= nl2br(htmlspecialchars($reply['comment'])) ?>
-                  </p>
-
-                  <?php if (!empty($reply['image_paths'])): ?>
-                    <div class="review-images" data-images='<?= json_encode($reply['image_paths']) ?>'>
-                      <?php foreach ($reply['image_paths'] as $idx => $img): ?>
-                        <img src="<?= htmlspecialchars($img) ?>" data-idx="<?= $idx ?>" alt="Bild zur Bewertung">
-                      <?php endforeach; ?>
-                    </div>
-                  <?php endif; ?>
-                </article>
-              <?php endforeach; ?>
-            </div>
-          <?php endif; ?>
-        </article>
+        </div>
       <?php endforeach; ?>
 
 
@@ -298,6 +274,7 @@
     <form id="ratingForm" class="review-form" action="index.php?page=community&action=addRating" method="post" enctype="multipart/form-data">
       <input type="hidden" name="product_id" id="ratingProductId" value="">
       <input type="hidden" name="parent_id" id="ratingParentId" value="">
+      <div id="replyTarget" class="reply-target hidden"></div>
       <label for="displayName">Name:</label>
       <input type="text" name="display_name" id="displayName" placeholder="Dein Name" value="<?= htmlspecialchars($_SESSION['username'] ?? '') ?>" required>
       <fieldset class="rating-stars">
