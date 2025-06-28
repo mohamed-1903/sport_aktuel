@@ -240,7 +240,6 @@
       <?php endforeach; ?>
     </div>
   </section>
-
   <?php foreach ($productsToShow as $index => $product):
     $ratings = getRatingsForProduct((int)$product['id'], $_SESSION['user_id'] ?? null);
 
@@ -300,8 +299,6 @@
           </div>
         </div>
       <?php endforeach; ?>
-
-
 
     </section>
     <?php if (isset($_SESSION['user_id'])): ?>
