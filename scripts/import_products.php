@@ -11,9 +11,11 @@ if (!$data || !isset($data['products'])) {
 $insertStmt = $db->prepare("
     INSERT INTO products 
         (id, name, description, price, price_text, image_main, marke, farbe, geschlecht, category, subcategory, sizes, images)
-    VALUES 
+    VALUES
         (:id, :name, :description, :price, :price_text, :image_main, :marke, :farbe, :geschlecht, :category, :subcategory, :sizes, :images)
 ");
+// Erst Ratings entfernen, um Foreign-Key-Fehler zu vermeiden
+$db->exec("DELETE FROM ratings");
 $db->exec("DELETE FROM products");
 
 foreach ($data['products'] as $product) {
