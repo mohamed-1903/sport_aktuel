@@ -16,7 +16,6 @@
 <?php endif; ?>
 
 
-
 <main class="produkte">
   <!-- 🔍 Zoom Modal -->
   <div id="zoomModal" class="zoom-modal hidden">
@@ -100,12 +99,6 @@
           <label for="quantity-<?= $index ?>">Menge:</label>
           <input type="number" id="quantity-<?= $index ?>" value="1" min="1" class="size-dropdown" />
 
-
-
-
-
-
-
           <div class="button-rows">
             <!-- 🎟 Rabattcode -->
             <label for="pin-<?= $index ?>">Rabatt-PIN eingeben:</label>
@@ -124,10 +117,6 @@
             <button onclick="resetFields(this.closest('.Eprodukt'))">Felder zurücksetzen</button>
           </div>
         </div>
-
-
-
-
 
         <!-- 🧺 Aktionen -->
 
@@ -175,16 +164,6 @@
     </section>
   <?php endforeach; ?>
 
-
-  <!-- 💰 Steuerberechnung + Rabattcode -->
-  <section class="preis-container">
-    <label for="netto">Preis ohne Steuern (€):</label>
-    <input class="size-dropdown" type="number" id="netto">
-    <button onclick="zeigePreis()">Berechne Bruttopreis</button>
-    <div id="priceResults">
-      <p id="bruttoErgebnis"></p>
-    </div>
-  </section>
   <button id="showCompareBtn" class="compare-toggle-btn" aria-label="Vergleich öffnen" type="button">+</button>
   <div id="compareSection" class="compare-section hidden">
     <label for="compareInput">Produkt zum Vergleichen auswählen:</label>
@@ -205,14 +184,14 @@
   </div>
 
   <!-- 🧠 Ähnliche Produkte statisch -->
-  <section class="produkte">
+  <section class="produkte similar-products">
     <h2>Ähnliche Produkte</h2>
     <div class="produkt-grid">
       <?php for ($i = 1; $i <= 3; $i++): ?>
         <div class="Eprodukt">
           <img src="nike-shoe.jpg" alt="Ähnliches Produkt <?= $i ?>" />
           <h3>Nike Produkt <?= $i ?></h3>
-          <p>€<?= 199.99 - ($i - 1) * 20 ?></p>
+          <p>€<?= number_format(199.99 - ($i - 1) * 20, 2, ',', '.') ?></p>
           <button>Details</button>
         </div>
       <?php endfor; ?>
@@ -234,14 +213,31 @@
       <?php foreach ($ratings as $r): ?>
         <div class="review">
           <strong><?= htmlspecialchars($r['display_name'] ?: $r['username']) ?></strong>
+          <small class="rating-date">
+            <?= date('d.m.Y H:i', strtotime($r['created_at'])) ?>
+          </small>
           <span class="rating-stars" style="pointer-events:none;">
             <?php for ($s = 5; $s >= 1; $s--): ?>
               <label><?= $s <= $r['stars'] ? '★' : '☆' ?></label>
             <?php endfor; ?>
           </span>
           <p><?= nl2br(htmlspecialchars($r['comment'])) ?></p>
-          <?php if (!empty($r['image_path'])): ?>
-            <img src="<?= htmlspecialchars($r['image_path']) ?>" alt="Bild zur Bewertung">
+          <?php if (!empty($r['image_paths'])): ?>
+            <div class="review-images" data-images='<?= json_encode($r['image_paths']) ?>'>
+              <?php foreach ($r['image_paths'] as $idx => $img): ?>
+                <img src="<?= htmlspecialchars($img) ?>" data-idx="<?= $idx ?>" alt="Bild zur Bewertung">
+              <?php endforeach; ?>
+            </div>
+          <?php endif; ?>
+        <div class="review-actions">
+          <button type="button" class="like-btn" data-id="<?= (int)$r['id'] ?>">
+            👍 <span><?= (int)$r['likes'] ?></span>
+          </button>
+          <button type="button" class="dislike-btn" data-id="<?= (int)$r['id'] ?>">
+            👎 <span><?= (int)$r['dislikes'] ?></span>
+          </button>
+          <?php if (isset($_SESSION['user_id'])): ?>
+            <button type="button" class="reply-btn" data-id="<?= (int)$r['id'] ?>" data-product-id="<?= (int)$product['id'] ?>">Antworten</button>
           <?php endif; ?>
           <?php if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == $r['user_id'] || !empty($_SESSION['is_admin']))): ?>
             <form class="delete-rating-form" method="post" action="index.php?page=community&action=deleteRating" onsubmit="return confirm('Bewertung löschen?');">
@@ -250,15 +246,37 @@
               <button type="submit" class="btn-delete-rating">Löschen</button>
             </form>
           <?php endif; ?>
-        </div>
+          <?php if (!empty($r['replies'])): ?>
+            <div class="review-replies">
+              <?php foreach ($r['replies'] as $reply): ?>
+                <div class="review reply">
+                  <strong><?= htmlspecialchars($reply['display_name'] ?: $reply['username']) ?></strong>
+                  <small class="rating-date"><?= date('d.m.Y H:i', strtotime($reply['created_at'])) ?></small>
+                  <span class="rating-stars" style="pointer-events:none;">
+                    <?php for ($s = 5; $s >= 1; $s--): ?>
+                      <label><?= $s <= $reply['stars'] ? '★' : '☆' ?></label>
+                    <?php endfor; ?>
+                  </span>
+                  <p><?= nl2br(htmlspecialchars($reply['comment'])) ?></p>
+                  <?php if (!empty($reply['image_paths'])): ?>
+                    <div class="review-images" data-images='<?= json_encode($reply['image_paths']) ?>'>
+                      <?php foreach ($reply['image_paths'] as $idx => $img): ?>
+                        <img src="<?= htmlspecialchars($img) ?>" data-idx="<?= $idx ?>" alt="Bild zur Bewertung">
+                      <?php endforeach; ?>
+                    </div>
+                  <?php endif; ?>
+                </div>
+              <?php endforeach; ?>
+            </div>
+          <?php endif; ?>
       <?php endforeach; ?>
 
-      <?php if (isset($_SESSION['user_id'])): ?>
-        <button type="button" class="open-review-modal btn-review" data-product-id="<?= (int)$product['id'] ?>">Bewertung schreiben</button>
-      <?php else: ?>
-        <p><a href="index.php?page=auth&action=login">Anmelden</a>, um eine Bewertung zu schreiben.</p>
-      <?php endif; ?>
     </section>
+<?php if (isset($_SESSION['user_id'])): ?>
+  <button type="button" class="open-review-modal btn-review" data-product-id="<?= (int)$product['id'] ?>">Bewertung schreiben</button>
+<?php else: ?>
+  <p><a href="index.php?page=auth&action=login">Anmelden</a>, um eine Bewertung zu schreiben.</p>
+<?php endif; ?>
   <?php endforeach; ?>
 </main>
 <div id="ratingModal" class="review-modal hidden">
@@ -267,6 +285,7 @@
     <button type="button" class="review-close" onclick="closeRatingModal()">&times;</button>
     <form id="ratingForm" class="review-form" action="index.php?page=community&action=addRating" method="post" enctype="multipart/form-data">
       <input type="hidden" name="product_id" id="ratingProductId" value="">
+      <input type="hidden" name="parent_id" id="ratingParentId" value="">
       <input type="text" name="display_name" id="displayName" placeholder="Dein Name" value="<?= htmlspecialchars($_SESSION['username'] ?? '') ?>" required>
       <div class="rating-stars">
 
@@ -285,11 +304,8 @@
           </div>
         <?php endforeach; ?>
       </div>
-      <input type="file" name="image" id="ratingImage" accept="image/*">
-      <div id="imagePreviewContainer" class="image-preview hidden">
-        <img id="ratingPreview" alt="Vorschau" />
-        <button type="button" id="removeImageBtn" aria-label="Bild entfernen">&times;</button>
-      </div>
+      <input type="file" name="images[]" id="ratingImages" accept="image/*" multiple>
+      <div id="imagePreviewList" class="image-preview-list hidden"></div>
       <button type="submit">Bewerten</button>
     </form>
   </div>

@@ -12,6 +12,7 @@
           <th>Benutzername</th>
           <th>E-Mail</th>
           <th>Registriert am</th>
+          <th>Status</th>
           <th>Aktionen</th>
         </tr>
       </thead>
@@ -22,11 +23,20 @@
             <td><?= htmlspecialchars($user['username']) ?></td>
             <td><?= htmlspecialchars($user['email']) ?></td>
             <td><?= date("d.m.Y H:i", strtotime($user['created_at'])) ?></td>
-            <td>
+            <td><?= htmlspecialchars($user['status']) ?></td>
+            <td style="display:flex;gap:0.5em;">
               <!-- Inaktiv: <a href="#"><button>Löschen</button></a> -->
               <form action="index.php?page=admin&action=deleteUser" method="post" onsubmit="return confirm('Benutzer wirklich löschen?');">
                 <input type="hidden" name="user_id" value="<?= (int)$user['id'] ?>">
                 <button type="submit" class="btn-delete-all">❌ Entfernen</button>
+              </form>
+              <form action="index.php?page=admin&action=toggleUserStatus" method="post">
+                <input type="hidden" name="user_id" value="<?= (int)$user['id'] ?>">
+                <?php if ($user['status'] === 'banned'): ?>
+                  <button type="submit" class="btn-checkout">Freigeben</button>
+                <?php else: ?>
+                  <button type="submit" class="btn-delete-all">Sperren</button>
+                <?php endif; ?>
               </form>
             </td>
           </tr>
