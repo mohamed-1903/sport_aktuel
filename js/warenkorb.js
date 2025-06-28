@@ -62,7 +62,10 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
     const codeDiscount =
       (typeof DISCOUNT_CODES !== "undefined" ? DISCOUNT_CODES[pin] : undefined) || 0;
     adminDiscount = parseFloat(section.dataset.adminDiscount || 0);
-    discount = adminDiscount + codeDiscount;
+    discount = 0;
+    if (adminDiscount || codeDiscount) {
+      discount = 100 - ((100 - adminDiscount) * (100 - codeDiscount)) / 100;
+    }
 
     gift = section.querySelector(`#giftWrap-${idx}`)?.checked || false;
   } else {
