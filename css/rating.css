@@ -147,8 +147,15 @@
 
 .review-replies {
   margin-top: 10px;
-  padding-left: 20px;
-  border-left: 2px solid var(--popup-border);
+  padding-left: 0;
+  border-left: none;
+}
+
+.reply-info {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 4px;
 }
 
 .review.reply {

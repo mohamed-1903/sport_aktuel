@@ -230,6 +230,12 @@ function addRatingToDom(rating) {
 
   const content = document.createElement('div');
   content.className = 'review-content';
+  if (rating.parent_name) {
+    const info = document.createElement('small');
+    info.className = 'reply-info';
+    info.textContent = 'Antwort auf ' + rating.parent_name;
+    content.appendChild(info);
+  }
   const name = document.createElement('strong');
   name.textContent = rating.display_name || rating.username || '';
   const date = document.createElement('small');
@@ -321,20 +327,9 @@ function addRatingToDom(rating) {
   reviewEl.appendChild(content);
   reviewEl.appendChild(actions);
 
-  if (rating.parent_id) {
-    const parent = document.querySelector(`[data-review-id="${rating.parent_id}"]`);
-    let replies = parent && parent.querySelector('.review-replies');
-    if (!replies && parent) {
-      replies = document.createElement('div');
-      replies.className = 'review-replies';
-      parent.appendChild(replies);
-    }
-    if (replies) replies.appendChild(reviewEl);
-  } else {
-    const noReviews = reviews.querySelector('.no-reviews');
-    if (noReviews) noReviews.remove();
-    reviews.insertBefore(reviewEl, reviews.firstChild);
-  }
+  const noReviews = reviews.querySelector('.no-reviews');
+  if (noReviews) noReviews.remove();
+  reviews.insertBefore(reviewEl, reviews.firstChild);
 
   reviewEl.classList.add('pulse-highlight');
   reviewEl.scrollIntoView({ behavior: 'smooth', block: 'center' });

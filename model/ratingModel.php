@@ -72,17 +72,27 @@ function getRatingsForProduct(int $productId, ?int $currentUserId = null): array
     ensureRatingSchema();
     global $db;
     if ($currentUserId) {
-        $stmt = $db->prepare("SELECT r.*, u.username, rv.vote AS user_vote FROM ratings r JOIN users u ON r.user_id = u.id LEFT JOIN rating_votes rv ON rv.rating_id = r.id AND rv.user_id = ? WHERE r.product_id = ? ORDER BY r.created_at ASC");
+        $stmt = $db->prepare(
+            "SELECT r.*, u.username, rv.vote AS user_vote
+             FROM ratings r
+             JOIN users u ON r.user_id = u.id
+             LEFT JOIN rating_votes rv ON rv.rating_id = r.id AND rv.user_id = ?
+             WHERE r.product_id = ? ORDER BY r.created_at ASC"
+        );
         $stmt->execute([$currentUserId, $productId]);
     } else {
-        $stmt = $db->prepare("SELECT r.*, u.username FROM ratings r JOIN users u ON r.user_id = u.id WHERE r.product_id = ? ORDER BY r.created_at ASC");
+        $stmt = $db->prepare(
+            "SELECT r.*, u.username FROM ratings r
+             JOIN users u ON r.user_id = u.id
+             WHERE r.product_id = ? ORDER BY r.created_at ASC"
+        );
+
         $stmt->execute([$productId]);
     }
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $map = [];
-    foreach ($rows as $row) {
-
+    $names = [];
+    foreach ($rows as &$row) {
         if (!empty($row['image_paths'])) {
             $row['image_paths'] = json_decode($row['image_paths'], true) ?: [];
         } elseif (!empty($row['image_path'])) {
@@ -90,22 +100,23 @@ function getRatingsForProduct(int $productId, ?int $currentUserId = null): array
         } else {
             $row['image_paths'] = [];
         }
-        $row['replies'] = [];
-        $map[$row['id']] = $row;
+        $names[$row['id']] = $row['display_name'] ?: $row['username'];
     }
+    unset($row);
 
-    $top = [];
-    foreach ($map as $id => $row) {
-        if (!empty($row['parent_id']) && isset($map[$row['parent_id']])) {
-            $map[$row['parent_id']]['replies'][] = $row;
-        } elseif (empty($row['parent_id'])) {
-            $top[] = $row;
+    foreach ($rows as &$row) {
+        $row['parent_name'] = null;
+        if (!empty($row['parent_id']) && isset($names[$row['parent_id']])) {
+            $row['parent_name'] = $names[$row['parent_id']];
         }
     }
+    unset($row);
 
-    // sort top level by created_at descending
-    usort($top, static function ($a, $b) { return strtotime($b['created_at']) <=> strtotime($a['created_at']); });
-    return $top;
+    usort($rows, static function ($a, $b) {
+        return strtotime($a['created_at']) <=> strtotime($b['created_at']);
+    });
+
+    return $rows;
 }
 
 function getAverageRating(int $productId): ?float {
@@ -246,10 +257,28 @@ function getRating(int $ratingId, ?int $currentUserId = null): ?array {
     ensureRatingSchema();
     global $db;
     if ($currentUserId) {
-        $stmt = $db->prepare('SELECT r.*, u.username, rv.vote AS user_vote FROM ratings r JOIN users u ON r.user_id = u.id LEFT JOIN rating_votes rv ON rv.rating_id = r.id AND rv.user_id = ? WHERE r.id = ?');
+        $stmt = $db->prepare(
+            'SELECT r.*, u.username, rv.vote AS user_vote,
+                    p.display_name AS parent_display_name, pu.username AS parent_username
+             FROM ratings r
+             JOIN users u ON r.user_id = u.id
+             LEFT JOIN rating_votes rv ON rv.rating_id = r.id AND rv.user_id = ?
+             LEFT JOIN ratings p ON r.parent_id = p.id
+             LEFT JOIN users pu ON p.user_id = pu.id
+             WHERE r.id = ?'
+        );
         $stmt->execute([$currentUserId, $ratingId]);
     } else {
-        $stmt = $db->prepare('SELECT r.*, u.username FROM ratings r JOIN users u ON r.user_id = u.id WHERE r.id = ?');
+        $stmt = $db->prepare(
+            'SELECT r.*, u.username,
+                    p.display_name AS parent_display_name, pu.username AS parent_username
+             FROM ratings r
+             JOIN users u ON r.user_id = u.id
+             LEFT JOIN ratings p ON r.parent_id = p.id
+             LEFT JOIN users pu ON p.user_id = pu.id
+             WHERE r.id = ?'
+        );
+
         $stmt->execute([$ratingId]);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -261,6 +290,11 @@ function getRating(int $ratingId, ?int $currentUserId = null): ?array {
     } else {
         $row['image_paths'] = [];
     }
+    $row['parent_name'] = null;
+    if (!empty($row['parent_id'])) {
+        $row['parent_name'] = $row['parent_display_name'] ?: $row['parent_username'];
+    }
+    unset($row['parent_display_name'], $row['parent_username']);
     return $row;
 }
 
