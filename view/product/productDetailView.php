@@ -212,23 +212,25 @@
       <?php endif; ?>
       <?php foreach ($ratings as $r): ?>
         <div class="review">
-          <strong><?= htmlspecialchars($r['display_name'] ?: $r['username']) ?></strong>
-          <small class="rating-date">
-            <?= date('d.m.Y H:i', strtotime($r['created_at'])) ?>
-          </small>
-          <span class="rating-stars" style="pointer-events:none;">
-            <?php for ($s = 5; $s >= 1; $s--): ?>
-              <label><?= $s <= $r['stars'] ? '★' : '☆' ?></label>
-            <?php endfor; ?>
-          </span>
-          <p><?= nl2br(htmlspecialchars($r['comment'])) ?></p>
-          <?php if (!empty($r['image_paths'])): ?>
-            <div class="review-images" data-images='<?= json_encode($r['image_paths']) ?>'>
-              <?php foreach ($r['image_paths'] as $idx => $img): ?>
-                <img src="<?= htmlspecialchars($img) ?>" data-idx="<?= $idx ?>" alt="Bild zur Bewertung">
-              <?php endforeach; ?>
-            </div>
-          <?php endif; ?>
+          <div class="review-content">
+            <strong><?= htmlspecialchars($r['display_name'] ?: $r['username']) ?></strong>
+            <small class="rating-date">
+              <?= date('d.m.Y H:i', strtotime($r['created_at'])) ?>
+            </small>
+            <span class="rating-stars" style="pointer-events:none;">
+              <?php for ($s = 5; $s >= 1; $s--): ?>
+                <label><?= $s <= $r['stars'] ? '★' : '☆' ?></label>
+              <?php endfor; ?>
+            </span>
+            <p><?= nl2br(htmlspecialchars($r['comment'])) ?></p>
+            <?php if (!empty($r['image_paths'])): ?>
+              <div class="review-images" data-images='<?= json_encode($r['image_paths']) ?>'>
+                <?php foreach ($r['image_paths'] as $idx => $img): ?>
+                  <img src="<?= htmlspecialchars($img) ?>" data-idx="<?= $idx ?>" alt="Bild zur Bewertung">
+                <?php endforeach; ?>
+              </div>
+            <?php endif; ?>
+          </div>
           <div class="review-actions">
               <button type="button" class="like-btn" data-id="<?= (int)$r['id'] ?>">
                 👍 <span><?= (int)$r['likes'] ?></span>

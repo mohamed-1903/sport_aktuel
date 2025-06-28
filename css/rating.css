@@ -57,6 +57,11 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* Inhalt soll nach unten gestreckt werden, damit die Buttons am Ende stehen */
+.review-content {
+  flex-grow: 1;
+}
+
 .review:hover {
   transform: translateY(-2px);
   box-shadow: 0 2px 6px rgb(0 0 0 / 10%);
@@ -76,6 +81,7 @@
   flex-wrap: wrap; /* optional, falls bei kleineren Bildschirmen umbrechen soll */
   flex-direction: row;
   margin-top: auto; /* schiebt nach unten */
+  padding-top: 24px; /* großer Abstand zwischen Bildern und Buttons */
 }
 .review-actions button,
 .review-actions form {
