@@ -57,6 +57,11 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* Inhalt soll nach unten gestreckt werden, damit die Buttons am Ende stehen */
+.review-content {
+  flex-grow: 1;
+}
+
 .review:hover {
   transform: translateY(-2px);
   box-shadow: 0 2px 6px rgb(0 0 0 / 10%);
