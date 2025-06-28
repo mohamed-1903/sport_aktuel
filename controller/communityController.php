@@ -12,6 +12,7 @@ switch ($action) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userId = $_SESSION['user_id'] ?? null;
             $productId = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
+            $parentId = isset($_POST['parent_id']) ? (int)$_POST['parent_id'] : null;
             $stars = isset($_POST['stars']) ? (int)$_POST['stars'] : 0;
             $displayName = trim($_POST['display_name'] ?? '');
             $comment = trim($_POST['comment'] ?? '');
@@ -35,7 +36,7 @@ switch ($action) {
                     }
                 }
             }
-            addRating($productId, $userId, $displayName ?: ($_SESSION['username'] ?? ''), $stars, $comment, $imagePaths);
+            addRating($productId, $userId, $displayName ?: ($_SESSION['username'] ?? ''), $stars, $comment, $imagePaths, $parentId);
 
             $_SESSION['message'] = 'Danke für deine Bewertung!';
 
@@ -56,6 +57,39 @@ switch ($action) {
             exit;
         }
         break;
+    case 'likeRating':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $ratingId = isset($_POST['rating_id']) ? (int)$_POST['rating_id'] : 0;
+            header('Content-Type: application/json');
+            echo json_encode(likeRating($ratingId));
+            exit;
+        }
+        break;
+    case 'dislikeRating':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $ratingId = isset($_POST['rating_id']) ? (int)$_POST['rating_id'] : 0;
+            header('Content-Type: application/json');
+            echo json_encode(dislikeRating($ratingId));
+            exit;
+        }
+        break;
+    case 'unlikeRating':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $ratingId = isset($_POST['rating_id']) ? (int)$_POST['rating_id'] : 0;
+            header('Content-Type: application/json');
+            echo json_encode(unlikeRating($ratingId));
+            exit;
+        }
+        break;
+    case 'undislikeRating':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $ratingId = isset($_POST['rating_id']) ? (int)$_POST['rating_id'] : 0;
+            header('Content-Type: application/json');
+            echo json_encode(undislikeRating($ratingId));
+            exit;
+        }
+        break;
+
     default:
         http_response_code(404);
         echo 'Unbekannte Aktion';

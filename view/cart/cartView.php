@@ -68,7 +68,10 @@ $total = 0;
                   <small>🎁 Geschenkverpackung</small><br>
                 <?php endif; ?>
                 <?php if (!empty($item['discount'])): ?>
-                  <small>🎟️ Rabatt: <?= (int)$item['discount'] ?>%</small>
+                  <small>
+                    🎟️ Rabatt<?= !empty($item['discount_code']) ? ' (' . htmlspecialchars($item['discount_code']) . ')' : '' ?>:
+                    <?= (int)$item['discount'] ?>%
+                  </small>
                 <?php endif; ?>
               </td>
               <td>
