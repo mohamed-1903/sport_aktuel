@@ -51,15 +51,25 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
   const section = btn?.closest(".Eprodukt");
   let discount = 0;
   let gift = false;
+  let discountCode = "";
 
   if (section) {
     const idx = section.dataset.productIndex;
     const pin = section.querySelector(`#pin-${idx}`)?.value.trim();
-    discount = window.DISCOUNT_CODES?.[pin] || 0;
+    discountCode = pin || "";
+    // DISCOUNT_CODES ist global in produkt.js definiert
+    discount = (typeof DISCOUNT_CODES !== "undefined" ? DISCOUNT_CODES[pin] : undefined) || 0;
     gift = section.querySelector(`#giftWrap-${idx}`)?.checked || false;
   }
 
-  const payload = { id: iid, size, quantity: qty, discount, gift };
+  const payload = {
+    id: iid,
+    size,
+    quantity: qty,
+    discount,
+    discount_code: discountCode,
+    gift,
+  };
   if (section) {
     const nameInput = section.querySelector(".custom-name");
     const numberInput = section.querySelector(".custom-number");
@@ -221,7 +231,9 @@ function loadList() {
                 }
                 ${
                   item.discount
-                    ? `<small>🎟️ Rabatt: ${item.discount}%</small>`
+                    ? `<small>🎟️ Rabatt${
+                        item.discount_code ? ` (${item.discount_code})` : ""
+                      }: ${item.discount}%</small>`
                     : ""
                 }
               </div>
