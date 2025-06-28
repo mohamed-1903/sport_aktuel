@@ -55,6 +55,7 @@
   justify-content: space-between;
   /* Mehr Höhe, damit die Buttons weiter unten erscheinen */
   min-height: 500px;
+
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -84,6 +85,7 @@
   margin-top: auto; /* schiebt nach unten */
   /* Noch mehr Abstand zwischen Inhalt und Buttons */
   padding-top: 60px;
+
 }
 .review-actions button,
 .review-actions form {
@@ -249,6 +251,7 @@
   margin-bottom: 8px;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
+  flex-direction: row;
 }
 
 .image-preview-list::-webkit-scrollbar {
@@ -276,6 +279,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   flex: 0 0 auto;
   cursor: pointer;
+  flex-direction: row;
 }
 .review-images img::after {
   content: attr(data-idx);
