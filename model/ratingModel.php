@@ -47,6 +47,15 @@ function ensureRatingSchema(): void {
     if ($stmt->rowCount() === 0) {
         $db->exec("ALTER TABLE ratings ADD COLUMN dislikes INT DEFAULT 0 AFTER likes");
     }
+
+    $db->exec("CREATE TABLE IF NOT EXISTS rating_votes (
+        rating_id INT NOT NULL,
+        user_id INT NOT NULL,
+        vote ENUM('like','dislike') NOT NULL,
+        PRIMARY KEY (rating_id, user_id),
+        FOREIGN KEY (rating_id) REFERENCES ratings(id) ON DELETE CASCADE,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    )");
     $done = true;
 }
 
@@ -59,16 +68,30 @@ function addRating(int $productId, int $userId, string $displayName, int $stars,
     return (int)$db->lastInsertId();
 }
 
-function getRatingsForProduct(int $productId): array {
+function getRatingsForProduct(int $productId, ?int $currentUserId = null): array {
     ensureRatingSchema();
     global $db;
-    $stmt = $db->prepare("SELECT r.*, u.username FROM ratings r JOIN users u ON r.user_id = u.id WHERE r.product_id = ? ORDER BY r.created_at ASC");
-    $stmt->execute([$productId]);
+    if ($currentUserId) {
+        $stmt = $db->prepare(
+            "SELECT r.*, u.username, rv.vote AS user_vote
+             FROM ratings r
+             JOIN users u ON r.user_id = u.id
+             LEFT JOIN rating_votes rv ON rv.rating_id = r.id AND rv.user_id = ?
+             WHERE r.product_id = ? ORDER BY r.created_at ASC"
+        );
+        $stmt->execute([$currentUserId, $productId]);
+    } else {
+        $stmt = $db->prepare(
+            "SELECT r.*, u.username FROM ratings r
+             JOIN users u ON r.user_id = u.id
+             WHERE r.product_id = ? ORDER BY r.created_at ASC"
+        );
+        $stmt->execute([$productId]);
+    }
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $map = [];
-    foreach ($rows as $row) {
-
+    $names = [];
+    foreach ($rows as &$row) {
         if (!empty($row['image_paths'])) {
             $row['image_paths'] = json_decode($row['image_paths'], true) ?: [];
         } elseif (!empty($row['image_path'])) {
@@ -76,22 +99,40 @@ function getRatingsForProduct(int $productId): array {
         } else {
             $row['image_paths'] = [];
         }
-        $row['replies'] = [];
-        $map[$row['id']] = $row;
+        $names[$row['id']] = $row['display_name'] ?: $row['username'];
     }
+    unset($row);
 
-    $top = [];
-    foreach ($map as $id => $row) {
-        if (!empty($row['parent_id']) && isset($map[$row['parent_id']])) {
-            $map[$row['parent_id']]['replies'][] = $row;
-        } elseif (empty($row['parent_id'])) {
-            $top[] = $row;
+    foreach ($rows as &$row) {
+        $row['parent_name'] = null;
+        if (!empty($row['parent_id']) && isset($names[$row['parent_id']])) {
+            $row['parent_name'] = $names[$row['parent_id']];
         }
     }
+    unset($row);
 
-    // sort top level by created_at descending
-    usort($top, static function ($a, $b) { return strtotime($b['created_at']) <=> strtotime($a['created_at']); });
-    return $top;
+    $grouped = [];
+    foreach ($rows as $row) {
+        $parent = $row['parent_id'] ? (int)$row['parent_id'] : 0;
+        $grouped[$parent][] = $row;
+    }
+
+    $ordered = [];
+    $add = static function (array $list, &$ordered, &$grouped) use (&$add) {
+        usort($list, static fn($a, $b) => strtotime($a['created_at']) <=> strtotime($b['created_at']));
+        foreach ($list as $item) {
+            $ordered[] = $item;
+            $pid = (int)$item['id'];
+            if (!empty($grouped[$pid])) {
+                $add($grouped[$pid], $ordered, $grouped);
+            }
+        }
+    };
+
+    $roots = $grouped[0] ?? [];
+    $add($roots, $ordered, $grouped);
+
+    return $ordered;
 }
 
 function getAverageRating(int $productId): ?float {
@@ -148,32 +189,76 @@ function deleteRating(int $ratingId, int $userId, bool $isAdmin): bool {
     return $success;
 }
 
-function likeRating(int $ratingId): array {
+function likeRating(int $ratingId, int $userId): array {
     ensureRatingSchema();
     global $db;
-    $db->prepare('UPDATE ratings SET likes = likes + 1 WHERE id = ?')->execute([$ratingId]);
-    return getRatingVotes($ratingId);
+    $db->beginTransaction();
+    $stmt = $db->prepare('SELECT vote FROM rating_votes WHERE rating_id = ? AND user_id = ?');
+    $stmt->execute([$ratingId, $userId]);
+    $existing = $stmt->fetchColumn();
+    if ($existing === 'dislike') {
+        $db->prepare('UPDATE ratings SET dislikes = GREATEST(dislikes - 1, 0) WHERE id = ?')->execute([$ratingId]);
+        $db->prepare('UPDATE rating_votes SET vote = "like" WHERE rating_id = ? AND user_id = ?')->execute([$ratingId, $userId]);
+        $db->prepare('UPDATE ratings SET likes = likes + 1 WHERE id = ?')->execute([$ratingId]);
+    } elseif ($existing !== 'like') {
+        $db->prepare('INSERT INTO rating_votes (rating_id, user_id, vote) VALUES (?, ?, "like")')->execute([$ratingId, $userId]);
+        $db->prepare('UPDATE ratings SET likes = likes + 1 WHERE id = ?')->execute([$ratingId]);
+    }
+    $db->commit();
+    $votes = getRatingVotes($ratingId);
+    $votes['user_vote'] = 'like';
+    return $votes;
 }
 
-function dislikeRating(int $ratingId): array {
+function dislikeRating(int $ratingId, int $userId): array {
     ensureRatingSchema();
     global $db;
-    $db->prepare('UPDATE ratings SET dislikes = dislikes + 1 WHERE id = ?')->execute([$ratingId]);
-    return getRatingVotes($ratingId);
+    $db->beginTransaction();
+    $stmt = $db->prepare('SELECT vote FROM rating_votes WHERE rating_id = ? AND user_id = ?');
+    $stmt->execute([$ratingId, $userId]);
+    $existing = $stmt->fetchColumn();
+    if ($existing === 'like') {
+        $db->prepare('UPDATE ratings SET likes = GREATEST(likes - 1, 0) WHERE id = ?')->execute([$ratingId]);
+        $db->prepare('UPDATE rating_votes SET vote = "dislike" WHERE rating_id = ? AND user_id = ?')->execute([$ratingId, $userId]);
+        $db->prepare('UPDATE ratings SET dislikes = dislikes + 1 WHERE id = ?')->execute([$ratingId]);
+    } elseif ($existing !== 'dislike') {
+        $db->prepare('INSERT INTO rating_votes (rating_id, user_id, vote) VALUES (?, ?, "dislike")')->execute([$ratingId, $userId]);
+        $db->prepare('UPDATE ratings SET dislikes = dislikes + 1 WHERE id = ?')->execute([$ratingId]);
+    }
+    $db->commit();
+    $votes = getRatingVotes($ratingId);
+    $votes['user_vote'] = 'dislike';
+    return $votes;
 }
 
-function unlikeRating(int $ratingId): array {
+function unlikeRating(int $ratingId, int $userId): array {
     ensureRatingSchema();
     global $db;
-    $db->prepare('UPDATE ratings SET likes = GREATEST(likes - 1, 0) WHERE id = ?')->execute([$ratingId]);
-    return getRatingVotes($ratingId);
+    $db->beginTransaction();
+    $stmt = $db->prepare('DELETE FROM rating_votes WHERE rating_id = ? AND user_id = ? AND vote = "like"');
+    $stmt->execute([$ratingId, $userId]);
+    if ($stmt->rowCount() > 0) {
+        $db->prepare('UPDATE ratings SET likes = GREATEST(likes - 1, 0) WHERE id = ?')->execute([$ratingId]);
+    }
+    $db->commit();
+    $votes = getRatingVotes($ratingId);
+    $votes['user_vote'] = null;
+    return $votes;
 }
 
-function undislikeRating(int $ratingId): array {
+function undislikeRating(int $ratingId, int $userId): array {
     ensureRatingSchema();
     global $db;
-    $db->prepare('UPDATE ratings SET dislikes = GREATEST(dislikes - 1, 0) WHERE id = ?')->execute([$ratingId]);
-    return getRatingVotes($ratingId);
+    $db->beginTransaction();
+    $stmt = $db->prepare('DELETE FROM rating_votes WHERE rating_id = ? AND user_id = ? AND vote = "dislike"');
+    $stmt->execute([$ratingId, $userId]);
+    if ($stmt->rowCount() > 0) {
+        $db->prepare('UPDATE ratings SET dislikes = GREATEST(dislikes - 1, 0) WHERE id = ?')->execute([$ratingId]);
+    }
+    $db->commit();
+    $votes = getRatingVotes($ratingId);
+    $votes['user_vote'] = null;
+    return $votes;
 }
 
 function getRatingVotes(int $ratingId): array {
@@ -184,11 +269,33 @@ function getRatingVotes(int $ratingId): array {
     return $row ?: ['likes' => 0, 'dislikes' => 0];
 }
 
-function getRating(int $ratingId): ?array {
+function getRating(int $ratingId, ?int $currentUserId = null): ?array {
     ensureRatingSchema();
     global $db;
-    $stmt = $db->prepare('SELECT r.*, u.username FROM ratings r JOIN users u ON r.user_id = u.id WHERE r.id = ?');
-    $stmt->execute([$ratingId]);
+    if ($currentUserId) {
+        $stmt = $db->prepare(
+            'SELECT r.*, u.username, rv.vote AS user_vote,
+                    p.display_name AS parent_display_name, pu.username AS parent_username
+             FROM ratings r
+             JOIN users u ON r.user_id = u.id
+             LEFT JOIN rating_votes rv ON rv.rating_id = r.id AND rv.user_id = ?
+             LEFT JOIN ratings p ON r.parent_id = p.id
+             LEFT JOIN users pu ON p.user_id = pu.id
+             WHERE r.id = ?'
+        );
+        $stmt->execute([$currentUserId, $ratingId]);
+    } else {
+        $stmt = $db->prepare(
+            'SELECT r.*, u.username,
+                    p.display_name AS parent_display_name, pu.username AS parent_username
+             FROM ratings r
+             JOIN users u ON r.user_id = u.id
+             LEFT JOIN ratings p ON r.parent_id = p.id
+             LEFT JOIN users pu ON p.user_id = pu.id
+             WHERE r.id = ?'
+        );
+        $stmt->execute([$ratingId]);
+    }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$row) {
         return null;
@@ -198,6 +305,11 @@ function getRating(int $ratingId): ?array {
     } else {
         $row['image_paths'] = [];
     }
+    $row['parent_name'] = null;
+    if (!empty($row['parent_id'])) {
+        $row['parent_name'] = $row['parent_display_name'] ?: $row['parent_username'];
+    }
+    unset($row['parent_display_name'], $row['parent_username']);
     return $row;
 }
 
