@@ -94,10 +94,6 @@ kommentier jede zeile mit einer klärung und warum genau so
 ├── config.php                         # Datenbankverbindung, App-Konstanten
 ├── .htaccess                          # RewriteEngine für clean URLs (optional)
 └── README.md                          # Dokumentation des Projekts
-
-
-Klar! Ich erkläre dir jetzt **Schritt für Schritt**, **wie die Dateien zusammenspielen** – anhand des **MVC-Musters (Model-View-Controller)** in deiner Struktur:
-
 ---
 
 ## 🔁 **1. Einstiegspunkt: `index.php` (Frontcontroller)**

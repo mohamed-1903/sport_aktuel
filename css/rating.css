@@ -82,6 +82,7 @@
   flex-direction: row;
   margin-top: auto; /* schiebt nach unten */
   padding-top: 40px; /* großer Abstand zwischen Bildern und Buttons */
+
 }
 .review-actions button,
 .review-actions form {
@@ -247,6 +248,7 @@
   margin-bottom: 8px;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
+  flex-direction: row;
 }
 
 .image-preview-list::-webkit-scrollbar {
@@ -274,6 +276,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   flex: 0 0 auto;
   cursor: pointer;
+  flex-direction: row;
 }
 .review-images img::after {
   content: attr(data-idx);
