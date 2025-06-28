@@ -206,7 +206,7 @@
   </section>
 
   <?php foreach ($productsToShow as $index => $product):
-    $ratings = getRatingsForProduct((int)$product['id']);
+    $ratings = getRatingsForProduct((int)$product['id'], $_SESSION['user_id'] ?? null);
     $avgRating = getAverageRating((int)$product['id']);
   ?>
     <section class="reviews" aria-live="polite" aria-atomic="true">
@@ -240,11 +240,11 @@
             <?php endif; ?>
           </div>
 
-          <div class="review-actions">
-              <button type="button" class="like-btn" data-id="<?= (int)$r['id'] ?>" aria-label="Bewertung positiv bewerten">
+          <div class="review-actions" data-user-vote="<?= htmlspecialchars($r['user_vote'] ?? '') ?>">
+              <button type="button" class="like-btn<?= ($r['user_vote'] ?? '') === 'like' ? ' active' : '' ?>" data-id="<?= (int)$r['id'] ?>" aria-label="Bewertung positiv bewerten">
                 👍 <span><?= (int)$r['likes'] ?></span>
               </button>
-              <button type="button" class="dislike-btn" data-id="<?= (int)$r['id'] ?>" aria-label="Bewertung negativ bewerten">
+              <button type="button" class="dislike-btn<?= ($r['user_vote'] ?? '') === 'dislike' ? ' active' : '' ?>" data-id="<?= (int)$r['id'] ?>" aria-label="Bewertung negativ bewerten">
                 👎 <span><?= (int)$r['dislikes'] ?></span>
               </button>
             <?php if (isset($_SESSION['user_id'])): ?>

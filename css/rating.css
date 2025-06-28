@@ -275,7 +275,7 @@
 
 .image-preview-list {
   display: flex;
-  gap: 8px;
+  gap: 12px;
   flex-wrap: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
