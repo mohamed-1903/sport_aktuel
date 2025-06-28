@@ -202,6 +202,7 @@
   <section class="produkte similar-products">
     <h2>Ähnliche Produkte</h2>
     <div class="einzelprodukt-grid">
+
       <?php foreach ($similarProducts as $sim): ?>
         <?php
           $preis = (float)($sim['price'] ?? 0);
@@ -236,6 +237,7 @@
               <button>Details</button>
             </a>
           </div>
+
         </div>
       <?php endforeach; ?>
     </div>
@@ -302,7 +304,6 @@
       <?php endforeach; ?>
 
 
-
     </section>
     <?php if (isset($_SESSION['user_id'])): ?>
       <button type="button" class="open-review-modal btn-review" data-product-id="<?= (int)$product['id'] ?>">Bewertung schreiben</button>
@@ -319,7 +320,6 @@
     <form id="ratingForm" class="review-form" action="index.php?page=community&action=addRating" method="post" enctype="multipart/form-data">
       <input type="hidden" name="product_id" id="ratingProductId" value="">
       <input type="hidden" name="parent_id" id="ratingParentId" value="">
-      <div id="replyTarget" class="reply-target hidden"></div>
       <label for="displayName">Name:</label>
       <input type="text" name="display_name" id="displayName" placeholder="Dein Name" value="<?= htmlspecialchars($_SESSION['username'] ?? '') ?>" required>
       <fieldset class="rating-stars">

@@ -55,6 +55,7 @@ switch ($action) {
 
         // Falls zu wenig Treffer, nur nach Kategorie suchen
         if (count($similarProducts) < 2) {
+
             $similarProducts = array_filter($allProducts, static function ($p) use ($baseProduct) {
                 return $p['id'] != $baseProduct['id'] &&
                     $p['category'] === $baseProduct['category'];
@@ -63,6 +64,7 @@ switch ($action) {
 
         shuffle($similarProducts);
         $similarProducts = array_slice($similarProducts, 0, 2);
+
 
         // Vorschläge für die Bewertungsleiste laden
         $suggestionsFile = 'data/review_suggestions.json';
