@@ -47,6 +47,22 @@ switch ($action) {
         header("Location: index.php?page=admin&action=manageUsers");
         exit;
 
+    case 'manageProducts':
+        $allProducts = getAllProducts();
+        require 'view/admin/manageProductsView.php';
+        break;
+
+    case 'updateDiscount':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $pid = (int)($_POST['product_id'] ?? 0);
+            $discount = max(0, min(90, (int)($_POST['discount'] ?? 0)));
+            if ($pid) {
+                updateProductDiscount($pid, $discount);
+            }
+        }
+        header('Location: index.php?page=admin&action=manageProducts');
+        exit;
+
     case 'addProduct':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $product = [
