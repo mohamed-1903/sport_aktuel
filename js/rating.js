@@ -361,6 +361,7 @@ function addRatingToDom(rating) {
     reviews.insertBefore(reviewEl, reviews.firstChild);
   }
 
+
   reviewEl.classList.add('pulse-highlight');
   reviewEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
   setTimeout(() => reviewEl.classList.remove('pulse-highlight'), 1000);

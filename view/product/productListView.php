@@ -98,6 +98,7 @@
           $preis = floatval(preg_replace('/[^0-9.]/', '', $produkt["price"]));
           $mannschaft = stripos($produkt["name"], "Bayern") !== false ? "Bayern" : (stripos($produkt["name"], "Dortmund") !== false ? "Dortmund" : "");
           $discount = $produkt["discount"] ?? 0;
+          $salePrice = $discount > 0 ? $preis * (1 - $discount / 100) : $preis;
           ?>
           <?php
           $marke = $produkt["marke"] ?? "Unbekannt";
@@ -119,12 +120,20 @@
 
             <div class="produkt-info">
               <h3><?= htmlspecialchars($produkt["name"]) ?></h3>
-              <p><?= htmlspecialchars($produkt["price"]) ?>€
-                <span>inkl. Mwst.</span>
-                <?php if ($discount > 0): ?>
+              <?php if ($discount > 0): ?>
+                <?php $neu = $preis * (1 - $discount / 100); ?>
+                <p>
+                  <del class="old-price">
+                    <?= number_format($preis, 2, ',', '.') ?>€ inkl. Mwst.
+                  </del>
+                  <span><?= number_format($neu, 2, ',', '.') ?>€ inkl. Mwst.</span>
                   <span class="rabatt">-<?= $discount ?>%</span>
-                <?php endif; ?>
-              </p>
+                </p>
+              <?php else: ?>
+                <p><?= htmlspecialchars($produkt["price"]) ?>€
+                  <span>inkl. Mwst.</span>
+                </p>
+              <?php endif; ?>
 
               <div class="button-row" data-iid="<?= (int)$produkt["iid"] ?>">
                 <a href="index.php?page=product&action=detail&id=<?= (int)$produkt["iid"] ?>">
@@ -134,7 +143,8 @@
                 <button class="btn-add-to-cart"
                   data-iid="<?= (int)$produkt['iid'] ?>"
                   data-name="<?= htmlspecialchars($produkt['name']) ?>"
-                  data-price="<?= (float)$produkt['price'] ?? 0 ?>"
+                  data-price="<?= $salePrice ?>"
+                  data-discount="<?= $discount ?>"
                   data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
                   🛒
                 </button>
@@ -142,8 +152,10 @@
                 <button class="btn-add-to-watch"
                   data-iid="<?= (int)$produkt['iid'] ?>"
                   data-name="<?= htmlspecialchars($produkt['name']) ?>"
-                  data-price="<?= (float)$produkt['price'] ?? 0 ?>"
+                  data-price="<?= $salePrice ?>"
+                  data-discount="<?= $discount ?>"
                   data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
+
                   🤍
                 </button>
               </div>

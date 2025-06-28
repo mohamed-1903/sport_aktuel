@@ -302,3 +302,22 @@
     top: 15px;
   }
 }
+
+/* Desktop layout adjustments */
+@media (width >= 769px) {
+  nav {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    background-color: transparent;
+  }
+
+  nav.open {
+    left: auto;
+  }
+
+  .nav-overlay {
+    display: none !important;
+  }
+}

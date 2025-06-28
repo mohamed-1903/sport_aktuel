@@ -35,6 +35,8 @@
     // 🧩 Produktdaten extrahieren mit Fallbacks
     $name = $product['name'] ?? 'Produktname nicht verfügbar';
     $price = isset($product['priceValue']) && is_numeric($product['priceValue']) ? $product['priceValue'] : 0;
+    $discount = (int)($product['discount'] ?? 0);
+    $salePrice = $discount > 0 ? $price * (1 - $discount / 100) : $price;
     $imageMain = $product['image_main'] ?? ($product['imagepath'] ?? 'img/placeholder.jpg');
     $images = $product['images'] ?? [$imageMain];
     $backImage = $images[1] ?? $imageMain;
@@ -42,7 +44,8 @@
     $sizes = $product['sizes'] ?? range(38, 46);
   ?>
     <!-- 📦 Einzelnes Produkt-Layout -->
-    <section class="Eprodukt untereinander" data-product-index="<?= $index ?>" data-base-price="<?= isset($product['priceValue']) ? (float)$product['priceValue'] : 0 ?>">
+    <section class="Eprodukt untereinander" data-product-index="<?= $index ?>" data-base-price="<?= $price ?>" data-admin-discount="<?= $discount ?>">
+
       <h2 style="text-align:center; margin-bottom: 20px;">
         <?= count($productsToShow) > 1 ? "🛍️ Produkt " . ($index + 1) : "Produktdetails" ?>
         <?php if (count($productsToShow) > 1): ?>
@@ -69,19 +72,29 @@
         <div>
           <h1 class="product-name"><?= htmlspecialchars($name) ?></h1>
 
-          <p id="original-price-<?= $index ?>" class="price-old" style="display: none;"></p>
+          <p id="original-price-<?= $index ?>" class="price-old" style="display:none;"></p>
           <p id="final-price-<?= $index ?>">
-            <?php if (isset($product['priceValue']) && is_numeric($product['priceValue'])): ?>
-              <span id="finalPriceValue-<?= $index ?>" class="preis">
-                <?= number_format((float)$product['priceValue'], 2, ',', '.') ?>€ inkl. Mwst.
-              </span>
-              <del id="basePrice-<?= $index ?>" class="preis" style="display:none;">
-                <?= number_format((float)$product['priceValue'], 2, ',', '.') ?>€
-              </del>
+            <?php if ($price > 0): ?>
+              <?php if ($discount > 0): ?>
+                <del id="basePrice-<?= $index ?>" class="preis old-price">
+                  Preis <?= number_format($price, 2, ',', '.') ?>€ inkl. Mwst.
+                </del>
+                <span id="finalPriceValue-<?= $index ?>" class="preis">
+                  <?= number_format($salePrice, 2, ',', '.') ?>€ inkl. Mwst.
+                </span>
+                <span id="discountLabel-<?= $index ?>" class="rabatt">-<?= $discount ?>%</span>
+              <?php else: ?>
+                <span id="finalPriceValue-<?= $index ?>" class="preis">
+                  <?= number_format($price, 2, ',', '.') ?>€ inkl. Mwst.
+                </span>
+                <del id="basePrice-<?= $index ?>" class="preis old-price" style="display:none;">
+                  Preis <?= number_format($price, 2, ',', '.') ?>€ inkl. Mwst.
+                </del>
+                <span id="discountLabel-<?= $index ?>" class="rabatt" style="display:none;">-0%</span>
+              <?php endif; ?>
             <?php else: ?>
               <span class="preis">Preis nicht verfügbar</span>
             <?php endif; ?>
-            <span id="discountLabel-<?= $index ?>" class="rabatt" style="display:none;">-20%</span>
           </p>
           <div class="price-breakdown"></div>
 
@@ -133,7 +146,8 @@
             class="btn-add-to-cart"
             data-iid="<?= $iid ?>"
             data-name="<?= htmlspecialchars($name) ?>"
-            data-price="<?= $price ?>"
+            data-price="<?= $salePrice ?>"
+            data-discount="<?= $discount ?>"
             data-image="<?= htmlspecialchars($image) ?>">
             🛒 In den Warenkorb
           </button>
@@ -143,7 +157,8 @@
             class="btn-add-to-watch"
             data-iid="<?= $iid ?>"
             data-name="<?= htmlspecialchars($name) ?>"
-            data-price="<?= $price ?>"
+            data-price="<?= $salePrice ?>"
+            data-discount="<?= $discount ?>"
             data-image="<?= htmlspecialchars($image) ?>">
             ❤️
           </button>
@@ -183,23 +198,54 @@
     <button id="compareBtn" class="btn-compare">⚖️ Vergleichen</button>
   </div>
 
-  <!-- 🧠 Ähnliche Produkte statisch -->
+  <!-- 🧠 Ähnliche Produkte dynamisch -->
   <section class="produkte similar-products">
     <h2>Ähnliche Produkte</h2>
-    <div class="produkt-grid">
-      <?php for ($i = 1; $i <= 3; $i++): ?>
-        <div class="Eprodukt">
-          <img src="nike-shoe.jpg" alt="Ähnliches Produkt <?= $i ?>" />
-          <h3>Nike Produkt <?= $i ?></h3>
-          <p>€<?= number_format(199.99 - ($i - 1) * 20, 2, ',', '.') ?></p>
-          <button>Details</button>
+    <div class="einzelprodukt-grid">
+
+      <?php foreach ($similarProducts as $sim): ?>
+        <?php
+          $preis = (float)($sim['price'] ?? 0);
+          $discount = (int)($sim['discount'] ?? 0);
+          $salePrice = $discount > 0 ? $preis * (1 - $discount / 100) : $preis;
+        ?>
+        <div class="einzelprodukt">
+          <div class="image-wrapper">
+            <img src="<?= htmlspecialchars($sim['image_main'] ?? 'img/placeholder.jpg') ?>"
+              alt="<?= htmlspecialchars($sim['name']) ?>" />
+          </div>
+          <div class="produkt-info">
+            <h3><?= htmlspecialchars($sim['name']) ?></h3>
+            <?php if ($discount > 0): ?>
+              <p>
+                <del class="old-price">
+                  <?= number_format($preis, 2, ',', '.') ?>€
+                </del>
+                <span><?= number_format($salePrice, 2, ',', '.') ?>€</span>
+                <span class="rabatt">-<?= $discount ?>%</span>
+                <span class="mwst">inkl. Mwst.</span>
+              </p>
+            <?php else: ?>
+              <p>
+                <?= number_format($preis, 2, ',', '.') ?>€
+                <span class="mwst">inkl. Mwst.</span>
+              </p>
+            <?php endif; ?>
+          </div>
+          <div class="button-row">
+            <a href="index.php?page=product&action=detail&id=<?= (int)$sim['id'] ?>">
+              <button>Details</button>
+            </a>
+          </div>
+
         </div>
-      <?php endfor; ?>
+      <?php endforeach; ?>
     </div>
   </section>
 
   <?php foreach ($productsToShow as $index => $product):
     $ratings = getRatingsForProduct((int)$product['id'], $_SESSION['user_id'] ?? null);
+
     $avgRating = getAverageRating((int)$product['id']);
   ?>
     <section class="reviews" aria-live="polite" aria-atomic="true">
@@ -256,7 +302,6 @@
           </div>
         </div>
       <?php endforeach; ?>
-
 
     </section>
     <?php if (isset($_SESSION['user_id'])): ?>
