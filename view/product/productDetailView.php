@@ -44,7 +44,7 @@
     $sizes = $product['sizes'] ?? range(38, 46);
   ?>
     <!-- 📦 Einzelnes Produkt-Layout -->
-    <section class="Eprodukt untereinander" data-product-index="<?= $index ?>" data-base-price="<?= $salePrice ?>" data-admin-discount="<?= $discount ?>">
+    <section class="Eprodukt untereinander" data-product-index="<?= $index ?>" data-base-price="<?= $price ?>" data-admin-discount="<?= $discount ?>">
 
       <h2 style="text-align:center; margin-bottom: 20px;">
         <?= count($productsToShow) > 1 ? "🛍️ Produkt " . ($index + 1) : "Produktdetails" ?>
@@ -147,7 +147,7 @@
             data-iid="<?= $iid ?>"
             data-name="<?= htmlspecialchars($name) ?>"
             data-price="<?= $salePrice ?>"
-
+            data-discount="<?= $discount ?>"
             data-image="<?= htmlspecialchars($image) ?>">
             🛒 In den Warenkorb
           </button>
@@ -158,6 +158,7 @@
             data-iid="<?= $iid ?>"
             data-name="<?= htmlspecialchars($name) ?>"
             data-price="<?= $salePrice ?>"
+            data-discount="<?= $discount ?>"
             data-image="<?= htmlspecialchars($image) ?>">
             ❤️
           </button>

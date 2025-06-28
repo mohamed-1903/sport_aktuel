@@ -53,14 +53,21 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
   let gift = false;
   let discountCode = "";
 
+  let adminDiscount = 0;
   if (section) {
     const idx = section.dataset.productIndex;
     const pin = section.querySelector(`#pin-${idx}`)?.value.trim();
     discountCode = pin || "";
     // DISCOUNT_CODES ist global in produkt.js definiert
-    discount = (typeof DISCOUNT_CODES !== "undefined" ? DISCOUNT_CODES[pin] : undefined) || 0;
+    const codeDiscount =
+      (typeof DISCOUNT_CODES !== "undefined" ? DISCOUNT_CODES[pin] : undefined) || 0;
+    adminDiscount = parseFloat(section.dataset.adminDiscount || 0);
+    discount = adminDiscount + codeDiscount;
 
     gift = section.querySelector(`#giftWrap-${idx}`)?.checked || false;
+  } else {
+    adminDiscount = parseFloat(btn?.dataset.discount || 0);
+    discount = adminDiscount;
   }
 
   const payload = {
