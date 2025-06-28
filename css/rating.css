@@ -211,7 +211,6 @@
   flex-wrap: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
-  white-space: nowrap;
   margin-bottom: 8px;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none;  /* IE and Edge */
@@ -223,11 +222,10 @@
 
 .review-images {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   gap: 8px;
   overflow-x: auto;
   overflow-y: hidden;
-  white-space: nowrap;
   margin-top: 6px;
   scrollbar-width: none;
   -ms-overflow-style: none;
