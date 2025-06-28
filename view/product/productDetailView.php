@@ -212,24 +212,18 @@
         <p class="no-reviews">Noch keine Bewertungen.</p>
       <?php endif; ?>
       <?php foreach ($ratings as $r): ?>
-        <article class="review" data-review-id="<?= (int)$r['id'] ?>" tabindex="0" role="article">
+        <div class="review" data-review-id="<?= (int)$r['id'] ?>">
           <div class="review-content">
-            <header class="review-header" id="review-<?= (int)$r['id'] ?>-header">
-              <strong class="review-author">
-                <?= htmlspecialchars($r['display_name'] ?: $r['username']) ?>
-              </strong>
-              <time class="rating-date" datetime="<?= date('c', strtotime($r['created_at'])) ?>">
-                <?= date('d.m.Y H:i', strtotime($r['created_at'])) ?>
-              </time>
-            </header>
-            <div class="rating-stars" role="img" aria-label="<?= (int)$r['stars'] ?> von 5 Sternen" style="pointer-events:none;">
+            <strong><?= htmlspecialchars($r['display_name'] ?: $r['username']) ?></strong>
+            <small class="rating-date">
+              <?= date('d.m.Y H:i', strtotime($r['created_at'])) ?>
+            </small>
+            <span class="rating-stars" style="pointer-events:none;">
               <?php for ($s = 5; $s >= 1; $s--): ?>
-                <label aria-hidden="true"><?= $s <= $r['stars'] ? '★' : '☆' ?></label>
+                <label><?= $s <= $r['stars'] ? '★' : '☆' ?></label>
               <?php endfor; ?>
-            </div>
-            <p class="review-text">
-              <?= nl2br(htmlspecialchars($r['comment'])) ?>
-            </p>
+            </span>
+            <p><?= nl2br(htmlspecialchars($r['comment'])) ?></p>
             <?php if (!empty($r['image_paths'])): ?>
               <div class="review-images" data-images='<?= json_encode($r['image_paths']) ?>'>
                 <?php foreach ($r['image_paths'] as $idx => $img): ?>
@@ -238,6 +232,7 @@
               </div>
             <?php endif; ?>
           </div>
+
           <div class="review-actions">
               <button type="button" class="like-btn" data-id="<?= (int)$r['id'] ?>" aria-label="Bewertung positiv bewerten">
                 👍 <span><?= (int)$r['likes'] ?></span>
@@ -259,16 +254,11 @@
           <?php if (!empty($r['replies'])): ?>
             <div class="review-replies">
               <?php foreach ($r['replies'] as $reply): ?>
-                <article class="review reply" data-review-id="<?= (int)$reply['id'] ?>" data-parent-id="<?= (int)$r['id'] ?>" tabindex="0" role="article">
-                  <header class="review-header" id="review-<?= (int)$reply['id'] ?>-header">
-                    <strong class="review-author">
-                      <?= htmlspecialchars($reply['display_name'] ?: $reply['username']) ?>
-                    </strong>
-                    <time class="rating-date" datetime="<?= date('c', strtotime($reply['created_at'])) ?>">
-                      <?= date('d.m.Y H:i', strtotime($reply['created_at'])) ?>
-                    </time>
-                  </header>
-                  <div class="rating-stars" role="img" aria-label="<?= (int)$reply['stars'] ?> von 5 Sternen" style="pointer-events:none;">
+                <div class="review reply" data-review-id="<?= (int)$reply['id'] ?>" data-parent-id="<?= (int)$r['id'] ?>">
+                  <strong><?= htmlspecialchars($reply['display_name'] ?: $reply['username']) ?></strong>
+                  <small class="rating-date"><?= date('d.m.Y H:i', strtotime($reply['created_at'])) ?></small>
+                  <span class="rating-stars" style="pointer-events:none;">
+
                     <?php for ($s = 5; $s >= 1; $s--): ?>
                       <label aria-hidden="true"><?= $s <= $reply['stars'] ? '★' : '☆' ?></label>
                     <?php endfor; ?>
