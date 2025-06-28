@@ -23,7 +23,16 @@
             </section>
             <section class="produkt-info">
               <h3><?= htmlspecialchars($produkt['name']) ?></h3>
-              <p><?= htmlspecialchars($produkt['price']) ?>€ <span>inkl. Mwst.</span></p>
+              <?php $d = $produkt['discount'] ?? 0; $base = (float)$produkt['price']; $salePrice = $d > 0 ? $base * (1 - $d / 100) : $base; ?>
+              <?php if ($d > 0): $neu = $salePrice; ?>
+                <p><del><?= number_format($base, 2, ',', '.') ?>€</del>
+                  <span><?= number_format($neu, 2, ',', '.') ?>€</span>
+                  <span>inkl. Mwst.</span>
+                  <span class="rabatt">-<?= $d ?>%</span>
+                </p>
+              <?php else: ?>
+                <p><?= htmlspecialchars($produkt['price']) ?>€ <span>inkl. Mwst.</span></p>
+              <?php endif; ?>
             </section>
           </section>
           <section class="button-row" data-iid="<?= (int)$produkt['iid'] ?>">
@@ -33,14 +42,14 @@
             <button class="btn-add-to-cart"
               data-iid="<?= (int)$produkt['iid'] ?>"
               data-name="<?= htmlspecialchars($produkt['name']) ?>"
-              data-price="<?= (float)$produkt['price'] ?? 0 ?>"
+              data-price="<?= $salePrice ?>"
               data-image="<?= htmlspecialchars($produkt['image_main'] ?? '') ?>">
               🛒
             </button>
             <button class="btn-add-to-watch"
               data-iid="<?= (int)$produkt['iid'] ?>"
               data-name="<?= htmlspecialchars($produkt['name']) ?>"
-              data-price="<?= (float)$produkt['price'] ?? 0 ?>"
+              data-price="<?= $salePrice ?>"
               data-image="<?= htmlspecialchars($produkt['image_main'] ?? '') ?>">
               🤍
             </button>
