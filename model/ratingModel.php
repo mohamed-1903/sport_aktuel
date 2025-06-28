@@ -37,6 +37,7 @@ function addRating(int $productId, int $userId, string $displayName, int $stars,
     $json = $imagePaths ? json_encode($imagePaths) : null;
     $stmt = $db->prepare("INSERT INTO ratings (product_id, user_id, display_name, stars, comment, image_paths) VALUES (?, ?, ?, ?, ?, ?)");
     return $stmt->execute([$productId, $userId, $displayName, $stars, $comment, $json]);
+
 }
 
 function getRatingsForProduct(int $productId): array {
