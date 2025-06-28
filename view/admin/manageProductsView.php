@@ -23,11 +23,20 @@
             <td><?= number_format((float)$prod['price'], 2, ',', '.') ?> €</td>
             <td><?= (int)($prod['discount'] ?? 0) ?></td>
             <td>
-              <form action="index.php?page=admin&action=updateDiscount" method="post" style="display:flex; gap:0.5em;">
-                <input type="hidden" name="product_id" value="<?= (int)$prod['id'] ?>">
-                <input type="number" name="discount" value="<?= (int)($prod['discount'] ?? 0) ?>" min="0" max="90" style="width:70px;">
-                <button type="submit" class="btn-checkout">Speichern</button>
-              </form>
+              <?php if (($prod['discount'] ?? 0) > 0): ?>
+                <form action="index.php?page=admin&action=updateDiscount" method="post" style="display:flex; gap:0.5em;">
+                  <input type="hidden" name="product_id" value="<?= (int)$prod['id'] ?>">
+                  <input type="hidden" name="discount" value="0">
+                  <button type="submit" class="btn-checkout">Entfernen</button>
+                </form>
+              <?php else: ?>
+                <form action="index.php?page=admin&action=updateDiscount" method="post" style="display:flex; gap:0.5em;">
+                  <input type="hidden" name="product_id" value="<?= (int)$prod['id'] ?>">
+                  <input type="number" name="discount" value="0" min="0" max="90" style="width:70px;">
+                  <button type="submit" class="btn-checkout">Speichern</button>
+                </form>
+              <?php endif; ?>
+
             </td>
           </tr>
         <?php endforeach; ?>

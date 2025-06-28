@@ -14,6 +14,7 @@ try {
 define('PRODUCT_JSON', __DIR__ . '/../data/products.json');
 define('LAST_IMPORT_FILE', __DIR__ . '/../data/.last_import_time');
 
+
 if (!file_exists(PRODUCT_JSON)) {
     die("❌ Datei products.json nicht gefunden.");
 }
@@ -44,6 +45,7 @@ $insertStmt = $db->prepare("
         (id, name, description, price, price_text, image_main, marke, farbe, geschlecht, category, subcategory, sizes, images, discount)
     VALUES
         (:id, :name, :description, :price, :price_text, :image_main, :marke, :farbe, :geschlecht, :category, :subcategory, :sizes, :images, :discount)
+
 ");
 
 // Produkte einfügen
@@ -64,6 +66,7 @@ foreach ($data['products'] as $product) {
         ':images'       => json_encode($product['images']),
         ':discount'     => $product['discount'] ?? 0,
     ]);
+
 }
 
 // Zeitstempel speichern
