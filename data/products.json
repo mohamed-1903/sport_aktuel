@@ -17,7 +17,18 @@
         "img/Fußball8.jpeg"
       ],
       "description": "Der Nike Air Zoom Mercurial Vapor XVI Elite FG aus dem exklusiven Mad Ambition Pack bietet herausragenden Komfort und Performance auf dem Spielfeld. Dieser Fußballschuh wurde speziell für schnelle Richtungswechsel und maximale Beschleunigung entwickelt. Der Nike Mercurial Vapor XVI Elite ist der perfekte Schuh für ambitionierte Fußballer, die auf der Suche nach höchster Geschwindigkeit, Kontrolle und Komfort sind.",
-      "sizes": [38, 39, 40, 41, 42, 43, 44, 45, 46],
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
       "category": "Fußballschuhe",
       "subcategory": "Stollen",
       "marke": "Nike",
@@ -37,7 +48,14 @@
         "img/bayern4.jpeg"
       ],
       "description": "Diese Saison im kreativen Streifendesign mit legendärer FC Bayern Rauten-DNA! Hier siehst Du das adidas FC Bayern München Home Trikot 2024/2025 in Herrengrößen. Dieses offiziell lizenzierte Fan-Trikot ist eine detailgetreue Replik des offiziellen Trikots, wie es die Bundesligaspieler des FC Bayern tragen. Ein Streifentrikot-Klassiker, kreativ neu interpretiert für den Rekordmeister.",
-      "sizes": ["XS", "S", "M", "L", "XL", "2XL"],
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
       "category": "Sportbekleidung",
       "subcategory": "Trikots",
       "marke": "Adidas",
@@ -50,9 +68,18 @@
       "price": "29.99 € inkl. Mwst.",
       "priceValue": 29.99,
       "imageMain": "img/handschuheSchwarz.jpg",
-      "images": ["img/handschuheSchwarz.jpg"],
+      "images": [
+        "img/handschuheSchwarz.jpg"
+      ],
       "description": "Leichte und flexible Puma Sporthandschuhe in elegantem Schwarz - ideal für Trainingseinheiten bei kühlerem Wetter. Bieten perfekten Grip, hohen Tragekomfort und eine gute Passform für sportliche Aktivitäten.",
-      "sizes": ["XS", "S", "M", "L", "XL", "2XL"],
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
       "category": "Sportbekleidung",
       "subcategory": "Handschuhe",
       "marke": "Puma",
@@ -65,9 +92,19 @@
       "price": "139.99 € inkl. Mwst.",
       "priceValue": 139.99,
       "imageMain": "img/trainingsanzugBlau.jpg",
-      "images": ["img/trainingsanzugBlau.jpg", "img/trainingsanzugBlau2.jpg"],
+      "images": [
+        "img/trainingsanzugBlau.jpg",
+        "img/trainingsanzugBlau2.jpg"
+      ],
       "description": "Der Nike Trainingsanzug in edlem Blau vereint sportliches Design mit hohem Tragekomfort. Hergestellt aus atmungsaktivem Funktionsmaterial bietet er optimale Bewegungsfreiheit beim Training oder in der Freizeit. Das moderne, körpernahe Design sorgt für einen stylischen Look - ideal für ambitionierte Sportler und modebewusste Aktive.",
-      "sizes": ["XS", "S", "M", "L", "XL", "2XL"],
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
       "category": "Sportbekleidung",
       "subcategory": "Trainingsanzüge",
       "marke": "Nike",
@@ -80,9 +117,19 @@
       "price": "119.99 € inkl. Mwst.",
       "priceValue": 119.99,
       "imageMain": "img/trainingsanzugRot.jpg",
-      "images": ["img/trainingsanzugRot.jpg", "img/trainingsanzugRot2.jpg"],
+      "images": [
+        "img/trainingsanzugRot.jpg",
+        "img/trainingsanzugRot2.jpg"
+      ],
       "description": "Der Nike Trainingsanzug in kräftigem Rot setzt ein sportliches Statement. Das hochwertige, feuchtigkeitsableitende Material garantiert ein angenehmes Tragegefühl, egal ob beim Workout oder im Alltag. Der ergonomische Schnitt und die elastischen Bündchen sorgen für eine perfekte Passform und maximale Bewegungsfreiheit.",
-      "sizes": ["XS", "S", "M", "L", "XL", "2XL"],
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
       "category": "Sportbekleidung",
       "subcategory": "Trainingsanzüge",
       "marke": "Nike",
@@ -95,9 +142,19 @@
       "price": "89.99 € inkl. Mwst.",
       "priceValue": 89.99,
       "imageMain": "img/dortmund.jpg",
-      "images": ["img/dortmund.jpg", "img/dortmund2.jpg"],
+      "images": [
+        "img/dortmund.jpg",
+        "img/dortmund2.jpg"
+      ],
       "description": "Das offizielle Borussia Dortmund Heimtrikot der Saison 2024/25 - mit ikonischem Design und modernster Technologie für höchsten Tragekomfort. Ein Muss für alle echten BVB-Fans.",
-      "sizes": ["XS", "S", "M", "L", "XL", "2XL"],
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
       "category": "Sportbekleidung",
       "subcategory": "Trikots",
       "marke": "Puma",
@@ -110,9 +167,16 @@
       "price": "19.99 € inkl. Mwst.",
       "priceValue": 19.99,
       "imageMain": "img/sockenWeiß.jpg",
-      "images": ["img/sockenWeiß.jpg"],
+      "images": [
+        "img/sockenWeiß.jpg"
+      ],
       "description": "Weiß wie dein Game am Sonntagmorgen: clean, klassisch und einfach zuverlässig. Diese Nike Sportsocken verbinden sportlichen Style mit Komfort für den ganzen Tag. Ob Workout, Streetwear oder Sofa - sie machen überall eine gute Figur. Und ja, sie fühlen sich so gut an, wie sie aussehen.",
-      "sizes": ["39-40", "41-42", "43-44", "45-46"],
+      "sizes": [
+        "39-40",
+        "41-42",
+        "43-44",
+        "45-46"
+      ],
       "category": "Sportbekleidung",
       "subcategory": "Socken",
       "marke": "Nike",
@@ -125,9 +189,16 @@
       "price": "19.99 € inkl. Mwst.",
       "priceValue": 19.99,
       "imageMain": "img/sockenSchwarz.jpg",
-      "images": ["img/sockenSchwarz.jpg"],
+      "images": [
+        "img/sockenSchwarz.jpg"
+      ],
       "description": "Schlicht. Stark. Schwarz. Diese Nike Sportsocken sitzen wie angegossen und liefern dir Halt, wo du ihn brauchst. Die weiche Polsterung schont deine Schritte, während das schweißableitende Material deine Füße auch bei langen Matches frisch hält. Für alle, die lieber performen statt reden.",
-      "sizes": ["39-40", "41-42", "43-44", "45-46"],
+      "sizes": [
+        "39-40",
+        "41-42",
+        "43-44",
+        "45-46"
+      ],
       "category": "Sportbekleidung",
       "subcategory": "Socken",
       "marke": "Nike",
@@ -140,9 +211,18 @@
       "price": "99.99 € inkl. Mwst.",
       "priceValue": 99.99,
       "imageMain": "img/realmadrid.jpg",
-      "images": ["img/realmadrid.jpg"],
+      "images": [
+        "img/realmadrid.jpg"
+      ],
       "description": "Das neue Real Madrid Heimtrikot 2024/25 von Adidas. Klassisch weiß mit goldenen Akzenten, wie es die Stars im Bernabéu tragen.",
-      "sizes": ["XS", "S", "M", "L", "XL", "2XL"],
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
       "category": "Sportbekleidung",
       "subcategory": "Trikots",
       "marke": "Adidas",
@@ -155,9 +235,18 @@
       "price": "99.99 € inkl. Mwst.",
       "priceValue": 99.99,
       "imageMain": "img/mancity.jpg",
-      "images": ["img/mancity.jpg"],
+      "images": [
+        "img/mancity.jpg"
+      ],
       "description": "Das offizielle Manchester City Home Trikot 2024/25 von Puma. Himmelblau, modern und mit allen Details des englischen Meisters.",
-      "sizes": ["XS", "S", "M", "L", "XL", "2XL"],
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
       "category": "Sportbekleidung",
       "subcategory": "Trikots",
       "marke": "Puma",
@@ -170,9 +259,18 @@
       "price": "99.99 € inkl. Mwst.",
       "priceValue": 99.99,
       "imageMain": "img/psg.jpg",
-      "images": ["img/psg.jpg"],
+      "images": [
+        "img/psg.jpg"
+      ],
       "description": "Das neue PSG Heimtrikot 2024/25 von Nike. Dunkelblau mit roten und weißen Details – Pariser Eleganz für Fans.",
-      "sizes": ["XS", "S", "M", "L", "XL", "2XL"],
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
       "category": "Sportbekleidung",
       "subcategory": "Trikots",
       "marke": "Nike",
@@ -185,9 +283,18 @@
       "price": "99.99 € inkl. Mwst.",
       "priceValue": 99.99,
       "imageMain": "img/juventus.jpg",
-      "images": ["img/juventus.jpg"],
+      "images": [
+        "img/juventus.jpg"
+      ],
       "description": "Das Juventus Turin Heimtrikot 2024/25 von Adidas. Klassisch schwarz-weiß gestreift, wie es die Stars in Turin tragen.",
-      "sizes": ["XS", "S", "M", "L", "XL", "2XL"],
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
       "category": "Sportbekleidung",
       "subcategory": "Trikots",
       "marke": "Adidas",
@@ -200,9 +307,18 @@
       "price": "99.99 € inkl. Mwst.",
       "priceValue": 99.99,
       "imageMain": "img/inter.jpg",
-      "images": ["img/inter.jpg"],
+      "images": [
+        "img/inter.jpg"
+      ],
       "description": "Das neue Inter Mailand Heimtrikot 2024/25 von Nike. Blau-schwarze Streifen, modernes Design für echte Nerazzurri-Fans.",
-      "sizes": ["XS", "S", "M", "L", "XL", "2XL"],
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
       "category": "Sportbekleidung",
       "subcategory": "Trikots",
       "marke": "Nike",
@@ -215,9 +331,17 @@
       "price": "69.99 € inkl. Mwst.",
       "priceValue": 69.99,
       "imageMain": "img/trainingsjackeSchwarz.jpg",
-      "images": ["img/trainingsjackeSchwarz.jpg"],
+      "images": [
+        "img/trainingsjackeSchwarz.jpg"
+      ],
       "description": "Leichte Adidas Trainingsjacke in Schwarz, atmungsaktiv und perfekt für das Aufwärmen oder den Weg zum Training.",
-      "sizes": ["S", "M", "L", "XL", "2XL"],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
       "category": "Sportbekleidung",
       "subcategory": "Trainingsjacken",
       "marke": "Adidas",
@@ -230,9 +354,17 @@
       "price": "49.99 € inkl. Mwst.",
       "priceValue": 49.99,
       "imageMain": "img/trainingshoseGrau.jpg",
-      "images": ["img/trainingshoseGrau.jpg"],
+      "images": [
+        "img/trainingshoseGrau.jpg"
+      ],
       "description": "Komfortable Nike Trainingshose in Grau mit elastischem Bund und Reißverschlusstaschen.",
-      "sizes": ["S", "M", "L", "XL", "2XL"],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
       "category": "Sportbekleidung",
       "subcategory": "Trainingshosen",
       "marke": "Nike",
@@ -245,9 +377,17 @@
       "price": "24.99 € inkl. Mwst.",
       "priceValue": 24.99,
       "imageMain": "img/tshirtWeiß.jpg",
-      "images": ["img/tshirtWeiß.jpg"],
+      "images": [
+        "img/tshirtWeiß.jpg"
+      ],
       "description": "Klassisches Adidas T-Shirt in Weiß, ideal für Training und Freizeit.",
-      "sizes": ["S", "M", "L", "XL", "2XL"],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
       "category": "Sportbekleidung",
       "subcategory": "T-Shirts",
       "marke": "Adidas",
@@ -260,9 +400,17 @@
       "price": "34.99 € inkl. Mwst.",
       "priceValue": 34.99,
       "imageMain": "img/poloshirtNavy.jpg",
-      "images": ["img/poloshirtNavy.jpg"],
+      "images": [
+        "img/poloshirtNavy.jpg"
+      ],
       "description": "Elegantes Puma Poloshirt in Navy für einen sportlich-schicken Look.",
-      "sizes": ["S", "M", "L", "XL", "2XL"],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
       "category": "Sportbekleidung",
       "subcategory": "Poloshirts",
       "marke": "Puma",
@@ -275,9 +423,22 @@
       "price": "129.99 € inkl. Mwst.",
       "priceValue": 129.99,
       "imageMain": "img/predatorAG.jpg",
-      "images": ["img/predatorAG.jpg"],
+      "images": [
+        "img/predatorAG.jpg"
+      ],
       "description": "Adidas Predator Fußballschuhe für Kunstrasenplätze. Perfekter Grip und Ballkontrolle.",
-      "sizes": [39, 40, 41, 42, 43, 44, 45],
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
       "category": "Fußballschuhe",
       "subcategory": "Kunstrasen",
       "marke": "Adidas",
@@ -290,9 +451,22 @@
       "price": "99.99 € inkl. Mwst.",
       "priceValue": 99.99,
       "imageMain": "img/tiempoIC.jpg",
-      "images": ["img/tiempoIC.jpg"],
+      "images": [
+        "img/tiempoIC.jpg"
+      ],
       "description": "Nike Tiempo Legend 10 Hallenschuhe für präzises Spiel auf Indoor-Böden.",
-      "sizes": [38, 39, 40, 41, 42, 43, 44, 45],
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
       "category": "Fußballschuhe",
       "subcategory": "Hallenschuhe",
       "marke": "Nike",
@@ -305,9 +479,22 @@
       "price": "199.99 € inkl. Mwst.",
       "priceValue": 199.99,
       "imageMain": "img/futureZ.jpg",
-      "images": ["img/futureZ.jpg"],
+      "images": [
+        "img/futureZ.jpg"
+      ],
       "description": "Puma Future Z 1.4 Fußballschuhe für Stollen- und Kunstrasenplätze. Maximale Beweglichkeit und Komfort.",
-      "sizes": [40, 41, 42, 43, 44, 45],
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
       "category": "Fußballschuhe",
       "subcategory": "Stollen",
       "marke": "Puma",
@@ -320,9 +507,15 @@
       "price": "24.99 € inkl. Mwst.",
       "priceValue": 24.99,
       "imageMain": "img/schienbeinschoner.jpg",
-      "images": ["img/schienbeinschoner.jpg"],
+      "images": [
+        "img/schienbeinschoner.jpg"
+      ],
       "description": "Leichte und robuste Nike Schienbeinschoner für optimalen Schutz beim Spiel.",
-      "sizes": ["S", "M", "L"],
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
       "category": "Zubehör",
       "subcategory": "Schienbeinschoner",
       "marke": "Nike",
@@ -335,9 +528,13 @@
       "price": "39.99 € inkl. Mwst.",
       "priceValue": 39.99,
       "imageMain": "img/fussballAlRihla.jpg",
-      "images": ["img/fussballAlRihla.jpg"],
+      "images": [
+        "img/fussballAlRihla.jpg"
+      ],
       "description": "Offizieller Adidas Trainingsball Al Rihla, FIFA Quality Pro zertifiziert.",
-      "sizes": ["5"],
+      "sizes": [
+        "5"
+      ],
       "category": "Zubehör",
       "subcategory": "Fußbälle",
       "marke": "Adidas",
@@ -350,9 +547,13 @@
       "price": "29.99 € inkl. Mwst.",
       "priceValue": 29.99,
       "imageMain": "img/sporttaschePuma.jpg",
-      "images": ["img/sporttaschePuma.jpg"],
+      "images": [
+        "img/sporttaschePuma.jpg"
+      ],
       "description": "Geräumige Puma Sporttasche TeamGOAL mit separatem Schuhfach.",
-      "sizes": ["One Size"],
+      "sizes": [
+        "One Size"
+      ],
       "category": "Zubehör",
       "subcategory": "Sporttaschen",
       "marke": "Puma",
@@ -365,9 +566,16 @@
       "price": "49.99 € inkl. Mwst.",
       "priceValue": 49.99,
       "imageMain": "img/trainingsjackeSale.jpg",
-      "images": ["img/trainingsjackeSale.jpg"],
+      "images": [
+        "img/trainingsjackeSale.jpg"
+      ],
       "description": "Nike Trainingsjacke in Schwarz im Sale – sportlich, bequem und reduziert.",
-      "sizes": ["S", "M", "L", "XL"],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
       "category": "Sale %",
       "subcategory": "Sportbekleidung",
       "marke": "Nike",
@@ -380,9 +588,22 @@
       "price": "99.99 € inkl. Mwst.",
       "priceValue": 99.99,
       "imageMain": "img/predatorSale.jpg",
-      "images": ["img/predatorSale.jpg"],
+      "images": [
+        "img/predatorSale.jpg"
+      ],
       "description": "Adidas Predator Fußballschuhe im Sale – Top-Performance zum Sonderpreis.",
-      "sizes": [40, 41, 42, 43, 44],
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
       "category": "Sale %",
       "subcategory": "Fußballschuhe",
       "marke": "Adidas",
@@ -395,13 +616,2214 @@
       "price": "19.99 € inkl. Mwst.",
       "priceValue": 19.99,
       "imageMain": "img/sporttascheSale.jpg",
-      "images": ["img/sporttascheSale.jpg"],
+      "images": [
+        "img/sporttascheSale.jpg"
+      ],
       "description": "Puma Sporttasche im Sale – praktisch und günstig.",
-      "sizes": ["One Size"],
+      "sizes": [
+        "One Size"
+      ],
       "category": "Sale %",
       "subcategory": "Zubehör",
       "marke": "Puma",
       "farbe": "Blau",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 27,
+      "name": "Adidas X Crazyfast+ FG",
+      "price": "239.99 € inkl. Mwst.",
+      "priceValue": 239.99,
+      "imageMain": "img/schuhBlau.jpg",
+      "images": [
+        "img/schuhBlau.jpg"
+      ],
+      "description": "Die Adidas X Crazyfast+ FG Fußballschuhe sind extrem leicht und sorgen für explosive Beschleunigung auf Naturrasen.",
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "category": "Fußballschuhe",
+      "subcategory": "Stollen",
+      "marke": "Adidas",
+      "farbe": "Blau-Weiß",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 28,
+      "name": "Nike Flight Fußball",
+      "price": "49.99 € inkl. Mwst.",
+      "priceValue": 49.99,
+      "imageMain": "img/Fußball7.JPEG",
+      "images": [
+        "img/Fußball7.JPEG"
+      ],
+      "description": "Premium-Trainingsball von Nike mit exzellenter Flugbahn und Haltbarkeit.",
+      "sizes": [
+        "5"
+      ],
+      "category": "Zubehör",
+      "subcategory": "Fußbälle",
+      "marke": "Nike",
+      "farbe": "Weiß-Orange",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 29,
+      "name": "Adidas Sporttasche Tiro",
+      "price": "34.99 € inkl. Mwst.",
+      "priceValue": 34.99,
+      "imageMain": "img/trainingsanzugBlau2.jpeg",
+      "images": [
+        "img/trainingsanzugBlau2.jpeg"
+      ],
+      "description": "Robuste Adidas Sporttasche aus der Tiro-Serie mit viel Stauraum für dein Equipment.",
+      "sizes": [
+        "One Size"
+      ],
+      "category": "Zubehör",
+      "subcategory": "Sporttaschen",
+      "marke": "Adidas",
+      "farbe": "Blau",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 30,
+      "name": "Nike Socken Sale",
+      "price": "9.99 € inkl. Mwst.",
+      "priceValue": 9.99,
+      "imageMain": "img/sockenSchwarz.jpg",
+      "images": [
+        "img/sockenSchwarz.jpg"
+      ],
+      "description": "Klassische Nike Sportsocken zum Sonderpreis im praktischen Dreierpack.",
+      "sizes": [
+        "39-40",
+        "41-42",
+        "43-44",
+        "45-46"
+      ],
+      "category": "Sale %",
+      "subcategory": "Sportbekleidung",
+      "marke": "Nike",
+      "farbe": "Schwarz",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 31,
+      "name": "Adidas T-Shirt Sale",
+      "price": "14.99 € inkl. Mwst.",
+      "priceValue": 14.99,
+      "imageMain": "img/tshirtWeiß.jpg",
+      "images": [
+        "img/tshirtWeiß.jpg"
+      ],
+      "description": "Leichtes Adidas T-Shirt in Weiß – reduziert, aber voller Performance.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "category": "Sale %",
+      "subcategory": "Sportbekleidung",
+      "marke": "Adidas",
+      "farbe": "Weiß",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 32,
+      "name": "FC Barcelona Trikot 2024/25",
+      "price": "99.99 € inkl. Mwst.",
+      "priceValue": 99.99,
+      "imageMain": "img/barcelona.jpg",
+      "images": [
+        "img/barcelona.jpg"
+      ],
+      "description": "Das offizielle FC Barcelona Heimtrikot 2024/25 von Nike. Blau-rot gestreift, wie es die Stars im Camp Nou tragen.",
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trikots",
+      "marke": "Nike",
+      "farbe": "Blau-Rot",
+      "geschlecht": "Herren"
+    },
+    {
+      "iid": 33,
+      "name": "Liverpool FC Trikot 2024/25",
+      "price": "99.99 € inkl. Mwst.",
+      "priceValue": 99.99,
+      "imageMain": "img/liverpool.jpg",
+      "images": [
+        "img/liverpool.jpg"
+      ],
+      "description": "Das neue Liverpool FC Heimtrikot 2024/25 von Nike in klassischem Rot mit dezenten Details.",
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trikots",
+      "marke": "Nike",
+      "farbe": "Rot",
+      "geschlecht": "Herren"
+    },
+    {
+      "iid": 34,
+      "name": "Arsenal London Trikot 2024/25",
+      "price": "99.99 € inkl. Mwst.",
+      "priceValue": 99.99,
+      "imageMain": "img/arsenal.jpg",
+      "images": [
+        "img/arsenal.jpg"
+      ],
+      "description": "Arsenal London Heimtrikot 2024/25 von Adidas. Traditionell rot-weiß für echte Gunners-Fans.",
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trikots",
+      "marke": "Adidas",
+      "farbe": "Rot-Weiß",
+      "geschlecht": "Herren"
+    },
+    {
+      "iid": 35,
+      "name": "AC Milan Trikot 2024/25",
+      "price": "99.99 € inkl. Mwst.",
+      "priceValue": 99.99,
+      "imageMain": "img/acmilan.jpg",
+      "images": [
+        "img/acmilan.jpg"
+      ],
+      "description": "AC Milan Heimtrikot 2024/25 von Puma. Schwarze und rote Streifen für den italienischen Traditionsclub.",
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trikots",
+      "marke": "Puma",
+      "farbe": "Rot-Schwarz",
+      "geschlecht": "Herren"
+    },
+    {
+      "iid": 36,
+      "name": "Adidas X Crazyfast Elite FG",
+      "price": "98.34 € inkl. Mwst.",
+      "priceValue": 98.34,
+      "imageMain": "img/stollen1.jpg",
+      "images": [
+        "img/stollen1.jpg"
+      ],
+      "description": "Hochwertiges Stollen Produkt von Adidas in Gelb.",
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "category": "Fußballschuhe",
+      "subcategory": "Stollen",
+      "marke": "Adidas",
+      "farbe": "Gelb",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 37,
+      "name": "Puma Ultra Ultimate FG",
+      "price": "43.86 € inkl. Mwst.",
+      "priceValue": 43.86,
+      "imageMain": "img/stollen2.jpg",
+      "images": [
+        "img/stollen2.jpg"
+      ],
+      "description": "Hochwertiges Stollen Produkt von Puma in Blau.",
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "category": "Fußballschuhe",
+      "subcategory": "Stollen",
+      "marke": "Puma",
+      "farbe": "Blau",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 38,
+      "name": "Puma Ultra Pro FG",
+      "price": "85.26 € inkl. Mwst.",
+      "priceValue": 85.26,
+      "imageMain": "img/stollen3.jpg",
+      "images": [
+        "img/stollen3.jpg"
+      ],
+      "description": "Hochwertiges Stollen Produkt von Puma in Weiß.",
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "category": "Fußballschuhe",
+      "subcategory": "Stollen",
+      "marke": "Puma",
+      "farbe": "Weiß",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 39,
+      "name": "Adidas Predator Accuracy FG",
+      "price": "126.82 € inkl. Mwst.",
+      "priceValue": 126.82,
+      "imageMain": "img/stollen4.jpg",
+      "images": [
+        "img/stollen4.jpg"
+      ],
+      "description": "Hochwertiges Stollen Produkt von Adidas in Gelb.",
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "category": "Fußballschuhe",
+      "subcategory": "Stollen",
+      "marke": "Adidas",
+      "farbe": "Gelb",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 40,
+      "name": "Nike Phantom GX Elite FG",
+      "price": "106.33 € inkl. Mwst.",
+      "priceValue": 106.33,
+      "imageMain": "img/stollen5.jpg",
+      "images": [
+        "img/stollen5.jpg"
+      ],
+      "description": "Hochwertiges Stollen Produkt von Nike in Schwarz.",
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "category": "Fußballschuhe",
+      "subcategory": "Stollen",
+      "marke": "Nike",
+      "farbe": "Schwarz",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 41,
+      "name": "FC Barcelona Trikot 2024/25",
+      "price": "193.95 € inkl. Mwst.",
+      "priceValue": 193.95,
+      "imageMain": "img/trikots1.jpg",
+      "images": [
+        "img/trikots1.jpg"
+      ],
+      "description": "Hochwertiges Trikots Produkt von Nike in Gelb.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trikots",
+      "marke": "Nike",
+      "farbe": "Gelb",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 42,
+      "name": "Liverpool FC Trikot 2024/25",
+      "price": "115.56 € inkl. Mwst.",
+      "priceValue": 115.56,
+      "imageMain": "img/trikots2.jpg",
+      "images": [
+        "img/trikots2.jpg"
+      ],
+      "description": "Hochwertiges Trikots Produkt von Nike in Weiß.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trikots",
+      "marke": "Nike",
+      "farbe": "Weiß",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 43,
+      "name": "Arsenal FC Trikot 2024/25",
+      "price": "190.06 € inkl. Mwst.",
+      "priceValue": 190.06,
+      "imageMain": "img/trikots3.jpg",
+      "images": [
+        "img/trikots3.jpg"
+      ],
+      "description": "Hochwertiges Trikots Produkt von Adidas in Blau.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trikots",
+      "marke": "Adidas",
+      "farbe": "Blau",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 44,
+      "name": "Flamengo Rio Trikot 2024/25",
+      "price": "226.28 € inkl. Mwst.",
+      "priceValue": 226.28,
+      "imageMain": "img/trikots4.jpg",
+      "images": [
+        "img/trikots4.jpg"
+      ],
+      "description": "Hochwertiges Trikots Produkt von Adidas in Grün.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trikots",
+      "marke": "Adidas",
+      "farbe": "Grün",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 45,
+      "name": "Tottenham Hotspur Trikot 2024/25",
+      "price": "136.03 € inkl. Mwst.",
+      "priceValue": 136.03,
+      "imageMain": "img/trikots5.jpg",
+      "images": [
+        "img/trikots5.jpg"
+      ],
+      "description": "Hochwertiges Trikots Produkt von Nike in Schwarz.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trikots",
+      "marke": "Nike",
+      "farbe": "Schwarz",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 46,
+      "name": "Adidas Predator Pro Torwarthandschuhe",
+      "price": "35.95 € inkl. Mwst.",
+      "priceValue": 35.95,
+      "imageMain": "img/handschuhe1.jpg",
+      "images": [
+        "img/handschuhe1.jpg"
+      ],
+      "description": "Hochwertiges Handschuhe Produkt von Adidas in Weiß.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Handschuhe",
+      "marke": "Adidas",
+      "farbe": "Weiß",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 47,
+      "name": "Puma Future Grip 2 Torwarthandschuhe",
+      "price": "94.81 € inkl. Mwst.",
+      "priceValue": 94.81,
+      "imageMain": "img/handschuhe2.jpg",
+      "images": [
+        "img/handschuhe2.jpg"
+      ],
+      "description": "Hochwertiges Handschuhe Produkt von Puma in Weiß.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Handschuhe",
+      "marke": "Puma",
+      "farbe": "Weiß",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 48,
+      "name": "Nike Vapor Grip Torwarthandschuhe",
+      "price": "33.89 € inkl. Mwst.",
+      "priceValue": 33.89,
+      "imageMain": "img/handschuhe3.jpg",
+      "images": [
+        "img/handschuhe3.jpg"
+      ],
+      "description": "Hochwertiges Handschuhe Produkt von Nike in Gelb.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Handschuhe",
+      "marke": "Nike",
+      "farbe": "Gelb",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 49,
+      "name": "Nike HyperWarm Torwarthandschuhe",
+      "price": "115.69 € inkl. Mwst.",
+      "priceValue": 115.69,
+      "imageMain": "img/handschuhe4.jpg",
+      "images": [
+        "img/handschuhe4.jpg"
+      ],
+      "description": "Hochwertiges Handschuhe Produkt von Nike in Rot.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Handschuhe",
+      "marke": "Nike",
+      "farbe": "Rot",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 50,
+      "name": "Nike Match Torwarthandschuhe",
+      "price": "184.22 € inkl. Mwst.",
+      "priceValue": 184.22,
+      "imageMain": "img/handschuhe5.jpg",
+      "images": [
+        "img/handschuhe5.jpg"
+      ],
+      "description": "Hochwertiges Handschuhe Produkt von Nike in Gelb.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Handschuhe",
+      "marke": "Nike",
+      "farbe": "Gelb",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 51,
+      "name": "Puma TeamRise Trainingsanzug Gelb",
+      "price": "154.66 € inkl. Mwst.",
+      "priceValue": 154.66,
+      "imageMain": "img/trainingsanzüge1.jpg",
+      "images": [
+        "img/trainingsanzüge1.jpg"
+      ],
+      "description": "Hochwertiges Trainingsanzüge Produkt von Puma in Gelb.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trainingsanzüge",
+      "marke": "Puma",
+      "farbe": "Gelb",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 52,
+      "name": "Puma Liga Trainingsanzug Schwarz",
+      "price": "245.94 € inkl. Mwst.",
+      "priceValue": 245.94,
+      "imageMain": "img/trainingsanzüge2.jpg",
+      "images": [
+        "img/trainingsanzüge2.jpg"
+      ],
+      "description": "Hochwertiges Trainingsanzüge Produkt von Puma in Schwarz.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trainingsanzüge",
+      "marke": "Puma",
+      "farbe": "Schwarz",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 53,
+      "name": "Nike Academy Trainingsanzug Rot",
+      "price": "100.56 € inkl. Mwst.",
+      "priceValue": 100.56,
+      "imageMain": "img/trainingsanzüge3.jpg",
+      "images": [
+        "img/trainingsanzüge3.jpg"
+      ],
+      "description": "Hochwertiges Trainingsanzüge Produkt von Nike in Rot.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trainingsanzüge",
+      "marke": "Nike",
+      "farbe": "Rot",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 54,
+      "name": "Nike Dri-FIT Strike Trainingsanzug Rot",
+      "price": "171.95 € inkl. Mwst.",
+      "priceValue": 171.95,
+      "imageMain": "img/trainingsanzüge4.jpg",
+      "images": [
+        "img/trainingsanzüge4.jpg"
+      ],
+      "description": "Hochwertiges Trainingsanzüge Produkt von Nike in Rot.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trainingsanzüge",
+      "marke": "Nike",
+      "farbe": "Rot",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 55,
+      "name": "Puma individualRISE Trainingsanzug Weiß",
+      "price": "198.63 € inkl. Mwst.",
+      "priceValue": 198.63,
+      "imageMain": "img/trainingsanzüge5.jpg",
+      "images": [
+        "img/trainingsanzüge5.jpg"
+      ],
+      "description": "Hochwertiges Trainingsanzüge Produkt von Puma in Weiß.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trainingsanzüge",
+      "marke": "Puma",
+      "farbe": "Weiß",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 56,
+      "name": "Nike Everyday Cushioned Crew Socks Schwarz",
+      "price": "68.71 € inkl. Mwst.",
+      "priceValue": 68.71,
+      "imageMain": "img/socken1.jpg",
+      "images": [
+        "img/socken1.jpg"
+      ],
+      "description": "Hochwertiges Socken Produkt von Nike in Schwarz.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Socken",
+      "marke": "Nike",
+      "farbe": "Schwarz",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 57,
+      "name": "Adidas Performance Crew Socken Weiß",
+      "price": "90.08 € inkl. Mwst.",
+      "priceValue": 90.08,
+      "imageMain": "img/socken2.jpg",
+      "images": [
+        "img/socken2.jpg"
+      ],
+      "description": "Hochwertiges Socken Produkt von Adidas in Weiß.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Socken",
+      "marke": "Adidas",
+      "farbe": "Weiß",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 58,
+      "name": "Adidas Adizero Laufsocken Blau",
+      "price": "229.01 € inkl. Mwst.",
+      "priceValue": 229.01,
+      "imageMain": "img/socken3.jpg",
+      "images": [
+        "img/socken3.jpg"
+      ],
+      "description": "Hochwertiges Socken Produkt von Adidas in Blau.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Socken",
+      "marke": "Adidas",
+      "farbe": "Blau",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 59,
+      "name": "Nike Elite Lightweight Socken Weiß",
+      "price": "93.81 € inkl. Mwst.",
+      "priceValue": 93.81,
+      "imageMain": "img/socken4.jpg",
+      "images": [
+        "img/socken4.jpg"
+      ],
+      "description": "Hochwertiges Socken Produkt von Nike in Weiß.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Socken",
+      "marke": "Nike",
+      "farbe": "Weiß",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 60,
+      "name": "Puma TeamSocks Rot",
+      "price": "52.96 € inkl. Mwst.",
+      "priceValue": 52.96,
+      "imageMain": "img/socken5.jpg",
+      "images": [
+        "img/socken5.jpg"
+      ],
+      "description": "Hochwertiges Socken Produkt von Puma in Rot.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Socken",
+      "marke": "Puma",
+      "farbe": "Rot",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 61,
+      "name": "Nike Academy 23 Trainingsjacke Rot",
+      "price": "45.93 € inkl. Mwst.",
+      "priceValue": 45.93,
+      "imageMain": "img/trainingsjacken1.jpg",
+      "images": [
+        "img/trainingsjacken1.jpg"
+      ],
+      "description": "Hochwertiges Trainingsjacken Produkt von Nike in Rot.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trainingsjacken",
+      "marke": "Nike",
+      "farbe": "Rot",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 62,
+      "name": "Adidas Tiro 23 Trainingsjacke Blau",
+      "price": "154.82 € inkl. Mwst.",
+      "priceValue": 154.82,
+      "imageMain": "img/trainingsjacken2.jpg",
+      "images": [
+        "img/trainingsjacken2.jpg"
+      ],
+      "description": "Hochwertiges Trainingsjacken Produkt von Adidas in Blau.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trainingsjacken",
+      "marke": "Adidas",
+      "farbe": "Blau",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 63,
+      "name": "Adidas Tiro Windbreaker Blau",
+      "price": "167.30 € inkl. Mwst.",
+      "priceValue": 167.3,
+      "imageMain": "img/trainingsjacken3.jpg",
+      "images": [
+        "img/trainingsjacken3.jpg"
+      ],
+      "description": "Hochwertiges Trainingsjacken Produkt von Adidas in Blau.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trainingsjacken",
+      "marke": "Adidas",
+      "farbe": "Blau",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 64,
+      "name": "Nike Therma-FIT Trainingsjacke Grün",
+      "price": "187.57 € inkl. Mwst.",
+      "priceValue": 187.57,
+      "imageMain": "img/trainingsjacken4.jpg",
+      "images": [
+        "img/trainingsjacken4.jpg"
+      ],
+      "description": "Hochwertiges Trainingsjacken Produkt von Nike in Grün.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trainingsjacken",
+      "marke": "Nike",
+      "farbe": "Grün",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 65,
+      "name": "Nike Team Club Trainingsjacke Weiß",
+      "price": "92.80 € inkl. Mwst.",
+      "priceValue": 92.8,
+      "imageMain": "img/trainingsjacken5.jpg",
+      "images": [
+        "img/trainingsjacken5.jpg"
+      ],
+      "description": "Hochwertiges Trainingsjacken Produkt von Nike in Weiß.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trainingsjacken",
+      "marke": "Nike",
+      "farbe": "Weiß",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 66,
+      "name": "Adidas Tiro 23 Trainingshose Rot",
+      "price": "178.49 € inkl. Mwst.",
+      "priceValue": 178.49,
+      "imageMain": "img/trainingshosen1.jpg",
+      "images": [
+        "img/trainingshosen1.jpg"
+      ],
+      "description": "Hochwertiges Trainingshosen Produkt von Adidas in Rot.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trainingshosen",
+      "marke": "Adidas",
+      "farbe": "Rot",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 67,
+      "name": "Nike Strike Trainingshose Grün",
+      "price": "185.18 € inkl. Mwst.",
+      "priceValue": 185.18,
+      "imageMain": "img/trainingshosen2.jpg",
+      "images": [
+        "img/trainingshosen2.jpg"
+      ],
+      "description": "Hochwertiges Trainingshosen Produkt von Nike in Grün.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trainingshosen",
+      "marke": "Nike",
+      "farbe": "Grün",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 68,
+      "name": "Adidas Tiro 23 Trainingshose Grün",
+      "price": "244.05 € inkl. Mwst.",
+      "priceValue": 244.05,
+      "imageMain": "img/trainingshosen3.jpg",
+      "images": [
+        "img/trainingshosen3.jpg"
+      ],
+      "description": "Hochwertiges Trainingshosen Produkt von Adidas in Grün.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trainingshosen",
+      "marke": "Adidas",
+      "farbe": "Grün",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 69,
+      "name": "Nike Dri-FIT Trainingshose Schwarz",
+      "price": "86.99 € inkl. Mwst.",
+      "priceValue": 86.99,
+      "imageMain": "img/trainingshosen4.jpg",
+      "images": [
+        "img/trainingshosen4.jpg"
+      ],
+      "description": "Hochwertiges Trainingshosen Produkt von Nike in Schwarz.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trainingshosen",
+      "marke": "Nike",
+      "farbe": "Schwarz",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 70,
+      "name": "Puma individualCUP Trainingshose Grün",
+      "price": "227.04 € inkl. Mwst.",
+      "priceValue": 227.04,
+      "imageMain": "img/trainingshosen5.jpg",
+      "images": [
+        "img/trainingshosen5.jpg"
+      ],
+      "description": "Hochwertiges Trainingshosen Produkt von Puma in Grün.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Trainingshosen",
+      "marke": "Puma",
+      "farbe": "Grün",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 71,
+      "name": "Nike Dri-FIT Academy Shirt Gelb",
+      "price": "74.55 € inkl. Mwst.",
+      "priceValue": 74.55,
+      "imageMain": "img/t-shirts1.jpg",
+      "images": [
+        "img/t-shirts1.jpg"
+      ],
+      "description": "Hochwertiges T-Shirts Produkt von Nike in Gelb.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "T-Shirts",
+      "marke": "Nike",
+      "farbe": "Gelb",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 72,
+      "name": "Puma teamGOAL Shirt Grün",
+      "price": "16.08 € inkl. Mwst.",
+      "priceValue": 16.08,
+      "imageMain": "img/t-shirts2.jpg",
+      "images": [
+        "img/t-shirts2.jpg"
+      ],
+      "description": "Hochwertiges T-Shirts Produkt von Puma in Grün.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "T-Shirts",
+      "marke": "Puma",
+      "farbe": "Grün",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 73,
+      "name": "Puma teamRISE Shirt Rot",
+      "price": "142.06 € inkl. Mwst.",
+      "priceValue": 142.06,
+      "imageMain": "img/t-shirts3.jpg",
+      "images": [
+        "img/t-shirts3.jpg"
+      ],
+      "description": "Hochwertiges T-Shirts Produkt von Puma in Rot.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "T-Shirts",
+      "marke": "Puma",
+      "farbe": "Rot",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 74,
+      "name": "Nike Park VII Shirt Gelb",
+      "price": "58.01 € inkl. Mwst.",
+      "priceValue": 58.01,
+      "imageMain": "img/t-shirts4.jpg",
+      "images": [
+        "img/t-shirts4.jpg"
+      ],
+      "description": "Hochwertiges T-Shirts Produkt von Nike in Gelb.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "T-Shirts",
+      "marke": "Nike",
+      "farbe": "Gelb",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 75,
+      "name": "Adidas Entrada 22 Shirt Gelb",
+      "price": "149.67 € inkl. Mwst.",
+      "priceValue": 149.67,
+      "imageMain": "img/t-shirts5.jpg",
+      "images": [
+        "img/t-shirts5.jpg"
+      ],
+      "description": "Hochwertiges T-Shirts Produkt von Adidas in Gelb.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "T-Shirts",
+      "marke": "Adidas",
+      "farbe": "Gelb",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 76,
+      "name": "Nike Dri-FIT Advantage Polo Schwarz",
+      "price": "138.14 € inkl. Mwst.",
+      "priceValue": 138.14,
+      "imageMain": "img/poloshirts1.jpg",
+      "images": [
+        "img/poloshirts1.jpg"
+      ],
+      "description": "Hochwertiges Poloshirts Produkt von Nike in Schwarz.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Poloshirts",
+      "marke": "Nike",
+      "farbe": "Schwarz",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 77,
+      "name": "Puma Essential Polo Schwarz",
+      "price": "231.01 € inkl. Mwst.",
+      "priceValue": 231.01,
+      "imageMain": "img/poloshirts2.jpg",
+      "images": [
+        "img/poloshirts2.jpg"
+      ],
+      "description": "Hochwertiges Poloshirts Produkt von Puma in Schwarz.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Poloshirts",
+      "marke": "Puma",
+      "farbe": "Schwarz",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 78,
+      "name": "Nike Court Dri-FIT Polo Weiß",
+      "price": "18.07 € inkl. Mwst.",
+      "priceValue": 18.07,
+      "imageMain": "img/poloshirts3.jpg",
+      "images": [
+        "img/poloshirts3.jpg"
+      ],
+      "description": "Hochwertiges Poloshirts Produkt von Nike in Weiß.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Poloshirts",
+      "marke": "Nike",
+      "farbe": "Weiß",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 79,
+      "name": "Nike Advantage Polo Rot",
+      "price": "246.16 € inkl. Mwst.",
+      "priceValue": 246.16,
+      "imageMain": "img/poloshirts4.jpg",
+      "images": [
+        "img/poloshirts4.jpg"
+      ],
+      "description": "Hochwertiges Poloshirts Produkt von Nike in Rot.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Poloshirts",
+      "marke": "Nike",
+      "farbe": "Rot",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 80,
+      "name": "Adidas Club Tennis Polo Blau",
+      "price": "129.10 € inkl. Mwst.",
+      "priceValue": 129.1,
+      "imageMain": "img/poloshirts5.jpg",
+      "images": [
+        "img/poloshirts5.jpg"
+      ],
+      "description": "Hochwertiges Poloshirts Produkt von Adidas in Blau.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sportbekleidung",
+      "subcategory": "Poloshirts",
+      "marke": "Adidas",
+      "farbe": "Blau",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 81,
+      "name": "Adidas Predator Accuracy AG Gelb",
+      "price": "14.26 € inkl. Mwst.",
+      "priceValue": 14.26,
+      "imageMain": "img/kunstrasen1.jpg",
+      "images": [
+        "img/kunstrasen1.jpg"
+      ],
+      "description": "Hochwertiges Kunstrasen Produkt von Adidas in Gelb.",
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "category": "Fußballschuhe",
+      "subcategory": "Kunstrasen",
+      "marke": "Adidas",
+      "farbe": "Gelb",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 82,
+      "name": "Adidas X Crazyfast AG Weiß",
+      "price": "131.17 € inkl. Mwst.",
+      "priceValue": 131.17,
+      "imageMain": "img/kunstrasen2.jpg",
+      "images": [
+        "img/kunstrasen2.jpg"
+      ],
+      "description": "Hochwertiges Kunstrasen Produkt von Adidas in Weiß.",
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "category": "Fußballschuhe",
+      "subcategory": "Kunstrasen",
+      "marke": "Adidas",
+      "farbe": "Weiß",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 83,
+      "name": "Nike Phantom GX Academy AG Blau",
+      "price": "66.79 € inkl. Mwst.",
+      "priceValue": 66.79,
+      "imageMain": "img/kunstrasen3.jpg",
+      "images": [
+        "img/kunstrasen3.jpg"
+      ],
+      "description": "Hochwertiges Kunstrasen Produkt von Nike in Blau.",
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "category": "Fußballschuhe",
+      "subcategory": "Kunstrasen",
+      "marke": "Nike",
+      "farbe": "Blau",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 84,
+      "name": "Puma Future Ultimate AG Gelb",
+      "price": "167.21 € inkl. Mwst.",
+      "priceValue": 167.21,
+      "imageMain": "img/kunstrasen4.jpg",
+      "images": [
+        "img/kunstrasen4.jpg"
+      ],
+      "description": "Hochwertiges Kunstrasen Produkt von Puma in Gelb.",
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "category": "Fußballschuhe",
+      "subcategory": "Kunstrasen",
+      "marke": "Puma",
+      "farbe": "Gelb",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 85,
+      "name": "Nike Tiempo Legend Academy AG Gelb",
+      "price": "18.30 € inkl. Mwst.",
+      "priceValue": 18.3,
+      "imageMain": "img/kunstrasen5.jpg",
+      "images": [
+        "img/kunstrasen5.jpg"
+      ],
+      "description": "Hochwertiges Kunstrasen Produkt von Nike in Gelb.",
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "category": "Fußballschuhe",
+      "subcategory": "Kunstrasen",
+      "marke": "Nike",
+      "farbe": "Gelb",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 86,
+      "name": "Nike Zoom Vapor 15 IC Schwarz",
+      "price": "99.42 € inkl. Mwst.",
+      "priceValue": 99.42,
+      "imageMain": "img/hallenschuhe1.jpg",
+      "images": [
+        "img/hallenschuhe1.jpg"
+      ],
+      "description": "Hochwertiges Hallenschuhe Produkt von Nike in Schwarz.",
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "category": "Fußballschuhe",
+      "subcategory": "Hallenschuhe",
+      "marke": "Nike",
+      "farbe": "Schwarz",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 87,
+      "name": "Nike React Gato IC Grün",
+      "price": "235.84 € inkl. Mwst.",
+      "priceValue": 235.84,
+      "imageMain": "img/hallenschuhe2.jpg",
+      "images": [
+        "img/hallenschuhe2.jpg"
+      ],
+      "description": "Hochwertiges Hallenschuhe Produkt von Nike in Grün.",
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "category": "Fußballschuhe",
+      "subcategory": "Hallenschuhe",
+      "marke": "Nike",
+      "farbe": "Grün",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 88,
+      "name": "Nike Lunar Legend 9 IC Grün",
+      "price": "152.31 € inkl. Mwst.",
+      "priceValue": 152.31,
+      "imageMain": "img/hallenschuhe3.jpg",
+      "images": [
+        "img/hallenschuhe3.jpg"
+      ],
+      "description": "Hochwertiges Hallenschuhe Produkt von Nike in Grün.",
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "category": "Fußballschuhe",
+      "subcategory": "Hallenschuhe",
+      "marke": "Nike",
+      "farbe": "Grün",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 89,
+      "name": "Nike Streetgato Gelb",
+      "price": "148.07 € inkl. Mwst.",
+      "priceValue": 148.07,
+      "imageMain": "img/hallenschuhe4.jpg",
+      "images": [
+        "img/hallenschuhe4.jpg"
+      ],
+      "description": "Hochwertiges Hallenschuhe Produkt von Nike in Gelb.",
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "category": "Fußballschuhe",
+      "subcategory": "Hallenschuhe",
+      "marke": "Nike",
+      "farbe": "Gelb",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 90,
+      "name": "Nike Tiempo Legend 9 Academy IC Schwarz",
+      "price": "37.31 € inkl. Mwst.",
+      "priceValue": 37.31,
+      "imageMain": "img/hallenschuhe5.jpg",
+      "images": [
+        "img/hallenschuhe5.jpg"
+      ],
+      "description": "Hochwertiges Hallenschuhe Produkt von Nike in Schwarz.",
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "category": "Fußballschuhe",
+      "subcategory": "Hallenschuhe",
+      "marke": "Nike",
+      "farbe": "Schwarz",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 91,
+      "name": "Puma Ultra Light Schienbeinschoner Weiß",
+      "price": "38.52 € inkl. Mwst.",
+      "priceValue": 38.52,
+      "imageMain": "img/schienbeinschoner1.jpg",
+      "images": [
+        "img/schienbeinschoner1.jpg"
+      ],
+      "description": "Hochwertiges Schienbeinschoner Produkt von Puma in Weiß.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Zubehör",
+      "subcategory": "Schienbeinschoner",
+      "marke": "Puma",
+      "farbe": "Weiß",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 92,
+      "name": "Nike Charge Schienbeinschoner Weiß",
+      "price": "186.08 € inkl. Mwst.",
+      "priceValue": 186.08,
+      "imageMain": "img/schienbeinschoner2.jpg",
+      "images": [
+        "img/schienbeinschoner2.jpg"
+      ],
+      "description": "Hochwertiges Schienbeinschoner Produkt von Nike in Weiß.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Zubehör",
+      "subcategory": "Schienbeinschoner",
+      "marke": "Nike",
+      "farbe": "Weiß",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 93,
+      "name": "Nike Mercurial Lite Schienbeinschoner Schwarz",
+      "price": "103.44 € inkl. Mwst.",
+      "priceValue": 103.44,
+      "imageMain": "img/schienbeinschoner3.jpg",
+      "images": [
+        "img/schienbeinschoner3.jpg"
+      ],
+      "description": "Hochwertiges Schienbeinschoner Produkt von Nike in Schwarz.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Zubehör",
+      "subcategory": "Schienbeinschoner",
+      "marke": "Nike",
+      "farbe": "Schwarz",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 94,
+      "name": "Nike J Guard Schienbeinschoner Grün",
+      "price": "74.90 € inkl. Mwst.",
+      "priceValue": 74.9,
+      "imageMain": "img/schienbeinschoner4.jpg",
+      "images": [
+        "img/schienbeinschoner4.jpg"
+      ],
+      "description": "Hochwertiges Schienbeinschoner Produkt von Nike in Grün.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Zubehör",
+      "subcategory": "Schienbeinschoner",
+      "marke": "Nike",
+      "farbe": "Grün",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 95,
+      "name": "Nike Park Guard Schienbeinschoner Schwarz",
+      "price": "32.33 € inkl. Mwst.",
+      "priceValue": 32.33,
+      "imageMain": "img/schienbeinschoner5.jpg",
+      "images": [
+        "img/schienbeinschoner5.jpg"
+      ],
+      "description": "Hochwertiges Schienbeinschoner Produkt von Nike in Schwarz.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Zubehör",
+      "subcategory": "Schienbeinschoner",
+      "marke": "Nike",
+      "farbe": "Schwarz",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 96,
+      "name": "Nike Flight Fußball Rot",
+      "price": "153.48 € inkl. Mwst.",
+      "priceValue": 153.48,
+      "imageMain": "img/fußbälle1.jpg",
+      "images": [
+        "img/fußbälle1.jpg"
+      ],
+      "description": "Hochwertiges Fußbälle Produkt von Nike in Rot.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Zubehör",
+      "subcategory": "Fußbälle",
+      "marke": "Nike",
+      "farbe": "Rot",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 97,
+      "name": "Adidas Starlancer Club Schwarz",
+      "price": "78.64 € inkl. Mwst.",
+      "priceValue": 78.64,
+      "imageMain": "img/fußbälle2.jpg",
+      "images": [
+        "img/fußbälle2.jpg"
+      ],
+      "description": "Hochwertiges Fußbälle Produkt von Adidas in Schwarz.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Zubehör",
+      "subcategory": "Fußbälle",
+      "marke": "Adidas",
+      "farbe": "Schwarz",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 98,
+      "name": "Adidas Training Pro Gelb",
+      "price": "196.12 € inkl. Mwst.",
+      "priceValue": 196.12,
+      "imageMain": "img/fußbälle3.jpg",
+      "images": [
+        "img/fußbälle3.jpg"
+      ],
+      "description": "Hochwertiges Fußbälle Produkt von Adidas in Gelb.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Zubehör",
+      "subcategory": "Fußbälle",
+      "marke": "Adidas",
+      "farbe": "Gelb",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 99,
+      "name": "Puma Orbita LaLiga 1 Blau",
+      "price": "174.93 € inkl. Mwst.",
+      "priceValue": 174.93,
+      "imageMain": "img/fußbälle4.jpg",
+      "images": [
+        "img/fußbälle4.jpg"
+      ],
+      "description": "Hochwertiges Fußbälle Produkt von Puma in Blau.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Zubehör",
+      "subcategory": "Fußbälle",
+      "marke": "Puma",
+      "farbe": "Blau",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 100,
+      "name": "Adidas Al Rihla League Blau",
+      "price": "90.14 € inkl. Mwst.",
+      "priceValue": 90.14,
+      "imageMain": "img/fußbälle5.jpg",
+      "images": [
+        "img/fußbälle5.jpg"
+      ],
+      "description": "Hochwertiges Fußbälle Produkt von Adidas in Blau.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Zubehör",
+      "subcategory": "Fußbälle",
+      "marke": "Adidas",
+      "farbe": "Blau",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 101,
+      "name": "Adidas Tiro Duffel Bag Blau",
+      "price": "241.54 € inkl. Mwst.",
+      "priceValue": 241.54,
+      "imageMain": "img/sporttaschen1.jpg",
+      "images": [
+        "img/sporttaschen1.jpg"
+      ],
+      "description": "Hochwertiges Sporttaschen Produkt von Adidas in Blau.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Zubehör",
+      "subcategory": "Sporttaschen",
+      "marke": "Adidas",
+      "farbe": "Blau",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 102,
+      "name": "Nike Brasilia Duffel Bag Rot",
+      "price": "124.59 € inkl. Mwst.",
+      "priceValue": 124.59,
+      "imageMain": "img/sporttaschen2.jpg",
+      "images": [
+        "img/sporttaschen2.jpg"
+      ],
+      "description": "Hochwertiges Sporttaschen Produkt von Nike in Rot.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Zubehör",
+      "subcategory": "Sporttaschen",
+      "marke": "Nike",
+      "farbe": "Rot",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 103,
+      "name": "Adidas Essentials Duffel Bag Schwarz",
+      "price": "15.32 € inkl. Mwst.",
+      "priceValue": 15.32,
+      "imageMain": "img/sporttaschen3.jpg",
+      "images": [
+        "img/sporttaschen3.jpg"
+      ],
+      "description": "Hochwertiges Sporttaschen Produkt von Adidas in Schwarz.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Zubehör",
+      "subcategory": "Sporttaschen",
+      "marke": "Adidas",
+      "farbe": "Schwarz",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 104,
+      "name": "Adidas Tiro 23 Duffel Bag Grün",
+      "price": "246.14 € inkl. Mwst.",
+      "priceValue": 246.14,
+      "imageMain": "img/sporttaschen4.jpg",
+      "images": [
+        "img/sporttaschen4.jpg"
+      ],
+      "description": "Hochwertiges Sporttaschen Produkt von Adidas in Grün.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Zubehör",
+      "subcategory": "Sporttaschen",
+      "marke": "Adidas",
+      "farbe": "Grün",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 105,
+      "name": "Adidas Team Duffel Bag Schwarz",
+      "price": "214.05 € inkl. Mwst.",
+      "priceValue": 214.05,
+      "imageMain": "img/sporttaschen5.jpg",
+      "images": [
+        "img/sporttaschen5.jpg"
+      ],
+      "description": "Hochwertiges Sporttaschen Produkt von Adidas in Schwarz.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Zubehör",
+      "subcategory": "Sporttaschen",
+      "marke": "Adidas",
+      "farbe": "Schwarz",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 106,
+      "name": "Puma teamCUP Trainingsshirt Rot",
+      "price": "103.47 € inkl. Mwst.",
+      "priceValue": 103.47,
+      "imageMain": "img/sportbekleidung1.jpg",
+      "images": [
+        "img/sportbekleidung1.jpg"
+      ],
+      "description": "Hochwertiges Sportbekleidung Produkt von Puma in Rot.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sale %",
+      "subcategory": "Sportbekleidung",
+      "marke": "Puma",
+      "farbe": "Rot",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 107,
+      "name": "Puma teamCUP Trainingsshirt Blau",
+      "price": "161.00 € inkl. Mwst.",
+      "priceValue": 161.0,
+      "imageMain": "img/sportbekleidung2.jpg",
+      "images": [
+        "img/sportbekleidung2.jpg"
+      ],
+      "description": "Hochwertiges Sportbekleidung Produkt von Puma in Blau.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sale %",
+      "subcategory": "Sportbekleidung",
+      "marke": "Puma",
+      "farbe": "Blau",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 108,
+      "name": "Puma teamLIGA Training Top Rot",
+      "price": "44.03 € inkl. Mwst.",
+      "priceValue": 44.03,
+      "imageMain": "img/sportbekleidung3.jpg",
+      "images": [
+        "img/sportbekleidung3.jpg"
+      ],
+      "description": "Hochwertiges Sportbekleidung Produkt von Puma in Rot.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sale %",
+      "subcategory": "Sportbekleidung",
+      "marke": "Puma",
+      "farbe": "Rot",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 109,
+      "name": "Adidas Entrada 22 Training Top Grün",
+      "price": "55.68 € inkl. Mwst.",
+      "priceValue": 55.68,
+      "imageMain": "img/sportbekleidung4.jpg",
+      "images": [
+        "img/sportbekleidung4.jpg"
+      ],
+      "description": "Hochwertiges Sportbekleidung Produkt von Adidas in Grün.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sale %",
+      "subcategory": "Sportbekleidung",
+      "marke": "Adidas",
+      "farbe": "Grün",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 110,
+      "name": "Adidas Tiro 23 Training Top Blau",
+      "price": "159.89 € inkl. Mwst.",
+      "priceValue": 159.89,
+      "imageMain": "img/sportbekleidung5.jpg",
+      "images": [
+        "img/sportbekleidung5.jpg"
+      ],
+      "description": "Hochwertiges Sportbekleidung Produkt von Adidas in Blau.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sale %",
+      "subcategory": "Sportbekleidung",
+      "marke": "Adidas",
+      "farbe": "Blau",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 111,
+      "name": "Puma Ultra Play FG/AG Rot",
+      "price": "146.98 € inkl. Mwst.",
+      "priceValue": 146.98,
+      "imageMain": "img/fußballschuhe1.jpg",
+      "images": [
+        "img/fußballschuhe1.jpg"
+      ],
+      "description": "Hochwertiges Fußballschuhe Produkt von Puma in Rot.",
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "category": "Sale %",
+      "subcategory": "Fußballschuhe",
+      "marke": "Puma",
+      "farbe": "Rot",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 112,
+      "name": "Nike Mercurial Vapor 15 Academy Grün",
+      "price": "213.02 € inkl. Mwst.",
+      "priceValue": 213.02,
+      "imageMain": "img/fußballschuhe2.jpg",
+      "images": [
+        "img/fußballschuhe2.jpg"
+      ],
+      "description": "Hochwertiges Fußballschuhe Produkt von Nike in Grün.",
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "category": "Sale %",
+      "subcategory": "Fußballschuhe",
+      "marke": "Nike",
+      "farbe": "Grün",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 113,
+      "name": "Nike Phantom GX Academy Rot",
+      "price": "73.32 € inkl. Mwst.",
+      "priceValue": 73.32,
+      "imageMain": "img/fußballschuhe3.jpg",
+      "images": [
+        "img/fußballschuhe3.jpg"
+      ],
+      "description": "Hochwertiges Fußballschuhe Produkt von Nike in Rot.",
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "category": "Sale %",
+      "subcategory": "Fußballschuhe",
+      "marke": "Nike",
+      "farbe": "Rot",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 114,
+      "name": "Adidas Predator Accuracy.3 FG Grün",
+      "price": "157.81 € inkl. Mwst.",
+      "priceValue": 157.81,
+      "imageMain": "img/fußballschuhe4.jpg",
+      "images": [
+        "img/fußballschuhe4.jpg"
+      ],
+      "description": "Hochwertiges Fußballschuhe Produkt von Adidas in Grün.",
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "category": "Sale %",
+      "subcategory": "Fußballschuhe",
+      "marke": "Adidas",
+      "farbe": "Grün",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 115,
+      "name": "Puma Future Pro FG Gelb",
+      "price": "170.81 € inkl. Mwst.",
+      "priceValue": 170.81,
+      "imageMain": "img/fußballschuhe5.jpg",
+      "images": [
+        "img/fußballschuhe5.jpg"
+      ],
+      "description": "Hochwertiges Fußballschuhe Produkt von Puma in Gelb.",
+      "sizes": [
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "category": "Sale %",
+      "subcategory": "Fußballschuhe",
+      "marke": "Puma",
+      "farbe": "Gelb",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 116,
+      "name": "Puma Team Bag Rot",
+      "price": "148.58 € inkl. Mwst.",
+      "priceValue": 148.58,
+      "imageMain": "img/zubehör1.jpg",
+      "images": [
+        "img/zubehör1.jpg"
+      ],
+      "description": "Hochwertiges Zubehör Produkt von Puma in Rot.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sale %",
+      "subcategory": "Zubehör",
+      "marke": "Puma",
+      "farbe": "Rot",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 117,
+      "name": "Puma Trinkflasche Gelb",
+      "price": "181.84 € inkl. Mwst.",
+      "priceValue": 181.84,
+      "imageMain": "img/zubehör2.jpg",
+      "images": [
+        "img/zubehör2.jpg"
+      ],
+      "description": "Hochwertiges Zubehör Produkt von Puma in Gelb.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sale %",
+      "subcategory": "Zubehör",
+      "marke": "Puma",
+      "farbe": "Gelb",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 118,
+      "name": "Nike Supporter Cap Weiß",
+      "price": "37.34 € inkl. Mwst.",
+      "priceValue": 37.34,
+      "imageMain": "img/zubehör3.jpg",
+      "images": [
+        "img/zubehör3.jpg"
+      ],
+      "description": "Hochwertiges Zubehör Produkt von Nike in Weiß.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sale %",
+      "subcategory": "Zubehör",
+      "marke": "Nike",
+      "farbe": "Weiß",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 119,
+      "name": "Adidas Kapitänsbinde Grün",
+      "price": "78.61 € inkl. Mwst.",
+      "priceValue": 78.61,
+      "imageMain": "img/zubehör4.jpg",
+      "images": [
+        "img/zubehör4.jpg"
+      ],
+      "description": "Hochwertiges Zubehör Produkt von Adidas in Grün.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sale %",
+      "subcategory": "Zubehör",
+      "marke": "Adidas",
+      "farbe": "Grün",
+      "geschlecht": "Unisex"
+    },
+    {
+      "iid": 120,
+      "name": "Puma Sporthandtuch Grün",
+      "price": "183.48 € inkl. Mwst.",
+      "priceValue": 183.48,
+      "imageMain": "img/zubehör5.jpg",
+      "images": [
+        "img/zubehör5.jpg"
+      ],
+      "description": "Hochwertiges Zubehör Produkt von Puma in Grün.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "category": "Sale %",
+      "subcategory": "Zubehör",
+      "marke": "Puma",
+      "farbe": "Grün",
       "geschlecht": "Unisex"
     }
   ]
