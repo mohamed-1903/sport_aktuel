@@ -171,6 +171,7 @@ function getCartItems(int $userId): array
              JOIN products p ON ci.product_id = p.id
              WHERE c.user_id = ?";
 
+
     $stmt = $db->prepare($select);
     $stmt->execute([$userId]);
 

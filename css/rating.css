@@ -169,6 +169,8 @@
 .image-preview {
   position: relative;
   max-width: 120px;
+  flex: 0 0 auto;
+
 }
 
 .image-preview-list {
@@ -176,14 +178,20 @@
   gap: 8px;
   flex-wrap: nowrap;
   overflow-x: auto;
+
+  white-space: nowrap;
+
   margin-bottom: 8px;
 }
 
 .review-images {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+
   gap: 8px;
   overflow-x: auto;
+  white-space: nowrap;
+
   margin-top: 6px;
 }
 
@@ -212,7 +220,6 @@
   cursor: pointer;
   font-size: 16px;
 }
-
 
 
 .review-form button {

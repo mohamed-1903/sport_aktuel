@@ -105,12 +105,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
 function openImageGallery(images, start) {
   if (!images || images.length === 0) return;
-  window.zoomImages = images;
-  window.currentImageIndex = start || 0;
-  window.zoomScale = 1;
+  zoomImages = images;
+  currentImageIndex = start || 0;
+  zoomScale = 1;
   const zoomImage = document.getElementById('zoom-image');
   if (zoomImage) {
-    zoomImage.src = images[window.currentImageIndex];
+    zoomImage.src = images[currentImageIndex];
+
     zoomImage.style.transform = 'scale(1)';
   }
   document.body.classList.add('modal-open');
