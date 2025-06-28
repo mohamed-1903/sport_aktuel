@@ -59,6 +59,7 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
     discountCode = pin || "";
     // DISCOUNT_CODES ist global in produkt.js definiert
     discount = (typeof DISCOUNT_CODES !== "undefined" ? DISCOUNT_CODES[pin] : undefined) || 0;
+
     gift = section.querySelector(`#giftWrap-${idx}`)?.checked || false;
   }
 

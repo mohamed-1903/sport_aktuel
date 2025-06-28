@@ -66,6 +66,33 @@
   margin-top: 5px;
 }
 
+.review-actions {
+  margin-top: 6px;
+  display: flex;
+  gap: 8px;
+}
+
+.review-actions button {
+  background: var(--popup-button-bg);
+  color: var(--popup-button-text);
+  border: 1px solid var(--popup-border);
+  border-radius: 20px;
+  padding: 2px 10px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.review-replies {
+  margin-top: 10px;
+  padding-left: 20px;
+  border-left: 2px solid var(--popup-border);
+}
+
+.review.reply {
+  background: var(--card-bg);
+  margin-top: 8px;
+}
+
 .review-form {
   margin-top: 1rem;
 }
@@ -169,6 +196,7 @@
 .image-preview {
   position: relative;
   max-width: 120px;
+  flex: 0 0 auto;
 }
 
 .image-preview-list {
@@ -176,15 +204,31 @@
   gap: 8px;
   flex-wrap: nowrap;
   overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
   margin-bottom: 8px;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+
+.image-preview-list::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .review-images {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 8px;
   overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
   margin-top: 6px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.review-images::-webkit-scrollbar {
+  display: none;
 }
 
 .review-images img {
@@ -212,7 +256,6 @@
   cursor: pointer;
   font-size: 16px;
 }
-
 
 
 .review-form button {

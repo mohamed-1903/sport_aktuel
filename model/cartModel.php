@@ -25,6 +25,7 @@ if (!function_exists('customizationSupported')) {
     }
 }
 
+
 /**
  * Gibt die ID des Warenkorbs für einen Nutzer zurück.
  * Existiert keiner, wird optional einer angelegt.
@@ -144,6 +145,7 @@ if (!function_exists('discountCodeSupported')) {
     }
 }
 
+
 function getCartItems(int $userId): array
 {
     global $db;
@@ -174,6 +176,36 @@ function getCartItems(int $userId): array
              JOIN cart c ON ci.cart_id = c.id
              JOIN products p ON ci.product_id = p.id
              WHERE c.user_id = ?";
+
+
+    $select = $base . ",
+                    p.name,
+                    p.price,
+                    p.image_main
+             FROM cart_items ci
+             JOIN cart c ON ci.cart_id = c.id
+             JOIN products p ON ci.product_id = p.id
+             WHERE c.user_id = ?";
+
+
+    $select = $base . ",
+                    p.name,
+                    p.price,
+                    p.image_main
+             FROM cart_items ci
+             JOIN cart c ON ci.cart_id = c.id
+             JOIN products p ON ci.product_id = p.id
+             WHERE c.user_id = ?";
+
+    $select = $base . ",
+                    p.name,
+                    p.price,
+                    p.image_main
+             FROM cart_items ci
+             JOIN cart c ON ci.cart_id = c.id
+             JOIN products p ON ci.product_id = p.id
+             WHERE c.user_id = ?";
+
 
     $stmt = $db->prepare($select);
     $stmt->execute([$userId]);
