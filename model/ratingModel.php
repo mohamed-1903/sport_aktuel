@@ -22,7 +22,6 @@ function ensureRatingSchema(): void {
     $stmt = $db->query("SHOW COLUMNS FROM ratings LIKE 'image_paths'");
     if ($stmt->rowCount() === 0) {
         $db->exec("ALTER TABLE ratings ADD COLUMN image_paths TEXT AFTER comment");
-
     }
 
     $stmt = $db->query("SHOW COLUMNS FROM ratings LIKE 'display_name'");
