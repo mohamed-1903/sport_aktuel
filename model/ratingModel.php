@@ -149,3 +149,4 @@ function getRatingVotes(int $ratingId): array {
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row ?: ['likes' => 0, 'dislikes' => 0];
 }
+

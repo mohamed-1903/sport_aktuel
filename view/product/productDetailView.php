@@ -15,6 +15,7 @@
   <?php unset($_SESSION['message']); ?>
 <?php endif; ?>
 
+
 <main class="produkte">
   <!-- 🔍 Zoom Modal -->
   <div id="zoomModal" class="zoom-modal hidden">
@@ -270,12 +271,12 @@
           <?php endif; ?>
       <?php endforeach; ?>
 
-      <?php if (isset($_SESSION['user_id'])): ?>
-        <button type="button" class="open-review-modal btn-review" data-product-id="<?= (int)$product['id'] ?>">Bewertung schreiben</button>
-      <?php else: ?>
-        <p><a href="index.php?page=auth&action=login">Anmelden</a>, um eine Bewertung zu schreiben.</p>
-      <?php endif; ?>
     </section>
+<?php if (isset($_SESSION['user_id'])): ?>
+  <button type="button" class="open-review-modal btn-review" data-product-id="<?= (int)$product['id'] ?>">Bewertung schreiben</button>
+<?php else: ?>
+  <p><a href="index.php?page=auth&action=login">Anmelden</a>, um eine Bewertung zu schreiben.</p>
+<?php endif; ?>
   <?php endforeach; ?>
 </main>
 <div id="ratingModal" class="review-modal hidden">

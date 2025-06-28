@@ -1289,7 +1289,6 @@ body.light-mode .zoom-close {
   --overlay-bg: rgb(0 0 0 / 80%);
 }
 
-
 /* === Buttons für Popups === */
 .popup-buttons {
   /* Ensure the action buttons inside popups appear next to each other */
