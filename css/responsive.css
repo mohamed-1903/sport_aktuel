@@ -194,7 +194,7 @@
 
   .einzelprodukt-list .einzelprodukt {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
   }
 
   .einzelprodukt-list .image-wrapper {
