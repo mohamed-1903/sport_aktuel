@@ -9,20 +9,25 @@
 
 .rating-stars label {
   font-size: 1.4rem;
-  color: #ccc;
+  color: #ffd700;
   cursor: pointer;
   transition: transform 0.2s ease, color 0.2s ease;
-
 }
 
-.rating-stars input:checked ~ label,
-.rating-stars label:hover,
-.rating-stars label:hover ~ label {
-  color: gold;
+#ratingForm .rating-stars label {
+  color: transparent;
+  -webkit-text-stroke: 1px #ffd700;
+}
+
+#ratingForm .rating-stars input:checked ~ label,
+#ratingForm .rating-stars label:hover,
+#ratingForm .rating-stars label:hover ~ label {
+  color: #ffd700;
+  -webkit-text-stroke: 0;
   transform: scale(1.2);
 }
 
-.rating-stars label:hover {
+#ratingForm .rating-stars label:hover {
   transform: scale(1.3);
 }
 
@@ -37,11 +42,13 @@
 }
 
 .review {
-  background: #f9f9f9;
-  border: 1px solid #eee;
+  text-align: left;
+  background: var(--card-bg);
+  border: 1px solid var(--popup-border);
   border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 12px 15px;
+  margin-bottom: 12px;
+  color: var(--text-color);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -56,18 +63,214 @@
   margin-top: 5px;
 }
 
+.review-actions {
+  margin-top: 6px;
+  display: flex;
+  gap: 8px;
+}
+
+.review-actions button {
+  background: var(--popup-button-bg);
+  color: var(--popup-button-text);
+  border: 1px solid var(--popup-border);
+  border-radius: 20px;
+  padding: 2px 10px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.review-replies {
+  margin-top: 10px;
+  padding-left: 20px;
+  border-left: 2px solid var(--popup-border);
+}
+
+.review.reply {
+  background: var(--card-bg);
+  margin-top: 8px;
+}
+
 .review-form {
   margin-top: 1rem;
 }
 
+
 .review-form textarea {
   width: 100%;
-  min-height: 80px;
-  margin: 5px 0;
+  min-height: 100px;
+  margin: 8px 0;
+  padding: 14px 18px;
+  border-radius: 8px;
+  border: 2px solid var(--popup-border);
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  font-size: 15px;
+  resize: vertical;
+  box-shadow: inset 0 1px 3px rgb(0 0 0 / 15%);
 }
 
+.review-form input[type="text"] {
+  width: 100%;
+  margin: 8px 0;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 2px solid var(--popup-border);
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.review-form input[type="text"]:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 6px rgb(255 215 0 / 50%);
+}
+
+
+.review-form textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 6px rgb(255 215 0 / 50%);
+}
+
+
+.review-form input[type="file"] {
+  margin: 12px 0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background-color: var(--popup-button-bg);
+  color: var(--popup-button-text);
+  border: 1px solid var(--popup-border);
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.suggestion-bar {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  margin-bottom: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+}
+
+.suggestions-set {
+  display: flex;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+
+.suggestion-bar::-webkit-scrollbar {
+  height: 6px;
+}
+
+.suggestion-bar::-webkit-scrollbar-thumb {
+  background-color: var(--popup-border);
+  border-radius: 3px;
+}
+
+.suggest-btn {
+  background-color: var(--popup-button-bg);
+  color: var(--popup-button-text);
+  border: 1px solid var(--popup-border);
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 14px;
+  white-space: nowrap;
+  flex: 0 0 auto;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.suggest-btn:hover {
+  background-color: var(--popup-button-hover);
+}
+
+.image-preview {
+  position: relative;
+  max-width: 120px;
+  flex: 0 0 auto;
+}
+
+
+.image-preview-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  margin-bottom: 8px;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+
+.image-preview-list::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.review-images {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  margin-top: 6px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.review-images::-webkit-scrollbar {
+  display: none;
+}
+
+.review-images img {
+  max-width: 120px;
+  flex: 0 0 auto;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.image-preview img {
+  width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
+}
+
+.image-preview button {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: var(--popup-button-bg);
+  border: 1px solid var(--popup-border);
+  color: var(--popup-button-text);
+  border-radius: 50%;
+  padding: 2px 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+
 .review-form button {
-  margin-top: 5px;
+  margin-top: 12px;
+  background-color: var(--accent-color);
+  color: #000;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 22px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.review-form button:hover {
+  background-color: #e6c200;
+  transform: translateY(-2px);
 }
 
 .review-modal {
@@ -76,7 +279,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgb(0 0 0 / 80%);
+  background: var(--overlay-bg);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -86,15 +289,17 @@
 }
 
 .review-modal-content {
-  background: #fff;
-  color: #000;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 500px;
-  width: 90%;
+  background: var(--popup-bg);
+  color: var(--popup-text);
+  padding: 24px;
+  border-radius: 10px;
+  max-width: 650px;
+  width: 95%;
+  border: 1px solid var(--popup-border);
+  box-shadow: var(--popup-shadow);
+  backdrop-filter: blur(var(--popup-blur)) saturate(160%);
   position: relative;
   animation: slideDown 0.3s ease forwards;
-
 }
 
 .review-modal-content .review-close {
@@ -124,6 +329,21 @@ body.modal-open {
 .btn-review:hover {
   background: #e6c200;
   transform: translateY(-2px);
+}
+
+.btn-delete-rating {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 4px;
+  padding: 0;
+}
+
+.btn-delete-rating:hover {
+  text-decoration: underline;
+  color: #c00;
 }
 
 @keyframes fadeInModal {
@@ -163,6 +383,35 @@ body.modal-open {
 
 .review img:hover {
   transform: scale(1.05);
+}
+
+.review strong {
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.rating-date {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: -2px;
+  margin-bottom: 4px;
+}
+
+.review p {
+  margin: 6px 0;
+  line-height: 1.4;
+}
+
+.rating-stars {
+  margin-bottom: 4px;
+}
+
+.no-reviews {
+  font-style: italic;
+  color: var(--text-muted);
+  margin: 8px 0;
 }
 
 .review-modal-content {
