@@ -124,6 +124,7 @@
                 <?php $neu = $preis * (1 - $discount / 100); ?>
                 <p>
                   <del class="old-price"><?= number_format($preis, 2, ',', '.') ?>€</del>
+
                   <span><?= number_format($neu, 2, ',', '.') ?>€</span>
                   <span>inkl. Mwst.</span>
                   <span class="rabatt">-<?= $discount ?>%</span>

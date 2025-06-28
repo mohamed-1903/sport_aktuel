@@ -27,6 +27,7 @@
               <?php if ($d > 0): $neu = $salePrice; ?>
                 <p>
                   <del class="old-price"><?= number_format($base, 2, ',', '.') ?>€</del>
+
                   <span><?= number_format($neu, 2, ',', '.') ?>€</span>
                   <span>inkl. Mwst.</span>
                   <span class="rabatt">-<?= $d ?>%</span>
