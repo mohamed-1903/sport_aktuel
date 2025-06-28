@@ -307,6 +307,7 @@ button {
   background-repeat: no-repeat;
 }
 
+
 .gift-wrap {
   margin: 10px 0;
   font-size: 16px;
@@ -324,4 +325,33 @@ button {
   grid-template-columns: 1fr 1fr; /* Bildbereich wieder kleiner */
   gap: 20px;
   align-items: flex-start; /* Buttons direkt unter dem Bild */
+}
+
+/* ✨ Layout für ähnliche Produkte */
+
+.similar-products {
+  width: 100%;
+  align-items: stretch;
+}
+
+.similar-products .produkt-grid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.similar-products .Eprodukt {
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+  transition: transform 0.3s ease;
+  width: 100%;
+}
+
+.similar-products .Eprodukt:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
 }
