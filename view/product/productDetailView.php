@@ -31,7 +31,6 @@
       </div>
     </div>
   </div>
-
   <?php foreach ($productsToShow as $index => $product):
     // 🧩 Produktdaten extrahieren mit Fallbacks
     $name = $product['name'] ?? 'Produktname nicht verfügbar';
@@ -45,7 +44,7 @@
     $sizes = $product['sizes'] ?? range(38, 46);
   ?>
     <!-- 📦 Einzelnes Produkt-Layout -->
-    <section class="Eprodukt untereinander" data-product-index="<?= $index ?>" data-base-price="<?= $salePrice ?>">
+    <section class="Eprodukt untereinander" data-product-index="<?= $index ?>" data-base-price="<?= $salePrice ?>" data-admin-discount="<?= $discount ?>">
 
       <h2 style="text-align:center; margin-bottom: 20px;">
         <?= count($productsToShow) > 1 ? "🛍️ Produkt " . ($index + 1) : "Produktdetails" ?>
@@ -99,6 +98,7 @@
           </p>
           <div class="price-breakdown"></div>
 
+
           <!-- 👕 Größenauswahl -->
           <label for="size-<?= $index ?>">Größe:</label>
           <select id="size-<?= $index ?>" class="size-dropdown">
@@ -146,7 +146,6 @@
             class="btn-add-to-cart"
             data-iid="<?= $iid ?>"
             data-name="<?= htmlspecialchars($name) ?>"
-
             data-price="<?= $salePrice ?>"
 
             data-image="<?= htmlspecialchars($image) ?>">
@@ -158,9 +157,7 @@
             class="btn-add-to-watch"
             data-iid="<?= $iid ?>"
             data-name="<?= htmlspecialchars($name) ?>"
-
             data-price="<?= $salePrice ?>"
-
             data-image="<?= htmlspecialchars($image) ?>">
             ❤️
           </button>

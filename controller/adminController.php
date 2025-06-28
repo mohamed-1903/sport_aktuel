@@ -27,6 +27,7 @@ switch ($action) {
         require 'view/admin/manageUsersView.php';
         break;
 
+
     case 'deleteUser':
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'])) {
             $userId = (int)$_POST['user_id'];

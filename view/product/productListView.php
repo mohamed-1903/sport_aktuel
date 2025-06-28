@@ -100,7 +100,6 @@
           $discount = $produkt["discount"] ?? 0;
           $salePrice = $discount > 0 ? $preis * (1 - $discount / 100) : $preis;
           ?>
-
           <?php
           $marke = $produkt["marke"] ?? "Unbekannt";
           $farbe = $produkt["farbe"] ?? "Unbekannt";
@@ -135,7 +134,6 @@
                   <span>inkl. Mwst.</span>
                 </p>
               <?php endif; ?>
-
 
               <div class="button-row" data-iid="<?= (int)$produkt["iid"] ?>">
                 <a href="index.php?page=product&action=detail&id=<?= (int)$produkt["iid"] ?>">

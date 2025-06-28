@@ -13,7 +13,6 @@
           <th>Name</th>
           <th>Preis</th>
           <th>Rabatt (%)</th>
-
           <th>Aktionen</th>
         </tr>
       </thead>
@@ -39,10 +38,12 @@
                 </form>
               <?php endif; ?>
 
+
               <form action="index.php?page=admin&action=deleteProduct" method="post" onsubmit="return confirm('Produkt wirklich löschen?');" style="margin-top:0.5em;">
                 <input type="hidden" name="product_id" value="<?= (int)$prod['id'] ?>">
                 <button type="submit" class="btn-delete-all">Löschen</button>
               </form>
+
             </td>
           </tr>
         <?php endforeach; ?>

@@ -40,7 +40,6 @@ $db->exec("DELETE FROM products");
 
 // Vorbereitete SQL-Anweisung
 $insertStmt = $db->prepare("
-
     INSERT INTO products
         (id, name, description, price, price_text, image_main, marke, farbe, geschlecht, category, subcategory, sizes, images, discount)
     VALUES

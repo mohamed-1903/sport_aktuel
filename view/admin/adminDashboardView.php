@@ -12,6 +12,7 @@
     <a href="index.php?page=admin&action=addProduct">
       <button class="btn-checkout">➕ Produkt hinzufügen</button>
     </a>
+
     <a href="index.php?page=order&action=admin">
       <button class="btn-checkout">📦 Bestellungen einsehen</button>
     </a>

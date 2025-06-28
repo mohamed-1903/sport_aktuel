@@ -65,6 +65,7 @@
 function addProduct(array $product): bool
 {
     global $db;
+
         $stmt = $db->prepare("INSERT INTO products (name, price, category, subcategory, description, image_Main, sizes, marke, farbe, geschlecht)
                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
@@ -80,6 +81,7 @@ function addProduct(array $product): bool
             $sizes,
             $product['marke'],
             $product['farbe'],
+
         $product['geschlecht']
     ]);
 }
