@@ -31,6 +31,7 @@
       </div>
     </div>
   </div>
+
   <?php foreach ($productsToShow as $index => $product):
     // 🧩 Produktdaten extrahieren mit Fallbacks
     $name = $product['name'] ?? 'Produktname nicht verfügbar';
@@ -77,7 +78,7 @@
             <?php if ($price > 0): ?>
               <?php if ($discount > 0): ?>
                 <del id="basePrice-<?= $index ?>" class="preis old-price">
-                  <?= number_format($price, 2, ',', '.') ?>€ inkl. Mwst.
+                  Preis <?= number_format($price, 2, ',', '.') ?>€ inkl. Mwst.
                 </del>
                 <span id="finalPriceValue-<?= $index ?>" class="preis">
                   <?= number_format($salePrice, 2, ',', '.') ?>€ inkl. Mwst.
@@ -88,7 +89,7 @@
                   <?= number_format($price, 2, ',', '.') ?>€ inkl. Mwst.
                 </span>
                 <del id="basePrice-<?= $index ?>" class="preis old-price" style="display:none;">
-                  <?= number_format($price, 2, ',', '.') ?>€ inkl. Mwst.
+                  Preis <?= number_format($price, 2, ',', '.') ?>€ inkl. Mwst.
                 </del>
                 <span id="discountLabel-<?= $index ?>" class="rabatt" style="display:none;">-0%</span>
               <?php endif; ?>
@@ -145,6 +146,7 @@
             class="btn-add-to-cart"
             data-iid="<?= $iid ?>"
             data-name="<?= htmlspecialchars($name) ?>"
+
             data-price="<?= $salePrice ?>"
 
             data-image="<?= htmlspecialchars($image) ?>">
@@ -156,6 +158,7 @@
             class="btn-add-to-watch"
             data-iid="<?= $iid ?>"
             data-name="<?= htmlspecialchars($name) ?>"
+
             data-price="<?= $salePrice ?>"
 
             data-image="<?= htmlspecialchars($image) ?>">

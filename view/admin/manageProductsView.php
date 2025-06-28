@@ -1,6 +1,7 @@
 <?php include __DIR__ . '/../layout/header.php'; ?>
 
 <section class="form-wrapper" style="padding:2em; max-width:1000px; margin:auto;">
+
   <h1 style="text-align:center;">🛍️ Produkte verwalten</h1>
   <?php if (empty($allProducts)): ?>
     <p style="text-align:center;">Keine Produkte gefunden.</p>
@@ -12,6 +13,7 @@
           <th>Name</th>
           <th>Preis</th>
           <th>Rabatt (%)</th>
+
           <th>Aktionen</th>
         </tr>
       </thead>
@@ -36,6 +38,7 @@
                   <button type="submit" class="btn-checkout">Speichern</button>
                 </form>
               <?php endif; ?>
+
               <form action="index.php?page=admin&action=deleteProduct" method="post" onsubmit="return confirm('Produkt wirklich löschen?');" style="margin-top:0.5em;">
                 <input type="hidden" name="product_id" value="<?= (int)$prod['id'] ?>">
                 <button type="submit" class="btn-delete-all">Löschen</button>

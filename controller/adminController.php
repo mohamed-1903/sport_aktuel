@@ -63,6 +63,7 @@ switch ($action) {
         header('Location: index.php?page=admin&action=manageProducts');
         exit;
 
+
     case 'deleteProduct':
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
             $pid = (int)$_POST['product_id'];
@@ -72,7 +73,6 @@ switch ($action) {
         }
         header('Location: index.php?page=admin&action=manageProducts');
         exit;
-
     case 'addProduct':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $product = [

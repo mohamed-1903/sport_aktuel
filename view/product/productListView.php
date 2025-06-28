@@ -136,6 +136,7 @@
                 </p>
               <?php endif; ?>
 
+
               <div class="button-row" data-iid="<?= (int)$produkt["iid"] ?>">
                 <a href="index.php?page=product&action=detail&id=<?= (int)$produkt["iid"] ?>">
                   <button>Details</button>

@@ -14,7 +14,6 @@ try {
 define('PRODUCT_JSON', __DIR__ . '/../data/products.json');
 define('LAST_IMPORT_FILE', __DIR__ . '/../data/.last_import_time');
 
-
 if (!file_exists(PRODUCT_JSON)) {
     die("❌ Datei products.json nicht gefunden.");
 }
@@ -41,6 +40,7 @@ $db->exec("DELETE FROM products");
 
 // Vorbereitete SQL-Anweisung
 $insertStmt = $db->prepare("
+
     INSERT INTO products
         (id, name, description, price, price_text, image_main, marke, farbe, geschlecht, category, subcategory, sizes, images, discount)
     VALUES
