@@ -159,7 +159,7 @@
       "price": "99.99 € inkl. Mwst.",
       "priceValue": 99.99,
       "imageMain": "img/mancity.jpg",
-      "images": ["img/mancity.jpg"],
+      "images": ["img/mancity.jpg", "img/mancity1.jpg"],
       "description": "Das offizielle Manchester City Home Trikot 2024/25 von Puma. Himmelblau, modern und mit allen Details des englischen Meisters.",
       "sizes": ["XS", "S", "M", "L", "XL", "2XL"],
       "category": "Sportbekleidung",
