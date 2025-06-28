@@ -111,11 +111,29 @@ function getRatingsForProduct(int $productId, ?int $currentUserId = null): array
     }
     unset($row);
 
-    usort($rows, static function ($a, $b) {
-        return strtotime($a['created_at']) <=> strtotime($b['created_at']);
-    });
+    $grouped = [];
+    foreach ($rows as $row) {
+        $parent = $row['parent_id'] ? (int)$row['parent_id'] : 0;
+        $grouped[$parent][] = $row;
+    }
 
-    return $rows;
+    $ordered = [];
+    $add = static function (array $list, &$ordered, &$grouped) use (&$add) {
+        usort($list, static fn($a, $b) => strtotime($a['created_at']) <=> strtotime($b['created_at']));
+        foreach ($list as $item) {
+            $ordered[] = $item;
+            $pid = (int)$item['id'];
+            if (!empty($grouped[$pid])) {
+                $add($grouped[$pid], $ordered, $grouped);
+            }
+        }
+    };
+
+    $roots = $grouped[0] ?? [];
+    $add($roots, $ordered, $grouped);
+
+    return $ordered;
+
 }
 
 function getAverageRating(int $productId): ?float {

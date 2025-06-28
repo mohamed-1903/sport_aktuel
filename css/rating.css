@@ -159,7 +159,7 @@
 }
 
 .review.reply {
-  background: var(--card-bg);
+  background: var(--reply-bg);
   margin-top: 8px;
   border-left: 4px solid var(--popup-border);
 }

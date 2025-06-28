@@ -329,7 +329,24 @@ function addRatingToDom(rating) {
 
   const noReviews = reviews.querySelector('.no-reviews');
   if (noReviews) noReviews.remove();
-  reviews.insertBefore(reviewEl, reviews.firstChild);
+
+  if (rating.parent_id) {
+    const parent = reviews.querySelector(`[data-review-id="${rating.parent_id}"]`);
+    if (parent) {
+      let target = parent;
+      let next = target.nextElementSibling;
+      while (next && next.dataset.parentId == rating.parent_id) {
+        target = next;
+        next = target.nextElementSibling;
+      }
+      target.insertAdjacentElement('afterend', reviewEl);
+    } else {
+      reviews.appendChild(reviewEl);
+    }
+  } else {
+    reviews.insertBefore(reviewEl, reviews.firstChild);
+  }
+
 
   reviewEl.classList.add('pulse-highlight');
   reviewEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
