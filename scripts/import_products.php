@@ -40,10 +40,12 @@ $db->exec("DELETE FROM products");
 
 // Vorbereitete SQL-Anweisung
 $insertStmt = $db->prepare("
+
     INSERT INTO products
         (id, name, description, price, price_text, image_main, marke, farbe, geschlecht, category, subcategory, sizes, images, discount)
     VALUES
         (:id, :name, :description, :price, :price_text, :image_main, :marke, :farbe, :geschlecht, :category, :subcategory, :sizes, :images, :discount)
+
 ");
 
 // Produkte einfügen
@@ -64,6 +66,7 @@ foreach ($data['products'] as $product) {
         ':images'       => json_encode($product['images']),
         ':discount'     => $product['discount'] ?? 0,
     ]);
+
 }
 
 // Zeitstempel speichern
