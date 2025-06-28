@@ -15,6 +15,7 @@
   <?php unset($_SESSION['message']); ?>
 <?php endif; ?>
 
+
 <main class="produkte">
   <!-- 🔍 Zoom Modal -->
   <div id="zoomModal" class="zoom-modal hidden">
@@ -98,12 +99,6 @@
           <label for="quantity-<?= $index ?>">Menge:</label>
           <input type="number" id="quantity-<?= $index ?>" value="1" min="1" class="size-dropdown" />
 
-
-
-
-
-
-
           <div class="button-rows">
             <!-- 🎟 Rabattcode -->
             <label for="pin-<?= $index ?>">Rabatt-PIN eingeben:</label>
@@ -122,10 +117,6 @@
             <button onclick="resetFields(this.closest('.Eprodukt'))">Felder zurücksetzen</button>
           </div>
         </div>
-
-
-
-
 
         <!-- 🧺 Aktionen -->
 
@@ -200,7 +191,7 @@
         <div class="Eprodukt">
           <img src="nike-shoe.jpg" alt="Ähnliches Produkt <?= $i ?>" />
           <h3>Nike Produkt <?= $i ?></h3>
-          <p>€<?= 199.99 - ($i - 1) * 20 ?></p>
+          <p>€<?= number_format(199.99 - ($i - 1) * 20, 2, ',', '.') ?></p>
           <button>Details</button>
         </div>
       <?php endfor; ?>

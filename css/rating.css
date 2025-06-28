@@ -169,22 +169,43 @@
 .image-preview {
   position: relative;
   max-width: 120px;
+  flex: 0 0 auto;
 }
+
+
 
 .image-preview-list {
   display: flex;
   gap: 8px;
   flex-wrap: nowrap;
   overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
   margin-bottom: 8px;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+
+.image-preview-list::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+
 }
 
 .review-images {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 8px;
   overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
   margin-top: 6px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.review-images::-webkit-scrollbar {
+  display: none;
+
 }
 
 .review-images img {
@@ -212,7 +233,6 @@
   cursor: pointer;
   font-size: 16px;
 }
-
 
 
 .review-form button {
