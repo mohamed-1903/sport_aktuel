@@ -110,8 +110,11 @@ switch ($action) {
             $reason = $_POST['reason'] ?? null;
             $allowed = ['neu', 'bestellt', 'versandt_nicht_erhalten', 'in_bearbeitung', 'abgelehnt', 'abgeschlossen', 'storniert'];
 
-            if ($orderId && in_array($status, $allowed, true)) {
+            if ($status === 'abgelehnt' && trim((string)$reason) === '') {
+                $_SESSION['message'] = 'Bitte gib einen Ablehnungsgrund an.';
+            } elseif ($orderId && in_array($status, $allowed, true)) {
                 updateOrderStatus($orderId, $status, $reason);
+                $_SESSION['message'] = 'Status aktualisiert.';
             }
 
             $redirect = $_POST['redirect'] ?? 'neu';

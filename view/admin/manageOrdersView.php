@@ -20,6 +20,22 @@
     <a href="index.php?page=order&action=admin&status=abgeschlossen" class="<?= $statusFilter === 'abgeschlossen' ? 'active' : '' ?>">Abgeschlossen</a>
   </nav>
 
+  <?php if (!empty($_SESSION['message'])): ?>
+    <div class="toast-popup show" id="toastMessage">
+      <?= htmlspecialchars($_SESSION['message']) ?>
+      <button type="button" class="close-toast" onclick="this.parentElement.classList.remove('show')">&times;</button>
+    </div>
+    <script>
+      const toast = document.getElementById('toastMessage');
+      if (toast) {
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 3000);
+      }
+    </script>
+    <?php unset($_SESSION['message']); ?>
+  <?php endif; ?>
+
   <?php if (empty($orders)): ?>
     <p style="text-align:center;">Keine Bestellungen vorhanden.</p>
   <?php else: ?>
@@ -60,6 +76,7 @@
                 <option value="abgeschlossen" <?= $order['status'] === 'abgeschlossen' ? 'selected' : '' ?>>abgeschlossen</option>
                 <option value="storniert" <?= $order['status'] === 'storniert' ? 'selected' : '' ?>>storniert</option>
               </select>
+              <input type="text" name="reason" placeholder="Grund" value="<?= htmlspecialchars($order['rejection_reason'] ?? '') ?>" style="max-width:150px;">
               <button type="submit" class="btn-checkout">Speichern</button>
             </form>
           </td>
