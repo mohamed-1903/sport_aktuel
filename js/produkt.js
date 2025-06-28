@@ -96,8 +96,16 @@ function getGiftWrapCharge(section) {
 function getBasePrice(section) {
   return parseFloat(section.dataset.basePrice || 0);
 }
+function getAdminDiscount(section) {
+  return parseFloat(section.dataset.adminDiscount || 0);
+}
+function getSalePrice(section) {
+  const base = getBasePrice(section);
+  const d = getAdminDiscount(section);
+  return d > 0 ? base * (1 - d / 100) : base;
+}
 function calculateBasePrice(section) {
-  const base = getBasePrice(section); // brutto Basis
+  const base = getSalePrice(section); // brutto Basis nach Adminrabatt
   const giftCharge = getGiftWrapCharge(section);
   const qty =
     parseInt(
@@ -111,7 +119,7 @@ function calculatePrice(section) {
   const qty = parseInt(section.querySelector(`#quantity-${idx}`).value) || 1;
   const gift = section.querySelector(`#giftWrap-${idx}`)?.checked;
   const pin = section.querySelector(`#pin-${idx}`)?.value.trim() || "";
-  let subtotal = getBasePrice(section) * qty;
+  let subtotal = getSalePrice(section) * qty;
   if (gift) subtotal += 2;
 
   // Rabattcode prüfen
@@ -130,6 +138,7 @@ function updateDisplay(section) {
   const finalValueEl = section.querySelector(`#finalPriceValue-${idx}`);
   const originalPriceEl = section.querySelector(`#original-price-${idx}`);
   const discountLabelEl = section.querySelector(`#discountLabel-${idx}`);
+  const basePriceEl = section.querySelector(`#basePrice-${idx}`);
   const infoEl = section.querySelector(`#rabatt-info-${idx}`);
 
   if (discount > 0) {
@@ -144,7 +153,9 @@ function updateDisplay(section) {
     }
   } else {
     originalPriceEl.style.display = "none";
-    discountLabelEl.style.display = "none";
+    if (!basePriceEl || basePriceEl.style.display === "none") {
+      discountLabelEl.style.display = "none";
+    }
     if (infoEl) {
       if (section.querySelector(`#pin-${idx}`).value.trim().length >= 5) {
         infoEl.textContent = "❌ Ungültiger PIN-Code.";
@@ -161,7 +172,7 @@ function updateDisplay(section) {
     const gift = getGiftWrapCharge(section);
     const qty = parseInt(section.querySelector(`#quantity-${idx}`).value) || 1;
     const discountAmount =
-      (getBasePrice(section) + gift) * qty * (discount / 100);
+      (getSalePrice(section) + gift) * qty * (discount / 100);
     const parts = [];
     if (gift) parts.push(`+${gift.toFixed(2)} €`);
     if (discount) parts.push(`-${discountAmount.toFixed(2)} €`);
@@ -369,11 +380,17 @@ function resetFields(section) {
   const originalPriceEl = section.querySelector(`#original-price-${idx}`);
   const discountLabelEl = section.querySelector(`#discountLabel-${idx}`);
   const basePriceEl = section.querySelector(`#basePrice-${idx}`);
+  const adminDiscount = getAdminDiscount(section);
 
   finalValueEl.textContent = "";
   originalPriceEl.style.display = "none";
-  discountLabelEl.style.display = "none";
-  basePriceEl.style.display = "none";
+  if (adminDiscount > 0) {
+    basePriceEl.style.display = "block";
+    discountLabelEl.style.display = "inline";
+  } else {
+    basePriceEl.style.display = "none";
+    discountLabelEl.style.display = "none";
+  }
 
   updateDisplay(section);
 }
