@@ -7,9 +7,8 @@ session_start(); // Startet eine neue oder bestehende Session. Wichtig für Logi
 error_reporting(E_ALL); // Aktiviert die Anzeige aller Fehlermeldungen (nur für Entwicklung empfohlen).
 ini_set("display_errors", 1); // Sorgt dafür, dass Fehler direkt im Browser angezeigt werden.
 
-if ($_SESSION['isAdmin'] ?? false) {
-    require_once 'import_products.php';
-}
+// Automatischer Import der Produktdaten aus data/products.json
+require_once __DIR__ . '/scripts/import_products.php';
 
 // require_once 'config.php'; // Lädt die Konfigurationsdatei (z.B. DB-Zugangsdaten, Konstanten).
 
