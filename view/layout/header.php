@@ -119,9 +119,9 @@ $cartCount = $uid ? countCartItems($uid) : 0;
                 </li>
             </ul>
         </nav>
+        <div id="nav-overlay" class="nav-overlay"></div>
         <div class="gutschein-banner">
             <p>💸 Jetzt 20% Rabatt mit Code <strong>"SP_20"</strong> sichern - nur für kurze Zeit!</p>
         </div>
 
     </header>
-</body>
