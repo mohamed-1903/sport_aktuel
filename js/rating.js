@@ -29,18 +29,6 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
 
-  document.querySelectorAll('.rating-stars input').forEach(rad => {
-    rad.addEventListener('change', () => showSuggestions(rad.value));
-  });
-
-  document.querySelectorAll('.review-images').forEach(container => {
-    const images = JSON.parse(container.dataset.images || '[]');
-    container.querySelectorAll('img').forEach(img => {
-      img.addEventListener('click', () => {
-        openImageGallery(images, parseInt(img.dataset.idx, 10) || 0);
-      });
-    });
-  });
 
   function updateCounts(btn, data) {
     if (!data) return;

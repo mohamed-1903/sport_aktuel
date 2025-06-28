@@ -203,6 +203,7 @@
     $avgRating = getAverageRating((int)$product['id']);
   ?>
     <section class="reviews" aria-live="polite" aria-atomic="true">
+
       <h3>Kundenbewertungen zu <?= htmlspecialchars($product['name']) ?></h3>
       <?php if ($avgRating): ?>
         <p>Durchschnittliche Bewertung: <?= number_format($avgRating, 1) ?>/5</p>
@@ -275,6 +276,7 @@
                   <p class="review-text">
                     <?= nl2br(htmlspecialchars($reply['comment'])) ?>
                   </p>
+
                   <?php if (!empty($reply['image_paths'])): ?>
                     <div class="review-images" data-images='<?= json_encode($reply['image_paths']) ?>'>
                       <?php foreach ($reply['image_paths'] as $idx => $img): ?>
@@ -289,6 +291,7 @@
         </article>
       <?php endforeach; ?>
 
+
     </section>
     <?php if (isset($_SESSION['user_id'])): ?>
       <button type="button" class="open-review-modal btn-review" data-product-id="<?= (int)$product['id'] ?>">Bewertung schreiben</button>
@@ -300,13 +303,13 @@
 <div id="ratingModal" class="review-modal hidden" role="dialog" aria-modal="true" aria-labelledby="ratingTitle">
   <div class="review-modal-content">
     <h2 id="ratingTitle">Bewertung abgeben</h2>
+
     <button type="button" class="review-close" onclick="closeRatingModal()">&times;</button>
     <form id="ratingForm" class="review-form" action="index.php?page=community&action=addRating" method="post" enctype="multipart/form-data">
       <input type="hidden" name="product_id" id="ratingProductId" value="">
       <input type="hidden" name="parent_id" id="ratingParentId" value="">
       <label for="displayName">Name:</label>
       <input type="text" name="display_name" id="displayName" placeholder="Dein Name" value="<?= htmlspecialchars($_SESSION['username'] ?? '') ?>" required>
-
       <fieldset class="rating-stars">
         <legend class="sr-only">Sternebewertung</legend>
         <?php for ($s = 5; $s >= 1; $s--): ?>
@@ -331,7 +334,6 @@
       <div id="imagePreviewList" class="image-preview-list hidden"></div>
       <button type="submit">Bewerten</button>
     </form>
-
 </div>
 </div>
 <script>
@@ -342,6 +344,7 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+
     let compareProducts = [];
     let compareFocus = -1;
     let selectedCompareId = null;
