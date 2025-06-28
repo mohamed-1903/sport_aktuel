@@ -246,12 +246,13 @@
               <button type="submit" class="btn-delete-rating">Löschen</button>
             </form>
           <?php endif; ?>
-          <?php if (!empty($r['replies'])): ?>
-            <div class="review-replies">
-              <?php foreach ($r['replies'] as $reply): ?>
-                <div class="review reply">
-                  <strong><?= htmlspecialchars($reply['display_name'] ?: $reply['username']) ?></strong>
-                  <small class="rating-date"><?= date('d.m.Y H:i', strtotime($reply['created_at'])) ?></small>
+        </div>
+        <?php if (!empty($r['replies'])): ?>
+          <div class="review-replies">
+            <?php foreach ($r['replies'] as $reply): ?>
+              <div class="review reply">
+                <strong><?= htmlspecialchars($reply['display_name'] ?: $reply['username']) ?></strong>
+                <small class="rating-date"><?= date('d.m.Y H:i', strtotime($reply['created_at'])) ?></small>
                   <span class="rating-stars" style="pointer-events:none;">
                     <?php for ($s = 5; $s >= 1; $s--): ?>
                       <label><?= $s <= $reply['stars'] ? '★' : '☆' ?></label>
@@ -265,10 +266,11 @@
                       <?php endforeach; ?>
                     </div>
                   <?php endif; ?>
-                </div>
-              <?php endforeach; ?>
-            </div>
-          <?php endif; ?>
+              </div>
+            <?php endforeach; ?>
+          </div>
+        <?php endif; ?>
+      </div>
       <?php endforeach; ?>
 
     </section>
