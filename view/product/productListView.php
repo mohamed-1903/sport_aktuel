@@ -100,6 +100,7 @@
           $discount = $produkt["discount"] ?? 0;
           $salePrice = $discount > 0 ? $preis * (1 - $discount / 100) : $preis;
           ?>
+
           <?php
           $marke = $produkt["marke"] ?? "Unbekannt";
           $farbe = $produkt["farbe"] ?? "Unbekannt";
@@ -153,6 +154,7 @@
                   data-name="<?= htmlspecialchars($produkt['name']) ?>"
                   data-price="<?= $salePrice ?>"
                   data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
+
                   🤍
                 </button>
               </div>

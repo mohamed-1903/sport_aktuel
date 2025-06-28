@@ -30,6 +30,7 @@
                     <?= number_format($base, 2, ',', '.') ?>€ inkl. Mwst.
                   </del>
                   <span><?= number_format($neu, 2, ',', '.') ?>€ inkl. Mwst.</span>
+
                   <span class="rabatt">-<?= $d ?>%</span>
                 </p>
               <?php else: ?>

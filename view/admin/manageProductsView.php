@@ -36,6 +36,7 @@
                   <button type="submit" class="btn-checkout">Speichern</button>
                 </form>
               <?php endif; ?>
+
             </td>
           </tr>
         <?php endforeach; ?>
