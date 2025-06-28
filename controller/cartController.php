@@ -98,11 +98,17 @@ switch ($action) {
             exit;
         }
 
-        $id = $_POST['id'] ?? ($_GET['id'] ?? null);
-        $size = isset($_POST['size']) ? trim($_POST['size']) : (isset($_GET['size']) ? trim($_GET['size']) : null);
-        if ($id !== null && $size !== null && $size !== '') {
-            removeFromCart($userId, (int)$id, trim($size));
+        $cartItemId = $_POST['cart_item_id'] ?? ($_GET['cart_item_id'] ?? null);
+        if ($cartItemId !== null) {
+            removeCartItem($userId, (int)$cartItemId);
             session_write_close();
+        } else {
+            $id = $_POST['id'] ?? ($_GET['id'] ?? null);
+            $size = isset($_POST['size']) ? trim($_POST['size']) : (isset($_GET['size']) ? trim($_GET['size']) : null);
+            if ($id !== null && $size !== null && $size !== '') {
+                removeFromCart($userId, (int)$id, trim($size));
+                session_write_close();
+            }
         }
         header("Location: index.php?page=cart&action=view");
         exit;
@@ -114,12 +120,18 @@ switch ($action) {
             exit;
         }
 
-        $id = $_POST['id'] ?? null;
-        $size = isset($_POST['size']) ? trim($_POST['size']) : null;
+        $cartItemId = $_POST['cart_item_id'] ?? null;
         $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
-        if ($id !== null && $size !== null && $size !== '' && $quantity > 0) {
-            updateCartQuantity($userId, (int)$id, trim($size), $quantity);
+        if ($cartItemId !== null && $quantity > 0) {
+            updateCartItemQuantity($userId, (int)$cartItemId, $quantity);
             session_write_close();
+        } else {
+            $id = $_POST['id'] ?? null;
+            $size = isset($_POST['size']) ? trim($_POST['size']) : null;
+            if ($id !== null && $size !== null && $size !== '' && $quantity > 0) {
+                updateCartQuantity($userId, (int)$id, trim($size), $quantity);
+                session_write_close();
+            }
         }
         header("Location: index.php?page=cart&action=view");
         exit;
