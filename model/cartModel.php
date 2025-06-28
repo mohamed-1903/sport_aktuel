@@ -226,22 +226,6 @@ function removeFromCart(int $userId, int $productId, string $size): void
     $stmt->execute([$cartId, $productId, $size]);
 }
 
-/**
- * Entfernt einen Eintrag anhand seiner eindeutigen ID.
- */
-function removeCartItem(int $userId, int $cartItemId): void
-{
-    global $db;
-
-    $cartId = getCartId($userId);
-    if ($cartId === null) {
-        return;
-    }
-
-    $stmt = $db->prepare("DELETE FROM cart_items WHERE cart_id = ? AND id = ?");
-    $stmt->execute([$cartId, $cartItemId]);
-}
-
 function updateCartQuantity(int $userId, int $productId, string $size, int $quantity): void
 {
     global $db;
@@ -253,22 +237,6 @@ function updateCartQuantity(int $userId, int $productId, string $size, int $quan
 
     $stmt = $db->prepare("UPDATE cart_items SET quantity = ? WHERE cart_id = ? AND product_id = ? AND size = ?");
     $stmt->execute([$quantity, $cartId, $productId, $size]);
-}
-
-/**
- * Aktualisiert die Menge anhand der eindeutigen ID des Cart-Items.
- */
-function updateCartItemQuantity(int $userId, int $cartItemId, int $quantity): void
-{
-    global $db;
-
-    $cartId = getCartId($userId);
-    if ($cartId === null) {
-        return;
-    }
-
-    $stmt = $db->prepare("UPDATE cart_items SET quantity = ? WHERE cart_id = ? AND id = ?");
-    $stmt->execute([$quantity, $cartId, $cartItemId]);
 }
 
 function clearCart(int $userId): void
