@@ -33,7 +33,6 @@ document.addEventListener("click", (e) => {
   const size = sizeSelect ? sizeSelect.value : "M";
   let quantity = parseInt(quantityInput?.value) || 1;
 
-
   if (sizeSelect && !size) {
     alert("❗ Bitte eine Größe auswählen.");
     return;
@@ -52,15 +51,26 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
   const section = btn?.closest(".Eprodukt");
   let discount = 0;
   let gift = false;
+  let discountCode = "";
 
   if (section) {
     const idx = section.dataset.productIndex;
     const pin = section.querySelector(`#pin-${idx}`)?.value.trim();
-    discount = window.DISCOUNT_CODES?.[pin] || 0;
+    discountCode = pin || "";
+    // DISCOUNT_CODES ist global in produkt.js definiert
+    discount = (typeof DISCOUNT_CODES !== "undefined" ? DISCOUNT_CODES[pin] : undefined) || 0;
+
     gift = section.querySelector(`#giftWrap-${idx}`)?.checked || false;
   }
 
-  const payload = { id: iid, size, quantity: qty, discount, gift };
+  const payload = {
+    id: iid,
+    size,
+    quantity: qty,
+    discount,
+    discount_code: discountCode,
+    gift,
+  };
   if (section) {
     const nameInput = section.querySelector(".custom-name");
     const numberInput = section.querySelector(".custom-number");
@@ -222,7 +232,9 @@ function loadList() {
                 }
                 ${
                   item.discount
-                    ? `<small>🎟️ Rabatt: ${item.discount}%</small>`
+                    ? `<small>🎟️ Rabatt${
+                        item.discount_code ? ` (${item.discount_code})` : ""
+                      }: ${item.discount}%</small>`
                     : ""
                 }
               </div>
@@ -231,7 +243,9 @@ function loadList() {
           <td>
             <input type="number" class="qty-input" data-id="${
               item.product_id
-            }" data-size="${item.size}" data-price="${einzelfpreis.toFixed(2)}" value="${menge}" min="1" />
+            }" data-size="${item.size}" data-price="${einzelfpreis.toFixed(
+          2
+        )}" value="${menge}" min="1" />
 
           </td>
           <td>${einzelfpreis.toFixed(2)} €</td>
@@ -284,7 +298,6 @@ function loadList() {
             handleQtyChange(input);
           });
         }
-
       });
     });
 }
@@ -369,9 +382,7 @@ function recalculateTotals() {
   const mwstEl = document.getElementById("mwstbetrag");
   let total = 0;
   sumCells.forEach((cell) => {
-    const raw = cell.textContent
-      .replace(/[^0-9,.-]/g, "")
-      .replace(',', '.');
+    const raw = cell.textContent.replace(/[^0-9,.-]/g, "").replace(",", ".");
     const val = parseFloat(raw);
 
     if (!isNaN(val)) total += val;
@@ -391,6 +402,7 @@ function zeigeToast(text, farbe = "") {
   // Nur den Text anzeigen und auf ein Schließen-Symbol verzichten
   el.textContent = text;
   el.style.background = farbe || "";
+
 
   el.classList.add("show");
 

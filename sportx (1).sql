@@ -61,6 +61,7 @@ CREATE TABLE `cart_items` (
     `size` varchar(10) DEFAULT NULL,
     `quantity` int(11) DEFAULT 1,
     `discount` int(11) DEFAULT 0,
+    `discount_code` varchar(20) DEFAULT NULL,
     `gift` tinyint(1) DEFAULT 0,
     `custom_name` varchar(50) DEFAULT NULL,
     `custom_number` varchar(10) DEFAULT NULL,
@@ -78,6 +79,7 @@ INSERT INTO
         `size`,
         `quantity`,
         `discount`,
+        `discount_code`,
         `gift`,
         `custom_name`,
         `custom_number`,
@@ -90,6 +92,7 @@ VALUES (
         '42',
         5,
         0,
+        NULL,
         0,
         NULL,
         NULL,
@@ -102,6 +105,7 @@ VALUES (
         'M',
         1,
         0,
+        NULL,
         0,
         NULL,
         NULL,
@@ -114,6 +118,7 @@ VALUES (
         'M',
         1,
         0,
+        NULL,
         0,
         NULL,
         NULL,
@@ -131,6 +136,8 @@ CREATE TABLE `orders` (
     `user_id` int(11) DEFAULT NULL,
     `status` enum(
         'neu',
+        'bestellt',
+        'versandt_nicht_erhalten',
         'in_bearbeitung',
         'abgeschlossen',
         'abgelehnt',
@@ -138,7 +145,8 @@ CREATE TABLE `orders` (
     ) DEFAULT 'neu',
     `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
     `updated_at` timestamp NULL DEFAULT NULL,
-    `admin_comment` text DEFAULT NULL
+    `admin_comment` text DEFAULT NULL,
+    `rejection_reason` text DEFAULT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 --
