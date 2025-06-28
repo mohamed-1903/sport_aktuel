@@ -258,7 +258,8 @@ CREATE TABLE `products` (
     `category` varchar(100) DEFAULT NULL,
     `subcategory` varchar(100) DEFAULT NULL,
     `sizes` text DEFAULT NULL,
-    `images` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`images`))
+    `images` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`images`)),
+    `discount` int(11) DEFAULT 0
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 --

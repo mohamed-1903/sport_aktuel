@@ -62,9 +62,9 @@
         return array_map('mapProductRow', $rows);
     }
 
-    function addProduct(array $product): bool
-    {
-        global $db;
+function addProduct(array $product): bool
+{
+    global $db;
         $stmt = $db->prepare("INSERT INTO products (name, price, category, subcategory, description, image_Main, sizes, marke, farbe, geschlecht)
                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
@@ -80,6 +80,13 @@
             $sizes,
             $product['marke'],
             $product['farbe'],
-            $product['geschlecht']
-        ]);
-    }
+        $product['geschlecht']
+    ]);
+}
+
+function updateProductDiscount(int $productId, int $discount): bool
+{
+    global $db;
+    $stmt = $db->prepare('UPDATE products SET discount = ? WHERE id = ?');
+    return $stmt->execute([$discount, $productId]);
+}
