@@ -111,7 +111,7 @@ $cartCount = $uid ? countCartItems($uid) : 0;
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#">Sale %</a>
+                    <a href="index.php?page=product&action=list&sale=1">Sale %</a>
                     <ul class="dropdown-menu">
                         <li><a href="index.php?page=product&action=list&category=Sportbekleidung&sale=1">Sportbekleidung</a></li>
                         <li><a href="index.php?page=product&action=list&category=Fußballschuhe&sale=1">Fußballschuhe</a></li>
