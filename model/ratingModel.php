@@ -117,6 +117,7 @@ function getRatingsForProduct(int $productId, ?int $currentUserId = null): array
         $grouped[$parent][] = $row;
     }
 
+ 
     $ordered = [];
     $add = static function (array $list, &$ordered, &$grouped) use (&$add) {
         usort($list, static fn($a, $b) => strtotime($a['created_at']) <=> strtotime($b['created_at']));
@@ -133,6 +134,7 @@ function getRatingsForProduct(int $productId, ?int $currentUserId = null): array
     $add($roots, $ordered, $grouped);
 
     return $ordered;
+
 }
 
 function getAverageRating(int $productId): ?float {
@@ -294,6 +296,7 @@ function getRating(int $ratingId, ?int $currentUserId = null): ?array {
              LEFT JOIN users pu ON p.user_id = pu.id
              WHERE r.id = ?'
         );
+
         $stmt->execute([$ratingId]);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);

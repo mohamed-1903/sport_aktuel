@@ -27,6 +27,7 @@ switch ($action) {
         require 'view/admin/manageUsersView.php';
         break;
 
+
     case 'deleteUser':
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'])) {
             $userId = (int)$_POST['user_id'];
@@ -47,6 +48,32 @@ switch ($action) {
         header("Location: index.php?page=admin&action=manageUsers");
         exit;
 
+    case 'manageProducts':
+        $allProducts = getAllProducts();
+        require 'view/admin/manageProductsView.php';
+        break;
+
+    case 'updateDiscount':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $pid = (int)($_POST['product_id'] ?? 0);
+            $discount = max(0, min(90, (int)($_POST['discount'] ?? 0)));
+            if ($pid) {
+                updateProductDiscount($pid, $discount);
+            }
+        }
+        header('Location: index.php?page=admin&action=manageProducts');
+        exit;
+
+
+    case 'deleteProduct':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
+            $pid = (int)$_POST['product_id'];
+            if ($pid) {
+                deleteProduct($pid);
+            }
+        }
+        header('Location: index.php?page=admin&action=manageProducts');
+        exit;
     case 'addProduct':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $product = [
