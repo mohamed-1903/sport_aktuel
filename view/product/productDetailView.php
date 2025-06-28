@@ -2,11 +2,11 @@
 <?php if (!empty($_SESSION['message'])): ?>
   <div class="toast-popup show" id="toastMessage">
     <?= htmlspecialchars($_SESSION['message']) ?>
+    <button type="button" class="close-toast" onclick="this.parentElement.classList.remove('show')">&times;</button>
   </div>
   <script>
     const toast = document.getElementById('toastMessage');
     if (toast) {
-      toast.classList.add('show');
       setTimeout(() => {
         toast.classList.remove('show');
       }, 3000);
@@ -221,19 +221,68 @@
       <?php if ($avgRating): ?>
         <p>Durchschnittliche Bewertung: <?= number_format($avgRating, 1) ?>/5</p>
       <?php endif; ?>
+      <?php if (empty($ratings)): ?>
+        <p class="no-reviews">Noch keine Bewertungen.</p>
+      <?php endif; ?>
       <?php foreach ($ratings as $r): ?>
         <div class="review">
-          <strong><?= htmlspecialchars($r['username']) ?></strong>
+          <strong><?= htmlspecialchars($r['display_name'] ?: $r['username']) ?></strong>
+          <small class="rating-date">
+            <?= date('d.m.Y H:i', strtotime($r['created_at'])) ?>
+          </small>
           <span class="rating-stars" style="pointer-events:none;">
             <?php for ($s = 5; $s >= 1; $s--): ?>
               <label><?= $s <= $r['stars'] ? '★' : '☆' ?></label>
             <?php endfor; ?>
           </span>
           <p><?= nl2br(htmlspecialchars($r['comment'])) ?></p>
-          <?php if (!empty($r['image_path'])): ?>
-            <img src="<?= htmlspecialchars($r['image_path']) ?>" alt="Bild zur Bewertung">
+          <?php if (!empty($r['image_paths'])): ?>
+            <div class="review-images" data-images='<?= json_encode($r['image_paths']) ?>'>
+              <?php foreach ($r['image_paths'] as $idx => $img): ?>
+                <img src="<?= htmlspecialchars($img) ?>" data-idx="<?= $idx ?>" alt="Bild zur Bewertung">
+              <?php endforeach; ?>
+            </div>
           <?php endif; ?>
-        </div>
+        <div class="review-actions">
+          <button type="button" class="like-btn" data-id="<?= (int)$r['id'] ?>">
+            👍 <span><?= (int)$r['likes'] ?></span>
+          </button>
+          <button type="button" class="dislike-btn" data-id="<?= (int)$r['id'] ?>">
+            👎 <span><?= (int)$r['dislikes'] ?></span>
+          </button>
+          <?php if (isset($_SESSION['user_id'])): ?>
+            <button type="button" class="reply-btn" data-id="<?= (int)$r['id'] ?>" data-product-id="<?= (int)$product['id'] ?>">Antworten</button>
+          <?php endif; ?>
+          <?php if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == $r['user_id'] || !empty($_SESSION['is_admin']))): ?>
+            <form class="delete-rating-form" method="post" action="index.php?page=community&action=deleteRating" onsubmit="return confirm('Bewertung löschen?');">
+              <input type="hidden" name="rating_id" value="<?= (int)$r['id'] ?>">
+              <input type="hidden" name="product_id" value="<?= (int)$product['id'] ?>">
+              <button type="submit" class="btn-delete-rating">Löschen</button>
+            </form>
+          <?php endif; ?>
+          <?php if (!empty($r['replies'])): ?>
+            <div class="review-replies">
+              <?php foreach ($r['replies'] as $reply): ?>
+                <div class="review reply">
+                  <strong><?= htmlspecialchars($reply['display_name'] ?: $reply['username']) ?></strong>
+                  <small class="rating-date"><?= date('d.m.Y H:i', strtotime($reply['created_at'])) ?></small>
+                  <span class="rating-stars" style="pointer-events:none;">
+                    <?php for ($s = 5; $s >= 1; $s--): ?>
+                      <label><?= $s <= $reply['stars'] ? '★' : '☆' ?></label>
+                    <?php endfor; ?>
+                  </span>
+                  <p><?= nl2br(htmlspecialchars($reply['comment'])) ?></p>
+                  <?php if (!empty($reply['image_paths'])): ?>
+                    <div class="review-images" data-images='<?= json_encode($reply['image_paths']) ?>'>
+                      <?php foreach ($reply['image_paths'] as $idx => $img): ?>
+                        <img src="<?= htmlspecialchars($img) ?>" data-idx="<?= $idx ?>" alt="Bild zur Bewertung">
+                      <?php endforeach; ?>
+                    </div>
+                  <?php endif; ?>
+                </div>
+              <?php endforeach; ?>
+            </div>
+          <?php endif; ?>
       <?php endforeach; ?>
       <?php if (isset($_SESSION['user_id'])): ?>
         <button type="button" class="open-review-modal btn-review" data-product-id="<?= (int)$product['id'] ?>">Bewertung schreiben</button>
@@ -249,6 +298,8 @@
     <button type="button" class="review-close" onclick="closeRatingModal()">&times;</button>
     <form id="ratingForm" class="review-form" action="index.php?page=community&action=addRating" method="post" enctype="multipart/form-data">
       <input type="hidden" name="product_id" id="ratingProductId" value="">
+      <input type="hidden" name="parent_id" id="ratingParentId" value="">
+      <input type="text" name="display_name" id="displayName" placeholder="Dein Name" value="<?= htmlspecialchars($_SESSION['username'] ?? '') ?>" required>
       <div class="rating-stars">
         <?php for ($s = 5; $s >= 1; $s--): ?>
           <input type="radio" id="modal-star<?= $s ?>" name="stars" value="<?= $s ?>" <?= $s == 5 ? ' checked' : '' ?>>
@@ -256,7 +307,17 @@
         <?php endfor; ?>
       </div>
       <textarea name="comment" required placeholder="Deine Meinung..."></textarea>
-      <input type="file" name="image" accept="image/*">
+      <div class="suggestion-bar" id="suggestionBar">
+        <?php foreach ($reviewSuggestions as $rating => $texts): ?>
+          <div class="suggestions-set <?= $rating == 5 ? '' : 'hidden' ?>" data-rating="<?= (int)$rating ?>">
+            <?php foreach ($texts as $text): ?>
+              <button type="button" class="suggest-btn"><?= htmlspecialchars($text) ?></button>
+            <?php endforeach; ?>
+          </div>
+        <?php endforeach; ?>
+      </div>
+      <input type="file" name="images[]" id="ratingImages" accept="image/*" multiple>
+      <div id="imagePreviewList" class="image-preview-list hidden"></div>
       <button type="submit">Bewerten</button>
     </form>
   </div>
