@@ -1737,10 +1737,10 @@ body.light-mode .welcome-overlay {
 
 .einzelprodukt-list .produkt-info {
   flex: 1;
-  text-align: left;
+  text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
 }
 
@@ -1755,7 +1755,7 @@ body.light-mode .welcome-overlay {
 
 .einzelprodukt-list .button-row {
   display: flex;
-  justify-content: flex-start; /* linksbündig */
+  justify-content: center;
   gap: 10px;
   margin-top: 10px;
 }
@@ -1766,10 +1766,14 @@ body.light-mode .welcome-overlay {
 .filter-tools,
 .einzelprodukt-grid .image-wrapper,
 .einzelprodukt-grid .produkt-info,
-.einzelprodukt-grid .button-row,
+.einzelprodukt-grid .button-row {
+  margin: 0;
+  text-align: left;
+}
+
 .einzelprodukt-list .image-wrapper,
 .einzelprodukt-list .produkt-info,
 .einzelprodukt-list .button-row {
   margin: 0;
-  text-align: left;
+  text-align: center;
 }
