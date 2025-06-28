@@ -202,7 +202,6 @@
   <section class="produkte similar-products">
     <h2>Ähnliche Produkte</h2>
     <div class="einzelprodukt-grid">
-
       <?php foreach ($similarProducts as $sim): ?>
         <?php
           $preis = (float)($sim['price'] ?? 0);
@@ -237,11 +236,11 @@
               <button>Details</button>
             </a>
           </div>
-
         </div>
       <?php endforeach; ?>
     </div>
   </section>
+
 
   <?php foreach ($productsToShow as $index => $product):
     $ratings = getRatingsForProduct((int)$product['id'], $_SESSION['user_id'] ?? null);

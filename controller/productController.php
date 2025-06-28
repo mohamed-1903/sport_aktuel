@@ -55,7 +55,6 @@ switch ($action) {
 
         // Falls zu wenig Treffer, nur nach Kategorie suchen
         if (count($similarProducts) < 2) {
-
             $similarProducts = array_filter($allProducts, static function ($p) use ($baseProduct) {
                 return $p['id'] != $baseProduct['id'] &&
                     $p['category'] === $baseProduct['category'];
@@ -65,6 +64,14 @@ switch ($action) {
         shuffle($similarProducts);
         $similarProducts = array_slice($similarProducts, 0, 2);
 
+        // Falls weiterhin keine Produkte gefunden wurden, nehme zwei beliebige
+        if (empty($similarProducts)) {
+            $fallback = array_filter($allProducts, static function ($p) use ($baseProduct) {
+                return $p['id'] != $baseProduct['id'];
+            });
+            shuffle($fallback);
+            $similarProducts = array_slice($fallback, 0, 2);
+        }
 
         // Vorschläge für die Bewertungsleiste laden
         $suggestionsFile = 'data/review_suggestions.json';
@@ -98,6 +105,7 @@ switch ($action) {
         require 'view/product/searchResultsView.php';
         break;
     case 'list':
+
     default:
         $category = $_GET['category'] ?? '';
         $subcategory = $_GET['subcategory'] ?? '';
