@@ -16,6 +16,7 @@
 <?php endif; ?>
 
 
+
 <main class="produkte">
   <!-- 🔍 Zoom Modal -->
   <div id="zoomModal" class="zoom-modal hidden">
@@ -229,12 +230,46 @@
               <?php endforeach; ?>
             </div>
           <?php endif; ?>
+          <div class="review-actions">
+            <button type="button" class="like-btn" data-id="<?= (int)$r['id'] ?>">
+              👍 <span><?= (int)$r['likes'] ?></span>
+            </button>
+            <button type="button" class="dislike-btn" data-id="<?= (int)$r['id'] ?>">
+              👎 <span><?= (int)$r['dislikes'] ?></span>
+            </button>
+            <?php if (isset($_SESSION['user_id'])): ?>
+              <button type="button" class="reply-btn" data-id="<?= (int)$r['id'] ?>" data-product-id="<?= (int)$product['id'] ?>">Antworten</button>
+            <?php endif; ?>
+          </div>
           <?php if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == $r['user_id'] || !empty($_SESSION['is_admin']))): ?>
             <form class="delete-rating-form" method="post" action="index.php?page=community&action=deleteRating" onsubmit="return confirm('Bewertung löschen?');">
               <input type="hidden" name="rating_id" value="<?= (int)$r['id'] ?>">
               <input type="hidden" name="product_id" value="<?= (int)$product['id'] ?>">
               <button type="submit" class="btn-delete-rating">Löschen</button>
             </form>
+          <?php endif; ?>
+          <?php if (!empty($r['replies'])): ?>
+            <div class="review-replies">
+              <?php foreach ($r['replies'] as $reply): ?>
+                <div class="review reply">
+                  <strong><?= htmlspecialchars($reply['display_name'] ?: $reply['username']) ?></strong>
+                  <small class="rating-date"><?= date('d.m.Y H:i', strtotime($reply['created_at'])) ?></small>
+                  <span class="rating-stars" style="pointer-events:none;">
+                    <?php for ($s = 5; $s >= 1; $s--): ?>
+                      <label><?= $s <= $reply['stars'] ? '★' : '☆' ?></label>
+                    <?php endfor; ?>
+                  </span>
+                  <p><?= nl2br(htmlspecialchars($reply['comment'])) ?></p>
+                  <?php if (!empty($reply['image_paths'])): ?>
+                    <div class="review-images" data-images='<?= json_encode($reply['image_paths']) ?>'>
+                      <?php foreach ($reply['image_paths'] as $idx => $img): ?>
+                        <img src="<?= htmlspecialchars($img) ?>" data-idx="<?= $idx ?>" alt="Bild zur Bewertung">
+                      <?php endforeach; ?>
+                    </div>
+                  <?php endif; ?>
+                </div>
+              <?php endforeach; ?>
+            </div>
           <?php endif; ?>
         </div>
       <?php endforeach; ?>
@@ -253,6 +288,7 @@
     <button type="button" class="review-close" onclick="closeRatingModal()">&times;</button>
     <form id="ratingForm" class="review-form" action="index.php?page=community&action=addRating" method="post" enctype="multipart/form-data">
       <input type="hidden" name="product_id" id="ratingProductId" value="">
+      <input type="hidden" name="parent_id" id="ratingParentId" value="">
       <input type="text" name="display_name" id="displayName" placeholder="Dein Name" value="<?= htmlspecialchars($_SESSION['username'] ?? '') ?>" required>
       <div class="rating-stars">
 
@@ -277,7 +313,6 @@
     </form>
   </div>
 </div>
-
 <script>
   document.getElementById('compareBtn').addEventListener('click', () => {
     const input = document.getElementById('compareInput').value.trim();
