@@ -64,7 +64,6 @@ window.addEventListener('DOMContentLoaded', () => {
       });
       syncInput();
       renderPreviews();
-
     });
   }
 
@@ -111,7 +110,6 @@ function openImageGallery(images, start) {
   const zoomImage = document.getElementById('zoom-image');
   if (zoomImage) {
     zoomImage.src = images[currentImageIndex];
-
     zoomImage.style.transform = 'scale(1)';
   }
   document.body.classList.add('modal-open');

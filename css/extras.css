@@ -1103,6 +1103,16 @@ body.light-mode .zoom-close {
   line-height: 1;
 }
 
+.toast-popup .close-toast {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: auto;
+  line-height: 1;
+}
+
 
 .toast-popup .close-toast {
   background: none;
@@ -1301,6 +1311,7 @@ body.light-mode .zoom-close {
   --toast-blur: 8px;
   --overlay-bg: rgb(0 0 0 / 80%);
 }
+
 
 
 
