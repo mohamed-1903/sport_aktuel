@@ -73,6 +73,23 @@ switch ($action) {
             exit;
         }
         break;
+    case 'unlikeRating':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $ratingId = isset($_POST['rating_id']) ? (int)$_POST['rating_id'] : 0;
+            header('Content-Type: application/json');
+            echo json_encode(unlikeRating($ratingId));
+            exit;
+        }
+        break;
+    case 'undislikeRating':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $ratingId = isset($_POST['rating_id']) ? (int)$_POST['rating_id'] : 0;
+            header('Content-Type: application/json');
+            echo json_encode(undislikeRating($ratingId));
+            exit;
+        }
+        break;
+
     default:
         http_response_code(404);
         echo 'Unbekannte Aktion';

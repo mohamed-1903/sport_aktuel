@@ -113,6 +113,7 @@ function deleteRating(int $ratingId, int $userId, bool $isAdmin): bool {
     $stmt = $db->prepare('DELETE FROM ratings WHERE id = ? AND user_id = ?');
     return $stmt->execute([$ratingId, $userId]);
 }
+
 function likeRating(int $ratingId): array {
     ensureRatingSchema();
     global $db;
@@ -127,6 +128,20 @@ function dislikeRating(int $ratingId): array {
     return getRatingVotes($ratingId);
 }
 
+function unlikeRating(int $ratingId): array {
+    ensureRatingSchema();
+    global $db;
+    $db->prepare('UPDATE ratings SET likes = GREATEST(likes - 1, 0) WHERE id = ?')->execute([$ratingId]);
+    return getRatingVotes($ratingId);
+}
+
+function undislikeRating(int $ratingId): array {
+    ensureRatingSchema();
+    global $db;
+    $db->prepare('UPDATE ratings SET dislikes = GREATEST(dislikes - 1, 0) WHERE id = ?')->execute([$ratingId]);
+    return getRatingVotes($ratingId);
+}
+
 function getRatingVotes(int $ratingId): array {
     global $db;
     $stmt = $db->prepare('SELECT likes, dislikes FROM ratings WHERE id = ?');
@@ -134,4 +149,3 @@ function getRatingVotes(int $ratingId): array {
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     return $row ?: ['likes' => 0, 'dislikes' => 0];
 }
-

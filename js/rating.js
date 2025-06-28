@@ -23,30 +23,104 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   document.querySelectorAll('.like-btn').forEach(btn => {
+    const id = btn.dataset.id;
+    const other = btn.parentElement.querySelector('.dislike-btn');
+    const key = 'ratingVote_' + id;
+    if (localStorage.getItem(key) === 'like') btn.classList.add('active');
+
     btn.addEventListener('click', () => {
-      const id = btn.dataset.id;
-      fetch('index.php?page=community&action=likeRating', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'rating_id=' + encodeURIComponent(id)
-      })
-        .then(res => res.json())
-        .then(data => { btn.querySelector('span').textContent = data.likes; })
-        .catch(err => console.error(err));
+      const current = localStorage.getItem(key);
+      if (current === 'like') {
+        fetch('index.php?page=community&action=unlikeRating', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: 'rating_id=' + encodeURIComponent(id)
+        })
+          .then(res => res.json())
+          .then(data => updateCounts(btn, data))
+          .catch(console.error);
+        localStorage.removeItem(key);
+        btn.classList.remove('active');
+      } else {
+        fetch('index.php?page=community&action=likeRating', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: 'rating_id=' + encodeURIComponent(id)
+        })
+          .then(res => res.json())
+          .then(data => updateCounts(btn, data))
+          .catch(console.error);
+        btn.classList.add('active');
+        if (current === 'dislike' && other) {
+          other.classList.remove('active');
+          fetch('index.php?page=community&action=undislikeRating', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'rating_id=' + encodeURIComponent(id)
+          })
+            .then(res => res.json())
+            .then(data => updateCounts(btn, data))
+            .catch(console.error);
+        }
+        localStorage.setItem(key, 'like');
+      }
     });
   });
 
   document.querySelectorAll('.dislike-btn').forEach(btn => {
+    const id = btn.dataset.id;
+    const other = btn.parentElement.querySelector('.like-btn');
+    const key = 'ratingVote_' + id;
+    if (localStorage.getItem(key) === 'dislike') btn.classList.add('active');
+
     btn.addEventListener('click', () => {
-      const id = btn.dataset.id;
-      fetch('index.php?page=community&action=dislikeRating', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'rating_id=' + encodeURIComponent(id)
-      })
-        .then(res => res.json())
-        .then(data => { btn.querySelector('span').textContent = data.dislikes; })
-        .catch(err => console.error(err));
+      const current = localStorage.getItem(key);
+      if (current === 'dislike') {
+        fetch('index.php?page=community&action=undislikeRating', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: 'rating_id=' + encodeURIComponent(id)
+        })
+          .then(res => res.json())
+          .then(data => updateCounts(btn, data))
+          .catch(console.error);
+        localStorage.removeItem(key);
+        btn.classList.remove('active');
+      } else {
+        fetch('index.php?page=community&action=dislikeRating', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: 'rating_id=' + encodeURIComponent(id)
+        })
+          .then(res => res.json())
+          .then(data => updateCounts(btn, data))
+          .catch(console.error);
+        btn.classList.add('active');
+        if (current === 'like' && other) {
+          other.classList.remove('active');
+          fetch('index.php?page=community&action=unlikeRating', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'rating_id=' + encodeURIComponent(id)
+          })
+            .then(res => res.json())
+            .then(data => updateCounts(btn, data))
+            .catch(console.error);
+        }
+        localStorage.setItem(key, 'dislike');
+      }
+    });
+  });
+
+  document.querySelectorAll('.reply-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.body.classList.add('modal-open');
+      modal.classList.remove('hidden');
+      const pidInput = document.getElementById('ratingProductId');
+      const parentInput = document.getElementById('ratingParentId');
+      if (pidInput) pidInput.value = btn.dataset.productId || '';
+      if (parentInput) parentInput.value = btn.dataset.id || '';
+
     });
   });
 

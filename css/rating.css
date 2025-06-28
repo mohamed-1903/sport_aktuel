@@ -81,6 +81,11 @@
   cursor: pointer;
   font-size: 0.85rem;
 }
+.review-actions button.active {
+  background: var(--accent-color);
+  color: #000;
+}
+
 
 .review-replies {
   margin-top: 10px;
