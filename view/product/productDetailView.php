@@ -35,6 +35,8 @@
     // 🧩 Produktdaten extrahieren mit Fallbacks
     $name = $product['name'] ?? 'Produktname nicht verfügbar';
     $price = isset($product['priceValue']) && is_numeric($product['priceValue']) ? $product['priceValue'] : 0;
+    $discount = (int)($product['discount'] ?? 0);
+    $salePrice = $discount > 0 ? $price * (1 - $discount / 100) : $price;
     $imageMain = $product['image_main'] ?? ($product['imagepath'] ?? 'img/placeholder.jpg');
     $images = $product['images'] ?? [$imageMain];
     $backImage = $images[1] ?? $imageMain;
@@ -42,7 +44,7 @@
     $sizes = $product['sizes'] ?? range(38, 46);
   ?>
     <!-- 📦 Einzelnes Produkt-Layout -->
-    <section class="Eprodukt untereinander" data-product-index="<?= $index ?>" data-base-price="<?= isset($product['priceValue']) ? (float)$product['priceValue'] : 0 ?>">
+    <section class="Eprodukt untereinander" data-product-index="<?= $index ?>" data-base-price="<?= $salePrice ?>">
       <h2 style="text-align:center; margin-bottom: 20px;">
         <?= count($productsToShow) > 1 ? "🛍️ Produkt " . ($index + 1) : "Produktdetails" ?>
         <?php if (count($productsToShow) > 1): ?>
@@ -69,19 +71,24 @@
         <div>
           <h1 class="product-name"><?= htmlspecialchars($name) ?></h1>
 
-          <p id="original-price-<?= $index ?>" class="price-old" style="display: none;"></p>
           <p id="final-price-<?= $index ?>">
-            <?php if (isset($product['priceValue']) && is_numeric($product['priceValue'])): ?>
-              <span id="finalPriceValue-<?= $index ?>" class="preis">
-                <?= number_format((float)$product['priceValue'], 2, ',', '.') ?>€ inkl. Mwst.
-              </span>
-              <del id="basePrice-<?= $index ?>" class="preis" style="display:none;">
-                <?= number_format((float)$product['priceValue'], 2, ',', '.') ?>€
-              </del>
+            <?php if ($price > 0): ?>
+              <?php if ($discount > 0): ?>
+                <span class="preis">
+                  <?= number_format($salePrice, 2, ',', '.') ?>€ inkl. Mwst.
+                </span>
+                <del class="preis">
+                  <?= number_format($price, 2, ',', '.') ?>€
+                </del>
+                <span class="rabatt">-<?= $discount ?>%</span>
+              <?php else: ?>
+                <span class="preis">
+                  <?= number_format($price, 2, ',', '.') ?>€ inkl. Mwst.
+                </span>
+              <?php endif; ?>
             <?php else: ?>
               <span class="preis">Preis nicht verfügbar</span>
             <?php endif; ?>
-            <span id="discountLabel-<?= $index ?>" class="rabatt" style="display:none;">-20%</span>
           </p>
           <div class="price-breakdown"></div>
 
@@ -133,7 +140,7 @@
             class="btn-add-to-cart"
             data-iid="<?= $iid ?>"
             data-name="<?= htmlspecialchars($name) ?>"
-            data-price="<?= $price ?>"
+            data-price="<?= $salePrice ?>"
             data-image="<?= htmlspecialchars($image) ?>">
             🛒 In den Warenkorb
           </button>
@@ -143,7 +150,7 @@
             class="btn-add-to-watch"
             data-iid="<?= $iid ?>"
             data-name="<?= htmlspecialchars($name) ?>"
-            data-price="<?= $price ?>"
+            data-price="<?= $salePrice ?>"
             data-image="<?= htmlspecialchars($image) ?>">
             ❤️
           </button>
@@ -256,6 +263,7 @@
           </div>
         </div>
       <?php endforeach; ?>
+
 
 
     </section>

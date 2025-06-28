@@ -86,6 +86,7 @@ function getRatingsForProduct(int $productId, ?int $currentUserId = null): array
              JOIN users u ON r.user_id = u.id
              WHERE r.product_id = ? ORDER BY r.created_at ASC"
         );
+
         $stmt->execute([$productId]);
     }
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -277,6 +278,7 @@ function getRating(int $ratingId, ?int $currentUserId = null): ?array {
              LEFT JOIN users pu ON p.user_id = pu.id
              WHERE r.id = ?'
         );
+
         $stmt->execute([$ratingId]);
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
