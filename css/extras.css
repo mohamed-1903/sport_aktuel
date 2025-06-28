@@ -82,6 +82,9 @@
   padding: 6px 8px;
   margin-bottom: 0; /* Buttons ohne Abstand darunter */
   flex: 0 0 auto; /* verhindert, dass die Elemente die volle Breite einnehmen */
+  width: auto; /* passt sich dem Inhalt an */
+  min-width: fit-content;
+  max-width: 100%; /* verhindert Überlauf */
 }
 
 /* Einheitliche Breite für alle Filterelemente */
