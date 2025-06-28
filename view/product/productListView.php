@@ -153,6 +153,7 @@
                   data-name="<?= htmlspecialchars($produkt['name']) ?>"
                   data-price="<?= $salePrice ?>"
                   data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
+
                   🤍
                 </button>
               </div>

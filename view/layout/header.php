@@ -62,6 +62,7 @@ $cartCount = $uid ? countCartItems($uid) : 0;
                                 <a href="index.php?page=admin&action=dashboard">Admin-Dashboard</a>
                                 <a href="index.php?page=admin&action=manageUsers">Benutzer verwalten</a>
                                 <a href="index.php?page=admin&action=addProduct">Produkt hinzufügen</a>
+                                <a href="index.php?page=admin&action=manageProducts">Produkte verwalten</a>
                             <?php else: ?>
                                 <a href="index.php?page=user&action=profile">Mein Profil</a>
                                 <a href="index.php?page=user&action=orders">Bestellungen</a>
@@ -110,7 +111,7 @@ $cartCount = $uid ? countCartItems($uid) : 0;
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#">Sale %</a>
+                    <a href="index.php?page=product&action=list&sale=1">Sale %</a>
                     <ul class="dropdown-menu">
                         <li><a href="index.php?page=product&action=list&category=Sportbekleidung&sale=1">Sportbekleidung</a></li>
                         <li><a href="index.php?page=product&action=list&category=Fußballschuhe&sale=1">Fußballschuhe</a></li>
@@ -119,9 +120,9 @@ $cartCount = $uid ? countCartItems($uid) : 0;
                 </li>
             </ul>
         </nav>
+        <div id="nav-overlay" class="nav-overlay"></div>
         <div class="gutschein-banner">
             <p>💸 Jetzt 20% Rabatt mit Code <strong>"SP_20"</strong> sichern - nur für kurze Zeit!</p>
         </div>
 
     </header>
-</body>
