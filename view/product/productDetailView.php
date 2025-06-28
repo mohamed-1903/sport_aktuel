@@ -221,9 +221,13 @@
               </del>
               <span><?= number_format($salePrice, 2, ',', '.') ?>€</span>
               <span class="rabatt">-<?= $discount ?>%</span>
+              <span class="mwst">inkl. Mwst.</span>
             </p>
           <?php else: ?>
-            <p><?= number_format($preis, 2, ',', '.') ?>€</p>
+            <p>
+              <?= number_format($preis, 2, ',', '.') ?>€
+              <span class="mwst">inkl. Mwst.</span>
+            </p>
           <?php endif; ?>
         </div>
       <?php endforeach; ?>
