@@ -1,11 +1,12 @@
 <?php include __DIR__ . '/../layout/header.php'; ?>
 
-<section class="form-wrapper" style="padding: 2em; max-width: 10000px; margin-top: 15px;">
+<section class="form-wrapper" style="padding: 2em; max-width: 1000px; margin-top: 15px;">
   <h1 style="text-align: center;">👥 Benutzerverwaltung</h1>
   <?php if (empty($allUsers)): ?>
     <p style="text-align: center;">Es wurden keine Benutzer gefunden.</p>
   <?php else: ?>
-    <table class="cart-table">
+    <div class="table-responsive">
+      <table class="cart-table">
       <thead>
         <tr>
           <th>Id-#</th>
@@ -42,7 +43,8 @@
           </tr>
         <?php endforeach; ?>
       </tbody>
-    </table>
+      </table>
+    </div>
   <?php endif; ?>
 </section>
 
