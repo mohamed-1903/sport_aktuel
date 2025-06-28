@@ -5,12 +5,13 @@ require_once 'model/db.php'; // Stellt $db (PDO) bereit
  * Prüft einmalig, ob die optionalen Spalten für Trikot‑Personalisierung
  * in der Tabelle cart_items vorhanden sind.
  */
-function customizationSupported(): bool
-{
-    static $supported;
-    if ($supported !== null) {
-        return $supported;
-    }
+if (!function_exists('customizationSupported')) {
+    function customizationSupported(): bool
+    {
+        static $supported;
+        if ($supported !== null) {
+            return $supported;
+        }
 
     global $db;
     try {
@@ -122,43 +123,26 @@ function addToCart(int $userId, array $item): void
 /**
  * Prüft einmalig, ob die Spalte discount_code existiert.
  */
-function discountCodeSupported(): bool
-{
-    static $supported;
-    if ($supported !== null) {
+if (!function_exists('discountCodeSupported')) {
+    function discountCodeSupported(): bool
+    {
+        static $supported;
+        if ($supported !== null) {
+            return $supported;
+        }
+
+        global $db;
+        try {
+            $stmt = $db->query("SHOW COLUMNS FROM cart_items LIKE 'discount_code'");
+            $supported = (bool) $stmt->fetch();
+        } catch (PDOException $e) {
+            $supported = false;
+        }
+
         return $supported;
     }
-
-    global $db;
-    try {
-        $stmt = $db->query("SHOW COLUMNS FROM cart_items LIKE 'discount_code'");
-        $supported = (bool) $stmt->fetch();
-    } catch (PDOException $e) {
-        $supported = false;
-    }
-
-    return $supported;
 }
-/**
- * Prüft einmalig, ob die Spalte discount_code existiert.
- */
-function discountCodeSupported(): bool
-{
-    static $supported;
-    if ($supported !== null) {
-        return $supported;
-    }
 
-    global $db;
-    try {
-        $stmt = $db->query("SHOW COLUMNS FROM cart_items LIKE 'discount_code'");
-        $supported = (bool) $stmt->fetch();
-    } catch (PDOException $e) {
-        $supported = false;
-    }
-
-    return $supported;
-}
 
 function getCartItems(int $userId): array
 {
@@ -181,6 +165,16 @@ function getCartItems(int $userId): array
                     ci.custom_number,
                     ci.custom_fee";
     }
+
+    $select = $base . ",
+                    p.name,
+                    p.price,
+                    p.image_main
+             FROM cart_items ci
+             JOIN cart c ON ci.cart_id = c.id
+             JOIN products p ON ci.product_id = p.id
+             WHERE c.user_id = ?";
+
 
     $select = $base . ",
                     p.name,
