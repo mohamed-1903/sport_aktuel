@@ -45,6 +45,7 @@
   ?>
     <!-- 📦 Einzelnes Produkt-Layout -->
     <section class="Eprodukt untereinander" data-product-index="<?= $index ?>" data-base-price="<?= $salePrice ?>">
+
       <h2 style="text-align:center; margin-bottom: 20px;">
         <?= count($productsToShow) > 1 ? "🛍️ Produkt " . ($index + 1) : "Produktdetails" ?>
         <?php if (count($productsToShow) > 1): ?>
@@ -76,7 +77,7 @@
             <?php if ($price > 0): ?>
               <?php if ($discount > 0): ?>
                 <del id="basePrice-<?= $index ?>" class="preis old-price">
-                  <?= number_format($price, 2, ',', '.') ?>€
+                  <?= number_format($price, 2, ',', '.') ?>€ inkl. Mwst.
                 </del>
                 <span id="finalPriceValue-<?= $index ?>" class="preis">
                   <?= number_format($salePrice, 2, ',', '.') ?>€ inkl. Mwst.
@@ -87,7 +88,7 @@
                   <?= number_format($price, 2, ',', '.') ?>€ inkl. Mwst.
                 </span>
                 <del id="basePrice-<?= $index ?>" class="preis old-price" style="display:none;">
-                  <?= number_format($price, 2, ',', '.') ?>€
+                  <?= number_format($price, 2, ',', '.') ?>€ inkl. Mwst.
                 </del>
                 <span id="discountLabel-<?= $index ?>" class="rabatt" style="display:none;">-0%</span>
               <?php endif; ?>

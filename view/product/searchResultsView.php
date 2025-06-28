@@ -26,10 +26,11 @@
               <?php $d = $produkt['discount'] ?? 0; $base = (float)$produkt['price']; $salePrice = $d > 0 ? $base * (1 - $d / 100) : $base; ?>
               <?php if ($d > 0): $neu = $salePrice; ?>
                 <p>
-                  <del class="old-price"><?= number_format($base, 2, ',', '.') ?>€</del>
+                  <del class="old-price">
+                    <?= number_format($base, 2, ',', '.') ?>€ inkl. Mwst.
+                  </del>
+                  <span><?= number_format($neu, 2, ',', '.') ?>€ inkl. Mwst.</span>
 
-                  <span><?= number_format($neu, 2, ',', '.') ?>€</span>
-                  <span>inkl. Mwst.</span>
                   <span class="rabatt">-<?= $d ?>%</span>
                 </p>
               <?php else: ?>

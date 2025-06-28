@@ -100,6 +100,7 @@
           $discount = $produkt["discount"] ?? 0;
           $salePrice = $discount > 0 ? $preis * (1 - $discount / 100) : $preis;
           ?>
+
           <?php
           $marke = $produkt["marke"] ?? "Unbekannt";
           $farbe = $produkt["farbe"] ?? "Unbekannt";
@@ -123,10 +124,10 @@
               <?php if ($discount > 0): ?>
                 <?php $neu = $preis * (1 - $discount / 100); ?>
                 <p>
-                  <del class="old-price"><?= number_format($preis, 2, ',', '.') ?>€</del>
-
-                  <span><?= number_format($neu, 2, ',', '.') ?>€</span>
-                  <span>inkl. Mwst.</span>
+                  <del class="old-price">
+                    <?= number_format($preis, 2, ',', '.') ?>€ inkl. Mwst.
+                  </del>
+                  <span><?= number_format($neu, 2, ',', '.') ?>€ inkl. Mwst.</span>
                   <span class="rabatt">-<?= $discount ?>%</span>
                 </p>
               <?php else: ?>
@@ -153,6 +154,7 @@
                   data-name="<?= htmlspecialchars($produkt['name']) ?>"
                   data-price="<?= $salePrice ?>"
                   data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
+
                   🤍
                 </button>
               </div>
