@@ -198,18 +198,35 @@
     <button id="compareBtn" class="btn-compare">⚖️ Vergleichen</button>
   </div>
 
-  <!-- 🧠 Ähnliche Produkte statisch -->
+  <!-- 🧠 Ähnliche Produkte dynamisch -->
   <section class="produkte similar-products">
     <h2>Ähnliche Produkte</h2>
     <div class="produkt-grid">
-      <?php for ($i = 1; $i <= 3; $i++): ?>
+      <?php foreach ($similarProducts as $sim): ?>
+        <?php
+          $preis = (float)($sim['price'] ?? 0);
+          $discount = (int)($sim['discount'] ?? 0);
+          $salePrice = $discount > 0 ? $preis * (1 - $discount / 100) : $preis;
+        ?>
         <div class="Eprodukt">
-          <img src="nike-shoe.jpg" alt="Ähnliches Produkt <?= $i ?>" />
-          <h3>Nike Produkt <?= $i ?></h3>
-          <p>€<?= number_format(199.99 - ($i - 1) * 20, 2, ',', '.') ?></p>
-          <button>Details</button>
+          <a href="index.php?page=product&action=detail&id=<?= (int)$sim['id'] ?>">
+            <img src="<?= htmlspecialchars($sim['image_main'] ?? 'img/placeholder.jpg') ?>"
+              alt="<?= htmlspecialchars($sim['name']) ?>" />
+            <h3><?= htmlspecialchars($sim['name']) ?></h3>
+          </a>
+          <?php if ($discount > 0): ?>
+            <p>
+              <del class="old-price">
+                <?= number_format($preis, 2, ',', '.') ?>€
+              </del>
+              <span><?= number_format($salePrice, 2, ',', '.') ?>€</span>
+              <span class="rabatt">-<?= $discount ?>%</span>
+            </p>
+          <?php else: ?>
+            <p><?= number_format($preis, 2, ',', '.') ?>€</p>
+          <?php endif; ?>
         </div>
-      <?php endfor; ?>
+      <?php endforeach; ?>
     </div>
   </section>
 
