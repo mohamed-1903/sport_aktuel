@@ -201,7 +201,7 @@
         <div class="Eprodukt">
           <img src="nike-shoe.jpg" alt="Ähnliches Produkt <?= $i ?>" />
           <h3>Nike Produkt <?= $i ?></h3>
-          <p>€<?= 199.99 - ($i - 1) * 20 ?></p>
+          <p>€<?= number_format(199.99 - ($i - 1) * 20, 2, ',', '.') ?></p>
           <button>Details</button>
         </div>
       <?php endfor; ?>
