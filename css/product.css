@@ -308,6 +308,7 @@ button {
 }
 
 
+
 .gift-wrap {
   margin: 10px 0;
   font-size: 16px;
@@ -328,10 +329,17 @@ button {
 }
 
 /* ✨ Layout für ähnliche Produkte */
+
+.similar-products {
+  width: 100%;
+  align-items: stretch;
+}
+
 .similar-products .produkt-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
   margin-top: 20px;
 }
 
@@ -339,9 +347,12 @@ button {
   background-color: var(--card-bg);
   padding: 20px;
   border-radius: 15px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
   transition: transform 0.3s ease;
+  width: 100%;
 }
 
 .similar-products .Eprodukt:hover {
   transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
 }
