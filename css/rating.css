@@ -139,6 +139,14 @@
   color: #000;
 }
 
+.review-actions button:hover {
+  background: var(--popup-button-hover);
+}
+
+.review-actions button:active {
+  background: var(--popup-button-active);
+}
+
 .review-actions button:focus,
 .review-actions form button:focus {
   outline: 2px solid var(--accent-color);
