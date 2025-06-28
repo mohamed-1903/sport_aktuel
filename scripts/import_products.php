@@ -1,10 +1,10 @@
 <?php
 // import_products.php – Automatischer Import von products.json in die Datenbank, nur bei Änderungen
 
-require_once '../model/db.php'; // Datenbankverbindung
+require_once __DIR__ . '/../model/db.php'; // Datenbankverbindung
 
-define('PRODUCT_JSON', '../data/products.json');
-define('LAST_IMPORT_FILE', '../data/.last_import_time');
+define('PRODUCT_JSON', __DIR__ . '/../data/products.json');
+define('LAST_IMPORT_FILE', __DIR__ . '/../data/.last_import_time');
 
 if (!file_exists(PRODUCT_JSON)) {
     die("❌ Datei products.json nicht gefunden.");
