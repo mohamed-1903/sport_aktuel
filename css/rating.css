@@ -158,6 +158,13 @@
   margin-bottom: 4px;
 }
 
+.reply-target {
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+  font-weight: 600;
+
+}
+
 .review.reply {
   background: var(--reply-bg);
   margin-top: 8px;

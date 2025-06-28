@@ -11,6 +11,11 @@ window.addEventListener('DOMContentLoaded', () => {
       if (pidInput) pidInput.value = btn.dataset.productId || '';
       const parentInput = document.getElementById('ratingParentId');
       if (parentInput) parentInput.value = '';
+      const target = document.getElementById('replyTarget');
+      if (target) {
+        target.classList.add('hidden');
+        target.textContent = '';
+      }
     });
   });
 
@@ -79,6 +84,13 @@ window.addEventListener('DOMContentLoaded', () => {
       const parentInput = document.getElementById('ratingParentId');
       if (pidInput) pidInput.value = btn.dataset.productId || '';
       if (parentInput) parentInput.value = btn.dataset.id || '';
+      const target = document.getElementById('replyTarget');
+      const review = btn.closest('.review');
+      if (target && review) {
+        const name = review.querySelector('strong')?.textContent || '';
+        target.textContent = 'Antwort auf ' + name;
+        target.classList.remove('hidden');
+      }
 
     });
   });
@@ -216,6 +228,8 @@ function closeRatingModal() {
     document.body.classList.remove('modal-open');
     const parentInput = document.getElementById('ratingParentId');
     if (parentInput) parentInput.value = '';
+    const target = document.getElementById('replyTarget');
+    if (target) target.classList.add('hidden');
   }
 }
 
