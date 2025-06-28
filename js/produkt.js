@@ -1,10 +1,9 @@
 const DISCOUNT_CODES = {
   12345: 10,
   54321: 15,
-  11111: 20,
+  SP_20: 20,
   "00000": 5,
 };
-
 
 // Initialisierung pro Produktcontainer
 document.addEventListener("DOMContentLoaded", () => {
@@ -22,8 +21,6 @@ function setupProduct(section) {
   const toggleInfo = section.querySelector(`#toggle-info-${idx}`);
   const desc = section.querySelector(`#description-full-${idx}`);
   const zoomContainer = section.querySelector(`#zoomContainer-${idx}`);
-
-
 
   section._zoomData = { currentIndex: 0 };
 
@@ -95,7 +92,6 @@ function getGiftWrapCharge(section) {
   const checkbox = section.querySelector(`#giftWrap-${idx}`);
   return checkbox?.checked ? 2 : 0;
 }
-
 
 function getBasePrice(section) {
   return parseFloat(section.dataset.basePrice || 0);
@@ -390,5 +386,3 @@ function resetFinalPriceDisplay(price, section) {
     `#finalPriceValue-${idx}`
   ).textContent = `${price.toFixed(2)}€ inkl. Mwst.`;
 }
-
-
