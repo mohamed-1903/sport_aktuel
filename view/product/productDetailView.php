@@ -71,20 +71,25 @@
         <div>
           <h1 class="product-name"><?= htmlspecialchars($name) ?></h1>
 
+          <p id="original-price-<?= $index ?>" class="price-old" style="display:none;"></p>
           <p id="final-price-<?= $index ?>">
             <?php if ($price > 0): ?>
               <?php if ($discount > 0): ?>
-                <span class="preis">
-                  <?= number_format($salePrice, 2, ',', '.') ?>€ inkl. Mwst.
-                </span>
-                <del class="preis">
+                <del id="basePrice-<?= $index ?>" class="preis old-price">
                   <?= number_format($price, 2, ',', '.') ?>€
                 </del>
-                <span class="rabatt">-<?= $discount ?>%</span>
+                <span id="finalPriceValue-<?= $index ?>" class="preis">
+                  <?= number_format($salePrice, 2, ',', '.') ?>€ inkl. Mwst.
+                </span>
+                <span id="discountLabel-<?= $index ?>" class="rabatt">-<?= $discount ?>%</span>
               <?php else: ?>
-                <span class="preis">
+                <span id="finalPriceValue-<?= $index ?>" class="preis">
                   <?= number_format($price, 2, ',', '.') ?>€ inkl. Mwst.
                 </span>
+                <del id="basePrice-<?= $index ?>" class="preis old-price" style="display:none;">
+                  <?= number_format($price, 2, ',', '.') ?>€
+                </del>
+                <span id="discountLabel-<?= $index ?>" class="rabatt" style="display:none;">-0%</span>
               <?php endif; ?>
             <?php else: ?>
               <span class="preis">Preis nicht verfügbar</span>

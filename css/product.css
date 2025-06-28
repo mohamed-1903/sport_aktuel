@@ -209,6 +209,17 @@ button {
   font-size: 40px;
 }
 
+.old-price {
+  display: block;
+  font-size: 0.8em;
+}
+
+.price-old {
+  font-size: 0.8em;
+  display: block;
+  text-decoration: line-through;
+}
+
 .preis-container {
   padding: 60px 20px;
   text-align: center;
