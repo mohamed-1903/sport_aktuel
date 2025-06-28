@@ -846,6 +846,12 @@ body.light-mode .zoom-close {
   overflow-x: auto;
   width: 100%;
   -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
 
 }
 
@@ -1027,7 +1033,6 @@ body.light-mode .zoom-close {
   .table-responsive {
     overflow-x: auto;
     width: 100%;
-
   }
 
   .cart-table th,
