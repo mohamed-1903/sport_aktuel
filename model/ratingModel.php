@@ -106,12 +106,46 @@ function getAverageRating(int $productId): ?float {
 function deleteRating(int $ratingId, int $userId, bool $isAdmin): bool {
     ensureRatingSchema();
     global $db;
+
+    if ($isAdmin) {
+        $stmt = $db->prepare('SELECT image_paths FROM ratings WHERE id = ?');
+        $stmt->execute([$ratingId]);
+    } else {
+        $stmt = $db->prepare('SELECT image_paths FROM ratings WHERE id = ? AND user_id = ?');
+        $stmt->execute([$ratingId, $userId]);
+    }
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!$row) {
+        return false;
+    }
+
+    $paths = [];
+    if (!empty($row['image_paths'])) {
+        $decoded = json_decode($row['image_paths'], true);
+        $paths = $decoded && is_array($decoded) ? $decoded : [$row['image_paths']];
+    }
+
     if ($isAdmin) {
         $stmt = $db->prepare('DELETE FROM ratings WHERE id = ?');
-        return $stmt->execute([$ratingId]);
+        $success = $stmt->execute([$ratingId]);
+    } else {
+        $stmt = $db->prepare('DELETE FROM ratings WHERE id = ? AND user_id = ?');
+        $success = $stmt->execute([$ratingId, $userId]);
     }
-    $stmt = $db->prepare('DELETE FROM ratings WHERE id = ? AND user_id = ?');
-    return $stmt->execute([$ratingId, $userId]);
+
+    if ($success) {
+        foreach ($paths as $path) {
+            if ($path && is_file($path)) {
+                $realBase = realpath('uploads');
+                $realPath = realpath($path);
+                if ($realBase !== false && $realPath !== false && strpos($realPath, $realBase) === 0) {
+                    @unlink($realPath);
+                }
+            }
+        }
+    }
+
+    return $success;
 }
 
 function likeRating(int $ratingId): array {
