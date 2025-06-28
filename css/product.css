@@ -307,65 +307,6 @@ button {
   background-repeat: no-repeat;
 }
 
-/* ===== Ähnliche Produkte ===== */
-.similar-products {
-  width: 100%;
-  margin-top: 40px;
-  text-align: center;
-}
-
-.similar-product-grid {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  flex-wrap: wrap;
-}
-
-.similar-product {
-  background-color: var(--card-bg);
-  color: var(--text-color);
-  padding: 20px;
-  border-radius: 15px;
-  transition: transform 0.3s, box-shadow 0.3s;
-  width: 220px;
-}
-
-.similar-product:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 12px rgb(0 0 0 / 30%);
-}
-
-.similar-product img {
-  max-width: 100%;
-  border-radius: 10px;
-}
-
-.similar-product h3 {
-  margin-top: 15px;
-  font-size: 18px;
-}
-
-.similar-product p {
-  font-size: 16px;
-  color: #caa000;
-  margin: 10px 0;
-}
-
-.similar-product button {
-  background-color: #ffd700;
-  color: #000;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s;
-}
-
-.similar-product button:hover {
-  background-color: #e6c200;
-}
-
 .gift-wrap {
   margin: 10px 0;
   font-size: 16px;
