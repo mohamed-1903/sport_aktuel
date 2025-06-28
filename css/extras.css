@@ -842,6 +842,12 @@ body.light-mode .zoom-close {
   border-collapse: collapse;
 }
 
+.table-responsive {
+  overflow-x: auto;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
 .cart-table thead {
   background-color: var(--card-bg); /* ✅ dynamisch */
   color: var(--text-color);
@@ -1017,10 +1023,19 @@ body.light-mode .zoom-close {
     overflow-x: auto;
   }
 
+  .table-responsive {
+    overflow-x: auto;
+    width: 100%;
+  }
+
   .cart-table th,
   .cart-table td {
     padding: 8px;
     font-size: 14px;
+  }
+
+  .cart-table {
+    min-width: 500px;
   }
 }
 
