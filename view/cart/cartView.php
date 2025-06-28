@@ -68,11 +68,15 @@ $total = 0;
                   <small>🎁 Geschenkverpackung</small><br>
                 <?php endif; ?>
                 <?php if (!empty($item['discount'])): ?>
-                  <small>🎟️ Rabatt: <?= (int)$item['discount'] ?>%</small>
+                  <small>
+                    🎟️ Rabatt<?= !empty($item['discount_code']) ? ' (' . htmlspecialchars($item['discount_code']) . ')' : '' ?>:
+                    <?= (int)$item['discount'] ?>%
+                  </small>
                 <?php endif; ?>
               </td>
               <td>
                 <form action="index.php?page=cart&action=update" method="post">
+                  <input type="hidden" name="cart_item_id" value="<?= (int)$item['cart_item_id'] ?>">
                   <input type="hidden" name="id" value="<?= (int)$item['product_id'] ?>">
                   <input type="hidden" name="size" value="<?= htmlspecialchars($item['size']) ?>">
                   <input
@@ -81,10 +85,10 @@ $total = 0;
                     class="qty-input"
                     data-id="<?= (int)$item['product_id'] ?>"
                     data-size="<?= htmlspecialchars($item['size']) ?>"
+                    data-cart-item-id="<?= (int)$item['cart_item_id'] ?>"
                     data-price="<?= number_format($einzelpreis, 2, '.', '') ?>"
                     value="<?= (int)$item['quantity'] ?>"
-                    min="1"
-                  />
+                    min="1" />
                 </form>
               </td>
 
@@ -92,9 +96,10 @@ $total = 0;
               <td><?= number_format($sum, 2, ',', '.') ?> €</td>
               <td>
                 <form action="index.php?page=cart&action=remove" method="post" style="display:inline">
+                  <input type="hidden" name="cart_item_id" value="<?= (int)$item['cart_item_id'] ?>">
                   <input type="hidden" name="id" value="<?= (int)$item['product_id'] ?>">
                   <input type="hidden" name="size" value="<?= htmlspecialchars($item['size']) ?>">
-                  <button type="submit" class="remove-btn">❌</button>
+                  <button type="submit" class="remove-btn" data-cart-item-id="<?= (int)$item['cart_item_id'] ?>">❌</button>
                 </form>
               </td>
             </tr>
@@ -115,13 +120,10 @@ $total = 0;
     <p>Gesamtnettosumme: <span id="nettosumme"><?= number_format($netto, 2, ',', '.') ?> €</span></p>
     <p>zzgl. 19% MwSt.: <span id="mwstbetrag"><?= number_format($mwst, 2, ',', '.') ?> €</span></p>
     <p><strong>Gesamtsumme: <span id="gesamtsumme"><?= number_format($total, 2, ',', '.') ?> €</span></strong></p>
-
-    <input type="text" placeholder="Gutscheincode eingeben (optional)" class="gutschein-input" />
+    <br> 
     <a href="index.php?page=order&action=checkout">
       <button class="btn-checkout">WEITER ZUR KASSE</button>
     </a>
-    <button class="btn-amazon">Bezahlen mit Amazon</button>
-    <button class="btn-paypal">Direkt zu PayPal</button>
   </aside>
 </main>
 

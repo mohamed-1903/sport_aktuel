@@ -33,7 +33,6 @@ document.addEventListener("click", (e) => {
   const size = sizeSelect ? sizeSelect.value : "M";
   let quantity = parseInt(quantityInput?.value) || 1;
 
-
   if (sizeSelect && !size) {
     alert("❗ Bitte eine Größe auswählen.");
     return;
@@ -52,15 +51,26 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
   const section = btn?.closest(".Eprodukt");
   let discount = 0;
   let gift = false;
+  let discountCode = "";
 
   if (section) {
     const idx = section.dataset.productIndex;
     const pin = section.querySelector(`#pin-${idx}`)?.value.trim();
-    discount = window.DISCOUNT_CODES?.[pin] || 0;
+    discountCode = pin || "";
+    // DISCOUNT_CODES ist global in produkt.js definiert
+    discount = (typeof DISCOUNT_CODES !== "undefined" ? DISCOUNT_CODES[pin] : undefined) || 0;
+
     gift = section.querySelector(`#giftWrap-${idx}`)?.checked || false;
   }
 
-  const payload = { id: iid, size, quantity: qty, discount, gift };
+  const payload = {
+    id: iid,
+    size,
+    quantity: qty,
+    discount,
+    discount_code: discountCode,
+    gift,
+  };
   if (section) {
     const nameInput = section.querySelector(".custom-name");
     const numberInput = section.querySelector(".custom-number");
@@ -222,7 +232,9 @@ function loadList() {
                 }
                 ${
                   item.discount
-                    ? `<small>🎟️ Rabatt: ${item.discount}%</small>`
+                    ? `<small>🎟️ Rabatt${
+                        item.discount_code ? ` (${item.discount_code})` : ""
+                      }: ${item.discount}%</small>`
                     : ""
                 }
               </div>
@@ -231,7 +243,9 @@ function loadList() {
           <td>
             <input type="number" class="qty-input" data-id="${
               item.product_id
-            }" data-size="${item.size}" data-price="${einzelfpreis.toFixed(2)}" value="${menge}" min="1" />
+            }" data-size="${item.size}" data-cart-item-id="${item.cart_item_id}" data-price="${einzelfpreis.toFixed(
+          2
+        )}" value="${menge}" min="1" />
 
           </td>
           <td>${einzelfpreis.toFixed(2)} €</td>
@@ -239,7 +253,7 @@ function loadList() {
           <td>
             <button class="remove-btn" data-id="${
               item.product_id
-            }" data-size="${item.size}" data-name="${item.name}" data-image="${
+            }" data-size="${item.size}" data-cart-item-id="${item.cart_item_id}" data-name="${item.name}" data-image="${
           item.image_main
         }">❌</button>
           </td>
@@ -261,9 +275,10 @@ function loadList() {
         btn.addEventListener("click", () => {
           const id = btn.dataset.id;
           const size = btn.dataset.size;
+          const cartItemId = btn.dataset.cartItemId;
           const name = btn.dataset.name;
           const image = btn.dataset.image;
-          removeFromCart(id, size, { name, image, productId: id });
+          removeFromCart(id, size, { name, image, productId: id }, cartItemId);
         });
       });
 
@@ -284,19 +299,19 @@ function loadList() {
             handleQtyChange(input);
           });
         }
-
       });
     });
 }
-function removeFromCart(productId, size, previewData = null) {
+function removeFromCart(productId, size, previewData = null, cartItemId = null) {
   fetch("index.php?page=cart&action=remove", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: `id=${encodeURIComponent(productId)}&size=${encodeURIComponent(
-      size
-    )}`,
+    body:
+      cartItemId !== null
+        ? `cart_item_id=${encodeURIComponent(cartItemId)}`
+        : `id=${encodeURIComponent(productId)}&size=${encodeURIComponent(size)}`,
   })
     .then(() => {
       if (previewData) {
@@ -312,15 +327,16 @@ function removeFromCart(productId, size, previewData = null) {
     .catch((err) => console.error("Fehler beim Entfernen:", err));
 }
 
-function updateCartQuantity(productId, size, quantity, reload = true) {
+function updateCartQuantity(productId, size, quantity, reload = true, cartItemId = null) {
   fetch("index.php?page=cart&action=update", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: `id=${encodeURIComponent(productId)}&size=${encodeURIComponent(
-      size
-    )}&quantity=${encodeURIComponent(quantity)}`,
+    body:
+      cartItemId !== null
+        ? `cart_item_id=${encodeURIComponent(cartItemId)}&quantity=${encodeURIComponent(quantity)}`
+        : `id=${encodeURIComponent(productId)}&size=${encodeURIComponent(size)}&quantity=${encodeURIComponent(quantity)}`,
   })
     .then(() => {
       if (reload) {
@@ -357,7 +373,8 @@ function handleQtyChange(el, sendUpdate = true) {
   if (sendUpdate) {
     const id = el.dataset.id;
     const size = el.dataset.size;
-    updateCartQuantity(id, size, qty, false);
+    const cartItemId = el.dataset.cartItemId;
+    updateCartQuantity(id, size, qty, false, cartItemId);
   }
 }
 
@@ -369,9 +386,7 @@ function recalculateTotals() {
   const mwstEl = document.getElementById("mwstbetrag");
   let total = 0;
   sumCells.forEach((cell) => {
-    const raw = cell.textContent
-      .replace(/[^0-9,.-]/g, "")
-      .replace(',', '.');
+    const raw = cell.textContent.replace(/[^0-9,.-]/g, "").replace(",", ".");
     const val = parseFloat(raw);
 
     if (!isNaN(val)) total += val;
@@ -392,6 +407,7 @@ function zeigeToast(text, farbe = "") {
   el.style.background = farbe || "";
   const closeBtn = el.querySelector(".close-toast");
   if (closeBtn) closeBtn.onclick = () => el.classList.remove("show");
+
   el.classList.add("show");
 
   clearTimeout(el._hideTimer);

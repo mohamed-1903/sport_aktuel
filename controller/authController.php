@@ -53,12 +53,17 @@ switch ($action) {
 
             $user = loginUser($email, $password);
 
+            if (is_array($user) && isset($user['banned'])) {
+                $_SESSION['login_error'] = 'Dein Account wurde gesperrt.';
+                header("Location: index.php?page=auth&action=login");
+                exit;
+            }
+
             if ($user) {
                 session_start();
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['is_admin'] = $user['is_admin'];
-
 
                 $redirect = $_GET['redirect'] ?? 'index';
                 header("Location: index.php?page={$redirect}");

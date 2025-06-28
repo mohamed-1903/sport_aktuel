@@ -12,6 +12,21 @@ require_once 'model/productModel.php';
 
 $action = $_GET['action'] ?? 'view';
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['gutschein'])) {
+  $code = strtoupper(trim($_POST['gutschein']));
+  $validCodes = ['SPORT20' => 20];
+
+  if (array_key_exists($code, $validCodes)) {
+    $_SESSION['discount_code'] = $code;
+    $_SESSION['discount_percent'] = $validCodes[$code];
+  } else {
+    unset($_SESSION['discount_code'], $_SESSION['discount_percent']);
+  }
+
+  header('Location: index.php?page=cart&action=view');
+  exit;
+}
+
 switch ($action) {
     case 'add':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -46,6 +61,7 @@ switch ($action) {
                         'size' => trim($size),
                         'quantity' => max(1, (int)$quantity),
                         'discount' => isset($data['discount']) ? (int)$data['discount'] : 0,
+                        'discount_code' => $data['discount_code'] ?? null,
                         'gift' => !empty($data['gift']),
                         'custom_name' => $data['custom_name'] ?? null,
                         'custom_number' => $data['custom_number'] ?? null,
@@ -82,11 +98,17 @@ switch ($action) {
             exit;
         }
 
-        $id = $_POST['id'] ?? ($_GET['id'] ?? null);
-        $size = isset($_POST['size']) ? trim($_POST['size']) : (isset($_GET['size']) ? trim($_GET['size']) : null);
-        if ($id !== null && $size !== null && $size !== '') {
-            removeFromCart($userId, (int)$id, trim($size));
+        $cartItemId = $_POST['cart_item_id'] ?? ($_GET['cart_item_id'] ?? null);
+        if ($cartItemId !== null) {
+            removeCartItem($userId, (int)$cartItemId);
             session_write_close();
+        } else {
+            $id = $_POST['id'] ?? ($_GET['id'] ?? null);
+            $size = isset($_POST['size']) ? trim($_POST['size']) : (isset($_GET['size']) ? trim($_GET['size']) : null);
+            if ($id !== null && $size !== null && $size !== '') {
+                removeFromCart($userId, (int)$id, trim($size));
+                session_write_close();
+            }
         }
         header("Location: index.php?page=cart&action=view");
         exit;
@@ -98,12 +120,18 @@ switch ($action) {
             exit;
         }
 
-        $id = $_POST['id'] ?? null;
-        $size = isset($_POST['size']) ? trim($_POST['size']) : null;
+        $cartItemId = $_POST['cart_item_id'] ?? null;
         $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
-        if ($id !== null && $size !== null && $size !== '' && $quantity > 0) {
-            updateCartQuantity($userId, (int)$id, trim($size), $quantity);
+        if ($cartItemId !== null && $quantity > 0) {
+            updateCartItemQuantity($userId, (int)$cartItemId, $quantity);
             session_write_close();
+        } else {
+            $id = $_POST['id'] ?? null;
+            $size = isset($_POST['size']) ? trim($_POST['size']) : null;
+            if ($id !== null && $size !== null && $size !== '' && $quantity > 0) {
+                updateCartQuantity($userId, (int)$id, trim($size), $quantity);
+                session_write_close();
+            }
         }
         header("Location: index.php?page=cart&action=view");
         exit;
@@ -172,6 +200,9 @@ switch ($action) {
             if (
                 $item['product_id'] == $data['product_id'] &&
                 $item['size'] == $data['size'] &&
+                ($item['discount'] ?? 0) == ($data['discount'] ?? 0) &&
+                ($item['discount_code'] ?? null) == ($data['discount_code'] ?? null) &&
+                ($item['gift'] ?? 0) == (!empty($data['gift']) ? 1 : 0) &&
                 ($item['custom_name'] ?? null) == ($data['custom_name'] ?? null) &&
                 ($item['custom_number'] ?? null) == ($data['custom_number'] ?? null) &&
                 ((float)($item['custom_fee'] ?? 0)) == (float)($data['custom_fee'] ?? 0)
@@ -188,6 +219,7 @@ switch ($action) {
                 'size' => trim($data['size']),
                 'quantity' => (int)$data['qty'],
                 'discount' => isset($data['discount']) ? (int)$data['discount'] : 0,
+                'discount_code' => $data['discount_code'] ?? null,
                 'gift' => !empty($data['gift']),
                 'custom_name' => $data['custom_name'] ?? null,
                 'custom_number' => $data['custom_number'] ?? null,
