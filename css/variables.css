@@ -3,6 +3,7 @@
   --text-color: #fff;
   --accent-color: #ffd700;
   --card-bg: #222;
+  --reply-bg: #1b1b1b;
   --cookie-bg-start: #1b5e20;
   --cookie-bg-end: #2e7d32;
   --cookie-button-start: #43a047;
@@ -15,6 +16,7 @@ body.light-mode {
   --text-color: #1a1a1a;
   --accent-color: #caa000;
   --card-bg: #fff;
+  --reply-bg: #f5f5f5;
   --cookie-bg-start: #5dcb6f;
   --cookie-bg-end: #46a850;
   --cookie-button-start: #46a850;
