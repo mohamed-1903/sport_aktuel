@@ -173,6 +173,9 @@ function initFilterAndSearch() {
   if (priceSel) priceSel.addEventListener("change", applyFilter);
   updateActiveFilters();
 
+  adjustFilterBar();
+  window.addEventListener("resize", adjustFilterBar);
+
   // alle Filter zurücksetzen und Pagination initial erstellen
   resetFilter();
   updatePagination();
@@ -496,6 +499,15 @@ window.toggleFilterBar = function () {
   const hidden = bar.classList.toggle("hidden");
   btn.textContent = hidden ? "Filter anzeigen ▼" : "Filter ausblenden ▲";
 };
+
+function adjustFilterBar() {
+  const bar = document.querySelector(".filterbar");
+  const btn = document.querySelector(".filter-toggle");
+  if (!bar || !btn) return;
+  const mobile = window.innerWidth <= 600;
+  bar.classList.toggle("hidden", mobile);
+  btn.textContent = mobile ? "Filter anzeigen ▼" : "Filter ausblenden ▲";
+}
 
 // Wechselt zwischen Listen- und Grid-Layout für die Produktübersicht
 window.toggleLayout = function () {
