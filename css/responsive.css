@@ -131,7 +131,7 @@
     z-index: 2000;
   }
   div {
-    text-align: right;
+    text-align: center;
   }
 
   /* Navigation fixieren und von links einblenden */
@@ -243,6 +243,16 @@
     display: block;
     margin: 1rem auto;
   }
+  .einzelprodukt-grid .button-row {
+    justify-content: center;
+  }
+  .einzelprodukt-grid .image-wrapper {
+    justify-content: center;
+  }
+  .btn-zurueck-startseite {
+    display: block;
+    margin: 1rem auto;
+  }
 
   /* Filter- und Layout-Buttons umbrechen lassen */
   .filter-tools {
@@ -323,6 +333,7 @@
     width: 100%;
     justify-content: center;
     order: -1;
+
   }
   .action-buttons button {
     padding: 4px 8px;
