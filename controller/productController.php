@@ -48,7 +48,13 @@ switch ($action) {
         // Dynamisch passende Produkte ermitteln
         $baseProduct = $productsToShow[0];
 
-        $similarProducts = computeSimilarProducts($baseProduct, $allProducts, 2);
+        $similarProducts = getSimilarProducts(
+            $baseProduct['category'] ?? '',
+            $baseProduct['subcategory'] ?? '',
+            $baseProduct['marke'] ?? '',
+            $baseProduct['id'],
+            2
+        );
 
         // Vorschläge für die Bewertungsleiste laden
         $suggestionsFile = 'data/review_suggestions.json';

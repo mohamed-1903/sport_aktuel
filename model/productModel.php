@@ -102,47 +102,47 @@ function deleteProduct(int $productId): bool
     return $stmt->execute([$productId]);
 }
 
-function computeSimilarProducts(array $product, array $allProducts, int $limit = 2): array
+function getSimilarProducts(string $category, ?string $subcategory, ?string $brand, int $excludeId, int $limit = 2): array
 {
-    $id          = $product['id'] ?? 0;
-    $category    = strtolower(trim($product['category'] ?? ''));
-    $subcategory = strtolower(trim($product['subcategory'] ?? ''));
-    $brand       = strtolower(trim($product['marke'] ?? ''));
+    global $db;
 
-    $others = array_filter($allProducts, static function ($p) use ($id) {
-        return ($p['id'] ?? null) != $id;
-    });
-
-    $steps = [
-        static function ($p) use ($category, $subcategory, $brand) {
-            return strtolower($p['category'] ?? '') === $category
-                && strtolower($p['subcategory'] ?? '') === $subcategory
-                && strtolower($p['marke'] ?? '') === $brand;
-        },
-        static function ($p) use ($category, $subcategory) {
-            return strtolower($p['category'] ?? '') === $category
-                && strtolower($p['subcategory'] ?? '') === $subcategory;
-        },
-        static function ($p) use ($category, $brand) {
-            return strtolower($p['category'] ?? '') === $category
-                && strtolower($p['marke'] ?? '') === $brand;
-        },
-        static function ($p) use ($category) {
-            return strtolower($p['category'] ?? '') === $category;
-        },
-        static function ($p) use ($brand) {
-            return strtolower($p['marke'] ?? '') === $brand;
-        },
+    $filters = [
+        [$category, $subcategory, $brand],
+        [$category, $subcategory, null],
+        [$category, null, $brand],
+        [$category, null, null],
+        [null, null, $brand],
     ];
 
     $result = [];
     $seen   = [];
 
-    foreach ($steps as $filter) {
-        foreach ($others as $op) {
-            if (!isset($seen[$op['id']]) && $filter($op)) {
-                $result[]          = $op;
-                $seen[$op['id']] = true;
+    foreach ($filters as [$cat, $subcat, $br]) {
+        $sql    = 'SELECT * FROM products WHERE id != ?';
+        $params = [$excludeId];
+
+        if ($cat !== null && trim($cat) !== '') {
+            $sql     .= ' AND LOWER(category) = LOWER(?)';
+            $params[] = $cat;
+        }
+        if ($subcat !== null && trim($subcat) !== '') {
+            $sql     .= ' AND LOWER(subcategory) = LOWER(?)';
+            $params[] = $subcat;
+        }
+        if ($br !== null && trim($br) !== '') {
+            $sql     .= ' AND LOWER(marke) = LOWER(?)';
+            $params[] = $br;
+        }
+
+        $sql .= ' ORDER BY RAND()';
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute($params);
+
+        while (($row = $stmt->fetch(PDO::FETCH_ASSOC)) !== false) {
+            if (!isset($seen[$row['id']])) {
+                $result[]        = mapProductRow($row);
+                $seen[$row['id']] = true;
                 if (count($result) >= $limit) {
                     break 2;
                 }
@@ -151,11 +151,19 @@ function computeSimilarProducts(array $product, array $allProducts, int $limit =
     }
 
     if (count($result) < $limit) {
-        $remaining = array_values(array_filter($others, static function ($p) use ($seen) {
-            return !isset($seen[$p['id']]);
-        }));
-        shuffle($remaining);
-        $result = array_merge($result, array_slice($remaining, 0, $limit - count($result)));
+        $sql  = 'SELECT * FROM products WHERE id != ? ORDER BY RAND()';
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$excludeId]);
+
+        while (($row = $stmt->fetch(PDO::FETCH_ASSOC)) !== false) {
+            if (!isset($seen[$row['id']])) {
+                $result[]        = mapProductRow($row);
+                $seen[$row['id']] = true;
+                if (count($result) >= $limit) {
+                    break;
+                }
+            }
+        }
     }
 
     return array_slice($result, 0, $limit);
