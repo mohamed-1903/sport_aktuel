@@ -184,11 +184,7 @@
   .sidebar-toggle {
     display: block;
     margin-bottom: 10px;
-  }
 
-  .sidebar-toggle {
-    display: block;
-    margin-bottom: 10px;
   }
 
   .sidebar {
@@ -232,6 +228,12 @@
   }
   nav.open .nav-menu {
     gap: 15px;
+  }
+  .filterbar {
+    flex-wrap: wrap;
+  }
+  .filter-controls {
+    flex-wrap: wrap;
   }
 }
 @media (width <= 600px) {
