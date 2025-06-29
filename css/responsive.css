@@ -214,6 +214,16 @@
   .einzelprodukt-grid {
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   }
+  .einzelprodukt-grid .button-row {
+    justify-content: center;
+  }
+  .einzelprodukt-grid .image-wrapper {
+    justify-content: center;
+  }
+  .btn-zurueck-startseite {
+    display: block;
+    margin: 1rem auto;
+  }
 
   /* Filter- und Layout-Buttons umbrechen lassen */
   .filter-tools {
@@ -276,19 +286,24 @@
 @media (width <= 360px) {
   header {
     padding: 10px;
-    display: flex;
   }
 
   .header-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 6px;
     padding: 5px 0;
-    display: flex;
   }
 
   .logo {
     font-size: 22px;
   }
 
+  .action-buttons {
+    width: 100%;
+    justify-content: center;
+  }
   .action-buttons button {
     padding: 4px 8px;
     font-size: 14px;
@@ -300,5 +315,25 @@
 
   .burger-menu {
     top: 15px;
+    left: 10px;
+  }
+}
+
+/* Desktop layout adjustments */
+@media (width >= 769px) {
+  nav {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    background-color: transparent;
+  }
+
+  nav.open {
+    left: auto;
+  }
+
+  .nav-overlay {
+    display: none !important;
   }
 }

@@ -39,7 +39,8 @@
   <?php if (empty($orders)): ?>
     <p style="text-align:center;">Keine Bestellungen vorhanden.</p>
   <?php else: ?>
-    <table class="cart-table" style="margin:auto;">
+    <div class="table-responsive">
+      <table class="cart-table" style="margin:auto;">
       <thead>
         <tr>
           <th>#</th>
@@ -77,13 +78,14 @@
                 <option value="storniert" <?= $order['status'] === 'storniert' ? 'selected' : '' ?>>storniert</option>
               </select>
               <input type="text" name="reason" placeholder="Grund" value="<?= htmlspecialchars($order['rejection_reason'] ?? '') ?>" style="max-width:150px;">
-              <button type="submit" class="btn-checkout">Speichern</button>
-            </form>
-          </td>
-        </tr>
+            <button type="submit" class="btn-checkout">Speichern</button>
+          </form>
+        </td>
+      </tr>
       <?php endforeach; ?>
 
-    </table>
+      </table>
+    </div>
   <?php endif; ?>
 </section>
 
