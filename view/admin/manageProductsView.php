@@ -6,7 +6,8 @@
   <?php if (empty($allProducts)): ?>
     <p style="text-align:center;">Keine Produkte gefunden.</p>
   <?php else: ?>
-    <table class="cart-table">
+    <div class="table-responsive">
+      <table class="cart-table">
       <thead>
         <tr>
           <th>Id-#</th>
@@ -48,7 +49,8 @@
           </tr>
         <?php endforeach; ?>
       </tbody>
-    </table>
+      </table>
+    </div>
   <?php endif; ?>
   <a href="index.php?page=admin&action=dashboard"><button class="btn-zurueck-startseite" type="button">Zurück</button></a>
 </section>
