@@ -113,7 +113,7 @@
     z-index: 2000;
   }
   div {
-    text-align: right;
+    text-align: center;
   }
 
   /* Navigation fixieren und von links einblenden */
@@ -276,7 +276,6 @@
 @media (width <= 360px) {
   header {
     padding: 10px;
-    display: flex;
   }
 
   .header-bar {
