@@ -25,6 +25,24 @@
     grid-template-columns: 1fr;
     text-align: center;
   }
+
+  .filter-tools {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .filterbar {
+    flex-direction: column;
+  }
+
+  .filterbar select,
+  .filterbar input[type="range"] {
+    width: 100%;
+  }
+
+  .einzelprodukt-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
 }
 
 @media (width <= 992px) {
@@ -195,6 +213,7 @@
   .filter-tools {
     flex-direction: column;
     align-items: stretch;
+    width: 100%;
   }
 
   .filterbar {
@@ -212,7 +231,17 @@
   }
 
   .einzelprodukt-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+  .einzelprodukt-grid .button-row {
+    justify-content: center;
+  }
+  .einzelprodukt-grid .image-wrapper {
+    justify-content: center;
+  }
+  .btn-zurueck-startseite {
+    display: block;
+    margin: 1rem auto;
   }
   .einzelprodukt-grid .button-row {
     justify-content: center;
@@ -303,6 +332,8 @@
   .action-buttons {
     width: 100%;
     justify-content: center;
+    order: -1;
+
   }
   .action-buttons button {
     padding: 4px 8px;
@@ -316,25 +347,6 @@
   .burger-menu {
     top: 15px;
     left: 10px;
-  }
-}
-
-/* Desktop layout adjustments */
-@media (width >= 769px) {
-  nav {
-    position: static;
-    width: auto;
-    height: auto;
-    padding: 0;
-    background-color: transparent;
-  }
-
-  nav.open {
-    left: auto;
-  }
-
-  .nav-overlay {
-    display: none !important;
   }
 }
 
