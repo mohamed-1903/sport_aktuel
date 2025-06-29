@@ -66,22 +66,23 @@ function addProduct(array $product): bool
 {
     global $db;
 
-        $stmt = $db->prepare("INSERT INTO products (name, price, category, subcategory, description, image_Main, sizes, marke, farbe, geschlecht)
-                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $db->prepare(
+        "INSERT INTO products (name, price, category, subcategory, description, image_main, sizes, marke, farbe, geschlecht)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    );
 
-        $sizes = json_encode($product['sizes']);
+    $sizes = json_encode($product['sizes']);
 
-        return $stmt->execute([
-            $product['name'],
-            $product['price'],
-            $product['category'],
-            $product['subcategory'],
-            $product['description'],
-            $product['imageMain'],
-            $sizes,
-            $product['marke'],
-            $product['farbe'],
-
+    return $stmt->execute([
+        $product['name'],
+        $product['price'],
+        $product['category'],
+        $product['subcategory'],
+        $product['description'],
+        $product['imageMain'],
+        $sizes,
+        $product['marke'],
+        $product['farbe'],
         $product['geschlecht']
     ]);
 }
@@ -100,23 +101,61 @@ function deleteProduct(int $productId): bool
     return $stmt->execute([$productId]);
 }
 
-function getSimilarProducts(string $category, ?string $subcategory, int $excludeId, int $limit = 2): array
+function computeSimilarProducts(array $product, array $allProducts, int $limit = 2): array
 {
-    global $db;
+    $id          = $product['id'] ?? 0;
+    $category    = strtolower(trim($product['category'] ?? ''));
+    $subcategory = strtolower(trim($product['subcategory'] ?? ''));
+    $brand       = strtolower(trim($product['marke'] ?? ''));
 
-    $sql = 'SELECT * FROM products WHERE id != ? AND LOWER(category) = LOWER(?)';
-    $params = [$excludeId, $category];
+    $others = array_filter($allProducts, static function ($p) use ($id) {
+        return ($p['id'] ?? null) != $id;
+    });
 
-    if ($subcategory !== null && trim($subcategory) !== '') {
-        $sql .= ' AND LOWER(subcategory) = LOWER(?)';
-        $params[] = $subcategory;
+    $steps = [
+        static function ($p) use ($category, $subcategory, $brand) {
+            return strtolower($p['category'] ?? '') === $category
+                && strtolower($p['subcategory'] ?? '') === $subcategory
+                && strtolower($p['marke'] ?? '') === $brand;
+        },
+        static function ($p) use ($category, $subcategory) {
+            return strtolower($p['category'] ?? '') === $category
+                && strtolower($p['subcategory'] ?? '') === $subcategory;
+        },
+        static function ($p) use ($category, $brand) {
+            return strtolower($p['category'] ?? '') === $category
+                && strtolower($p['marke'] ?? '') === $brand;
+        },
+        static function ($p) use ($category) {
+            return strtolower($p['category'] ?? '') === $category;
+        },
+        static function ($p) use ($brand) {
+            return strtolower($p['marke'] ?? '') === $brand;
+        },
+    ];
+
+    $result = [];
+    $seen   = [];
+
+    foreach ($steps as $filter) {
+        foreach ($others as $op) {
+            if (!isset($seen[$op['id']]) && $filter($op)) {
+                $result[]          = $op;
+                $seen[$op['id']] = true;
+                if (count($result) >= $limit) {
+                    break 2;
+                }
+            }
+        }
     }
 
-    $sql .= ' ORDER BY RAND() LIMIT ' . (int)$limit;
+    if (count($result) < $limit) {
+        $remaining = array_values(array_filter($others, static function ($p) use ($seen) {
+            return !isset($seen[$p['id']]);
+        }));
+        shuffle($remaining);
+        $result = array_merge($result, array_slice($remaining, 0, $limit - count($result)));
+    }
 
-    $stmt = $db->prepare($sql);
-    $stmt->execute($params);
-    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    return array_map('mapProductRow', $rows);
+    return array_slice($result, 0, $limit);
 }
