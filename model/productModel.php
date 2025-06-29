@@ -104,9 +104,15 @@ function deleteProduct(int $productId): bool
 
 function getSimilarProducts(int $productId, int $limit = 4): array
 {
-    global $db;
+    $all = getAllProducts();
 
-    $base = getProductById($productId);
+    $base = null;
+    foreach ($all as $p) {
+        if ($p['id'] == $productId) {
+            $base = $p;
+            break;
+        }
+    }
     if (!$base) {
         return [];
     }
@@ -114,50 +120,42 @@ function getSimilarProducts(int $productId, int $limit = 4): array
     $category = $base['category'] ?? '';
     $subcategory = $base['subcategory'] ?? '';
 
-    // MariaDB does not allow using a bound parameter for LIMIT, therefore the
-    // integer value is appended directly to the SQL string after validation
     $limit = max(1, (int)$limit);
 
-    // 1) Zuerst nach gleicher Kategorie UND Subkategorie suchen
-    $sql = 'SELECT * FROM products WHERE id <> ? AND category = ?';
-    $params = [$productId, $category];
-    if ($subcategory !== '') {
-        $sql .= ' AND subcategory = ?';
-        $params[] = $subcategory;
-    }
-    $sql .= ' ORDER BY RAND() LIMIT ' . $limit;
+    // 1) Produkte mit gleicher Kategorie UND Subkategorie
+    $sameSub = array_filter($all, function ($p) use ($productId, $category, $subcategory) {
+        return $p['id'] != $productId &&
+               strcasecmp($p['category'], $category) === 0 &&
+               strcasecmp($p['subcategory'], $subcategory) === 0;
+    });
+    $sameSub = array_values($sameSub);
+    shuffle($sameSub);
+    $result = array_slice($sameSub, 0, $limit);
 
-    $stmt = $db->prepare($sql);
-    $stmt->execute($params);
-    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    $count = count($rows);
-
-    // 2) Falls weniger Treffer als gewünscht: gleiche Kategorie, andere Subkategorie
-    if ($count < $limit) {
-        $remain = $limit - $count;
-        $sql = 'SELECT * FROM products WHERE id <> ? AND category = ?';
-        $params = [$productId, $category];
-        if ($subcategory !== '') {
-            $sql .= ' AND (subcategory IS NULL OR subcategory <> ?)';
-            $params[] = $subcategory;
-        }
-        $sql .= ' ORDER BY RAND() LIMIT ' . $remain;
-
-        $stmt = $db->prepare($sql);
-        $stmt->execute($params);
-        $rows = array_merge($rows, $stmt->fetchAll(PDO::FETCH_ASSOC));
-        $count = count($rows);
+    // 2) Falls noch Plätze frei, gleiche Kategorie aber andere Subkategorie
+    if (count($result) < $limit) {
+        $sameCat = array_filter($all, function ($p) use ($productId, $category, $subcategory, $result) {
+            return $p['id'] != $productId &&
+                   strcasecmp($p['category'], $category) === 0 &&
+                   strcasecmp($p['subcategory'], $subcategory) !== 0 &&
+                   !in_array($p['id'], array_column($result, 'id'));
+        });
+        $sameCat = array_values($sameCat);
+        shuffle($sameCat);
+        $needed = $limit - count($result);
+        $result = array_merge($result, array_slice($sameCat, 0, $needed));
     }
 
-    // 3) Immer noch zu wenig? Dann mit allen verbleibenden Produkten auffüllen
-    if ($count < $limit) {
-        $remain = $limit - $count;
-        $sql = 'SELECT * FROM products WHERE id <> ? ORDER BY RAND() LIMIT ' . $remain;
-        $stmt = $db->prepare($sql);
-        $stmt->execute([$productId]);
-        $rows = array_merge($rows, $stmt->fetchAll(PDO::FETCH_ASSOC));
+    // 3) Immer noch zu wenig? Mit zufälligen Produkten auffüllen
+    if (count($result) < $limit) {
+        $remaining = array_filter($all, function ($p) use ($productId, $result) {
+            return $p['id'] != $productId && !in_array($p['id'], array_column($result, 'id'));
+        });
+        $remaining = array_values($remaining);
+        shuffle($remaining);
+        $needed = $limit - count($result);
+        $result = array_merge($result, array_slice($remaining, 0, $needed));
     }
 
-    return array_map('mapProductRow', $rows);
+    return $result;
 }
