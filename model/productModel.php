@@ -66,22 +66,23 @@ function addProduct(array $product): bool
 {
     global $db;
 
-        $stmt = $db->prepare("INSERT INTO products (name, price, category, subcategory, description, image_Main, sizes, marke, farbe, geschlecht)
-                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $db->prepare(
+        "INSERT INTO products (name, price, category, subcategory, description, image_main, sizes, marke, farbe, geschlecht)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    );
 
-        $sizes = json_encode($product['sizes']);
+    $sizes = json_encode($product['sizes']);
 
-        return $stmt->execute([
-            $product['name'],
-            $product['price'],
-            $product['category'],
-            $product['subcategory'],
-            $product['description'],
-            $product['imageMain'],
-            $sizes,
-            $product['marke'],
-            $product['farbe'],
-
+    return $stmt->execute([
+        $product['name'],
+        $product['price'],
+        $product['category'],
+        $product['subcategory'],
+        $product['description'],
+        $product['imageMain'],
+        $sizes,
+        $product['marke'],
+        $product['farbe'],
         $product['geschlecht']
     ]);
 }
@@ -143,26 +144,47 @@ function getRandomProductsExcept(int $excludeId, int $limit = 2): array
 
 function findSimilarProducts(array $product, int $limit = 2): array
 {
-    $category = $product['category'] ?? '';
+    $category    = $product['category'] ?? '';
     $subcategory = $product['subcategory'] ?? '';
-    $brand = $product['marke'] ?? '';
-    $id = $product['id'] ?? 0;
+    $brand       = $product['marke'] ?? '';
+    $id          = $product['id'] ?? 0;
 
-    $result = getSimilarProducts($category, $subcategory, $brand, $id, $limit);
-    if (count($result) >= $limit) {
-        return $result;
+    $result = [];
+    $seen   = [];
+
+    $steps = [
+        [$category, $subcategory, $brand],
+        [$category, $subcategory, null],
+        [$category, null, $brand],
+        [$category, null, null],
+    ];
+
+    foreach ($steps as [$cat, $sub, $br]) {
+        $rows = getSimilarProducts($cat, $sub, $br, $id, $limit);
+        foreach ($rows as $row) {
+            if (!isset($seen[$row['id']])) {
+                $result[] = $row;
+                $seen[$row['id']] = true;
+                if (count($result) >= $limit) {
+                    break 2;
+                }
+            }
+        }
     }
 
-    $result = getSimilarProducts($category, null, $brand, $id, $limit);
-    if (count($result) >= $limit) {
-        return $result;
+    if (count($result) < $limit) {
+        $rows = getRandomProductsExcept($id, $limit);
+        foreach ($rows as $row) {
+            if (!isset($seen[$row['id']])) {
+                $result[] = $row;
+                $seen[$row['id']] = true;
+                if (count($result) >= $limit) {
+                    break;
+                }
+            }
+        }
     }
 
-    $result = getSimilarProducts($category, null, null, $id, $limit);
-    if (count($result) >= $limit) {
-        return $result;
-    }
-
-    return getRandomProductsExcept($id, $limit);
+    return array_slice($result, 0, $limit);
 }
 

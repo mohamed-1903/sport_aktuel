@@ -11,6 +11,7 @@ body.dark-mode input,
 body.dark-mode textarea,
 body.dark-mode select {
   color-scheme: dark;
+
   background-color: #2a2a2a;
   color: #fff;
   border-color: #444;
@@ -31,6 +32,7 @@ body.light-mode input,
 body.light-mode textarea,
 body.light-mode select {
   color-scheme: light;
+
   background-color: #f8f8f8;
   color: #000;
   border-color: #ccc;
