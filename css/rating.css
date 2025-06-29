@@ -139,6 +139,14 @@
   color: #000;
 }
 
+.review-actions button:hover {
+  background: var(--popup-button-hover);
+}
+
+.review-actions button:active {
+  background: var(--popup-button-active);
+}
+
 .review-actions button:focus,
 .review-actions form button:focus {
   outline: 2px solid var(--accent-color);
@@ -158,10 +166,16 @@
   margin-bottom: 4px;
 }
 
+.parent-excerpt {
+  font-style: italic;
+  color: var(--text-muted);
+}
+
 .reply-target {
   font-size: 0.9rem;
   margin-bottom: 6px;
   font-weight: 600;
+  display: block;
 
 }
 
@@ -169,6 +183,11 @@
   background: var(--reply-bg);
   margin-top: 8px;
   border-left: 4px solid var(--popup-border);
+  margin-left: 1rem;
+}
+
+.review.target-highlight {
+  outline: 2px solid var(--accent-color);
 }
 
 .review-form {

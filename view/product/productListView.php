@@ -146,6 +146,7 @@
                   data-iid="<?= (int)$produkt['iid'] ?>"
                   data-name="<?= htmlspecialchars($produkt['name']) ?>"
                   data-price="<?= $salePrice ?>"
+                  data-discount="<?= $discount ?>"
                   data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
                   🛒
                 </button>
@@ -154,6 +155,7 @@
                   data-iid="<?= (int)$produkt['iid'] ?>"
                   data-name="<?= htmlspecialchars($produkt['name']) ?>"
                   data-price="<?= $salePrice ?>"
+                  data-discount="<?= $discount ?>"
                   data-image="<?= htmlspecialchars($produkt["image_main"] ?? "") ?>">
 
                   🤍

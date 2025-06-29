@@ -66,25 +66,27 @@ function addProduct(array $product): bool
 {
     global $db;
 
-        $stmt = $db->prepare("INSERT INTO products (name, price, category, subcategory, description, image_Main, sizes, marke, farbe, geschlecht)
-                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $db->prepare(
+        "INSERT INTO products (name, price, category, subcategory, description, image_main, sizes, marke, farbe, geschlecht)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    );
 
-        $sizes = json_encode($product['sizes']);
+    $sizes = json_encode($product['sizes']);
 
-        return $stmt->execute([
-            $product['name'],
-            $product['price'],
-            $product['category'],
-            $product['subcategory'],
-            $product['description'],
-            $product['imageMain'],
-            $sizes,
-            $product['marke'],
-            $product['farbe'],
-
+    return $stmt->execute([
+        $product['name'],
+        $product['price'],
+        $product['category'],
+        $product['subcategory'],
+        $product['description'],
+        $product['imageMain'],
+        $sizes,
+        $product['marke'],
+        $product['farbe'],
         $product['geschlecht']
     ]);
 }
+
 
 function updateProductDiscount(int $productId, int $discount): bool
 {
@@ -98,4 +100,32 @@ function deleteProduct(int $productId): bool
     global $db;
     $stmt = $db->prepare('DELETE FROM products WHERE id = ?');
     return $stmt->execute([$productId]);
+}
+
+function getSimilarProducts(int $productId, int $limit = 4): array
+{
+    global $db;
+
+    $base = getProductById($productId);
+    if (!$base) {
+        return [];
+    }
+
+    $category = $base['category'] ?? '';
+    $subcategory = $base['subcategory'] ?? '';
+
+    $sql = 'SELECT * FROM products WHERE id <> ? AND category = ?';
+    $params = [$productId, $category];
+    if ($subcategory !== '') {
+        $sql .= ' AND subcategory = ?';
+        $params[] = $subcategory;
+    }
+    $sql .= ' ORDER BY RAND() LIMIT ?';
+    $params[] = $limit;
+
+    $stmt = $db->prepare($sql);
+    $stmt->execute($params);
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return array_map('mapProductRow', $rows);
 }

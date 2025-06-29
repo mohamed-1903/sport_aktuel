@@ -44,7 +44,7 @@
     $sizes = $product['sizes'] ?? range(38, 46);
   ?>
     <!-- 📦 Einzelnes Produkt-Layout -->
-    <section class="Eprodukt untereinander" data-product-index="<?= $index ?>" data-base-price="<?= $salePrice ?>" data-admin-discount="<?= $discount ?>">
+    <section class="Eprodukt untereinander" data-product-index="<?= $index ?>" data-base-price="<?= $price ?>" data-admin-discount="<?= $discount ?>">
 
       <h2 style="text-align:center; margin-bottom: 20px;">
         <?= count($productsToShow) > 1 ? "🛍️ Produkt " . ($index + 1) : "Produktdetails" ?>
@@ -147,7 +147,7 @@
             data-iid="<?= $iid ?>"
             data-name="<?= htmlspecialchars($name) ?>"
             data-price="<?= $salePrice ?>"
-
+            data-discount="<?= $discount ?>"
             data-image="<?= htmlspecialchars($image) ?>">
             🛒 In den Warenkorb
           </button>
@@ -158,6 +158,7 @@
             data-iid="<?= $iid ?>"
             data-name="<?= htmlspecialchars($name) ?>"
             data-price="<?= $salePrice ?>"
+            data-discount="<?= $discount ?>"
             data-image="<?= htmlspecialchars($image) ?>">
             ❤️
           </button>
@@ -176,7 +177,48 @@
       </div>
 
     </section>
-  <?php endforeach; ?>
+    <?php endforeach; ?>
+
+  <?php if (!empty($similarProducts)): ?>
+    <section class="similar-products">
+      <h3>Ähnliche Produkte</h3>
+      <ul class="einzelprodukt-grid">
+        <?php foreach ($similarProducts as $sp): ?>
+          <?php
+            $preis = (float)($sp['priceValue'] ?? $sp['price']);
+            $discount = $sp['discount'] ?? 0;
+            $salePrice = $discount > 0 ? $preis * (1 - $discount / 100) : $preis;
+          ?>
+          <li class="einzelprodukt">
+            <div class="image-wrapper">
+              <img src="<?= htmlspecialchars($sp['image_main'] ?? '') ?>" alt="<?= htmlspecialchars($sp['name'] ?? '') ?>">
+            </div>
+            <div class="produkt-info">
+              <h3><?= htmlspecialchars($sp['name'] ?? '') ?></h3>
+              <?php if ($discount > 0): ?>
+                <p>
+                  <del class="old-price">
+                    <?= number_format($preis, 2, ',', '.') ?>€ inkl. Mwst.
+                  </del>
+                  <span><?= number_format($salePrice, 2, ',', '.') ?>€ inkl. Mwst.</span>
+                  <span class="rabatt">-<?= $discount ?>%</span>
+                </p>
+              <?php else: ?>
+                <p><?= number_format($preis, 2, ',', '.') ?>€ <span>inkl. Mwst.</span></p>
+              <?php endif; ?>
+            </div>
+            <div class="button-row" data-iid="<?= (int)$sp['id'] ?>">
+              <a href="index.php?page=product&action=detail&id=<?= (int)$sp['id'] ?>">
+                <button>Details</button>
+              </a>
+              <button class="btn-add-to-cart" data-iid="<?= (int)$sp['id'] ?>" data-name="<?= htmlspecialchars($sp['name'] ?? '') ?>" data-price="<?= $salePrice ?>" data-discount="<?= $discount ?>" data-image="<?= htmlspecialchars($sp['image_main'] ?? '') ?>">🛒</button>
+              <button class="btn-add-to-watch" data-iid="<?= (int)$sp['id'] ?>" data-name="<?= htmlspecialchars($sp['name'] ?? '') ?>" data-price="<?= $salePrice ?>" data-discount="<?= $discount ?>" data-image="<?= htmlspecialchars($sp['image_main'] ?? '') ?>">🤍</button>
+            </div>
+          </li>
+        <?php endforeach; ?>
+      </ul>
+    </section>
+  <?php endif; ?>
 
   <button id="showCompareBtn" class="compare-toggle-btn" aria-label="Vergleich öffnen" type="button">+</button>
   <div id="compareSection" class="compare-section hidden">
@@ -197,20 +239,6 @@
     <button id="compareBtn" class="btn-compare">⚖️ Vergleichen</button>
   </div>
 
-  <!-- 🧠 Ähnliche Produkte statisch -->
-  <section class="produkte similar-products">
-    <h2>Ähnliche Produkte</h2>
-    <div class="produkt-grid">
-      <?php for ($i = 1; $i <= 3; $i++): ?>
-        <div class="Eprodukt">
-          <img src="nike-shoe.jpg" alt="Ähnliches Produkt <?= $i ?>" />
-          <h3>Nike Produkt <?= $i ?></h3>
-          <p>€<?= number_format(199.99 - ($i - 1) * 20, 2, ',', '.') ?></p>
-          <button>Details</button>
-        </div>
-      <?php endfor; ?>
-    </div>
-  </section>
 
   <?php foreach ($productsToShow as $index => $product):
     $ratings = getRatingsForProduct((int)$product['id'], $_SESSION['user_id'] ?? null);
@@ -230,7 +258,10 @@
         <div class="review<?= !empty($r['parent_id']) ? ' reply' : '' ?>" data-review-id="<?= (int)$r['id'] ?>"<?php if (!empty($r['parent_id'])): ?> data-parent-id="<?= (int)$r['parent_id'] ?>"<?php endif; ?>>
           <div class="review-content">
             <?php if (!empty($r['parent_name'])): ?>
-              <small class="reply-info">Antwort auf <?= htmlspecialchars($r['parent_name']) ?></small>
+              <small class="reply-info">
+                <?= 'Antwort auf ' . htmlspecialchars($r['parent_name']) ?>:
+                <span class="parent-excerpt"><?= htmlspecialchars($r['parent_comment']) ?></span>
+              </small>
             <?php endif; ?>
             <strong><?= htmlspecialchars($r['display_name'] ?: $r['username']) ?></strong>
             <small class="rating-date">
@@ -271,8 +302,6 @@
           </div>
         </div>
       <?php endforeach; ?>
-
-
 
     </section>
     <?php if (isset($_SESSION['user_id'])): ?>
