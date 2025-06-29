@@ -101,3 +101,63 @@ function deleteProduct(int $productId): bool
     $stmt = $db->prepare('DELETE FROM products WHERE id = ?');
     return $stmt->execute([$productId]);
 }
+
+function getSimilarProducts(int $productId, int $limit = 4): array
+{
+    global $db;
+
+    $base = getProductById($productId);
+    if (!$base) {
+        return [];
+    }
+
+    $category = $base['category'] ?? '';
+    $subcategory = $base['subcategory'] ?? '';
+
+    // MariaDB does not allow using a bound parameter for LIMIT, therefore the
+    // integer value is appended directly to the SQL string after validation
+    $limit = max(1, (int)$limit);
+
+    // 1) Zuerst nach gleicher Kategorie UND Subkategorie suchen
+    $sql = 'SELECT * FROM products WHERE id <> ? AND category = ?';
+    $params = [$productId, $category];
+    if ($subcategory !== '') {
+        $sql .= ' AND subcategory = ?';
+        $params[] = $subcategory;
+    }
+    $sql .= ' ORDER BY RAND() LIMIT ' . $limit;
+
+    $stmt = $db->prepare($sql);
+    $stmt->execute($params);
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $count = count($rows);
+
+    // 2) Falls weniger Treffer als gewünscht: gleiche Kategorie, andere Subkategorie
+    if ($count < $limit) {
+        $remain = $limit - $count;
+        $sql = 'SELECT * FROM products WHERE id <> ? AND category = ?';
+        $params = [$productId, $category];
+        if ($subcategory !== '') {
+            $sql .= ' AND (subcategory IS NULL OR subcategory <> ?)';
+            $params[] = $subcategory;
+        }
+        $sql .= ' ORDER BY RAND() LIMIT ' . $remain;
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute($params);
+        $rows = array_merge($rows, $stmt->fetchAll(PDO::FETCH_ASSOC));
+        $count = count($rows);
+    }
+
+    // 3) Immer noch zu wenig? Dann mit allen verbleibenden Produkten auffüllen
+    if ($count < $limit) {
+        $remain = $limit - $count;
+        $sql = 'SELECT * FROM products WHERE id <> ? ORDER BY RAND() LIMIT ' . $remain;
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$productId]);
+        $rows = array_merge($rows, $stmt->fetchAll(PDO::FETCH_ASSOC));
+    }
+
+    return array_map('mapProductRow', $rows);
+}
