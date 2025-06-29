@@ -27,6 +27,26 @@
   cursor: pointer;
 }
 
+.sidebar-toggle {
+  display: none;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  font-size: 14px;
+  padding: 6px 8px;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.sidebar-toggle {
+  display: none;
+}
+
+.sidebar-toggle {
+  display: none;
+}
+
 .main-content {
   flex: 1;
   display: flex;
@@ -863,6 +883,8 @@ body.light-mode .zoom-close {
   -webkit-overflow-scrolling: touch;
 }
 
+
+
 .cart-table thead {
   background-color: var(--card-bg); /* ✅ dynamisch */
   color: var(--text-color);
@@ -877,6 +899,7 @@ body.light-mode .zoom-close {
   color: var(--text-color); /* adapt text to theme */
   word-break: break-word; /* verhindert horizontales Scrollen */
 }
+
 
 .cart-table td:first-child {
   text-align: center;
@@ -1054,6 +1077,7 @@ body.light-mode .zoom-close {
     width: 100%;
   }
 }
+
 
 .btn-zurueck-startseite {
   background-color: var(--accent-color);
