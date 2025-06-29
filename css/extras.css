@@ -392,9 +392,7 @@
   list-style: none;
   padding: 0;
   margin-bottom: 0;
-  width: 100%;
 }
-
 
 /* Kartenansicht für Produkte im Grid */
 .einzelprodukt-grid .einzelprodukt {
@@ -425,7 +423,6 @@
 
 .einzelprodukt-grid .produkt-info h3 {
   margin: 0 0 0.25rem;
-  word-break: break-word;
 }
 
 .einzelprodukt-grid .produkt-info p {
@@ -449,25 +446,29 @@
   align-items: flex-start; /* linksbündig */
 }
 
-/* Zentrierte Darstellung der Highlights auf der Startseite */
-.produkte .einzelprodukt-grid {
-  justify-content: center; /* Grid als Ganzes zentrieren */
-  justify-items: center;    /* Inhalte innerhalb der Zellen zentrieren */
-}
-
-.produkte .einzelprodukt-grid .produkt {
+.einzelprodukt-grid .image-wrapper {
+  display: flex;
+  justify-content: center;
   align-items: center;
-  text-align: center;
+}
+.einzelprodukt-grid .image-wrapper img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
-/* Zentrierte Darstellung der Highlights auf der Startseite */
-.produkte .einzelprodukt-grid {
-  justify-items: center;
+.einzelprodukt-grid .produkt-info h3 {
+  margin: 0 0 0.25rem;
 }
-
-.produkte .einzelprodukt-grid .produkt {
-  align-items: center;
-  text-align: center;
+.einzelprodukt-grid .produkt-info p {
+  margin: 0;
+}
+.einzelprodukt-grid .button-row {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: flex-start; /* linksbündig */
+  gap: 10px;
+  width: 100%;
 }
 
 .sidebar {
