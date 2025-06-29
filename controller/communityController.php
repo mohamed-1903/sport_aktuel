@@ -1,4 +1,6 @@
 <?php
+//Mohamed
+
 // controller/communityController.php
 // Verwaltet Bewertungen und Reaktionen der Community
 if (session_status() === PHP_SESSION_NONE) {

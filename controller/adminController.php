@@ -1,4 +1,6 @@
 <?php
+//Mohamed
+
 // controller/adminController.php
 // Steuert alle Adminfunktionen der Anwendung
 if (session_status() === PHP_SESSION_NONE) {

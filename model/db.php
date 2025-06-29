@@ -1,4 +1,5 @@
 <?php
+//Mohamed
 // model/db.php
 // Stellt die Verbindung zur Datenbank her
 

@@ -1,4 +1,5 @@
 <?php
+
 // import_products.php – Automatischer Import von products.json in die Datenbank, nur bei Änderungen
 
 require_once __DIR__ . '/../model/db.php'; // Datenbankverbindung

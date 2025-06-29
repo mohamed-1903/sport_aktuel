@@ -1,4 +1,7 @@
 <?php
+//Laith
+
+
 // model/userModel.php
 // Die Funktionen sind bewusst getrennt, obwohl sie sich ähneln
 // (z. B. getUserByEmail und getUserByUsername). Eine Generifizierung

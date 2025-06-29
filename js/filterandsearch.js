@@ -327,7 +327,7 @@ function updateFokus(eintraege) {
     if (i === fokusIndex) li.scrollIntoView({ block: "nearest" });
   });
 }
-
+//Chatgpt
 // gibt zu einem Farbnamen das passende Emoji zurück
 function colorEmoji(name) {
   const base = name.toLowerCase().split(/[-/]/)[0];
@@ -351,6 +351,8 @@ function colorEmoji(name) {
   };
   return map[base] || "⬛";
 }
+//Chatgpt Ende
+
 
 // befüllt die Dropdowns für die Filter dynamisch aus den vorhandenen Produkten
 window.populateFilterOptions = function () {
@@ -552,9 +554,9 @@ function updateLayoutToggle(layout) {
   const btn = document.querySelector(".layout-toggle");
   if (!btn) return;
   if (layout === "list") {
-    btn.textContent = "🔳 Grid anzeigen";
+    btn.textContent = "🔳 Grid anzeigen"; //Chatgpt
   } else {
-    btn.textContent = "☰ Liste anzeigen";
+    btn.textContent = "☰ Liste anzeigen"; //Chatgpt
   }
 }
 
