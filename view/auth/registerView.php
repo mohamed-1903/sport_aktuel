@@ -1,40 +1,51 @@
+<!-- Laith -->
+
 <?php include __DIR__ . '/../layout/header.php'; ?>
 
-
+<!-- Registrierungsformular -->
 <div class="form-wrapper">
   <div align="center">
     <h1>Registrierung</h1>
 
+    <!-- Fehlermeldung anzeigen, falls vorhanden -->
     <?php if (!empty($error)): ?>
       <p class="error-message"><?= htmlspecialchars($error) ?></p>
     <?php endif; ?>
 
     <form id="registerForm" action="index.php?page=auth&action=register" method="POST" autocomplete="off">
+      <!-- Benutzername mit Pattern für mind. eine Groß- und Kleinbuchstabe -->
       <label for="registerUsername">Benutzername:</label>
       <input type="text" name="username" id="registerUsername" required minlength="5" pattern="(?=.*[a-z])(?=.*[A-Z]).{5,}">
       <small></small><br>
 
+      <!-- E-Mail-Eingabe -->
       <label for="registerEmail">E-Mail:</label>
       <input type="email" name="email" id="registerEmail" required>
       <small></small><br>
 
+      <!-- Passwortfeld -->
       <label for="registerPassword">Passwort:</label><br>
       <input type="password" name="password" id="registerPassword" required minlength="10">
       <small></small><br>
 
+      <!-- Passwortwiederholung -->
       <label for="registerConfirmPassword">Passwort wiederholen:</label>
       <input type="password" id="registerConfirmPassword" required>
       <small></small><br>
 
+      <!-- Absende-Button (initial deaktiviert) -->
       <button type="submit" id="registerBtn" disabled>Registrieren</button>
     </form>
 
-    <a href="index.php?page=auth&action=login" class="btn-link">Zurück zur Anmeldung</button>
-    </a>
+    <!-- Link zur Anmeldung -->
+    <a href="index.php?page=auth&action=login" class="btn-link">Zurück zur Anmeldung</a>
   </div>
 </div>
 
+<!-- Scroll-to-top Button -->
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
+
+<!-- JavaScript zur Validierung -->
 <script>
   function validateUsernameFormat(input) {
     const value = input.value;
@@ -69,6 +80,7 @@
   const rConf = document.getElementById("registerConfirmPassword");
   const rBtn = document.getElementById("registerBtn");
 
+  // Servercheck auf Verfügbarkeit von Username/Email
   async function checkTaken(field, value) {
     const res = await fetch('index.php?page=auth&action=check', {
       method: 'POST',
@@ -101,6 +113,7 @@
     return !taken;
   }
 
+  // Prüfe alle Felder gemeinsam
   async function checkForm() {
     const uValid = await validateUsername(rUser);
     const eValid = await validateEmail(rEmail);
@@ -109,6 +122,8 @@
     rBtn.disabled = !(uValid && eValid && pValid && cValid);
   }
 
+  // Eventlistener auf Eingabefelder
   [rUser, rEmail, rPass, rConf].forEach(input => input.addEventListener('input', checkForm));
 </script>
+
 <?php include __DIR__ . '/../layout/footer.php'; ?>

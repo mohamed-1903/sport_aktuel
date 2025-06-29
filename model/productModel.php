@@ -4,7 +4,6 @@
 // model/productModel.php
 require_once 'model/db.php';
 
-// Keine offensichtlichen redundanten Funktionen vorhanden.
 
 /**
  * Konvertiert eine Datenbankzeile in ein Produktarray.

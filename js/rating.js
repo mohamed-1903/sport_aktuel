@@ -1,4 +1,3 @@
-// Handles the rating modal interactions
 // Warten bis die Seite geladen ist, dann sämtliche Event-Handler registrieren
 window.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('ratingModal');

@@ -3,8 +3,6 @@
 
 
 // model/watchlistModel.php
-// Keine offensichtliche Redundanz vorhanden. Die Hilfsfunktionen erleichtern
-// lediglich den Aufruf einzelner Operationen.
 require_once 'model/db.php';
 
 /**

@@ -5,8 +5,6 @@
 // model/orderModel.php
 require_once 'model/db.php';
 
-// Dieses Model stellt Funktionen bereit, um Bestellungen in der Datenbank
-// anzulegen und deren Status zu verwalten.
 
 // Speichert eine neue Bestellung für den angegebenen Nutzer. Die einzelnen
 // Warenkorbdaten werden als JSON im Feld admin_comment abgelegt.

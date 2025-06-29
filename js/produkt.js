@@ -1,3 +1,5 @@
+//Laith
+
 // Sammlung gültiger Rabattcodes und deren Nachlass in Prozent
 const DISCOUNT_CODES = {
   12345: 10,
@@ -201,6 +203,7 @@ function updateDisplay(section) {
     list.textContent = parts.join(" ");
   }
 }
+//Hussein
 
 // ---- Zoom Handling ----
 // Aktuell geöffnete Sektion (wird derzeit nicht weiter verwendet)

@@ -1,3 +1,5 @@
+//Hussein
+
 // Script zur Verwaltung der Merkliste. Lädt Inhalte nach dem Seitenaufbau
 // und reagiert auf Klicks auf "Zur Merkliste" Buttons.
 document.addEventListener("DOMContentLoaded", () => {

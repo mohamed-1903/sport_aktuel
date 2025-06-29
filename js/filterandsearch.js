@@ -1,3 +1,6 @@
+//Mohamed
+
+
 // Steuert die Paginierung der Produktliste
 let currentPage = 1; // aktuell angezeigte Seite
 let paginatedItems = []; // Elemente, die für die Pagination verwendet werden
@@ -290,6 +293,8 @@ function autocompleteSuche() {
     shadow.value = "";
   }
 }
+//Hussein
+
 
 // Steuert die Navigation in der Autocomplete-Liste über die Tastatur
 function handleTastaturNavigation(e, liste, input, shadow) {

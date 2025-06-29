@@ -1,5 +1,6 @@
 <?php
 //Mohamed
+
 // model/db.php
 // Stellt die Verbindung zur Datenbank her
 
@@ -19,4 +20,3 @@ try {
     die("Verbindung zur Datenbank fehlgeschlagen: " . $e->getMessage());
 }
 
-// Keine Redundanz festgestellt: Verbindung wird nur einmal aufgebaut

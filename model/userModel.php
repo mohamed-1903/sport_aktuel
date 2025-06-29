@@ -3,9 +3,6 @@
 
 
 // model/userModel.php
-// Die Funktionen sind bewusst getrennt, obwohl sie sich ähneln
-// (z. B. getUserByEmail und getUserByUsername). Eine Generifizierung
-// könnte Redundanz verringern, erhöht aber die Lesbarkeit hier kaum.
 require_once 'model/db.php';
 
 /**

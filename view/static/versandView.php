@@ -1,23 +1,36 @@
-
-<?php include 'view/layout/header.php'; ?>
+<!-- Laith -->
+<?php 
+include 'view/layout/header.php'; 
+?>
 
 <?php /* versandView.php */ ?>
 <section class="versand-page">
   <div class="versand-container">
+    <!-- Hauptüberschrift der Seite -->
     <h1>Versand & Lieferung</h1>
 
-    <p>Wir liefern deine Bestellung schnell und zuverlässig direkt zu dir nach Hause. Hier findest du alle Informationen rund um unsere Versandoptionen, Lieferzeiten und Versandkosten.</p>
+    <!-- Einleitungstext zu Versandinformationen -->
+    <p>
+      Wir liefern deine Bestellung schnell und zuverlässig direkt zu dir nach Hause. 
+      Hier findest du alle Informationen rund um unsere Versandoptionen, Lieferzeiten und Versandkosten.
+    </p>
 
+    <!-- Abschnitt: Versanddienstleister -->
     <h2>Versanddienstleister</h2>
-    <p>Unsere Produkte werden mit unseren zuverlässigen Partnern <strong>DHL</strong> und <strong>DPD</strong> versendet.</p>
+    <p>
+      Unsere Produkte werden mit unseren zuverlässigen Partnern 
+      <strong>DHL</strong> und <strong>DPD</strong> versendet.
+    </p>
 
+    <!-- Abschnitt: Lieferzeiten -->
     <h2>Lieferzeiten</h2>
     <ul>
-      <strong>Deutschland:</strong> 2–4 Werktage<br>
-      <strong>EU-Ausland:</strong> 4–7 Werktage<br>
+      <strong>Deutschland:</strong> 2-4 Werktage<br>
+      <strong>EU-Ausland:</strong> 4-7 Werktage<br>
       <strong>Internationale Lieferung:</strong> bis zu 14 Werktage<br>
     </ul>
 
+    <!-- Abschnitt: Versandkosten -->
     <h2>Versandkosten</h2>
     <ul>
       <strong>Deutschland:</strong> 4,95 € (ab 50 € Bestellwert kostenlos)<br>
@@ -25,35 +38,48 @@
       <strong>Weltweit:</strong> 19,95 €
     </ul>
 
+    <!-- Abschnitt: Sendungsverfolgung -->
     <h2>Sendungsverfolgung</h2>
-    <p>Sobald dein Paket unser Lager verlässt, erhältst du eine E-Mail mit deiner Sendungsnummer zur Verfolgung deiner Bestellung.</p>
+    <p>
+      Sobald dein Paket unser Lager verlässt, erhältst du eine E-Mail mit deiner 
+      Sendungsnummer zur Verfolgung deiner Bestellung.
+    </p>
 
+    <!-- Abschnitt: Lieferadresse -->
     <h2>Lieferadresse</h2>
-    <p>Bitte stelle sicher, dass deine Adresse vollständig und korrekt angegeben ist, um eine reibungslose Lieferung zu gewährleisten.</p>
+    <p>
+      Bitte stelle sicher, dass deine Adresse vollständig und korrekt angegeben ist, 
+      um eine reibungslose Lieferung zu gewährleisten.
+    </p>
   </div>
 </section>
 
+<!-- Eingebettetes CSS für diese Seite -->
 <style>
+/* Max. Breite, zentrierter Bereich mit Padding */
 .versand-page {
   max-width: 800px;
   margin: 60px auto;
   padding: 20px;
   font-family: 'Montserrat', sans-serif;
-  color: var(--text-color);
+  color: var(--text-color); /* verwendet CSS-Variable */
 }
 
+/* Gestaltung der Hauptüberschrift */
 .versand-container h1 {
   font-size: 2rem;
   margin-bottom: 20px;
-  color: var(--accent-color);
+  color: var(--accent-color); /* verwendet CSS-Variable */
 }
 
+/* Gestaltung der Zwischenüberschriften */
 .versand-container h2 {
   font-size: 1.3rem;
   margin-top: 30px;
   margin-bottom: 10px;
 }
 
+/* Fließtext und Listentext */
 .versand-container p,
 .versand-container ul {
   font-size: 1rem;
@@ -61,10 +87,12 @@
   color: var(--text-color);
 }
 
+/* Einzug für Aufzählungen */
 .versand-container ul {
   padding-left: 20px;
 }
 </style>
 
-
-<?php include 'view/layout/footer.php'; ?>
+<?php 
+include 'view/layout/footer.php'; 
+?>
