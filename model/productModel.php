@@ -165,3 +165,4 @@ function findSimilarProducts(array $product, int $limit = 2): array
 
     return getRandomProductsExcept($id, $limit);
 }
+
