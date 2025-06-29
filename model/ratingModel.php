@@ -5,8 +5,12 @@
 require_once 'model/db.php';
 
 /**
- * Ensure that rating tables and required columns exist.
- * Uses a static flag so the schema check runs only once per request.
+ * Prüft beim ersten Aufruf, ob die benötigten Tabellen und Spalten
+ * für Bewertungen vorhanden sind und legt sie bei Bedarf an.
+ * Dank eines statischen Flags passiert dies nur einmal pro Request.
+ *
+ * Redundanz: Für jede Spaltenprüfung wird beinahe identischer Code
+ * verwendet. Eine Hilfsfunktion könnte hier Wiederholungen vermeiden.
  */
 function ensureRatingSchema(): void {
     global $db;
@@ -67,7 +71,8 @@ function ensureRatingSchema(): void {
 }
 
 /**
- * Insert a new rating for the given product and return the inserted ID.
+ * Fügt eine neue Bewertung zu einem Produkt hinzu und gibt die erzeugte ID zurück.
+ * Optional kann eine Elternbewertung angegeben werden, falls es sich um eine Antwort handelt.
  */
 function addRating(int $productId, int $userId, string $displayName, int $stars, string $comment, array $imagePaths, ?int $parentId = null): int {
     ensureRatingSchema();
@@ -79,8 +84,8 @@ function addRating(int $productId, int $userId, string $displayName, int $stars,
 }
 
 /**
- * Fetch ratings for a product and optionally include the current user's vote.
- * Results are grouped so that replies follow their parent rating.
+ * Holt alle Bewertungen zu einem Produkt und ordnet Antworten unter ihre jeweilige Elternbewertung ein.
+ * Ist ein Nutzer angemeldet, wird dessen bisherige Stimme (Like/Dislike) mit ausgeliefert.
  */
 function getRatingsForProduct(int $productId, ?int $currentUserId = null): array {
     ensureRatingSchema();
@@ -156,7 +161,7 @@ function getRatingsForProduct(int $productId, ?int $currentUserId = null): array
 }
 
 /**
- * Calculate the average star rating for a product.
+ * Berechnet die durchschnittliche Sternebewertung eines Produkts.
  */
 function getAverageRating(int $productId): ?float {
     ensureRatingSchema();
@@ -168,8 +173,11 @@ function getAverageRating(int $productId): ?float {
 }
 
 /**
- * Delete a rating and any uploaded images. The SQL used for admin and user
- * deletion is almost identical and could be consolidated.
+ * Löscht eine Bewertung und entfernt eventuelle Bilder.
+ * Administratoren dürfen jede Bewertung entfernen, normale Nutzer nur ihre eigene.
+ *
+ * Redundanz: Die SQL-Abfragen für Admin und Nutzer unterscheiden sich nur durch
+ * einen zusätzlichen WHERE-Parameter und könnten vereint werden.
  */
 function deleteRating(int $ratingId, int $userId, bool $isAdmin): bool {
     ensureRatingSchema();
@@ -217,8 +225,8 @@ function deleteRating(int $ratingId, int $userId, bool $isAdmin): bool {
 }
 
 /**
- * Register a like for a rating and return updated vote counts.
- * Shares much of its logic with dislikeRating().
+ * Vermerkt ein "Like" zu einer Bewertung und liefert die neuen Stimmenzahlen zurück.
+ * Großteils identisch zu *dislikeRating()* und daher potenziell zusammenführbar.
  */
 function likeRating(int $ratingId, int $userId): array {
     ensureRatingSchema();
@@ -242,7 +250,7 @@ function likeRating(int $ratingId, int $userId): array {
 }
 
 /**
- * Register a dislike for a rating. Essentially the counterpart to likeRating().
+ * Vermerkt ein "Dislike". Aufbau und Ablauf entsprechen weitgehend dem der Like-Funktion.
  */
 function dislikeRating(int $ratingId, int $userId): array {
     ensureRatingSchema();
@@ -266,7 +274,7 @@ function dislikeRating(int $ratingId, int $userId): array {
 }
 
 /**
- * Remove a like from a rating for the given user.
+ * Entfernt das "Like" eines Nutzers von einer Bewertung.
  */
 function unlikeRating(int $ratingId, int $userId): array {
     ensureRatingSchema();
@@ -284,7 +292,7 @@ function unlikeRating(int $ratingId, int $userId): array {
 }
 
 /**
- * Remove a dislike from a rating for the given user.
+ * Hebt ein "Dislike" eines Nutzers auf.
  */
 function undislikeRating(int $ratingId, int $userId): array {
     ensureRatingSchema();
@@ -302,7 +310,7 @@ function undislikeRating(int $ratingId, int $userId): array {
 }
 
 /**
- * Return the like and dislike counts for a rating.
+ * Liefert die Anzahl der Likes und Dislikes einer Bewertung.
  */
 function getRatingVotes(int $ratingId): array {
     global $db;
@@ -313,8 +321,11 @@ function getRatingVotes(int $ratingId): array {
 }
 
 /**
- * Retrieve a single rating along with parent and user information.
- * Contains duplicated query logic depending on whether a current user is given.
+ * Lädt eine einzelne Bewertung inklusive Benutzer- und optionaler Elterninformationen.
+ * Abhängig davon, ob eine Nutzer-ID vorliegt, wird auch die eigene Stimme abgefragt.
+ *
+ * Redundanz: Die beiden SELECT-Abfragen sind bis auf den JOIN zu "rating_votes"
+ * nahezu identisch.
  */
 function getRating(int $ratingId, ?int $currentUserId = null): ?array {
     ensureRatingSchema();
