@@ -1,3 +1,4 @@
+// Sammlung gültiger Rabattcodes und deren Nachlass in Prozent
 const DISCOUNT_CODES = {
   12345: 10,
   54321: 15,
@@ -5,7 +6,8 @@ const DISCOUNT_CODES = {
   "00000": 5,
 };
 
-// Initialisierung pro Produktcontainer
+// Sobald der DOM geladen ist, wird für jedes Produkt die
+// Initialisierung ausgeführt
 document.addEventListener("DOMContentLoaded", () => {
   document
     .querySelectorAll("[data-product-index]")
@@ -15,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function setupProduct(section) {
   const idx = section.dataset.productIndex;
 
+  // Relevante Elemente innerhalb des Produktbereichs sammeln
   const qtyInput = section.querySelector(`#quantity-${idx}`);
   const mainImage = section.querySelector(`#main-image-${idx}`);
   const additionalImages = section.querySelectorAll(".additional-images img");
@@ -22,29 +25,37 @@ function setupProduct(section) {
   const desc = section.querySelector(`#description-full-${idx}`);
   const zoomContainer = section.querySelector(`#zoomContainer-${idx}`);
 
+  // Daten für Zoom-Ansicht speichern
   section._zoomData = { currentIndex: 0 };
 
+  // Vorschaubilder wechseln das Hauptbild
   additionalImages.forEach((img, i) =>
     img.addEventListener("click", () => changeImage(section, img.src, i))
   );
 
+  // Klick aufs Hauptbild öffnet die Zoom-Ansicht
   mainImage.addEventListener("click", () => openZoomModal(section));
 
+  // Ein-/Ausklappen der Produktbeschreibung
   if (toggleInfo) {
     toggleInfo.addEventListener("click", () => toggleDescription(section));
   }
 
+  // Zoom-Interaktion im Produktbild
   zoomContainer.addEventListener("mouseenter", () => enableZoom(section));
   zoomContainer.addEventListener("mouseleave", () => disableZoom(section));
   zoomContainer.addEventListener("mousemove", (e) => moveZoom(section, e));
 
+  // Preis neu berechnen, sobald Eingaben geändert werden
   qtyInput.addEventListener("input", () => updateDisplay(section));
   const giftWrapEl = section.querySelector(`#giftWrap-${idx}`);
   const pinInputEl = section.querySelector(`#pin-${idx}`);
   giftWrapEl?.addEventListener("change", () => updateDisplay(section));
   pinInputEl?.addEventListener("input", () => updateDisplay(section));
 
+  // Anzeige initial updaten
   updateDisplay(section);
+  // Elemente für den Produktvergleich
   const compareBtn = document.getElementById("showCompareForm");
   if (!compareBtn) return;
 
@@ -52,10 +63,12 @@ function setupProduct(section) {
   const select = document.getElementById("compareSelect");
   const submit = document.getElementById("compareSubmit");
 
+  // Formular zum Produktvergleich ein-/ausblenden
   compareBtn.addEventListener("click", () => {
     form.classList.toggle("hidden");
   });
 
+  // Bei Bestätigung auf die Detailseite mit beiden IDs springen
   submit.addEventListener("click", () => {
     const otherId = select.value;
     if (!otherId) return;
@@ -64,6 +77,7 @@ function setupProduct(section) {
   });
 }
 
+// Tauscht das Hauptbild aus und merkt sich die aktuelle Position
 function changeImage(section, src, index) {
   const idx = section.dataset.productIndex;
   const mainImage = section.querySelector(`#main-image-${idx}`);
@@ -80,6 +94,7 @@ function changeImage(section, src, index) {
   }
 }
 
+// Zeigt oder versteckt die vollständige Produktbeschreibung
 function toggleDescription(section) {
   const idx = section.dataset.productIndex;
   const desc = section.querySelector(`#description-full-${idx}`);
@@ -87,23 +102,28 @@ function toggleDescription(section) {
   const hidden = desc.classList.toggle("hidden");
   if (icon) icon.textContent = hidden ? "+" : "-";
 }
+// Aufpreis für Geschenkverpackung ermitteln
 function getGiftWrapCharge(section) {
   const idx = section.dataset.productIndex;
   const checkbox = section.querySelector(`#giftWrap-${idx}`);
   return checkbox?.checked ? 2 : 0;
 }
 
+// Basispreis des Produkts (ohne Rabatt)
 function getBasePrice(section) {
   return parseFloat(section.dataset.basePrice || 0);
 }
+// Vom Admin gesetzten Rabatt auslesen
 function getAdminDiscount(section) {
   return parseFloat(section.dataset.adminDiscount || 0);
 }
+// Preis nach Adminrabatt berechnen
 function getSalePrice(section) {
   const base = getBasePrice(section);
   const d = getAdminDiscount(section);
   return d > 0 ? base * (1 - d / 100) : base;
 }
+// Nicht verwendet: berechnet den Gesamtpreis inkl. Geschenkoption
 function calculateBasePrice(section) {
   const base = getSalePrice(section); // brutto Basis nach Adminrabatt
   const giftCharge = getGiftWrapCharge(section);
@@ -114,6 +134,7 @@ function calculateBasePrice(section) {
   return (base + giftCharge) * qty;
 }
 
+// Berechnet Endpreis und angewandten Rabatt für die aktuellen Eingaben
 function calculatePrice(section) {
   const idx = section.dataset.productIndex;
   const qty = parseInt(section.querySelector(`#quantity-${idx}`).value) || 1;
@@ -132,6 +153,7 @@ function calculatePrice(section) {
   return { original, final, discount };
 }
 
+// Aktualisiert die Preis­- und Rabatt-Anzeige im DOM
 function updateDisplay(section) {
   const idx = section.dataset.productIndex;
   const { original, final, discount } = calculatePrice(section);
@@ -181,11 +203,14 @@ function updateDisplay(section) {
 }
 
 // ---- Zoom Handling ----
+// Aktuell geöffnete Sektion (wird derzeit nicht weiter verwendet)
 let currentSection = null;
+// Bildquellen für die Zoom-Galerie
 let zoomImages = [];
 let currentImageIndex = 0;
 let zoomScale = 1;
 
+// Öffnet das Bild in einer Modal-Galerie
 function openZoomModal(section) {
   currentSection = section;
   const idx = section.dataset.productIndex;
@@ -202,37 +227,44 @@ function openZoomModal(section) {
   document.getElementById("zoomModal").classList.remove("hidden");
 }
 
+// Schliesst die Zoom-Galerie wieder
 function closeZoomModal() {
   document.body.classList.remove("modal-open");
   document.getElementById("zoomModal").classList.add("hidden");
 }
 
+// Nächstes Bild in der Zoom-Ansicht anzeigen
 function nextZoomImage() {
   currentImageIndex = (currentImageIndex + 1) % zoomImages.length;
   updateZoomImage();
 }
 
+// Vorheriges Bild in der Zoom-Ansicht anzeigen
 function prevZoomImage() {
   currentImageIndex =
     (currentImageIndex - 1 + zoomImages.length) % zoomImages.length;
   updateZoomImage();
 }
 
+// Bild vergrößern
 function zoomIn() {
   zoomScale = Math.min(3, zoomScale + 0.25);
   updateZoomImage();
 }
 
+// Bild verkleinern
 function zoomOut() {
   zoomScale = Math.max(0.5, zoomScale - 0.25);
   updateZoomImage();
 }
 
+// Zoom zurücksetzen
 function resetZoom() {
   zoomScale = 1;
   updateZoomImage();
 }
 
+// Aktuelles Zoom-Bild und Skalierung setzen
 function updateZoomImage() {
   const zoomImage = document.getElementById("zoom-image");
   zoomImage.src = zoomImages[currentImageIndex];
@@ -240,6 +272,7 @@ function updateZoomImage() {
 }
 
 // 🎯 Tastatursteuerung fürs Modal
+// Unterstützt Navigation und Zoom per Tastatur
 document.addEventListener("keydown", (e) => {
   const modal = document.getElementById("zoomModal");
   if (!modal || modal.classList.contains("hidden")) return;
@@ -270,6 +303,7 @@ document.addEventListener("keydown", (e) => {
 // ✨ Klick außerhalb vom Content schließt das Modal
 const zoomModalEl = document.getElementById("zoomModal");
 if (zoomModalEl) {
+  // Klick auf den Hintergrund schließt die Modalansicht
   zoomModalEl.addEventListener("click", (e) => {
     const content = document.getElementById("zoomModalContent");
     if (content && !content.contains(e.target)) {
@@ -278,6 +312,7 @@ if (zoomModalEl) {
   });
 }
 
+// Aktiviert den Hover-Zoom auf dem Hauptbild
 function enableZoom(section) {
   const idx = section.dataset.productIndex;
   const container = section.querySelector(`#zoomContainer-${idx}`);
@@ -287,6 +322,7 @@ function enableZoom(section) {
   container.style.backgroundSize = `150%`;
   container.style.backgroundPosition = `center center`;
 }
+// Deaktiviert den Hover-Zoom
 function disableZoom(section) {
   const idx = section.dataset.productIndex;
   const container = section.querySelector(`#zoomContainer-${idx}`);
@@ -295,6 +331,7 @@ function disableZoom(section) {
   container.style.backgroundSize = "";
   container.style.backgroundPosition = "";
 }
+// Verschiebt den Hintergrund entsprechend der Mausposition
 function moveZoom(section, e) {
   const container = section.querySelector(
     `#zoomContainer-${section.dataset.productIndex}`
@@ -307,6 +344,7 @@ function moveZoom(section, e) {
 
 // ----- Steuerrechner -----
 // Ausgabe des Bruttopreises für ein einzelnes Eingabefeld
+// Wird auf der Produktdetailseite verwendet
 window.zeigePreis = function () {
   const nettoInput = document.getElementById("netto");
   const ergebnisEl = document.getElementById("bruttoErgebnis");
@@ -323,12 +361,14 @@ window.zeigePreis = function () {
 };
 
 // Berechnet einen Bruttopreis aus einem Netto-Preis
+// Kann universell für andere Eingaben genutzt werden
 window.getTotalPrice = function (priceWOTax) {
   const TAX_RATE = 0.19;
   return priceWOTax * (1 + TAX_RATE);
 };
 
 // Animation aus anderen Skripten genutzt
+// Lässt ein Symbol von einem Start-Element zum Ziel fliegen
 function flyToTarget(startEl, targetSelector) {
   const target = document.querySelector(targetSelector);
   if (!startEl || !target) return;
@@ -368,6 +408,7 @@ function flyToTarget(startEl, targetSelector) {
     }
   });
 }
+// Setzt alle benutzeränderten Felder zurück
 function resetFields(section) {
   const idx = section.dataset.productIndex;
 
@@ -395,6 +436,7 @@ function resetFields(section) {
   updateDisplay(section);
 }
 
+// Nicht verwendet: zeigt nur einen Preis ohne Rabatt an
 function resetFinalPriceDisplay(price, section) {
   const idx = section.dataset.productIndex;
   section.querySelector(`#original-price-${idx}`).style.display = "none";
