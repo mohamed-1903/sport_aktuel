@@ -1,6 +1,6 @@
 <?php include __DIR__ . '/../layout/header.php'; ?>
 
-<section class="form-wrapper" style="padding: 2em; max-width: 1000px; margin-top: 15px;">
+<section class="form-wrapper" style="padding: 2em; max-width: 10000px; margin: 20px;">
   <h1 style="text-align: center;">👥 Benutzerverwaltung</h1>
   <?php if (empty($allUsers)): ?>
     <p style="text-align: center;">Es wurden keine Benutzer gefunden.</p>
