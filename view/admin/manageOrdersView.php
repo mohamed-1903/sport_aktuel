@@ -1,6 +1,6 @@
 <?php include __DIR__ . '/../layout/header.php'; ?>
 
-<section class="form-wrapper" style="padding: 2em; max-width: 1000px; margin: auto;">
+<section class="form-wrapper" style="padding: 2em; max-width: 10000px; margin: 20px;">
   <?php
   $statusTitleMap = [
     'neu' => 'Neue Aufträge',
