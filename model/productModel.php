@@ -100,16 +100,26 @@ function deleteProduct(int $productId): bool
     return $stmt->execute([$productId]);
 }
 
-function getSimilarProducts(string $category, ?string $subcategory, int $excludeId, int $limit = 2): array
+function getSimilarProducts(string $category, ?string $subcategory, ?string $brand, int $excludeId, int $limit = 2): array
 {
     global $db;
 
-    $sql = 'SELECT * FROM products WHERE id != ? AND LOWER(category) = LOWER(?)';
-    $params = [$excludeId, $category];
+    $sql = 'SELECT * FROM products WHERE id != ?';
+    $params = [$excludeId];
+
+    if ($category !== null && trim($category) !== '') {
+        $sql .= ' AND LOWER(category) = LOWER(?)';
+        $params[] = $category;
+    }
 
     if ($subcategory !== null && trim($subcategory) !== '') {
         $sql .= ' AND LOWER(subcategory) = LOWER(?)';
         $params[] = $subcategory;
+    }
+
+    if ($brand !== null && trim($brand) !== '') {
+        $sql .= ' AND LOWER(marke) = LOWER(?)';
+        $params[] = $brand;
     }
 
     $sql .= ' ORDER BY RAND() LIMIT ' . (int)$limit;
@@ -119,4 +129,39 @@ function getSimilarProducts(string $category, ?string $subcategory, int $exclude
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     return array_map('mapProductRow', $rows);
+}
+
+function getRandomProductsExcept(int $excludeId, int $limit = 2): array
+{
+    global $db;
+    $sql = 'SELECT * FROM products WHERE id != ? ORDER BY RAND() LIMIT ' . (int)$limit;
+    $stmt = $db->prepare($sql);
+    $stmt->execute([$excludeId]);
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return array_map('mapProductRow', $rows);
+}
+
+function findSimilarProducts(array $product, int $limit = 2): array
+{
+    $category = $product['category'] ?? '';
+    $subcategory = $product['subcategory'] ?? '';
+    $brand = $product['marke'] ?? '';
+    $id = $product['id'] ?? 0;
+
+    $result = getSimilarProducts($category, $subcategory, $brand, $id, $limit);
+    if (count($result) >= $limit) {
+        return $result;
+    }
+
+    $result = getSimilarProducts($category, null, $brand, $id, $limit);
+    if (count($result) >= $limit) {
+        return $result;
+    }
+
+    $result = getSimilarProducts($category, null, null, $id, $limit);
+    if (count($result) >= $limit) {
+        return $result;
+    }
+
+    return getRandomProductsExcept($id, $limit);
 }
