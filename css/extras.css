@@ -29,6 +29,38 @@
   cursor: pointer;
 }
 
+.sidebar-toggle {
+  display: none;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  font-size: 14px;
+  padding: 6px 8px;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.sidebar-toggle {
+  display: none;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  font-size: 14px;
+  padding: 6px 8px;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.sidebar-toggle {
+  display: none;
+}
+
+.sidebar-toggle {
+  display: none;
+}
+
 .main-content {
   flex: 1;
   display: flex;
@@ -69,6 +101,7 @@
   max-width: 100%;
 }
 
+
 .filterbar.hidden {
   display: none;
 }
@@ -83,6 +116,7 @@
   width: 100%;
   max-width: 100%;
 }
+
 
 .filterbar select,
 .filterbar input[type="range"],
@@ -329,6 +363,7 @@
   margin-bottom: 0;
   width: 100%;
 }
+
 
 /* Kartenansicht für Produkte im Grid */
 .einzelprodukt-grid .einzelprodukt {
@@ -882,6 +917,8 @@ body.light-mode .zoom-close {
   word-break: break-word; /* verhindert horizontales Scrollen */
 }
 
+
+
 .cart-table td:first-child {
   text-align: center;
 }
@@ -1058,6 +1095,7 @@ body.light-mode .zoom-close {
     width: 100%;
   }
 }
+
 
 .btn-zurueck-startseite {
   background-color: var(--accent-color);
