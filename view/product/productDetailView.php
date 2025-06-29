@@ -183,7 +183,6 @@
   <button id="showCompareBtn" class="compare-toggle-btn" aria-label="Vergleich öffnen" type="button">+</button>
   <div id="compareSection" class="compare-section hidden">
     <label for="compareInput">Produkt zum Vergleichen auswählen:</label>
-
     <div class="search-wrapper compare-search">
       <input type="text" id="compareShadow" class="compare-shadow" readonly tabindex="-1" />
       <input id="compareInput" list="compareOptions" placeholder="Name eingeben" autocomplete="off">
@@ -250,7 +249,6 @@
       </ul>
     </section>
   <?php endif; ?>
-
   <?php foreach ($productsToShow as $index => $product):
     $ratings = getRatingsForProduct((int)$product['id'], $_SESSION['user_id'] ?? null);
 
