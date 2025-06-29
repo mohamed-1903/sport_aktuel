@@ -179,6 +179,26 @@
     </section>
     <?php endforeach; ?>
 
+  <button id="showCompareBtn" class="compare-toggle-btn" aria-label="Vergleich öffnen" type="button">+</button>
+  <div id="compareSection" class="compare-section hidden">
+    <label for="compareInput">Produkt zum Vergleichen auswählen:</label>
+
+    <div class="search-wrapper compare-search">
+      <input type="text" id="compareShadow" class="compare-shadow" readonly tabindex="-1" />
+      <input id="compareInput" list="compareOptions" placeholder="Name eingeben" autocomplete="off">
+      <ul id="compareSuggestions" class="autocomplete-liste"></ul>
+    </div>
+    <?php $selectedIds = array_column($productsToShow, 'id'); ?>
+    <datalist id="compareOptions">
+      <?php foreach ($allProducts as $p): ?>
+        <?php if (!in_array($p['id'], $selectedIds)): ?>
+          <option data-id="<?= (int)$p['id'] ?>" value="<?= htmlspecialchars($p['name']) ?>"></option>
+        <?php endif; ?>
+      <?php endforeach; ?>
+    </datalist>
+    <button id="compareBtn" class="btn-compare">⚖️ Vergleichen</button>
+  </div>
+
   <?php if (!empty($similarProducts)): ?>
     <section class="similar-products">
       <h3>Ähnliche Produkte</h3>
@@ -219,25 +239,6 @@
       </ul>
     </section>
   <?php endif; ?>
-
-  <button id="showCompareBtn" class="compare-toggle-btn" aria-label="Vergleich öffnen" type="button">+</button>
-  <div id="compareSection" class="compare-section hidden">
-    <label for="compareInput">Produkt zum Vergleichen auswählen:</label>
-    <div class="search-wrapper compare-search">
-      <input type="text" id="compareShadow" class="compare-shadow" readonly tabindex="-1" />
-      <input id="compareInput" list="compareOptions" placeholder="Name eingeben" autocomplete="off">
-      <ul id="compareSuggestions" class="autocomplete-liste"></ul>
-    </div>
-    <?php $selectedIds = array_column($productsToShow, 'id'); ?>
-    <datalist id="compareOptions">
-      <?php foreach ($allProducts as $p): ?>
-        <?php if (!in_array($p['id'], $selectedIds)): ?>
-          <option data-id="<?= (int)$p['id'] ?>" value="<?= htmlspecialchars($p['name']) ?>"></option>
-        <?php endif; ?>
-      <?php endforeach; ?>
-    </datalist>
-    <button id="compareBtn" class="btn-compare">⚖️ Vergleichen</button>
-  </div>
 
 
   <?php foreach ($productsToShow as $index => $product):
