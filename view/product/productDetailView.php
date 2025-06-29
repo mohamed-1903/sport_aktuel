@@ -251,48 +251,6 @@
     </section>
   <?php endif; ?>
 
-  <?php if (!empty($similarProducts)): ?>
-    <section class="similar-products">
-      <h3>Ähnliche Produkte</h3>
-      <ul class="einzelprodukt-grid">
-        <?php foreach ($similarProducts as $sp): ?>
-          <?php
-            $preis = (float)($sp['priceValue'] ?? $sp['price']);
-            $discount = $sp['discount'] ?? 0;
-            $salePrice = $discount > 0 ? $preis * (1 - $discount / 100) : $preis;
-          ?>
-          <li class="einzelprodukt">
-            <div class="image-wrapper">
-              <img src="<?= htmlspecialchars($sp['image_main'] ?? '') ?>" alt="<?= htmlspecialchars($sp['name'] ?? '') ?>">
-            </div>
-            <div class="produkt-info">
-              <h3><?= htmlspecialchars($sp['name'] ?? '') ?></h3>
-              <?php if ($discount > 0): ?>
-                <p>
-                  <del class="old-price">
-                    <?= number_format($preis, 2, ',', '.') ?>€ inkl. Mwst.
-                  </del>
-                  <span><?= number_format($salePrice, 2, ',', '.') ?>€ inkl. Mwst.</span>
-                  <span class="rabatt">-<?= $discount ?>%</span>
-                </p>
-              <?php else: ?>
-                <p><?= number_format($preis, 2, ',', '.') ?>€ <span>inkl. Mwst.</span></p>
-              <?php endif; ?>
-            </div>
-            <div class="button-row" data-iid="<?= (int)$sp['id'] ?>">
-              <a href="index.php?page=product&action=detail&id=<?= (int)$sp['id'] ?>">
-                <button>Details</button>
-              </a>
-              <button class="btn-add-to-cart" data-iid="<?= (int)$sp['id'] ?>" data-name="<?= htmlspecialchars($sp['name'] ?? '') ?>" data-price="<?= $salePrice ?>" data-discount="<?= $discount ?>" data-image="<?= htmlspecialchars($sp['image_main'] ?? '') ?>">🛒</button>
-              <button class="btn-add-to-watch" data-iid="<?= (int)$sp['id'] ?>" data-name="<?= htmlspecialchars($sp['name'] ?? '') ?>" data-price="<?= $salePrice ?>" data-discount="<?= $discount ?>" data-image="<?= htmlspecialchars($sp['image_main'] ?? '') ?>">🤍</button>
-            </div>
-          </li>
-        <?php endforeach; ?>
-      </ul>
-    </section>
-  <?php endif; ?>
-
-
   <?php foreach ($productsToShow as $index => $product):
     $ratings = getRatingsForProduct((int)$product['id'], $_SESSION['user_id'] ?? null);
 
