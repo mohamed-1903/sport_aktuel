@@ -305,8 +305,6 @@
         </div>
       <?php endforeach; ?>
 
-
-
     </section>
     <?php if (isset($_SESSION['user_id'])): ?>
       <button type="button" class="open-review-modal btn-review" data-product-id="<?= (int)$product['id'] ?>">Bewertung schreiben</button>
