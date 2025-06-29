@@ -120,8 +120,10 @@ function getSimilarProducts(int $productId, int $limit = 4): array
         $sql .= ' AND subcategory = ?';
         $params[] = $subcategory;
     }
-    $sql .= ' ORDER BY RAND() LIMIT ?';
-    $params[] = $limit;
+    // MariaDB does not allow using a bound parameter for the LIMIT clause, so
+    // cast it to an integer and append it directly to the SQL string
+    $limit = max(1, (int)$limit);
+    $sql .= ' ORDER BY RAND() LIMIT ' . $limit;
 
     $stmt = $db->prepare($sql);
     $stmt->execute($params);
