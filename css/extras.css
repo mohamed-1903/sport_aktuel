@@ -19,6 +19,10 @@
   display: none;
 }
 
+.sidebar-toggle {
+  display: none;
+}
+
 .main-content {
   flex: 1;
   display: flex;
@@ -853,6 +857,49 @@ body.light-mode .zoom-close {
   -webkit-overflow-scrolling: touch;
 }
 
+.table-responsive {
+  overflow-x: auto;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+
+}
+
 .cart-table thead {
   background-color: var(--card-bg); /* ✅ dynamisch */
   color: var(--text-color);
@@ -1044,6 +1091,8 @@ body.light-mode .zoom-close {
     width: 100%;
   }
 }
+
+
 
 .btn-zurueck-startseite {
   background-color: var(--accent-color);

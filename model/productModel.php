@@ -99,3 +99,34 @@ function deleteProduct(int $productId): bool
     $stmt = $db->prepare('DELETE FROM products WHERE id = ?');
     return $stmt->execute([$productId]);
 }
+
+function getSimilarProducts(string $category, ?string $subcategory, ?string $brand, int $excludeId, int $limit = 2): array
+{
+    global $db;
+
+    $sql = 'SELECT * FROM products WHERE id != ?';
+    $params = [$excludeId];
+
+    if ($category !== null && trim($category) !== '') {
+        $sql .= ' AND LOWER(category) = LOWER(?)';
+        $params[] = $category;
+    }
+
+    if ($subcategory !== null && trim($subcategory) !== '') {
+        $sql .= ' AND LOWER(subcategory) = LOWER(?)';
+        $params[] = $subcategory;
+    }
+
+    if ($brand !== null && trim($brand) !== '') {
+        $sql .= ' AND LOWER(marke) = LOWER(?)';
+        $params[] = $brand;
+    }
+
+    $sql .= ' ORDER BY RAND() LIMIT ' . (int)$limit;
+
+    $stmt = $db->prepare($sql);
+    $stmt->execute($params);
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return array_map('mapProductRow', $rows);
+}
