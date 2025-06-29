@@ -45,6 +45,10 @@ switch ($action) {
         $allProducts = getAllProducts();
         $currentId = $productsToShow[0]['id'];
 
+        // Dynamisch passende Produkte ermitteln
+        $baseProduct = $productsToShow[0];
+
+        $similarProducts = findSimilarProducts($baseProduct, 2);
         // Vorschläge für die Bewertungsleiste laden
         $suggestionsFile = 'data/review_suggestions.json';
         $reviewSuggestions = [];
@@ -77,6 +81,7 @@ switch ($action) {
         require 'view/product/searchResultsView.php';
         break;
     case 'list':
+
     default:
         $category = $_GET['category'] ?? '';
         $subcategory = $_GET['subcategory'] ?? '';

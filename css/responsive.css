@@ -49,6 +49,7 @@
   }
   .einzelprodukt-grid .produkt-info {
     text-align: center;
+
   }
 }
 
@@ -138,7 +139,7 @@
     z-index: 2000;
   }
   div {
-    text-align: right;
+    text-align: center;
   }
 
   /* Navigation fixieren und von links einblenden */
@@ -256,6 +257,7 @@
   }
   .einzelprodukt-grid .produkt-info {
     text-align: center;
+
   }
   .einzelprodukt-grid .button-row {
     justify-content: center;
@@ -266,6 +268,7 @@
   .btn-zurueck-startseite {
     display: block;
     margin: 1rem auto;
+
   }
 
   /* Filter- und Layout-Buttons umbrechen lassen */
@@ -337,6 +340,7 @@
     grid-template-areas:
       "logo actions"
       "search search";
+
     align-items: center;
     gap: 6px;
     padding: 5px 0;
@@ -357,6 +361,7 @@
     display: flex;
     justify-content: flex-end;
     gap: 6px;
+
   }
   .action-buttons button {
     padding: 4px 8px;
