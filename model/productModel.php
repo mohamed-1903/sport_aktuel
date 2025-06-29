@@ -187,3 +187,4 @@ function findSimilarProducts(array $product, int $limit = 2): array
 
     return array_slice($result, 0, $limit);
 }
+

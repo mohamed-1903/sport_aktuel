@@ -49,7 +49,6 @@ switch ($action) {
         $baseProduct = $productsToShow[0];
 
         $similarProducts = findSimilarProducts($baseProduct, 2);
-
         // Vorschläge für die Bewertungsleiste laden
         $suggestionsFile = 'data/review_suggestions.json';
         $reviewSuggestions = [];
