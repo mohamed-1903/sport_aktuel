@@ -66,22 +66,23 @@ function addProduct(array $product): bool
 {
     global $db;
 
-        $stmt = $db->prepare("INSERT INTO products (name, price, category, subcategory, description, image_Main, sizes, marke, farbe, geschlecht)
-                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $db->prepare(
+        "INSERT INTO products (name, price, category, subcategory, description, image_main, sizes, marke, farbe, geschlecht)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    );
 
-        $sizes = json_encode($product['sizes']);
+    $sizes = json_encode($product['sizes']);
 
-        return $stmt->execute([
-            $product['name'],
-            $product['price'],
-            $product['category'],
-            $product['subcategory'],
-            $product['description'],
-            $product['imageMain'],
-            $sizes,
-            $product['marke'],
-            $product['farbe'],
-
+    return $stmt->execute([
+        $product['name'],
+        $product['price'],
+        $product['category'],
+        $product['subcategory'],
+        $product['description'],
+        $product['imageMain'],
+        $sizes,
+        $product['marke'],
+        $product['farbe'],
         $product['geschlecht']
     ]);
 }
@@ -98,4 +99,71 @@ function deleteProduct(int $productId): bool
     global $db;
     $stmt = $db->prepare('DELETE FROM products WHERE id = ?');
     return $stmt->execute([$productId]);
+}
+
+function getSimilarProducts(string $category, ?string $subcategory, ?string $brand, int $excludeId, int $limit = 2): array
+{
+    global $db;
+
+    $filters = [
+        [$category, $subcategory, $brand],
+        [$category, $subcategory, null],
+        [$category, null, $brand],
+        [$category, null, null],
+        [null, null, $brand],
+    ];
+
+    $result = [];
+    $seen   = [];
+
+    foreach ($filters as [$cat, $subcat, $br]) {
+        $sql    = 'SELECT * FROM products WHERE id != ?';
+        $params = [$excludeId];
+
+        if ($cat !== null && trim($cat) !== '') {
+            $sql     .= ' AND LOWER(category) = LOWER(?)';
+            $params[] = $cat;
+        }
+        if ($subcat !== null && trim($subcat) !== '') {
+            $sql     .= ' AND LOWER(subcategory) = LOWER(?)';
+            $params[] = $subcat;
+        }
+        if ($br !== null && trim($br) !== '') {
+            $sql     .= ' AND LOWER(marke) = LOWER(?)';
+            $params[] = $br;
+        }
+
+        $sql .= ' ORDER BY RAND()';
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute($params);
+
+        while (($row = $stmt->fetch(PDO::FETCH_ASSOC)) !== false) {
+            if (!isset($seen[$row['id']])) {
+                $result[]        = mapProductRow($row);
+                $seen[$row['id']] = true;
+                if (count($result) >= $limit) {
+                    break 2;
+                }
+            }
+        }
+    }
+
+    if (count($result) < $limit) {
+        $sql  = 'SELECT * FROM products WHERE id != ? ORDER BY RAND()';
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$excludeId]);
+
+        while (($row = $stmt->fetch(PDO::FETCH_ASSOC)) !== false) {
+            if (!isset($seen[$row['id']])) {
+                $result[]        = mapProductRow($row);
+                $seen[$row['id']] = true;
+                if (count($result) >= $limit) {
+                    break;
+                }
+            }
+        }
+    }
+
+    return array_slice($result, 0, $limit);
 }

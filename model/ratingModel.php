@@ -91,6 +91,7 @@ function getRatingsForProduct(int $productId, ?int $currentUserId = null): array
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $names = [];
+    $comments = [];
     foreach ($rows as &$row) {
         if (!empty($row['image_paths'])) {
             $row['image_paths'] = json_decode($row['image_paths'], true) ?: [];
@@ -100,13 +101,17 @@ function getRatingsForProduct(int $productId, ?int $currentUserId = null): array
             $row['image_paths'] = [];
         }
         $names[$row['id']] = $row['display_name'] ?: $row['username'];
+        $comments[$row['id']] = $row['comment'];
     }
     unset($row);
 
     foreach ($rows as &$row) {
         $row['parent_name'] = null;
+        $row['parent_comment'] = null;
         if (!empty($row['parent_id']) && isset($names[$row['parent_id']])) {
             $row['parent_name'] = $names[$row['parent_id']];
+            $snippet = $comments[$row['parent_id']] ?? '';
+            $row['parent_comment'] = mb_strimwidth($snippet, 0, 60, '…');
         }
     }
     unset($row);
@@ -117,7 +122,6 @@ function getRatingsForProduct(int $productId, ?int $currentUserId = null): array
         $grouped[$parent][] = $row;
     }
 
- 
     $ordered = [];
     $add = static function (array $list, &$ordered, &$grouped) use (&$add) {
         usort($list, static fn($a, $b) => strtotime($a['created_at']) <=> strtotime($b['created_at']));
@@ -277,7 +281,7 @@ function getRating(int $ratingId, ?int $currentUserId = null): ?array {
     if ($currentUserId) {
         $stmt = $db->prepare(
             'SELECT r.*, u.username, rv.vote AS user_vote,
-                    p.display_name AS parent_display_name, pu.username AS parent_username
+                    p.display_name AS parent_display_name, pu.username AS parent_username, p.comment AS parent_comment
              FROM ratings r
              JOIN users u ON r.user_id = u.id
              LEFT JOIN rating_votes rv ON rv.rating_id = r.id AND rv.user_id = ?
@@ -289,7 +293,7 @@ function getRating(int $ratingId, ?int $currentUserId = null): ?array {
     } else {
         $stmt = $db->prepare(
             'SELECT r.*, u.username,
-                    p.display_name AS parent_display_name, pu.username AS parent_username
+                    p.display_name AS parent_display_name, pu.username AS parent_username, p.comment AS parent_comment
              FROM ratings r
              JOIN users u ON r.user_id = u.id
              LEFT JOIN ratings p ON r.parent_id = p.id
@@ -309,8 +313,12 @@ function getRating(int $ratingId, ?int $currentUserId = null): ?array {
         $row['image_paths'] = [];
     }
     $row['parent_name'] = null;
+    $row['parent_comment'] = null;
     if (!empty($row['parent_id'])) {
         $row['parent_name'] = $row['parent_display_name'] ?: $row['parent_username'];
+        if (!empty($row['parent_comment'])) {
+            $row['parent_comment'] = mb_strimwidth($row['parent_comment'], 0, 60, '…');
+        }
     }
     unset($row['parent_display_name'], $row['parent_username']);
     return $row;
