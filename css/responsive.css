@@ -167,10 +167,20 @@
     flex-direction: column;
   }
 
+  .sidebar-toggle {
+    display: block;
+    margin-bottom: 10px;
+  }
+
   .sidebar {
     width: 100%;
     position: static;
     top: auto;
+    display: none;
+  }
+
+  .sidebar.mobile-open {
+    display: block;
   }
 
   /* Footer für kleinere Bildschirme */

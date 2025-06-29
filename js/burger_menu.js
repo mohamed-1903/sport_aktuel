@@ -16,11 +16,24 @@ document.addEventListener('DOMContentLoaded', () => {
   dropdownLinks.forEach((link) => {
     link.addEventListener('click', (e) => {
       if (window.innerWidth <= 768) {
-        e.preventDefault();
         const item = link.parentElement;
         const isOpen = item.classList.contains('open');
-        nav.querySelectorAll('.dropdown').forEach((el) => el.classList.remove('open'));
-        if (!isOpen) item.classList.add('open');
+        if (!isOpen) {
+          e.preventDefault();
+          nav.querySelectorAll('.dropdown').forEach((el) => el.classList.remove('open'));
+          item.classList.add('open');
+        } else {
+          toggleMenu();
+        }
+      }
+    });
+  });
+
+  const submenuLinks = nav.querySelectorAll('.dropdown-menu a');
+  submenuLinks.forEach((lnk) => {
+    lnk.addEventListener('click', () => {
+      if (window.innerWidth <= 768) {
+        toggleMenu();
       }
     });
   });
@@ -33,3 +46,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+

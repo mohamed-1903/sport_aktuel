@@ -176,6 +176,9 @@ function initFilterAndSearch() {
   adjustFilterBar();
   window.addEventListener("resize", adjustFilterBar);
 
+  adjustSidebar();
+  window.addEventListener("resize", adjustSidebar);
+
   // alle Filter zurücksetzen und Pagination initial erstellen
   resetFilter();
   updatePagination();
@@ -632,4 +635,21 @@ window.addEventListener("load", () => {
 window.addEventListener("resize", () => {
   updatePagination();
 });
+
+window.toggleSidebar = function () {
+  const bar = document.querySelector(".sidebar");
+  const btn = document.querySelector(".sidebar-toggle");
+  if (!bar || !btn) return;
+  const open = bar.classList.toggle("mobile-open");
+  btn.textContent = open ? "Kategorien ausblenden ▲" : "Kategorien anzeigen ▼";
+};
+
+function adjustSidebar() {
+  const bar = document.querySelector(".sidebar");
+  const btn = document.querySelector(".sidebar-toggle");
+  if (!bar || !btn) return;
+  const mobile = window.innerWidth <= 768;
+  btn.style.display = mobile ? "block" : "none";
+  if (!mobile) bar.classList.remove("mobile-open");
+}
 
