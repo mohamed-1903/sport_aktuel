@@ -1900,3 +1900,13 @@ body.light-mode .welcome-overlay {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }
 }
+
+.similar-products .einzelprodukt-grid .image-wrapper {
+  height: 160px;
+}
+
+.similar-products .einzelprodukt-grid .image-wrapper img {
+  max-height: 100%;
+  width: auto;
+  object-fit: contain;
+}
