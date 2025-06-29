@@ -1,4 +1,7 @@
 <?php
+//Mohamed
+
+
 // controller/authController.php
 // Verarbeitet Registrierung, Login und Logout
 require_once 'model/userModel.php';

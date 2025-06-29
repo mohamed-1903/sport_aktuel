@@ -1,4 +1,4 @@
-{
+{ 
   "products": [
     {
       "iid": 1,
@@ -96,7 +96,7 @@
       "priceValue": 89.99,
       "imageMain": "img/dortmund.jpg",
       "images": ["img/dortmund.jpg", "img/dortmund1.jpg"],
-      "description": "Ob im Stadion oder zuhause auf der Couch – deine Unterstützung zeigst du am besten durch das super bequeme Modell in Gelb. PUMA hat mit dem Sporttop ein richtig hervorragendes Produkt erschaffen. Das Heim-Sporttop, wie es die Spieler in der 1. Bundesliga tragen, sorgt bei echten Borussia Dortmund-Anhängern für wahre Begeisterung. Es ist atmungsaktiv, super bequem und leicht. Du bekommst eine hohe Strapazierfähigkeit geboten. Mit diesem Sportshirt bist du für jede Einheit ideal gekleidet. Optisch besticht es mit einem Vereinswappen auf der Brust.",
+      "description": "Ob im Stadion oder zuhause auf der Couch - deine Unterstützung zeigst du am besten durch das super bequeme Modell in Gelb. PUMA hat mit dem Sporttop ein richtig hervorragendes Produkt erschaffen. Das Heim-Sporttop, wie es die Spieler in der 1. Bundesliga tragen, sorgt bei echten Borussia Dortmund-Anhängern für wahre Begeisterung. Es ist atmungsaktiv, super bequem und leicht. Du bekommst eine hohe Strapazierfähigkeit geboten. Mit diesem Sportshirt bist du für jede Einheit ideal gekleidet. Optisch besticht es mit einem Vereinswappen auf der Brust.",
       "sizes": ["XS", "S", "M", "L", "XL", "2XL"],
       "category": "Sportbekleidung",
       "subcategory": "Trikots",
@@ -146,7 +146,7 @@
         "img/realmadrid2.jpg",
         "img/realmadrid3.jpg"
       ],
-      "description": "Für echte Fans – das Modell in Weiß begleitet dich ins Stadion, zum Public Viewing oder einfach zum Sportabend mit Freunden. Das adidas Sporttop sorgt für wahre Begeisterung. Zeige deine Zugehörigkeit – mit diesem Real Madrid-Sporttop erweiterst du deine Fan-Kollektion um ein Kleidungsstück im Original-Design. Es ist atmungsaktiv, bequem und leicht. Obendrein bietet es dir eine hohe Strapazierfähigkeit. Mit diesem Trikot bist du für die nächste Einheit perfekt ausgestattet. Für eine besondere Belüftung sorgen die nützlichen Mesh-Einsätze an der Seite. Es besticht optisch mit einem Vereinswappen auf der Brust.",
+      "description": "Für echte Fans - das Modell in Weiß begleitet dich ins Stadion, zum Public Viewing oder einfach zum Sportabend mit Freunden. Das adidas Sporttop sorgt für wahre Begeisterung. Zeige deine Zugehörigkeit - mit diesem Real Madrid-Sporttop erweiterst du deine Fan-Kollektion um ein Kleidungsstück im Original-Design. Es ist atmungsaktiv, bequem und leicht. Obendrein bietet es dir eine hohe Strapazierfähigkeit. Mit diesem Trikot bist du für die nächste Einheit perfekt ausgestattet. Für eine besondere Belüftung sorgen die nützlichen Mesh-Einsätze an der Seite. Es besticht optisch mit einem Vereinswappen auf der Brust.",
       "sizes": ["XS", "S", "M", "L", "XL", "2XL"],
       "category": "Sportbekleidung",
       "subcategory": "Trikots",
@@ -161,7 +161,7 @@
       "priceValue": 99.99,
       "imageMain": "img/mancity.jpg",
       "images": ["img/mancity.jpg", "img/mancity1.jpg"],
-      "description": "Echte Fans zeigen ihre Begeisterung immer und überall – das super bequeme Modell in Blau begleitet dich ins Stadion, zum Public Viewing oder einfach zum Sportabend mit Freunden. PUMA hat mit dem Sportshirt ein sehr perfektes Produkt erschaffen. Jeder eingefleischte Manchester City-Unterstützer benötigt dieses Heim-Sportshirt, denn auch die Spieler tragen es in der Premier League. Das leichte, atmungsaktive, super bequeme und schweißableitende Modell überzeugt auf ganzer Linie. Außerdem wird dir eine hohe Strapazierfähigkeit geboten. Mit diesem Shirt kannst du noch leistungsfähiger werden und dich auf das nächste Spiel vorbereiten. Unterstrichen wird die tolle Optik des Sportshirts durch das Verbandslogo auf der Brust.",
+      "description": "Echte Fans zeigen ihre Begeisterung immer und überall - das super bequeme Modell in Blau begleitet dich ins Stadion, zum Public Viewing oder einfach zum Sportabend mit Freunden. PUMA hat mit dem Sportshirt ein sehr perfektes Produkt erschaffen. Jeder eingefleischte Manchester City-Unterstützer benötigt dieses Heim-Sportshirt, denn auch die Spieler tragen es in der Premier League. Das leichte, atmungsaktive, super bequeme und schweißableitende Modell überzeugt auf ganzer Linie. Außerdem wird dir eine hohe Strapazierfähigkeit geboten. Mit diesem Shirt kannst du noch leistungsfähiger werden und dich auf das nächste Spiel vorbereiten. Unterstrichen wird die tolle Optik des Sportshirts durch das Verbandslogo auf der Brust.",
       "sizes": ["XS", "S", "M", "L", "XL", "2XL"],
       "category": "Sportbekleidung",
       "subcategory": "Trikots",
@@ -191,7 +191,7 @@
       "priceValue": 99.99,
       "imageMain": "img/juventus.jpg",
       "images": ["img/juventus.jpg", "img/juventus1.jpg"],
-      "description": "Das Sporttop von adidas in Weiß lässt dich die Farben deines Lieblingsclubs tragen und allen zeigen, wofür dein Herz schlägt. Zeige deine Zugehörigkeit – mit diesem FC Juventus Turin-Heim-Sporttop erweiterst du deine Fan-Kollektion um ein Kleidungsstück im Original-Design, wie es die Spieler in der Serie A tragen. Die leichte, schweißableitende, atmungsaktive und bequeme Funktionsweise lässt es überzeugen. Du bekommst eine hohe Strapazierfähigkeit geboten. Die tolle Optik dieses Sportshirts wird unterstützt durch ein Vereinswappen auf der Brust. Mit diesem Sportshirt bist du für jede Einheit ideal gekleidet.",
+      "description": "Das Sporttop von adidas in Weiß lässt dich die Farben deines Lieblingsclubs tragen und allen zeigen, wofür dein Herz schlägt. Zeige deine Zugehörigkeit - mit diesem FC Juventus Turin-Heim-Sporttop erweiterst du deine Fan-Kollektion um ein Kleidungsstück im Original-Design, wie es die Spieler in der Serie A tragen. Die leichte, schweißableitende, atmungsaktive und bequeme Funktionsweise lässt es überzeugen. Du bekommst eine hohe Strapazierfähigkeit geboten. Die tolle Optik dieses Sportshirts wird unterstützt durch ein Vereinswappen auf der Brust. Mit diesem Sportshirt bist du für jede Einheit ideal gekleidet.",
       "sizes": ["XS", "S", "M", "L", "XL", "2XL"],
       "category": "Sportbekleidung",
       "subcategory": "Trikots",
@@ -412,7 +412,7 @@
       "priceValue": 99.99,
       "imageMain": "img/predatorSale.jpg",
       "images": ["img/predatorSale.jpg"],
-      "description": "Adidas Predator Fußballschuhe im Sale – Top-Performance zum Sonderpreis.",
+      "description": "Adidas Predator Fußballschuhe im Sale - Top-Performance zum Sonderpreis.",
       "sizes": [38, 39, 40, 41, 42, 43, 44, 45, 46, 47],
       "category": "Sale %",
       "subcategory": "Fußballschuhe",
@@ -427,7 +427,7 @@
       "priceValue": 19.99,
       "imageMain": "img/sporttascheSale.jpg",
       "images": ["img/sporttascheSale.jpg"],
-      "description": "Puma Sporttasche im Sale – praktisch und günstig.",
+      "description": "Puma Sporttasche im Sale - praktisch und günstig.",
       "sizes": ["One Size"],
       "category": "Sale %",
       "subcategory": "Zubehör",
@@ -509,7 +509,7 @@
       "priceValue": 14.99,
       "imageMain": "img/tshirtWeiß.jpg",
       "images": ["img/tshirtWeiß.jpg"],
-      "description": "Leichtes Adidas T-Shirt in Weiß – reduziert, aber voller Performance.",
+      "description": "Leichtes Adidas T-Shirt in Weiß - reduziert, aber voller Performance.",
       "sizes": ["S", "M", "L", "XL", "2XL"],
       "category": "Sale %",
       "subcategory": "Sportbekleidung",

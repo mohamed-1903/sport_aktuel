@@ -1,4 +1,6 @@
 <?php
+//Hussein
+
 require_once 'model/db.php'; // Stellt $db (PDO) bereit
 
 /**

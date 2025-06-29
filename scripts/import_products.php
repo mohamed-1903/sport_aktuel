@@ -77,4 +77,3 @@ foreach ($data['products'] as $product) {
 
 // Zeitstempel speichern
 file_put_contents(LAST_IMPORT_FILE, $currentModified);
-// Redundanzprüfung: keine doppelten Schritte festgestellt

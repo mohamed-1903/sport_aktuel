@@ -1,84 +1,85 @@
-
 <?php
-   // model/productModel.php
-   require_once 'model/db.php';
+//Hussein
 
-   // Keine offensichtlichen redundanten Funktionen vorhanden.
+// model/productModel.php
+require_once 'model/db.php';
 
-    /**
-     * Konvertiert eine Datenbankzeile in ein Produktarray.
-     * Dekodiert JSON-Felder wie "sizes" und "images" und
-     * füllt fehlende Preiswerte nach.
-     */
-    function mapProductRow(array $row): array
-    {
-        foreach (['sizes', 'images'] as $field) {
-            if (isset($row[$field]) && is_string($row[$field])) {
-                $decoded = json_decode($row[$field], true);
-                if (json_last_error() === JSON_ERROR_NONE) {
-                    $row[$field] = $decoded;
-                }
+// Keine offensichtlichen redundanten Funktionen vorhanden.
+
+/**
+ * Konvertiert eine Datenbankzeile in ein Produktarray.
+ * Dekodiert JSON-Felder wie "sizes" und "images" und
+ * füllt fehlende Preiswerte nach.
+ */
+function mapProductRow(array $row): array
+{
+    foreach (['sizes', 'images'] as $field) {
+        if (isset($row[$field]) && is_string($row[$field])) {
+            $decoded = json_decode($row[$field], true);
+            if (json_last_error() === JSON_ERROR_NONE) {
+                $row[$field] = $decoded;
             }
         }
-
-        // Preis synchronisieren, falls priceValue nicht vorhanden ist
-        if (!isset($row['priceValue']) && isset($row['price'])) {
-            $row['priceValue'] = $row['price'];
-        }
-
-        return $row;
     }
 
-
-    /**
-     * Liefert alle Produkte aus der Datenbank als Array.
-     */
-    function getAllProducts(): array
-    {
-        global $db;
-        $stmt = $db->query("SELECT * FROM products");
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return array_map('mapProductRow', $rows);
+    // Preis synchronisieren, falls priceValue nicht vorhanden ist
+    if (!isset($row['priceValue']) && isset($row['price'])) {
+        $row['priceValue'] = $row['price'];
     }
 
-    /**
-     * Holt ein einzelnes Produkt anhand seiner ID.
-     */
-    function getProductById($id): ?array
-    {
-        global $db;
-        $stmt = $db->prepare("SELECT * FROM products WHERE id = ? LIMIT 1");
-        $stmt->execute([$id]);
+    return $row;
+}
 
-        $product = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $product ? mapProductRow($product) : null;
-    }
 
-    /**
-     * Gibt alle Produkte einer bestimmten Kategorie zurück.
-     */
-    function getProductsByCategory($category): array
-    {
-        global $db;
-        $stmt = $db->prepare("SELECT * FROM products WHERE category = ?");
+/**
+ * Liefert alle Produkte aus der Datenbank als Array.
+ */
+function getAllProducts(): array
+{
+    global $db;
+    $stmt = $db->query("SELECT * FROM products");
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return array_map('mapProductRow', $rows);
+}
 
-        $stmt->execute([$category]);
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return array_map('mapProductRow', $rows);
-    }
+/**
+ * Holt ein einzelnes Produkt anhand seiner ID.
+ */
+function getProductById($id): ?array
+{
+    global $db;
+    $stmt = $db->prepare("SELECT * FROM products WHERE id = ? LIMIT 1");
+    $stmt->execute([$id]);
 
-    /**
-     * Liefert Produkte nach Kategorie und Unterkategorie gefiltert.
-     */
-    function getProductsByCategoryAndSub($category, $subcategory): array
-    {
-        global $db;
-        $stmt = $db->prepare("SELECT * FROM products WHERE category = ? AND subcategory = ?");
+    $product = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $product ? mapProductRow($product) : null;
+}
 
-        $stmt->execute([$category, $subcategory]);
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return array_map('mapProductRow', $rows);
-    }
+/**
+ * Gibt alle Produkte einer bestimmten Kategorie zurück.
+ */
+function getProductsByCategory($category): array
+{
+    global $db;
+    $stmt = $db->prepare("SELECT * FROM products WHERE category = ?");
+
+    $stmt->execute([$category]);
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return array_map('mapProductRow', $rows);
+}
+
+/**
+ * Liefert Produkte nach Kategorie und Unterkategorie gefiltert.
+ */
+function getProductsByCategoryAndSub($category, $subcategory): array
+{
+    global $db;
+    $stmt = $db->prepare("SELECT * FROM products WHERE category = ? AND subcategory = ?");
+
+    $stmt->execute([$category, $subcategory]);
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return array_map('mapProductRow', $rows);
+}
 
 /**
  * Fügt ein neues Produkt in die Datenbank ein.
@@ -156,8 +157,8 @@ function getSimilarProducts(int $productId, int $limit = 4): array
     // 1) Produkte mit gleicher Kategorie UND Subkategorie
     $sameSub = array_filter($all, function ($p) use ($productId, $category, $subcategory) {
         return $p['id'] != $productId &&
-               strcasecmp($p['category'], $category) === 0 &&
-               strcasecmp($p['subcategory'], $subcategory) === 0;
+            strcasecmp($p['category'], $category) === 0 &&
+            strcasecmp($p['subcategory'], $subcategory) === 0;
     });
     $sameSub = array_values($sameSub);
     shuffle($sameSub);
@@ -167,9 +168,9 @@ function getSimilarProducts(int $productId, int $limit = 4): array
     if (count($result) < $limit) {
         $sameCat = array_filter($all, function ($p) use ($productId, $category, $subcategory, $result) {
             return $p['id'] != $productId &&
-                   strcasecmp($p['category'], $category) === 0 &&
-                   strcasecmp($p['subcategory'], $subcategory) !== 0 &&
-                   !in_array($p['id'], array_column($result, 'id'));
+                strcasecmp($p['category'], $category) === 0 &&
+                strcasecmp($p['subcategory'], $subcategory) !== 0 &&
+                !in_array($p['id'], array_column($result, 'id'));
         });
         $sameCat = array_values($sameCat);
         shuffle($sameCat);
@@ -190,4 +191,3 @@ function getSimilarProducts(int $productId, int $limit = 4): array
 
     return $result;
 }
-
