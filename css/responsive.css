@@ -173,6 +173,17 @@
   /* Layout anpassen: Sidebar unter Inhalt stapeln */
   .main-container {
     flex-direction: column;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .filterbar {
+    flex-wrap: wrap;
+  }
+
+  .sidebar-toggle {
+    display: block;
+    margin-bottom: 10px;
   }
 
   .sidebar-toggle {

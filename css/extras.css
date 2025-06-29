@@ -29,6 +29,18 @@
 
 .sidebar-toggle {
   display: none;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  font-size: 14px;
+  padding: 6px 8px;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.sidebar-toggle {
+  display: none;
 }
 
 .sidebar-toggle {
@@ -69,9 +81,10 @@
   padding: 0.25rem 0.5rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  overflow-x: auto;
   justify-content: flex-start; /* linksbündig */
   text-align: left;
+  width: 100%;
+  max-width: 100%;
 }
 
 .filterbar.hidden {
@@ -86,7 +99,7 @@
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  max-width: 1200px;
+  max-width: 100%;
 }
 
 .filterbar select,
@@ -332,6 +345,7 @@
   list-style: none;
   padding: 0;
   margin-bottom: 0;
+  width: 100%;
 }
 
 /* Kartenansicht für Produkte im Grid */
@@ -870,6 +884,7 @@ body.light-mode .zoom-close {
 }
 
 
+
 .cart-table thead {
   background-color: var(--card-bg); /* ✅ dynamisch */
   color: var(--text-color);
@@ -1062,7 +1077,6 @@ body.light-mode .zoom-close {
     width: 100%;
   }
 }
-
 
 
 .btn-zurueck-startseite {
