@@ -29,6 +29,19 @@
   cursor: pointer;
 }
 
+
+.sidebar-toggle {
+  display: none;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  font-size: 14px;
+  padding: 6px 8px;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
 .sidebar-toggle {
   display: none;
   border: 1px solid #555;
@@ -102,6 +115,7 @@
 }
 
 
+
 .filterbar.hidden {
   display: none;
 }
@@ -116,6 +130,7 @@
   width: 100%;
   max-width: 100%;
 }
+
 
 
 .filterbar select,
@@ -198,6 +213,7 @@
   justify-content: flex-start; /* Filter linksbündig */
   overflow-x: visible;
 }
+
 
 .filter-controls.hidden {
   display: none;
@@ -364,7 +380,6 @@
   width: 100%;
 }
 
-
 /* Kartenansicht für Produkte im Grid */
 .einzelprodukt-grid .einzelprodukt {
   display: flex;
@@ -396,6 +411,7 @@
   margin: 0 0 0.25rem;
   word-break: break-word;
 }
+
 
 .einzelprodukt-grid .produkt-info p {
   margin: 0;
@@ -433,6 +449,7 @@
   margin: 0 0 0.25rem;
   word-break: break-word;
 }
+
 .einzelprodukt-grid .produkt-info p {
   margin: 0;
 }
@@ -902,6 +919,7 @@ body.light-mode .zoom-close {
   -webkit-overflow-scrolling: touch;
 }
 
+
 .cart-table thead {
   background-color: var(--card-bg); /* ✅ dynamisch */
   color: var(--text-color);
@@ -916,8 +934,6 @@ body.light-mode .zoom-close {
   color: var(--text-color); /* adapt text to theme */
   word-break: break-word; /* verhindert horizontales Scrollen */
 }
-
-
 
 .cart-table td:first-child {
   text-align: center;
@@ -1095,7 +1111,6 @@ body.light-mode .zoom-close {
     width: 100%;
   }
 }
-
 
 .btn-zurueck-startseite {
   background-color: var(--accent-color);

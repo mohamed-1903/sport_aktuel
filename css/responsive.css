@@ -107,7 +107,8 @@
     width: 100%;
   }
 
-  div {
+  /* Reset spacing for header groups */
+  .header-bar div {
     margin: 0;
   }
   .action-buttons button {
@@ -138,8 +139,10 @@
     top: 20px;
     z-index: 2000;
   }
-  div {
-    text-align: center;
+  /* Right align header actions */
+  .header-bar div {
+    text-align: right;
+
   }
 
   /* Navigation fixieren und von links einblenden */
@@ -196,6 +199,12 @@
 
   .sidebar.mobile-open {
     display: block;
+  }
+
+  /* Grid layout for tablets */
+  .einzelprodukt-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+
   }
 
   /* Footer für kleinere Bildschirme */
