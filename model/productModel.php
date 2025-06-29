@@ -87,6 +87,7 @@ function addProduct(array $product): bool
     ]);
 }
 
+
 function updateProductDiscount(int $productId, int $discount): bool
 {
     global $db;
@@ -101,70 +102,47 @@ function deleteProduct(int $productId): bool
     return $stmt->execute([$productId]);
 }
 
-function getSimilarProducts(string $category, ?string $subcategory, ?string $brand, int $excludeId, int $limit = 2): array
+function computeSimilarProducts(array $product, array $allProducts, int $limit = 2): array
 {
-    global $db;
-
-    $sql = 'SELECT * FROM products WHERE id != ?';
-    $params = [$excludeId];
-
-    if ($category !== null && trim($category) !== '') {
-        $sql .= ' AND LOWER(category) = LOWER(?)';
-        $params[] = $category;
-    }
-
-    if ($subcategory !== null && trim($subcategory) !== '') {
-        $sql .= ' AND LOWER(subcategory) = LOWER(?)';
-        $params[] = $subcategory;
-    }
-
-    if ($brand !== null && trim($brand) !== '') {
-        $sql .= ' AND LOWER(marke) = LOWER(?)';
-        $params[] = $brand;
-    }
-
-    $sql .= ' ORDER BY RAND() LIMIT ' . (int)$limit;
-
-    $stmt = $db->prepare($sql);
-    $stmt->execute($params);
-    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    return array_map('mapProductRow', $rows);
-}
-
-function getRandomProductsExcept(int $excludeId, int $limit = 2): array
-{
-    global $db;
-    $sql = 'SELECT * FROM products WHERE id != ? ORDER BY RAND() LIMIT ' . (int)$limit;
-    $stmt = $db->prepare($sql);
-    $stmt->execute([$excludeId]);
-    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    return array_map('mapProductRow', $rows);
-}
-
-function findSimilarProducts(array $product, int $limit = 2): array
-{
-    $category    = $product['category'] ?? '';
-    $subcategory = $product['subcategory'] ?? '';
-    $brand       = $product['marke'] ?? '';
     $id          = $product['id'] ?? 0;
+    $category    = strtolower(trim($product['category'] ?? ''));
+    $subcategory = strtolower(trim($product['subcategory'] ?? ''));
+    $brand       = strtolower(trim($product['marke'] ?? ''));
+
+    $others = array_filter($allProducts, static function ($p) use ($id) {
+        return ($p['id'] ?? null) != $id;
+    });
+
+    $steps = [
+        static function ($p) use ($category, $subcategory, $brand) {
+            return strtolower($p['category'] ?? '') === $category
+                && strtolower($p['subcategory'] ?? '') === $subcategory
+                && strtolower($p['marke'] ?? '') === $brand;
+        },
+        static function ($p) use ($category, $subcategory) {
+            return strtolower($p['category'] ?? '') === $category
+                && strtolower($p['subcategory'] ?? '') === $subcategory;
+        },
+        static function ($p) use ($category, $brand) {
+            return strtolower($p['category'] ?? '') === $category
+                && strtolower($p['marke'] ?? '') === $brand;
+        },
+        static function ($p) use ($category) {
+            return strtolower($p['category'] ?? '') === $category;
+        },
+        static function ($p) use ($brand) {
+            return strtolower($p['marke'] ?? '') === $brand;
+        },
+    ];
 
     $result = [];
     $seen   = [];
 
-    $steps = [
-        [$category, $subcategory, $brand],
-        [$category, $subcategory, null],
-        [$category, null, $brand],
-        [$category, null, null],
-    ];
-
-    foreach ($steps as [$cat, $sub, $br]) {
-        $rows = getSimilarProducts($cat, $sub, $br, $id, $limit);
-        foreach ($rows as $row) {
-            if (!isset($seen[$row['id']])) {
-                $result[] = $row;
-                $seen[$row['id']] = true;
+    foreach ($steps as $filter) {
+        foreach ($others as $op) {
+            if (!isset($seen[$op['id']]) && $filter($op)) {
+                $result[]          = $op;
+                $seen[$op['id']] = true;
                 if (count($result) >= $limit) {
                     break 2;
                 }
@@ -173,18 +151,12 @@ function findSimilarProducts(array $product, int $limit = 2): array
     }
 
     if (count($result) < $limit) {
-        $rows = getRandomProductsExcept($id, $limit);
-        foreach ($rows as $row) {
-            if (!isset($seen[$row['id']])) {
-                $result[] = $row;
-                $seen[$row['id']] = true;
-                if (count($result) >= $limit) {
-                    break;
-                }
-            }
-        }
+        $remaining = array_values(array_filter($others, static function ($p) use ($seen) {
+            return !isset($seen[$p['id']]);
+        }));
+        shuffle($remaining);
+        $result = array_merge($result, array_slice($remaining, 0, $limit - count($result)));
     }
 
     return array_slice($result, 0, $limit);
 }
-
