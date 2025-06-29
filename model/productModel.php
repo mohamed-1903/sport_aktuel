@@ -114,6 +114,7 @@ function getSimilarProducts(string $category, ?string $subcategory, int $exclude
 
     $sql .= ' ORDER BY RAND() LIMIT ' . (int)$limit;
 
+
     $stmt = $db->prepare($sql);
     $stmt->execute($params);
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
