@@ -1869,3 +1869,32 @@ body.light-mode .welcome-overlay {
   margin: 0;
   text-align: center;
 }
+
+.similar-products {
+  margin-top: 2rem;
+}
+
+.similar-products h3 {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.similar-products .einzelprodukt-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (width <= 600px) {
+  .similar-products .einzelprodukt-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}
+
+.similar-products .einzelprodukt-grid .image-wrapper {
+  height: 160px;
+}
+
+.similar-products .einzelprodukt-grid .image-wrapper img {
+  max-height: 100%;
+  width: auto;
+  object-fit: contain;
+}

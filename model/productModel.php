@@ -101,3 +101,61 @@ function deleteProduct(int $productId): bool
     $stmt = $db->prepare('DELETE FROM products WHERE id = ?');
     return $stmt->execute([$productId]);
 }
+
+function getSimilarProducts(int $productId, int $limit = 4): array
+{
+    $all = getAllProducts();
+
+    $base = null;
+    foreach ($all as $p) {
+        if ($p['id'] == $productId) {
+            $base = $p;
+            break;
+        }
+    }
+    if (!$base) {
+        return [];
+    }
+
+    $category = $base['category'] ?? '';
+    $subcategory = $base['subcategory'] ?? '';
+
+    $limit = max(1, (int)$limit);
+
+    // 1) Produkte mit gleicher Kategorie UND Subkategorie
+    $sameSub = array_filter($all, function ($p) use ($productId, $category, $subcategory) {
+        return $p['id'] != $productId &&
+               strcasecmp($p['category'], $category) === 0 &&
+               strcasecmp($p['subcategory'], $subcategory) === 0;
+    });
+    $sameSub = array_values($sameSub);
+    shuffle($sameSub);
+    $result = array_slice($sameSub, 0, $limit);
+
+    // 2) Falls noch Plätze frei, gleiche Kategorie aber andere Subkategorie
+    if (count($result) < $limit) {
+        $sameCat = array_filter($all, function ($p) use ($productId, $category, $subcategory, $result) {
+            return $p['id'] != $productId &&
+                   strcasecmp($p['category'], $category) === 0 &&
+                   strcasecmp($p['subcategory'], $subcategory) !== 0 &&
+                   !in_array($p['id'], array_column($result, 'id'));
+        });
+        $sameCat = array_values($sameCat);
+        shuffle($sameCat);
+        $needed = $limit - count($result);
+        $result = array_merge($result, array_slice($sameCat, 0, $needed));
+    }
+
+    // 3) Immer noch zu wenig? Mit zufälligen Produkten auffüllen
+    if (count($result) < $limit) {
+        $remaining = array_filter($all, function ($p) use ($productId, $result) {
+            return $p['id'] != $productId && !in_array($p['id'], array_column($result, 'id'));
+        });
+        $remaining = array_values($remaining);
+        shuffle($remaining);
+        $needed = $limit - count($result);
+        $result = array_merge($result, array_slice($remaining, 0, $needed));
+    }
+
+    return $result;
+}

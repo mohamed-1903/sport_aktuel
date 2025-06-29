@@ -44,6 +44,7 @@ switch ($action) {
 
         $allProducts = getAllProducts();
         $currentId = $productsToShow[0]['id'];
+        $similarProducts = getSimilarProducts($currentId, 3);
 
         // Vorschläge für die Bewertungsleiste laden
         $suggestionsFile = 'data/review_suggestions.json';
