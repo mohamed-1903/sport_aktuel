@@ -2,6 +2,7 @@
 window.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('ratingModal');
   if (!modal) return;
+  let highlighted = null;
 
   document.querySelectorAll('.open-review-modal').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -15,6 +16,10 @@ window.addEventListener('DOMContentLoaded', () => {
       if (target) {
         target.classList.add('hidden');
         target.textContent = '';
+      }
+      if (highlighted) {
+        highlighted.classList.remove('target-highlight');
+        highlighted = null;
       }
     });
   });
@@ -88,8 +93,19 @@ window.addEventListener('DOMContentLoaded', () => {
       const review = btn.closest('.review');
       if (target && review) {
         const name = review.querySelector('strong')?.textContent || '';
-        target.textContent = 'Antwort auf ' + name;
+        const snippet = review.querySelector('p')?.textContent.slice(0, 60) || '';
+        target.textContent = '';
+        target.append('Antwort auf ' + name + ': ');
+        const span = document.createElement('span');
+        span.className = 'parent-excerpt';
+        span.textContent = snippet;
+        target.appendChild(span);
         target.classList.remove('hidden');
+      }
+      if (highlighted) highlighted.classList.remove('target-highlight');
+      if (review) {
+        review.classList.add('target-highlight');
+        highlighted = review;
       }
 
     });
@@ -230,6 +246,10 @@ function closeRatingModal() {
     if (parentInput) parentInput.value = '';
     const target = document.getElementById('replyTarget');
     if (target) target.classList.add('hidden');
+    if (highlighted) {
+      highlighted.classList.remove('target-highlight');
+      highlighted = null;
+    }
   }
 }
 
@@ -247,7 +267,13 @@ function addRatingToDom(rating) {
   if (rating.parent_name) {
     const info = document.createElement('small');
     info.className = 'reply-info';
-    info.textContent = 'Antwort auf ' + rating.parent_name;
+    info.append('Antwort auf ' + rating.parent_name + ': ');
+    if (rating.parent_comment) {
+      const ex = document.createElement('span');
+      ex.className = 'parent-excerpt';
+      ex.textContent = rating.parent_comment;
+      info.appendChild(ex);
+    }
     content.appendChild(info);
   }
   const name = document.createElement('strong');
