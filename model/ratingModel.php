@@ -117,7 +117,6 @@ function getRatingsForProduct(int $productId, ?int $currentUserId = null): array
         $grouped[$parent][] = $row;
     }
 
- 
     $ordered = [];
     $add = static function (array $list, &$ordered, &$grouped) use (&$add) {
         usort($list, static fn($a, $b) => strtotime($a['created_at']) <=> strtotime($b['created_at']));
