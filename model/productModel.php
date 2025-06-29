@@ -66,22 +66,23 @@ function addProduct(array $product): bool
 {
     global $db;
 
-        $stmt = $db->prepare("INSERT INTO products (name, price, category, subcategory, description, image_Main, sizes, marke, farbe, geschlecht)
-                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $db->prepare(
+        "INSERT INTO products (name, price, category, subcategory, description, image_main, sizes, marke, farbe, geschlecht)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    );
 
-        $sizes = json_encode($product['sizes']);
+    $sizes = json_encode($product['sizes']);
 
-        return $stmt->execute([
-            $product['name'],
-            $product['price'],
-            $product['category'],
-            $product['subcategory'],
-            $product['description'],
-            $product['imageMain'],
-            $sizes,
-            $product['marke'],
-            $product['farbe'],
-
+    return $stmt->execute([
+        $product['name'],
+        $product['price'],
+        $product['category'],
+        $product['subcategory'],
+        $product['description'],
+        $product['imageMain'],
+        $sizes,
+        $product['marke'],
+        $product['farbe'],
         $product['geschlecht']
     ]);
 }
@@ -100,16 +101,26 @@ function deleteProduct(int $productId): bool
     return $stmt->execute([$productId]);
 }
 
-function getSimilarProducts(string $category, ?string $subcategory, int $excludeId, int $limit = 2): array
+function getSimilarProducts(string $category, ?string $subcategory, ?string $brand, int $excludeId, int $limit = 2): array
 {
     global $db;
 
-    $sql = 'SELECT * FROM products WHERE id != ? AND LOWER(category) = LOWER(?)';
-    $params = [$excludeId, $category];
+    $sql = 'SELECT * FROM products WHERE id != ?';
+    $params = [$excludeId];
+
+    if ($category !== null && trim($category) !== '') {
+        $sql .= ' AND LOWER(category) = LOWER(?)';
+        $params[] = $category;
+    }
 
     if ($subcategory !== null && trim($subcategory) !== '') {
         $sql .= ' AND LOWER(subcategory) = LOWER(?)';
         $params[] = $subcategory;
+    }
+
+    if ($brand !== null && trim($brand) !== '') {
+        $sql .= ' AND LOWER(marke) = LOWER(?)';
+        $params[] = $brand;
     }
 
     $sql .= ' ORDER BY RAND() LIMIT ' . (int)$limit;
@@ -119,4 +130,60 @@ function getSimilarProducts(string $category, ?string $subcategory, int $exclude
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     return array_map('mapProductRow', $rows);
+}
+
+function getRandomProductsExcept(int $excludeId, int $limit = 2): array
+{
+    global $db;
+    $sql = 'SELECT * FROM products WHERE id != ? ORDER BY RAND() LIMIT ' . (int)$limit;
+    $stmt = $db->prepare($sql);
+    $stmt->execute([$excludeId]);
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return array_map('mapProductRow', $rows);
+}
+
+function findSimilarProducts(array $product, int $limit = 2): array
+{
+    $category    = $product['category'] ?? '';
+    $subcategory = $product['subcategory'] ?? '';
+    $brand       = $product['marke'] ?? '';
+    $id          = $product['id'] ?? 0;
+
+    $result = [];
+    $seen   = [];
+
+    $steps = [
+        [$category, $subcategory, $brand],
+        [$category, $subcategory, null],
+        [$category, null, $brand],
+        [$category, null, null],
+    ];
+
+    foreach ($steps as [$cat, $sub, $br]) {
+        $rows = getSimilarProducts($cat, $sub, $br, $id, $limit);
+        foreach ($rows as $row) {
+            if (!isset($seen[$row['id']])) {
+                $result[] = $row;
+                $seen[$row['id']] = true;
+                if (count($result) >= $limit) {
+                    break 2;
+                }
+            }
+        }
+    }
+
+    if (count($result) < $limit) {
+        $rows = getRandomProductsExcept($id, $limit);
+        foreach ($rows as $row) {
+            if (!isset($seen[$row['id']])) {
+                $result[] = $row;
+                $seen[$row['id']] = true;
+                if (count($result) >= $limit) {
+                    break;
+                }
+            }
+        }
+    }
+
+    return array_slice($result, 0, $limit);
 }
