@@ -95,7 +95,6 @@ function updateProductDiscount(int $productId, int $discount): bool
     return $stmt->execute([$discount, $productId]);
 }
 
-<<<<<< avobuq-codex/ähnliche-produkte-funktion-hinzufügen
 function deleteProduct(int $productId): bool
 {
     global $db;

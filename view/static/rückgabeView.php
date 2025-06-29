@@ -23,7 +23,7 @@
     <p>3. Verpacke die Artikel sicher und sende sie frankiert an uns zurück.</p>
 
     <h2>Rückerstattung</h2>
-    <p>Sobald deine Rücksendung bei uns eingegangen und geprüft wurde, erstatten wir dir den Kaufbetrag innerhalb von <strong>5–7 Werktagen</strong> über die ursprünglich gewählte Zahlungsmethode.</p>
+    <p>Sobald deine Rücksendung bei uns eingegangen und geprüft wurde, erstatten wir dir den Kaufbetrag innerhalb von <strong>5-7 Werktagen</strong> über die ursprünglich gewählte Zahlungsmethode.</p>
 
     <h2>Fragen?</h2>
     <p>Unser Kundenservice hilft dir gerne weiter. Du erreichst uns unter <a href="mailto:support@sportx.de">support@sportx.de</a>.</p>

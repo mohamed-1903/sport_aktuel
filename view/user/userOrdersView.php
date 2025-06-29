@@ -40,7 +40,7 @@ include __DIR__ . '/../layout/header.php';
   <?php else: ?>
     <?php
     $labels = [
-      'neu' => '🕓 Neu – noch stornierbar',
+      'neu' => '🕓 Neu - noch stornierbar',
       'bestellt' => '📦 Bestellt',
       'versandt_nicht_erhalten' => '🚚 Versandt, nicht erhalten',
       'in_bearbeitung' => '🔧 In Bearbeitung',

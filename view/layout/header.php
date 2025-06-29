@@ -25,9 +25,7 @@ $cartCount = $uid ? countCartItems($uid) : 0;
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/form.css">
     <link rel="stylesheet" href="css/product.css">
-    <!-- Styles für Filterbar und weitere Extras -->
     <link rel="stylesheet" href="css/extras.css">
-    <link rel="stylesheet" href="css/customize.css">
     <link rel="stylesheet" href="css/rating.css">
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/themes.css">
