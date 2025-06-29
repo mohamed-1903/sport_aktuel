@@ -1,9 +1,15 @@
 
- <?php
-    // model/productModel.php
-    require_once 'model/db.php';
+<?php
+   // model/productModel.php
+   require_once 'model/db.php';
 
+   // Keine offensichtlichen redundanten Funktionen vorhanden.
 
+    /**
+     * Konvertiert eine Datenbankzeile in ein Produktarray.
+     * Dekodiert JSON-Felder wie "sizes" und "images" und
+     * füllt fehlende Preiswerte nach.
+     */
     function mapProductRow(array $row): array
     {
         foreach (['sizes', 'images'] as $field) {
@@ -24,6 +30,9 @@
     }
 
 
+    /**
+     * Liefert alle Produkte aus der Datenbank als Array.
+     */
     function getAllProducts(): array
     {
         global $db;
@@ -32,6 +41,9 @@
         return array_map('mapProductRow', $rows);
     }
 
+    /**
+     * Holt ein einzelnes Produkt anhand seiner ID.
+     */
     function getProductById($id): ?array
     {
         global $db;
@@ -42,6 +54,9 @@
         return $product ? mapProductRow($product) : null;
     }
 
+    /**
+     * Gibt alle Produkte einer bestimmten Kategorie zurück.
+     */
     function getProductsByCategory($category): array
     {
         global $db;
@@ -52,6 +67,9 @@
         return array_map('mapProductRow', $rows);
     }
 
+    /**
+     * Liefert Produkte nach Kategorie und Unterkategorie gefiltert.
+     */
     function getProductsByCategoryAndSub($category, $subcategory): array
     {
         global $db;
@@ -62,6 +80,9 @@
         return array_map('mapProductRow', $rows);
     }
 
+/**
+ * Fügt ein neues Produkt in die Datenbank ein.
+ */
 function addProduct(array $product): bool
 {
     global $db;
@@ -88,6 +109,9 @@ function addProduct(array $product): bool
 }
 
 
+/**
+ * Aktualisiert den Rabattwert eines Produkts.
+ */
 function updateProductDiscount(int $productId, int $discount): bool
 {
     global $db;
@@ -95,6 +119,9 @@ function updateProductDiscount(int $productId, int $discount): bool
     return $stmt->execute([$discount, $productId]);
 }
 
+/**
+ * Löscht ein Produkt anhand seiner ID aus der Datenbank.
+ */
 function deleteProduct(int $productId): bool
 {
     global $db;
@@ -102,6 +129,10 @@ function deleteProduct(int $productId): bool
     return $stmt->execute([$productId]);
 }
 
+/**
+ * Ermittelt ähnliche Produkte für Empfehlungen.
+ * Produkte aus der gleichen (Unter-)Kategorie werden bevorzugt.
+ */
 function getSimilarProducts(int $productId, int $limit = 4): array
 {
     $all = getAllProducts();
