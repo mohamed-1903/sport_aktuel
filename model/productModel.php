@@ -104,16 +104,15 @@ function getSimilarProducts(string $category, ?string $subcategory, int $exclude
 {
     global $db;
 
-    $sql = 'SELECT * FROM products WHERE id != ? AND category = ?';
+    $sql = 'SELECT * FROM products WHERE id != ? AND LOWER(category) = LOWER(?)';
     $params = [$excludeId, $category];
 
-    if ($subcategory !== null && $subcategory !== '') {
-        $sql .= ' AND subcategory = ?';
+    if ($subcategory !== null && trim($subcategory) !== '') {
+        $sql .= ' AND LOWER(subcategory) = LOWER(?)';
         $params[] = $subcategory;
     }
 
     $sql .= ' ORDER BY RAND() LIMIT ' . (int)$limit;
-
 
     $stmt = $db->prepare($sql);
     $stmt->execute($params);
