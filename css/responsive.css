@@ -42,6 +42,14 @@
 
   .einzelprodukt-grid {
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    justify-items: center;
+  }
+  .einzelprodukt-grid .einzelprodukt {
+    align-items: center;
+  }
+  .einzelprodukt-grid .produkt-info {
+    text-align: center;
+
   }
 }
 
@@ -167,10 +175,20 @@
     flex-direction: column;
   }
 
+  .sidebar-toggle {
+    display: block;
+    margin-bottom: 10px;
+  }
+
   .sidebar {
     width: 100%;
     position: static;
     top: auto;
+    display: none;
+  }
+
+  .sidebar.mobile-open {
+    display: block;
   }
 
   /* Footer für kleinere Bildschirme */
@@ -232,6 +250,14 @@
 
   .einzelprodukt-grid {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    justify-items: center;
+  }
+  .einzelprodukt-grid .einzelprodukt {
+    align-items: center;
+  }
+  .einzelprodukt-grid .produkt-info {
+    text-align: center;
+
   }
   .einzelprodukt-grid .button-row {
     justify-content: center;
@@ -263,7 +289,7 @@
 
   .einzelprodukt-list .einzelprodukt {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
   }
 
   .einzelprodukt-list .image-wrapper {
