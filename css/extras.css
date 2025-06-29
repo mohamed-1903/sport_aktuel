@@ -451,6 +451,17 @@
 
 /* Zentrierte Darstellung der Highlights auf der Startseite */
 .produkte .einzelprodukt-grid {
+  justify-content: center; /* Grid als Ganzes zentrieren */
+  justify-items: center;    /* Inhalte innerhalb der Zellen zentrieren */
+}
+
+.produkte .einzelprodukt-grid .produkt {
+  align-items: center;
+  text-align: center;
+}
+
+/* Zentrierte Darstellung der Highlights auf der Startseite */
+.produkte .einzelprodukt-grid {
   justify-items: center;
 }
 
