@@ -29,6 +29,18 @@
   cursor: pointer;
 }
 
+.sidebar-toggle {
+  display: none;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  font-size: 14px;
+  padding: 6px 8px;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
 
 .sidebar-toggle {
   display: none;
@@ -116,6 +128,7 @@
 
 
 
+
 .filterbar.hidden {
   display: none;
 }
@@ -130,6 +143,7 @@
   width: 100%;
   max-width: 100%;
 }
+
 
 
 
@@ -213,6 +227,7 @@
   justify-content: flex-start; /* Filter linksbündig */
   overflow-x: visible;
 }
+
 
 
 .filter-controls.hidden {
@@ -380,6 +395,7 @@
   width: 100%;
 }
 
+
 /* Kartenansicht für Produkte im Grid */
 .einzelprodukt-grid .einzelprodukt {
   display: flex;
@@ -412,7 +428,6 @@
   word-break: break-word;
 }
 
-
 .einzelprodukt-grid .produkt-info p {
   margin: 0;
 }
@@ -434,31 +449,14 @@
   align-items: flex-start; /* linksbündig */
 }
 
-.einzelprodukt-grid .image-wrapper {
-  display: flex;
-  justify-content: center;
+/* Zentrierte Darstellung der Highlights auf der Startseite */
+.produkte .einzelprodukt-grid {
+  justify-items: center;
+}
+
+.produkte .einzelprodukt-grid .produkt {
   align-items: center;
-}
-.einzelprodukt-grid .image-wrapper img {
-  max-width: 100%;
-  height: auto;
-  object-fit: contain;
-}
-
-.einzelprodukt-grid .produkt-info h3 {
-  margin: 0 0 0.25rem;
-  word-break: break-word;
-}
-
-.einzelprodukt-grid .produkt-info p {
-  margin: 0;
-}
-.einzelprodukt-grid .button-row {
-  margin-top: 0.5rem;
-  display: flex;
-  justify-content: flex-start; /* linksbündig */
-  gap: 10px;
-  width: 100%;
+  text-align: center;
 }
 
 .sidebar {
@@ -920,6 +918,7 @@ body.light-mode .zoom-close {
 }
 
 
+
 .cart-table thead {
   background-color: var(--card-bg); /* ✅ dynamisch */
   color: var(--text-color);
@@ -932,8 +931,8 @@ body.light-mode .zoom-close {
   border-bottom: 1px solid #444;
   font-size: 16px;
   color: var(--text-color); /* adapt text to theme */
-  word-break: break-word; /* verhindert horizontales Scrollen */
 }
+
 
 .cart-table td:first-child {
   text-align: center;
@@ -1105,12 +1104,14 @@ body.light-mode .zoom-close {
   .cart-table td {
     padding: 8px;
     font-size: 14px;
+    flex-wrap: nowrap;
   }
 
   .cart-table {
     width: 100%;
   }
 }
+
 
 .btn-zurueck-startseite {
   background-color: var(--accent-color);
