@@ -1,5 +1,9 @@
-<?php include __DIR__ . '/../layout/header.php'; ?>
+<?php
+// Header einbinden
+include __DIR__ . '/../layout/header.php';
+?>
 <?php if (!empty($_SESSION['message'])): ?>
+  <?php // Toast Nachricht bei Erfolg anzeigen ?>
   <div class="toast-popup show" id="toastMessage">
     <?= htmlspecialchars($_SESSION['message']) ?>
     <button type="button" class="close-toast" onclick="this.parentElement.classList.remove('show')">&times;</button>
@@ -17,7 +21,7 @@
 
 
 <main class="produkte">
-  <!-- 🔍 Zoom Modal -->
+  <!-- 🔍 Zoom Modal zur Bildvergrößerung -->
   <div id="zoomModal" class="zoom-modal hidden">
     <div class="zoom-modal-content" id="zoomModalContent">
       <span class="zoom-close" onclick="closeZoomModal()">×</span>
@@ -31,17 +35,22 @@
       </div>
     </div>
   </div>
-  <?php foreach ($productsToShow as $index => $product):
+  <?php // Schleife über alle anzuzeigenden Produkte
+  foreach ($productsToShow as $index => $product):
     // 🧩 Produktdaten extrahieren mit Fallbacks
+    // Produkt-ID bestimmen
+    $iid = isset($product['iid']) ? (int)$product['iid'] : (int)($product['id'] ?? 0);
+    // Name und Preis ggf. mit Fallback
     $name = $product['name'] ?? 'Produktname nicht verfügbar';
     $price = isset($product['priceValue']) && is_numeric($product['priceValue']) ? $product['priceValue'] : 0;
-    $discount = (int)($product['discount'] ?? 0);
-    $salePrice = $discount > 0 ? $price * (1 - $discount / 100) : $price;
+    $discount = (int)($product['discount'] ?? 0); // Rabatt in Prozent
+    $salePrice = $discount > 0 ? $price * (1 - $discount / 100) : $price; // Endpreis nach Rabatt
+    // Bildpfade ermitteln
     $imageMain = $product['image_main'] ?? ($product['imagepath'] ?? 'img/placeholder.jpg');
     $images = $product['images'] ?? [$imageMain];
     $backImage = $images[1] ?? $imageMain;
     $description = $product['description'] ?? 'Keine Beschreibung verfügbar';
-    $sizes = $product['sizes'] ?? range(38, 46);
+    $sizes = $product['sizes'] ?? range(38, 46); // verfügbare Größen
   ?>
     <!-- 📦 Einzelnes Produkt-Layout -->
     <section class="Eprodukt untereinander" data-product-index="<?= $index ?>" data-base-price="<?= $price ?>" data-admin-discount="<?= $discount ?>">
@@ -73,6 +82,7 @@
           <h1 class="product-name"><?= htmlspecialchars($name) ?></h1>
 
           <p id="original-price-<?= $index ?>" class="price-old" style="display:none;"></p>
+          <?php // Preisdarstellung mit optionalem Rabatt ?>
           <p id="final-price-<?= $index ?>">
             <?php if ($price > 0): ?>
               <?php if ($discount > 0): ?>
@@ -132,14 +142,9 @@
         </div>
 
         <!-- 🧺 Aktionen -->
+        <?php // Variablen wurden bereits oben definiert ?>
 
         <div class="button-reihe" data-iid="<?= (int)$product['id'] ?>">
-          <?php
-          $iid = isset($product['iid']) ? (int)$product['iid'] : 0;
-          $name = $product['name'] ?? 'Unbekanntes Produkt';
-          $price = isset($product['priceValue']) ? (float)$product['priceValue'] : 0.00;
-          $image = $product['image_main'] ?? 'img/placeholder.jpg';
-          ?>
 
           <!-- 🛒 In den Warenkorb -->
           <button
@@ -148,20 +153,20 @@
             data-name="<?= htmlspecialchars($name) ?>"
             data-price="<?= $salePrice ?>"
             data-discount="<?= $discount ?>"
-            data-image="<?= htmlspecialchars($image) ?>">
+            data-image="<?= htmlspecialchars($imageMain) ?>">
             🛒 In den Warenkorb
           </button>
 
           <!-- ❤️ Zur Merkliste -->
-          <button
-            class="btn-add-to-watch"
-            data-iid="<?= $iid ?>"
-            data-name="<?= htmlspecialchars($name) ?>"
-            data-price="<?= $salePrice ?>"
-            data-discount="<?= $discount ?>"
-            data-image="<?= htmlspecialchars($image) ?>">
-            ❤️
-          </button>
+            <button
+              class="btn-add-to-watch"
+              data-iid="<?= $iid ?>"
+              data-name="<?= htmlspecialchars($name) ?>"
+              data-price="<?= $salePrice ?>"
+              data-discount="<?= $discount ?>"
+              data-image="<?= htmlspecialchars($imageMain) ?>">
+              ❤️
+            </button>
 
 
         </div>
@@ -180,6 +185,7 @@
     <?php endforeach; ?>
 
 
+  <!-- ⚖️ Produktvergleich -->
   <button id="showCompareBtn" class="compare-toggle-btn" aria-label="Vergleich öffnen" type="button">+</button>
   <div id="compareSection" class="compare-section hidden">
     <label for="compareInput">Produkt zum Vergleichen auswählen:</label>
@@ -201,6 +207,7 @@
   </div>
 
   <?php if (!empty($similarProducts)): ?>
+    <?php // Vorschläge ähnlicher Produkte ?>
     <section class="similar-products">
       <h3>Ähnliche Produkte</h3>
       <ul class="einzelprodukt-grid">
@@ -251,7 +258,9 @@
     </section>
   <?php endif; ?>
 
-  <?php foreach ($productsToShow as $index => $product):
+  <?php // Bewertungen für jedes Produkt anzeigen
+  foreach ($productsToShow as $index => $product):
+    // Bewertungen und Durchschnitt ermitteln
     $ratings = getRatingsForProduct((int)$product['id'], $_SESSION['user_id'] ?? null);
 
     $avgRating = getAverageRating((int)$product['id']);
@@ -320,8 +329,9 @@
     <?php else: ?>
       <p><a href="index.php?page=auth&action=login">Anmelden</a>, um eine Bewertung zu schreiben.</p>
     <?php endif; ?>
-  <?php endforeach; ?>
+<?php endforeach; ?>
 </main>
+<!-- Modal zum Schreiben einer Bewertung -->
 <div id="ratingModal" class="review-modal hidden" role="dialog" aria-modal="true" aria-labelledby="ratingTitle">
   <div class="review-modal-content">
     <h2 id="ratingTitle">Bewertung abgeben</h2>
@@ -360,12 +370,14 @@
 </div>
 </div>
 <script>
+  // Globale Infos für JS
   window.isLoggedIn = <?= isset($_SESSION['user_id']) ? 'true' : 'false' ?>;
   window.currentUserId = <?= isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : 'null' ?>;
   window.isAdmin = <?= !empty($_SESSION['is_admin']) ? 'true' : 'false' ?>;
 </script>
 
 <script>
+  // JS-Logik für Produktvergleich und Bildfunktionen
   document.addEventListener('DOMContentLoaded', () => {
 
     let compareProducts = [];
@@ -505,6 +517,10 @@
     });
   });
 </script>
+<!-- Button zum schnellen Zurückscrollen -->
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
 
-<?php include __DIR__ . '/../layout/footer.php'; ?>
+<?php
+// Footer einbinden
+include __DIR__ . '/../layout/footer.php';
+?>
