@@ -1,5 +1,6 @@
 <?php
 // controller/orderController.php
+// Steuerung des gesamten Bestellprozesses
 require_once 'model/orderModel.php';
 require_once 'model/cartModel.php';
 
@@ -13,6 +14,7 @@ $action = $_GET['action'] ?? 'checkout';
 
 switch ($action) {
     case 'checkout':
+        // Anzeige der Zusammenfassung vor dem Kauf
         $cartItems = getCartItems($_SESSION['user_id']);
         if (empty($cartItems)) {
             header("Location: index.php?page=cart&action=view");
@@ -32,6 +34,7 @@ switch ($action) {
         break;
 
     case 'submit':
+        // Bestellung abschicken
         $cartItems = getCartItems($_SESSION['user_id']);
         if (empty($cartItems)) {
             header("Location: index.php?page=cart&action=view");
@@ -61,12 +64,14 @@ switch ($action) {
         break;
 
     case 'success':
+        // Erfolgsseite nach Bestellung
         $discountPercent = $_SESSION['last_discount_percent'] ?? 0;
         unset($_SESSION['last_discount_percent']);
         require 'view/order/checkoutSuccessView.php';
         break;
 
     case 'cancel':
+        // Bestellung stornieren, solange sie neu ist
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $orderId = (int) ($_GET['id'] ?? 0);
             $userId = $_SESSION['user_id'] ?? null;
@@ -83,6 +88,7 @@ switch ($action) {
         break;
 
     case 'admin':
+        // Admin-Übersicht aller Bestellungen
         if (empty($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
             header("Location: index.php?page=auth&action=login&unauthorized=1");
             exit;
@@ -99,6 +105,7 @@ switch ($action) {
         break;
 
     case 'updateStatus':
+        // Status einer Bestellung ändern
         if (empty($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
             header("Location: index.php?page=auth&action=login&unauthorized=1");
             exit;
