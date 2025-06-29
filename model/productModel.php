@@ -101,3 +101,34 @@ function deleteProduct(int $productId): bool
     $stmt = $db->prepare('DELETE FROM products WHERE id = ?');
     return $stmt->execute([$productId]);
 }
+
+function getSimilarProducts(int $productId, int $limit = 4): array
+{
+    global $db;
+
+    $base = getProductById($productId);
+    if (!$base) {
+        return [];
+    }
+
+    $category = $base['category'] ?? '';
+    $subcategory = $base['subcategory'] ?? '';
+
+    $sql = 'SELECT * FROM products WHERE id <> ? AND category = ?';
+    $params = [$productId, $category];
+    if ($subcategory !== '') {
+        $sql .= ' AND subcategory = ?';
+        $params[] = $subcategory;
+    }
+
+    // MariaDB does not allow using a bound parameter for the LIMIT clause, so
+    // cast it to an integer and append it directly to the SQL string
+    $limit = max(1, (int)$limit);
+    $sql .= ' ORDER BY RAND() LIMIT ' . $limit;
+
+    $stmt = $db->prepare($sql);
+    $stmt->execute($params);
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return array_map('mapProductRow', $rows);
+}
