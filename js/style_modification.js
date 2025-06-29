@@ -1,7 +1,10 @@
 // ✅ Dark-/Light-Mode Toggle
+// IIFE that manages theme selection and persists the choice
 (() => {
+  // Load previously selected theme or default to dark mode
   const savedTheme = localStorage.getItem("theme") || "dark";
 
+  // Apply the given theme classes to the document
   const applyTheme = (theme) => {
     document.body.classList.toggle("light-mode", theme === "light");
     document.body.classList.toggle("dark-mode", theme === "dark");
@@ -10,6 +13,7 @@
 
   applyTheme(savedTheme);
 
+  // Initialize the toggle button and handle clicks
   const initToggle = () => {
     const toggleButton = document.getElementById("theme-toggle");
     if (!toggleButton) return;
@@ -24,6 +28,7 @@
     });
   };
 
+  // Ensure toggle initialization after DOM is loaded
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initToggle);
   } else {
@@ -32,10 +37,12 @@
 })();
 
 // ✅ Scroll-To-Top Button
+// Adds a button that smoothly scrolls back to the page top
 document.addEventListener("DOMContentLoaded", () => {
   const scrollBtn = document.getElementById("scrollTopBtn");
   if (!scrollBtn) return;
 
+  // Toggle button visibility depending on scroll position
   const checkScrollAvailability = () => {
     const scrollable =
       document.documentElement.scrollHeight > window.innerHeight;
