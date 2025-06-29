@@ -87,7 +87,6 @@ function addProduct(array $product): bool
     ]);
 }
 
-
 function updateProductDiscount(int $productId, int $discount): bool
 {
     global $db;

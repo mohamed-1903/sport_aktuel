@@ -55,7 +55,6 @@ switch ($action) {
             $baseProduct['id'],
             2
         );
-
         // Vorschläge für die Bewertungsleiste laden
         $suggestionsFile = 'data/review_suggestions.json';
         $reviewSuggestions = [];
