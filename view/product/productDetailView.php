@@ -202,12 +202,13 @@
   <section class="produkte similar-products">
     <h2>Ähnliche Produkte</h2>
     <div class="einzelprodukt-grid">
-      <?php foreach ($similarProducts as $sim): ?>
-        <?php
-          $preis = (float)($sim['price'] ?? 0);
-          $discount = (int)($sim['discount'] ?? 0);
-          $salePrice = $discount > 0 ? $preis * (1 - $discount / 100) : $preis;
-        ?>
+      <?php if (!empty($similarProducts)): ?>
+        <?php foreach ($similarProducts as $sim): ?>
+          <?php
+            $preis = (float)($sim['price'] ?? 0);
+            $discount = (int)($sim['discount'] ?? 0);
+            $salePrice = $discount > 0 ? $preis * (1 - $discount / 100) : $preis;
+          ?>
         <div class="einzelprodukt">
           <div class="image-wrapper">
             <img src="<?= htmlspecialchars($sim['image_main'] ?? 'img/placeholder.jpg') ?>"
@@ -237,9 +238,13 @@
             </a>
           </div>
         </div>
-      <?php endforeach; ?>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <p class="no-similar">Keine passenden Produkte gefunden.</p>
+      <?php endif; ?>
     </div>
   </section>
+
   <?php foreach ($productsToShow as $index => $product):
     $ratings = getRatingsForProduct((int)$product['id'], $_SESSION['user_id'] ?? null);
 
