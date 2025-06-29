@@ -852,6 +852,12 @@ body.light-mode .zoom-close {
   overflow-x: auto;
   width: 100%;
   -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
 
 }
 
@@ -1045,7 +1051,6 @@ body.light-mode .zoom-close {
     min-width: 500px;
   }
 }
-
 
 .btn-zurueck-startseite {
   background-color: var(--accent-color);

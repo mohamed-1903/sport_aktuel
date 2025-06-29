@@ -47,31 +47,41 @@ switch ($action) {
 
         // Dynamisch passende Produkte ermitteln
         $baseProduct = $productsToShow[0];
-        $similarProducts = array_filter($allProducts, static function ($p) use ($baseProduct) {
-            return $p['id'] != $baseProduct['id'] &&
-                $p['category'] === $baseProduct['category'] &&
-                $p['subcategory'] === $baseProduct['subcategory'];
-        });
 
-        // Falls zu wenig Treffer, nur nach Kategorie suchen
-        if (count($similarProducts) < 2) {
-            $similarProducts = array_filter($allProducts, static function ($p) use ($baseProduct) {
+        // 1. Zuerst nach identischer Kategorie und Subkategorie suchen
+        $similarProducts = array_filter(
+            $allProducts,
+            static function ($p) use ($baseProduct) {
                 return $p['id'] != $baseProduct['id'] &&
-                    $p['category'] === $baseProduct['category'];
-            });
+                    strcasecmp($p['category'] ?? '', $baseProduct['category'] ?? '') === 0 &&
+                    strcasecmp($p['subcategory'] ?? '', $baseProduct['subcategory'] ?? '') === 0;
+            }
+        );
+
+        // 2. Wenn weniger als zwei Treffer, nur die Kategorie vergleichen
+        if (count($similarProducts) < 2) {
+            $similarProducts = array_filter(
+                $allProducts,
+                static function ($p) use ($baseProduct) {
+                    return $p['id'] != $baseProduct['id'] &&
+                        strcasecmp($p['category'] ?? '', $baseProduct['category'] ?? '') === 0;
+                }
+            );
         }
 
+        // 3. Sollte das immer noch weniger als zwei Produkte ergeben, alle übrigen nehmen
+        if (count($similarProducts) < 2) {
+            $similarProducts = array_filter(
+                $allProducts,
+                static function ($p) use ($baseProduct) {
+                    return $p['id'] != $baseProduct['id'];
+                }
+            );
+        }
+
+        // Reihenfolge mischen und genau zwei Produkte auswählen
         shuffle($similarProducts);
         $similarProducts = array_slice($similarProducts, 0, 2);
-
-        // Falls weiterhin keine Produkte gefunden wurden, nehme zwei beliebige
-        if (empty($similarProducts)) {
-            $fallback = array_filter($allProducts, static function ($p) use ($baseProduct) {
-                return $p['id'] != $baseProduct['id'];
-            });
-            shuffle($fallback);
-            $similarProducts = array_slice($fallback, 0, 2);
-        }
 
         // Vorschläge für die Bewertungsleiste laden
         $suggestionsFile = 'data/review_suggestions.json';
