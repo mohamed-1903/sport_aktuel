@@ -449,6 +449,17 @@
   align-items: flex-start; /* linksbündig */
 }
 
+/* Zentrierte Darstellung der Highlights auf der Startseite */
+.produkte .einzelprodukt-grid {
+  justify-content: center; /* Grid als Ganzes zentrieren */
+  justify-items: center;    /* Inhalte innerhalb der Zellen zentrieren */
+}
+
+.produkte .einzelprodukt-grid .produkt {
+  align-items: center;
+  text-align: center;
+}
+
 .sidebar {
   width: 220px;
   background-color: var(--card-bg);
