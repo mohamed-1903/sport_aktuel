@@ -109,7 +109,6 @@ switch ($action) {
         require 'view/product/searchResultsView.php';
         break;
     case 'list':
-
     default:
         $category = $_GET['category'] ?? '';
         $subcategory = $_GET['subcategory'] ?? '';

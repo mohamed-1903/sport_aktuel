@@ -112,8 +112,8 @@ function getSimilarProducts(string $category, ?string $subcategory, int $exclude
         $params[] = $subcategory;
     }
 
-    $sql .= ' ORDER BY RAND() LIMIT ?';
-    $params[] = $limit;
+    $sql .= ' ORDER BY RAND() LIMIT ' . (int)$limit;
+
 
     $stmt = $db->prepare($sql);
     $stmt->execute($params);
