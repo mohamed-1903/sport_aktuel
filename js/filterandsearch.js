@@ -1,7 +1,8 @@
-// ✅ FILTERFUNKTION
-let currentPage = 1;
-let paginatedItems = [];
+// Steuert die Paginierung der Produktliste
+let currentPage = 1; // aktuell angezeigte Seite
+let paginatedItems = []; // Elemente, die für die Pagination verwendet werden
 
+// Ermittelt abhängig vom Layout wie viele Produkte pro Seite angezeigt werden
 function getItemsPerPage() {
   const container = document.getElementById("produktContainer");
   if (!container) return 8;
@@ -22,6 +23,7 @@ function getItemsPerPage() {
   return 2;
 }
 
+// Filtert die angezeigten Produkte nach den gewählten Kriterien
 window.applyFilter = function () {
   const priceSel = document.getElementById("filter-price");
   let minVal = 0;
@@ -77,7 +79,7 @@ window.applyFilter = function () {
   updateActiveFilters();
 };
 
-// ✅ PRODUKTSUCHE mit Feedback
+// Durchsucht alle geladenen Produkte und liefert Feedback über die Trefferzahl
 function produktSuche() {
   const eingabe = document
     .getElementById("produktsuche")
@@ -114,6 +116,7 @@ function produktSuche() {
 let alleProdukte = [];
 let fokusIndex = -1;
 
+// Initialisiert Suche, Filter und Event-Listener
 function initFilterAndSearch() {
   const input = document.getElementById("produktsuche");
   const shadow = document.getElementById("autocomplete-shadow");
@@ -141,6 +144,7 @@ function initFilterAndSearch() {
     });
   }
 
+  // schließt die Autocomplete-Liste bei Klick außerhalb des Suchfeldes
   document.addEventListener("click", (e) => {
     if (!e.target.closest(".search-container")) {
       liste.style.display = "none";
@@ -148,19 +152,21 @@ function initFilterAndSearch() {
     }
   });
 
-  // Produktdaten laden
+  // Produktdaten laden, um Suche und Filter zu befüllen
   fetch("data/products.json")
     .then((res) => res.json())
     .then((data) => {
       alleProdukte = data.products || [];
     });
 
+  // zusätzliche Produktlisten (z.B. Kategorien) laden
   if (typeof produktKonfigurationen !== "undefined") {
     produktKonfigurationen.forEach(({ containerId, urls }) => {
       ladeProdukte(containerId, urls);
     });
   }
 
+  // Layout der Produktübersicht wiederherstellen
   const prodContainer = document.getElementById("produktContainer");
   const savedLayout = localStorage.getItem("productLayout");
   if (prodContainer && savedLayout === "list") {
@@ -192,7 +198,7 @@ if (document.readyState === "loading") {
 }
 
 
-// 🔽 PRODUKTE LADEN
+// Lädt HTML-Fragmente für weitere Produktcontainer nach
 function ladeProdukte(containerId, urls) {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -208,8 +214,10 @@ function ladeProdukte(containerId, urls) {
         })
     )
   ).then(() => {
+    // nach dem Laden Filter und Suche neu anwenden
     resetFilter();
     produktSuche();
+    // ursprüngliche Sortierung merken
     if (!window.originalProductOrder) {
       window.originalProductOrder = Array.from(
         container.querySelectorAll(".einzelprodukt")
@@ -219,6 +227,7 @@ function ladeProdukte(containerId, urls) {
   });
 }
 
+// Zeigt Autocomplete-Vorschläge zur Suchanfrage an
 function autocompleteSuche() {
   const input = document.getElementById("produktsuche");
   const liste = document.getElementById("such-vorschlaege");
@@ -226,7 +235,6 @@ function autocompleteSuche() {
 
   const wert = input.value.toLowerCase().trim();
   liste.innerHTML = "";
-  autocompleteVorschlag = "";
   fokusIndex = -1;
 
   if (wert.length < 1) {
@@ -283,7 +291,7 @@ function autocompleteSuche() {
   }
 }
 
-// ⌨️ TASTATUR-NAVIGATION
+// Steuert die Navigation in der Autocomplete-Liste über die Tastatur
 function handleTastaturNavigation(e, liste, input, shadow) {
   const eintraege = liste.querySelectorAll("li");
   if (!eintraege.length) return;
@@ -312,6 +320,7 @@ function handleTastaturNavigation(e, liste, input, shadow) {
   updateFokus(eintraege);
 }
 
+// hebt den aktuell gewählten Vorschlag hervor
 function updateFokus(eintraege) {
   eintraege.forEach((li, i) => {
     li.classList.toggle("focused", i === fokusIndex);
@@ -319,6 +328,7 @@ function updateFokus(eintraege) {
   });
 }
 
+// gibt zu einem Farbnamen das passende Emoji zurück
 function colorEmoji(name) {
   const base = name.toLowerCase().split(/[-/]/)[0];
   const map = {
@@ -342,6 +352,7 @@ function colorEmoji(name) {
   return map[base] || "⬛";
 }
 
+// befüllt die Dropdowns für die Filter dynamisch aus den vorhandenen Produkten
 window.populateFilterOptions = function () {
   const container = document.getElementById("produktContainer");
   if (!container) return;
@@ -409,7 +420,7 @@ window.populateFilterOptions = function () {
   }
 };
 
-// 🔄 Alle Filter zurücksetzen und erneut anwenden
+// Setzt alle Filter und die Sucheingabe zurück und wendet den Filter neu an
 window.resetFilter = function () {
   document.querySelectorAll(".filterbar select").forEach((sel) => {
     sel.selectedIndex = 0;
@@ -437,7 +448,7 @@ window.resetFilter = function () {
   updateActiveFilters();
 };
 
-// Sortiert die angezeigten Produkte nach Preis
+// Sortiert die angezeigten Produkte nach Preis oder Name
 window.sortProducts = function (order) {
   const container = document.getElementById("produktContainer");
   if (!container) return;
@@ -469,7 +480,7 @@ window.sortProducts = function (order) {
   updateActiveFilters();
 };
 
-// Setzt die Produkte in ihre ursprüngliche Reihenfolge zurück
+// Stellt die ursprüngliche Reihenfolge der Produkte wieder her
 window.restoreOriginalOrder = function () {
   const container = document.getElementById("produktContainer");
   if (!container) return;
@@ -482,6 +493,7 @@ window.restoreOriginalOrder = function () {
   items.forEach((el) => container.appendChild(el));
 };
 
+// markiert aktive Filter im UI
 function updateActiveFilters() {
   document.querySelectorAll(".filterbar select").forEach((sel) => {
     if (sel.id === "sort-select") {
@@ -495,7 +507,7 @@ function updateActiveFilters() {
   if (priceSel) priceSel.classList.toggle("active", priceActive);
 }
 
-// Ein/Ausblenden der Filterleiste
+// blendet die Filterleiste auf kleinen Bildschirmen ein oder aus
 window.toggleFilterBar = function () {
   const bar = document.querySelector(".filterbar");
   const btn = document.querySelector(".filter-toggle");
@@ -504,6 +516,7 @@ window.toggleFilterBar = function () {
   btn.textContent = hidden ? "Filter anzeigen ▼" : "Filter ausblenden ▲";
 };
 
+// passt die Sichtbarkeit der Filterleiste an die Fensterbreite an
 function adjustFilterBar() {
   const bar = document.querySelector(".filterbar");
   const btn = document.querySelector(".filter-toggle");
@@ -534,6 +547,7 @@ window.toggleLayout = function () {
   applyFilter();
 };
 
+// passt den Text des Layout-Buttons an
 function updateLayoutToggle(layout) {
   const btn = document.querySelector(".layout-toggle");
   if (!btn) return;
@@ -544,6 +558,7 @@ function updateLayoutToggle(layout) {
   }
 }
 
+// blendet die Produkte der gewählten Seite ein
 function showPage(page) {
   const itemsPerPage = getItemsPerPage();
   const start = (page - 1) * itemsPerPage;
@@ -568,6 +583,7 @@ function showPage(page) {
   if (next) next.disabled = currentPage === totalPages;
 }
 
+// erstellt die Navigationsbuttons für die Paginierung
 function renderPagination(total) {
   const container = document.querySelector(".pagination");
   if (!container) return;
@@ -610,6 +626,7 @@ function renderPagination(total) {
   showPage(currentPage);
 }
 
+// berechnet die Seitenanzahl neu und erstellt die Pagination
 function updatePagination() {
   const container = document.getElementById("produktContainer");
   if (!container) return;
@@ -628,6 +645,7 @@ function updatePagination() {
 }
 // Nach dem kompletten Laden der Seite erneut Pagination berechnen,
 // damit alle Produkte und Layout-Styles berücksichtigt werden
+// Pagination auch nach dem Laden und beim Resize anpassen
 window.addEventListener("load", () => {
   updatePagination();
 });
@@ -637,6 +655,7 @@ window.addEventListener("resize", () => {
   updatePagination();
 });
 
+// öffnet oder schließt die Seitenleiste im Mobilmodus
 window.toggleSidebar = function () {
   const bar = document.querySelector(".sidebar");
   const btn = document.querySelector(".sidebar-toggle");
@@ -645,6 +664,7 @@ window.toggleSidebar = function () {
   btn.textContent = open ? "Kategorien ausblenden ▲" : "Kategorien anzeigen ▼";
 };
 
+// blendet den Kategoriebutton ein oder aus
 function adjustSidebar() {
   const bar = document.querySelector(".sidebar");
   const btn = document.querySelector(".sidebar-toggle");
