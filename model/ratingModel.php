@@ -1,6 +1,11 @@
 <?php
+// model/ratingModel.php
 require_once 'model/db.php';
 
+/**
+ * Ensure that rating tables and required columns exist.
+ * Uses a static flag so the schema check runs only once per request.
+ */
 function ensureRatingSchema(): void {
     global $db;
     static $done = false;
@@ -59,6 +64,9 @@ function ensureRatingSchema(): void {
     $done = true;
 }
 
+/**
+ * Insert a new rating for the given product and return the inserted ID.
+ */
 function addRating(int $productId, int $userId, string $displayName, int $stars, string $comment, array $imagePaths, ?int $parentId = null): int {
     ensureRatingSchema();
     global $db;
@@ -68,6 +76,10 @@ function addRating(int $productId, int $userId, string $displayName, int $stars,
     return (int)$db->lastInsertId();
 }
 
+/**
+ * Fetch ratings for a product and optionally include the current user's vote.
+ * Results are grouped so that replies follow their parent rating.
+ */
 function getRatingsForProduct(int $productId, ?int $currentUserId = null): array {
     ensureRatingSchema();
     global $db;
@@ -141,6 +153,9 @@ function getRatingsForProduct(int $productId, ?int $currentUserId = null): array
 
 }
 
+/**
+ * Calculate the average star rating for a product.
+ */
 function getAverageRating(int $productId): ?float {
     ensureRatingSchema();
     global $db;
@@ -150,6 +165,10 @@ function getAverageRating(int $productId): ?float {
     return $avg ? (float)$avg : null;
 }
 
+/**
+ * Delete a rating and any uploaded images. The SQL used for admin and user
+ * deletion is almost identical and could be consolidated.
+ */
 function deleteRating(int $ratingId, int $userId, bool $isAdmin): bool {
     ensureRatingSchema();
     global $db;
@@ -195,6 +214,10 @@ function deleteRating(int $ratingId, int $userId, bool $isAdmin): bool {
     return $success;
 }
 
+/**
+ * Register a like for a rating and return updated vote counts.
+ * Shares much of its logic with dislikeRating().
+ */
 function likeRating(int $ratingId, int $userId): array {
     ensureRatingSchema();
     global $db;
@@ -216,6 +239,9 @@ function likeRating(int $ratingId, int $userId): array {
     return $votes;
 }
 
+/**
+ * Register a dislike for a rating. Essentially the counterpart to likeRating().
+ */
 function dislikeRating(int $ratingId, int $userId): array {
     ensureRatingSchema();
     global $db;
@@ -237,6 +263,9 @@ function dislikeRating(int $ratingId, int $userId): array {
     return $votes;
 }
 
+/**
+ * Remove a like from a rating for the given user.
+ */
 function unlikeRating(int $ratingId, int $userId): array {
     ensureRatingSchema();
     global $db;
@@ -252,6 +281,9 @@ function unlikeRating(int $ratingId, int $userId): array {
     return $votes;
 }
 
+/**
+ * Remove a dislike from a rating for the given user.
+ */
 function undislikeRating(int $ratingId, int $userId): array {
     ensureRatingSchema();
     global $db;
@@ -267,6 +299,9 @@ function undislikeRating(int $ratingId, int $userId): array {
     return $votes;
 }
 
+/**
+ * Return the like and dislike counts for a rating.
+ */
 function getRatingVotes(int $ratingId): array {
     global $db;
     $stmt = $db->prepare('SELECT likes, dislikes FROM ratings WHERE id = ?');
@@ -275,6 +310,10 @@ function getRatingVotes(int $ratingId): array {
     return $row ?: ['likes' => 0, 'dislikes' => 0];
 }
 
+/**
+ * Retrieve a single rating along with parent and user information.
+ * Contains duplicated query logic depending on whether a current user is given.
+ */
 function getRating(int $ratingId, ?int $currentUserId = null): ?array {
     ensureRatingSchema();
     global $db;
