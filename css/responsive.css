@@ -289,15 +289,21 @@
   }
 
   .header-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 6px;
     padding: 5px 0;
-    display: flex;
   }
 
   .logo {
     font-size: 22px;
   }
 
+  .action-buttons {
+    width: 100%;
+    justify-content: center;
+  }
   .action-buttons button {
     padding: 4px 8px;
     font-size: 14px;
@@ -309,6 +315,26 @@
 
   .burger-menu {
     top: 15px;
+    left: 10px;
+  }
+}
+
+/* Desktop layout adjustments */
+@media (width >= 769px) {
+  nav {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    background-color: transparent;
+  }
+
+  nav.open {
+    left: auto;
+  }
+
+  .nav-overlay {
+    display: none !important;
   }
 }
 
