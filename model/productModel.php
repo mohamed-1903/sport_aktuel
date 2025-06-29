@@ -100,16 +100,26 @@ function deleteProduct(int $productId): bool
     return $stmt->execute([$productId]);
 }
 
-function getSimilarProducts(string $category, ?string $subcategory, int $excludeId, int $limit = 2): array
+function getSimilarProducts(string $category, ?string $subcategory, ?string $brand, int $excludeId, int $limit = 2): array
 {
     global $db;
 
-    $sql = 'SELECT * FROM products WHERE id != ? AND LOWER(category) = LOWER(?)';
-    $params = [$excludeId, $category];
+    $sql = 'SELECT * FROM products WHERE id != ?';
+    $params = [$excludeId];
+
+    if ($category !== null && trim($category) !== '') {
+        $sql .= ' AND LOWER(category) = LOWER(?)';
+        $params[] = $category;
+    }
 
     if ($subcategory !== null && trim($subcategory) !== '') {
         $sql .= ' AND LOWER(subcategory) = LOWER(?)';
         $params[] = $subcategory;
+    }
+
+    if ($brand !== null && trim($brand) !== '') {
+        $sql .= ' AND LOWER(marke) = LOWER(?)';
+        $params[] = $brand;
     }
 
     $sql .= ' ORDER BY RAND() LIMIT ' . (int)$limit;

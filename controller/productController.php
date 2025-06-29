@@ -51,6 +51,7 @@ switch ($action) {
         $similarProducts = getSimilarProducts(
             $baseProduct['category'] ?? '',
             $baseProduct['subcategory'] ?? '',
+            $baseProduct['marke'] ?? '',
             $baseProduct['id'],
             2
         );
@@ -59,6 +60,17 @@ switch ($action) {
         if (count($similarProducts) < 2) {
             $similarProducts = getSimilarProducts(
                 $baseProduct['category'] ?? '',
+                null,
+                $baseProduct['marke'] ?? '',
+                $baseProduct['id'],
+                2
+            );
+        }
+
+        if (count($similarProducts) < 2) {
+            $similarProducts = getSimilarProducts(
+                $baseProduct['category'] ?? '',
+                null,
                 null,
                 $baseProduct['id'],
                 2
