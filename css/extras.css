@@ -1875,7 +1875,6 @@ body.light-mode .welcome-overlay {
   margin: 0;
   text-align: left;
 }
-
 .einzelprodukt-list .image-wrapper,
 .einzelprodukt-list .produkt-info,
 .einzelprodukt-list .button-row {
@@ -1910,4 +1909,11 @@ body.light-mode .welcome-overlay {
   max-height: 100%;
   width: auto;
   object-fit: contain;
+}
+
+.similar-products .einzelprodukt-grid .button-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 0.5rem;
 }
