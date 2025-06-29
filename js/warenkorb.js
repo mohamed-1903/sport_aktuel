@@ -1,14 +1,19 @@
+// Beim Laden der Seite initial den Warenkorb abrufen und Zähler/Buttons aktualisieren
+// Hinweis: updateCartButtons() ist derzeit nirgends definiert und hat somit keine Wirkung
 document.addEventListener("DOMContentLoaded", () => {
   loadList();
   updateCartButtons();
   updateCartCount();
 });
-// avoid conflicts with watchlist script
+// Flag zur Unterscheidung, ob wir uns auf der Produktdetailseite befinden
+// (wird z.B. genutzt, um den "Anzeigen"-Button in Popups anzuzeigen oder nicht)
+// Dieser Code vermeidet Konflikte mit dem Watchlist-Skript
 const isOnProductDetailPageCart =
   window.location.href.includes("page=product") &&
   window.location.href.includes("action=detail");
 
 // 🧠 Globale Button-Steuerung für ALLE .btn-add-to-cart Buttons
+// Ermittelt Produkt, Größe und Menge und ruft danach toggleCart auf
 document.addEventListener("click", (e) => {
   const btn = e.target.closest(".btn-add-to-cart");
   if (!btn) return;
@@ -44,9 +49,11 @@ document.addEventListener("click", (e) => {
   }
 
   toggleCart(iid, btn, size, quantity);
-  flyToTarget(btn, "#cart-button");
+flyToTarget(btn, "#cart-button");
 });
 
+// Fügt ein Produkt dem Warenkorb hinzu oder aktualisiert es
+// Berücksichtigt dabei Rabatte, Geschenkoptionen und Personalisierungen
 function toggleCart(iid, btn = null, size = "M", qty = 1) {
   const section = btn?.closest(".Eprodukt");
   let discount = 0;
@@ -148,6 +155,8 @@ function toggleCart(iid, btn = null, size = "M", qty = 1) {
     });
 }
 
+// Holt die aktuelle Anzahl der Warenkorb-Artikel vom Server
+// und aktualisiert die Anzeige im Header
 function updateCartCount(callback) {
   fetch("index.php?page=cart&action=count")
     .then((res) => res.json())
@@ -162,6 +171,7 @@ function updateCartCount(callback) {
     .catch((err) => console.error("Warenkorb-Zähler Fehler:", err));
 }
 
+// Kurzer Haken am Warenkorbsymbol als Feedback
 function zeigeCartBestaetigung(count) {
   const el = document.getElementById("cart-button");
   if (!el) return;
@@ -175,6 +185,7 @@ function zeigeCartBestaetigung(count) {
   }, 2000);
 }
 
+// Zeigt kurz einen Haken im Button, nachdem ein Produkt hinzugefügt wurde
 function zeigeButtonBestaetigung(btn) {
   if (!btn) return;
   const original = btn.textContent;
@@ -184,7 +195,7 @@ function zeigeButtonBestaetigung(btn) {
     btn.textContent = original;
   }, 2000);
 }
-// ✅ Warenkorbliste darstellen
+// ✅ Ruft die Warenkorb-Daten ab und baut die Tabelle im Warenkorb auf
 function loadList() {
   fetch("index.php?page=cart&action=json")
     .then((res) => res.json())
@@ -311,6 +322,9 @@ function loadList() {
       });
     });
 }
+
+// Entfernt einen Artikel aus dem Warenkorb
+// Optional wird ein Vorschau-Popup angezeigt
 function removeFromCart(productId, size, previewData = null) {
   fetch("index.php?page=cart&action=remove", {
     method: "POST",
@@ -335,6 +349,8 @@ function removeFromCart(productId, size, previewData = null) {
     .catch((err) => console.error("Fehler beim Entfernen:", err));
 }
 
+// Aktualisiert die Menge eines Artikels im Warenkorb
+// reload=false vermeidet einen kompletten Reload der Liste
 function updateCartQuantity(productId, size, quantity, reload = true) {
   fetch("index.php?page=cart&action=update", {
     method: "POST",
@@ -357,6 +373,7 @@ function updateCartQuantity(productId, size, quantity, reload = true) {
     .catch((err) => console.error("Fehler beim Aktualisieren:", err));
 }
 
+// Reagiert auf Änderungen der Mengenfelder und aktualisiert Summen
 function handleQtyChange(el, sendUpdate = true) {
   let qty = parseInt(el.value);
   if (!qty || qty < 1) {
@@ -384,6 +401,7 @@ function handleQtyChange(el, sendUpdate = true) {
   }
 }
 
+// Berechnet anhand der Tabellenwerte die Summen neu
 function recalculateTotals() {
   const sumCells = document.querySelectorAll(".summe-cell");
   const zwischensummeEl = document.getElementById("zwischensumme");
@@ -405,6 +423,7 @@ function recalculateTotals() {
   if (mwstEl) mwstEl.textContent = `${mwst.toFixed(2)} €`;
 }
 
+// Einfaches Toast-Popup ohne Close-Button
 function zeigeToast(text, farbe = "") {
   const el = document.getElementById("toast-popup");
   if (!el) return;
@@ -420,6 +439,7 @@ function zeigeToast(text, farbe = "") {
     el.classList.remove("show");
   }, 3500);
 }
+// Universelle Popup-Funktion zum Stapeln mehrerer Hinweise
 function zeigeGestapeltesPopup({
   name,
   image,
@@ -467,6 +487,7 @@ function zeigeGestapeltesPopup({
   }, timeout);
 }
 
+// Spezielles Popup, wird aktuell nicht genutzt (redundant)
 function zeigeProduktPreview({ name, image, price, productId }) {
   const popup = document.getElementById("cart-preview-popup");
   if (!popup) return;
@@ -497,6 +518,7 @@ function zeigeProduktPreview({ name, image, price, productId }) {
   }, 4000);
 }
 
+// Popup nachdem ein Artikel entfernt wurde
 function zeigeCartRemovePreview({ name, image, productId }) {
   const isDetailPage =
     location.href.includes("page=product") &&
@@ -519,7 +541,7 @@ function zeigeCartRemovePreview({ name, image, productId }) {
   });
 }
 
-// 🧹 Alles löschen
+// 🧹 Entfernt alle Artikel aus dem Warenkorb
 function clearList() {
   if (confirm("Wirklich den ganzen Warenkorb löschen?")) {
     fetch("index.php?page=cart&action=clear").then(() => {
@@ -530,7 +552,7 @@ function clearList() {
   }
 }
 
-// 💳 Checkout
+// 💳 Einfacher Checkout-Prototyp der prüft, ob der Nutzer eingeloggt ist
 function checkout() {
   fetch("check_login.php")
     .then((res) => res.json())
