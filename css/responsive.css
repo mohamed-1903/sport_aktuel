@@ -49,6 +49,10 @@
   }
   .einzelprodukt-grid .produkt-info {
     text-align: center;
+  }
+  .einzelprodukt-grid .button-row {
+    justify-content: center;
+    flex-wrap: wrap;
 
   }
 }
@@ -279,10 +283,11 @@
   }
   .einzelprodukt-grid .produkt-info {
     text-align: center;
-
   }
   .einzelprodukt-grid .button-row {
     justify-content: center;
+    flex-wrap: wrap;
+
   }
   .einzelprodukt-grid .image-wrapper {
     justify-content: center;
