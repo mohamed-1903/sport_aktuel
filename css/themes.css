@@ -2,6 +2,31 @@ body.light-mode .action-buttons button {
   color: #fff;
 }
 
+/* Use the browser's dark/light form controls appropriately */
+body.dark-mode {
+  color-scheme: dark;
+}
+
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+  background-color: #2a2a2a;
+  color: #fff;
+  border-color: #444;
+}
+
+body.light-mode {
+  color-scheme: light;
+}
+
+body.light-mode input,
+body.light-mode textarea,
+body.light-mode select {
+  background-color: #f8f8f8;
+  color: #000;
+  border-color: #ccc;
+}
+
 body.light-mode nav {
   background-color: var(--card-bg);
 }
