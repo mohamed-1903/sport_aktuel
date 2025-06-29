@@ -1,5 +1,6 @@
 <?php
 // controller/productController.php
+// Steuert Produktansichten und Suche
 require_once 'model/productModel.php';
 // Für Bewertungsfunktionen benötigt die Detailansicht
 require_once 'model/ratingModel.php';
@@ -8,6 +9,7 @@ $action = $_GET['action'] ?? 'list';
 
 switch ($action) {
     case 'detail':
+        // Detailansicht für ein oder mehrere Produkte
         // Alle Parameter, die mit "id" oder "iid" beginnen, einsammeln
         $ids = [];
         foreach ($_GET as $key => $value) {
@@ -58,6 +60,7 @@ switch ($action) {
         require 'view/product/productDetailView.php';
         break;
     case 'search':
+        // Produkte anhand eines Suchbegriffs filtern
         $query = $_GET['query'] ?? '';
         $all = getAllProducts();
         $results = [];
@@ -81,6 +84,7 @@ switch ($action) {
     case 'list':
 
     default:
+        // Liste der Produkte anzeigen
         $category = $_GET['category'] ?? '';
         $subcategory = $_GET['subcategory'] ?? '';
         $saleOnly = isset($_GET['sale']) && $_GET['sale'] === '1';

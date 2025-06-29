@@ -1,5 +1,6 @@
 <?php
 // controller/returnController.php
+// Kümmert sich um Rücksendeanfragen
 require_once 'model/returnModel.php';
 
 if (session_status() === PHP_SESSION_NONE) {
@@ -15,6 +16,7 @@ $action = $_GET['action'] ?? 'form';
 
 switch ($action) {
     case 'submit':
+        // Rücksendeanfrage abschicken
         $orderId = isset($_POST['order_id']) ? (int)$_POST['order_id'] : 0;
         $reason = trim($_POST['reason'] ?? '');
         if ($orderId > 0 && $reason !== '') {
@@ -28,11 +30,13 @@ switch ($action) {
         break;
 
     case 'success':
+        // Erfolgreiche Anfrage anzeigen
         require 'view/return/returnSuccessView.php';
         break;
 
     case 'form':
     default:
+        // Formular für Rücksendeanfrage laden
         $orderId = $_GET['order_id'] ?? '';
         require 'view/return/returnFormView.php';
         break;

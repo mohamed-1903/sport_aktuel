@@ -1,11 +1,13 @@
 <?php
 // controller/authController.php
+// Verarbeitet Registrierung, Login und Logout
 require_once 'model/userModel.php';
 
 $action = $_GET['action'] ?? 'login';
 
 switch ($action) {
     case 'check':
+        // Prüft ob Benutzername oder E-Mail bereits existieren
         header('Content-Type: application/json');
         $raw = file_get_contents('php://input');
         $data = json_decode($raw, true) ?: [];
@@ -22,6 +24,7 @@ switch ($action) {
         exit;
 
     case 'register':
+        // Neuen Benutzer registrieren
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'] ?? '';
             $email = $_POST['email'] ?? '';
@@ -40,6 +43,7 @@ switch ($action) {
         break;
 
     case 'logout':
+        // Beendet die aktuelle Sitzung
         session_start();
         session_destroy();
         header("Location: index.php?page=auth&action=login&logout=1");
@@ -47,6 +51,7 @@ switch ($action) {
 
     case 'login':
     default:
+        // Benutzer einloggen
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = $_POST['email'] ?? '';
             $password = $_POST['password'] ?? '';

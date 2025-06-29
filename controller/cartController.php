@@ -1,10 +1,12 @@
 <?php
 // controller/cartController.php
+// Behandelt alle Warenkorb-Operationen
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// ID des angemeldeten Nutzers
 $userId = $_SESSION['user_id'] ?? null;
 
 require_once 'model/cartModel.php';
@@ -12,6 +14,7 @@ require_once 'model/productModel.php';
 
 $action = $_GET['action'] ?? 'view';
 
+// Prüft einen eingegebenen Gutscheincode
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['gutschein'])) {
   $code = strtoupper(trim($_POST['gutschein']));
   $validCodes = ['SPORT20' => 20];
@@ -29,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['gutschein'])) {
 
 switch ($action) {
     case 'add':
+        // Produkt zum Warenkorb hinzufügen
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $expectJson = isset($_SERVER['CONTENT_TYPE']) &&
                 strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false;
@@ -42,6 +46,7 @@ switch ($action) {
                 exit;
             }
 
+            // Eingabedaten aus JSON oder POST holen
             if (
                 isset($_SERVER['CONTENT_TYPE']) &&
                 strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false
@@ -55,6 +60,7 @@ switch ($action) {
             $size = isset($data['size']) ? trim($data['size']) : null;
             $quantity = $data['quantity'] ?? $data['qty'] ?? null;
             if ($id !== null && $size !== null && $size !== '' && $quantity !== null) {
+                // Speichert den Artikel im Warenkorb
                 try {
                     addToCart($userId, [
                         'id' => (int)$id,
@@ -93,6 +99,7 @@ switch ($action) {
         break;
 
     case 'remove':
+        // Produkt aus dem Warenkorb entfernen
         if (!$userId) {
             header("Location: index.php?page=auth&action=login&redirect=cart");
             exit;
@@ -109,6 +116,7 @@ switch ($action) {
         break;
 
     case 'update':
+        // Menge oder Größe eines Artikels ändern
         if (!$userId) {
             header("Location: index.php?page=auth&action=login&redirect=cart");
             exit;
@@ -124,6 +132,7 @@ switch ($action) {
         header("Location: index.php?page=cart&action=view");
         exit;
     case 'count':
+        // Anzahl der Warenkorbartikel zurückgeben
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
@@ -141,6 +150,7 @@ switch ($action) {
         break;
 
     case 'clear':
+        // Warenkorb komplett leeren
         session_start();
         $userId = $_SESSION['user_id'] ?? null;
         if ($userId) {
@@ -151,6 +161,7 @@ switch ($action) {
         break;
 
     case 'json':
+        // Warenkorb als JSON ausgeben
         session_start();
         $userId = $_SESSION['user_id'] ?? null;
         if (!$userId) {
@@ -164,6 +175,7 @@ switch ($action) {
         break;
 
     case 'toggle':
+        // Artikel je nach Zustand hinzufügen oder entfernen
         header('Content-Type: application/json');
         $userId = $_SESSION['user_id'] ?? null;
         if (!$userId) {
@@ -224,6 +236,7 @@ switch ($action) {
 
 
     case 'view':
+        // Standardansicht des Warenkorbs anzeigen
     default:
         if (!$userId) {
             header("Location: index.php?page=auth&action=login&redirect=cart");
