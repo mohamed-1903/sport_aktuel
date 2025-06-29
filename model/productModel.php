@@ -87,6 +87,7 @@ function addProduct(array $product): bool
     ]);
 }
 
+
 function updateProductDiscount(int $productId, int $discount): bool
 {
     global $db;
@@ -100,4 +101,3 @@ function deleteProduct(int $productId): bool
     $stmt = $db->prepare('DELETE FROM products WHERE id = ?');
     return $stmt->execute([$productId]);
 }
-

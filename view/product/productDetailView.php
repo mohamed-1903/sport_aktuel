@@ -217,7 +217,10 @@
         <div class="review<?= !empty($r['parent_id']) ? ' reply' : '' ?>" data-review-id="<?= (int)$r['id'] ?>"<?php if (!empty($r['parent_id'])): ?> data-parent-id="<?= (int)$r['parent_id'] ?>"<?php endif; ?>>
           <div class="review-content">
             <?php if (!empty($r['parent_name'])): ?>
-              <small class="reply-info">Antwort auf <?= htmlspecialchars($r['parent_name']) ?></small>
+              <small class="reply-info">
+                <?= 'Antwort auf ' . htmlspecialchars($r['parent_name']) ?>:
+                <span class="parent-excerpt"><?= htmlspecialchars($r['parent_comment']) ?></span>
+              </small>
             <?php endif; ?>
             <strong><?= htmlspecialchars($r['display_name'] ?: $r['username']) ?></strong>
             <small class="rating-date">

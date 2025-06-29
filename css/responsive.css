@@ -42,6 +42,14 @@
 
   .einzelprodukt-grid {
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    justify-items: center;
+  }
+  .einzelprodukt-grid .einzelprodukt {
+    align-items: center;
+  }
+  .einzelprodukt-grid .produkt-info {
+    text-align: center;
+
   }
 }
 
@@ -99,7 +107,8 @@
     width: 100%;
   }
 
-  div {
+  /* Reset spacing for header groups */
+  .header-bar div {
     margin: 0;
   }
   .action-buttons button {
@@ -130,8 +139,10 @@
     top: 20px;
     z-index: 2000;
   }
-  div {
-    text-align: center;
+  /* Right align header actions */
+  .header-bar div {
+    text-align: right;
+
   }
 
   /* Navigation fixieren und von links einblenden */
@@ -165,12 +176,35 @@
   /* Layout anpassen: Sidebar unter Inhalt stapeln */
   .main-container {
     flex-direction: column;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .filterbar {
+    flex-wrap: wrap;
+  }
+
+  .sidebar-toggle {
+    display: block;
+    margin-bottom: 10px;
+
   }
 
   .sidebar {
     width: 100%;
     position: static;
     top: auto;
+    display: none;
+  }
+
+  .sidebar.mobile-open {
+    display: block;
+  }
+
+  /* Grid layout for tablets */
+  .einzelprodukt-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+
   }
 
   /* Footer für kleinere Bildschirme */
@@ -204,6 +238,12 @@
   nav.open .nav-menu {
     gap: 15px;
   }
+  .filterbar {
+    flex-wrap: wrap;
+  }
+  .filter-controls {
+    flex-wrap: wrap;
+  }
 }
 @media (width <= 600px) {
   .main-content {
@@ -232,6 +272,14 @@
 
   .einzelprodukt-grid {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    justify-items: center;
+  }
+  .einzelprodukt-grid .einzelprodukt {
+    align-items: center;
+  }
+  .einzelprodukt-grid .produkt-info {
+    text-align: center;
+
   }
   .einzelprodukt-grid .button-row {
     justify-content: center;
@@ -263,7 +311,7 @@
 
   .einzelprodukt-list .einzelprodukt {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
   }
 
   .einzelprodukt-list .image-wrapper {

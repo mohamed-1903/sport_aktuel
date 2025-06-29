@@ -4,6 +4,8 @@
   gap: 2rem;
   align-items: flex-start;
   padding: 1rem;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .sidebar {
@@ -13,6 +15,63 @@
   padding: 1rem;
   border-radius: 10px;
   flex-shrink: 0;
+}
+
+.sidebar-toggle {
+  display: none;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  font-size: 14px;
+  padding: 6px 8px;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+
+.sidebar-toggle {
+  display: none;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  font-size: 14px;
+  padding: 6px 8px;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.sidebar-toggle {
+  display: none;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  font-size: 14px;
+  padding: 6px 8px;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.sidebar-toggle {
+  display: none;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  font-size: 14px;
+  padding: 6px 8px;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.sidebar-toggle {
+  display: none;
+}
+
+.sidebar-toggle {
+  display: none;
 }
 
 .main-content {
@@ -49,10 +108,13 @@
   padding: 0.25rem 0.5rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  overflow-x: auto;
   justify-content: flex-start; /* linksbündig */
   text-align: left;
+  width: 100%;
+  max-width: 100%;
 }
+
+
 
 .filterbar.hidden {
   display: none;
@@ -61,13 +123,15 @@
 /* Container für die Steuerelemente */
 .filter-controls {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   gap: 0.5rem;
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  max-width: 1200px;
+  max-width: 100%;
 }
+
+
 
 .filterbar select,
 .filterbar input[type="range"],
@@ -143,12 +207,13 @@
 .filter-controls {
   display: flex;
   flex-direction: row; /* horizontal anordnen */
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   gap: 0.5rem;
   align-items: center;
   justify-content: flex-start; /* Filter linksbündig */
-  overflow-x: auto; /* bei Bedarf horizontal scrollen */
+  overflow-x: visible;
 }
+
 
 .filter-controls.hidden {
   display: none;
@@ -312,6 +377,7 @@
   list-style: none;
   padding: 0;
   margin-bottom: 0;
+  width: 100%;
 }
 
 /* Kartenansicht für Produkte im Grid */
@@ -343,7 +409,9 @@
 
 .einzelprodukt-grid .produkt-info h3 {
   margin: 0 0 0.25rem;
+  word-break: break-word;
 }
+
 
 .einzelprodukt-grid .produkt-info p {
   margin: 0;
@@ -379,7 +447,9 @@
 
 .einzelprodukt-grid .produkt-info h3 {
   margin: 0 0 0.25rem;
+  word-break: break-word;
 }
+
 .einzelprodukt-grid .produkt-info p {
   margin: 0;
 }
@@ -840,6 +910,7 @@ body.light-mode .zoom-close {
 .cart-table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed; /* verhindert Überbreite */
 }
 
 .table-responsive {
@@ -848,36 +919,6 @@ body.light-mode .zoom-close {
   -webkit-overflow-scrolling: touch;
 }
 
-.table-responsive {
-  overflow-x: auto;
-  width: 100%;
-  -webkit-overflow-scrolling: touch;
-}
-
-.table-responsive {
-  overflow-x: auto;
-  width: 100%;
-  -webkit-overflow-scrolling: touch;
-}
-
-.table-responsive {
-  overflow-x: auto;
-  width: 100%;
-  -webkit-overflow-scrolling: touch;
-}
-
-.table-responsive {
-  overflow-x: auto;
-  width: 100%;
-  -webkit-overflow-scrolling: touch;
-}
-
-.table-responsive {
-  overflow-x: auto;
-  width: 100%;
-  -webkit-overflow-scrolling: touch;
-
-}
 
 .cart-table thead {
   background-color: var(--card-bg); /* ✅ dynamisch */
@@ -891,6 +932,7 @@ body.light-mode .zoom-close {
   border-bottom: 1px solid #444;
   font-size: 16px;
   color: var(--text-color); /* adapt text to theme */
+  word-break: break-word; /* verhindert horizontales Scrollen */
 }
 
 .cart-table td:first-child {
@@ -1066,7 +1108,7 @@ body.light-mode .zoom-close {
   }
 
   .cart-table {
-    min-width: 500px;
+    width: 100%;
   }
 }
 
@@ -1796,6 +1838,7 @@ body.light-mode .welcome-overlay {
 .einzelprodukt-list .produkt-info h3 {
   font-size: 1.2rem;
   margin: 0 0 5px;
+  word-break: break-word;
 }
 
 .einzelprodukt-list .produkt-info p {
