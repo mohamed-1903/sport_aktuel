@@ -1525,6 +1525,10 @@ body.light-mode .zoom-close {
   display: block;
 }
 
+.konto-popup.show {
+  display: block;
+}
+
 .konto-popup a {
   display: block;
   margin: 0.5em 0;
