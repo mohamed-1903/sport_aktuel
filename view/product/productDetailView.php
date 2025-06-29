@@ -249,8 +249,6 @@
       </ul>
     </section>
   <?php endif; ?>
-
-
   <?php foreach ($productsToShow as $index => $product):
     $ratings = getRatingsForProduct((int)$product['id'], $_SESSION['user_id'] ?? null);
 
