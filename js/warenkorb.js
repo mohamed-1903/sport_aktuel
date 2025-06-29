@@ -413,7 +413,6 @@ function zeigeToast(text, farbe = "") {
   el.textContent = text;
   el.style.background = farbe || "";
 
-
   el.classList.add("show");
 
   clearTimeout(el._hideTimer);

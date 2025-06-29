@@ -1,7 +1,9 @@
+
 <?php include __DIR__ . '/../layout/header.php'; ?>
 
 <main class="main-container">
- <aside class="sidebar">
+  <button type="button" class="sidebar-toggle" onclick="toggleSidebar()">Kategorien anzeigen ▼</button>
+  <aside class="sidebar">
   <h2><?= $category === "Alle Produkte" ? "Alle Unterkategorien" : htmlspecialchars($category) ?></h2>
   <ul>
     <?php
