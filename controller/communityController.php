@@ -1,4 +1,6 @@
 <?php
+// controller/communityController.php
+// Verwaltet Bewertungen und Reaktionen der Community
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -9,6 +11,7 @@ $action = $_GET['action'] ?? '';
 
 switch ($action) {
     case 'addRating':
+        // Bewertung über normales Formular speichern
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userId = $_SESSION['user_id'] ?? null;
             $productId = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
@@ -45,6 +48,7 @@ switch ($action) {
         }
         break;
     case 'addRatingAjax':
+        // Bewertung per AJAX senden
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userId = $_SESSION['user_id'] ?? null;
             $productId = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
@@ -81,6 +85,7 @@ switch ($action) {
         }
         break;
     case 'deleteRating':
+        // Bewertung löschen
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ratingId = isset($_POST['rating_id']) ? (int)$_POST['rating_id'] : 0;
             $productId = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
@@ -94,6 +99,7 @@ switch ($action) {
         }
         break;
     case 'likeRating':
+        // Bewertung positiv bewerten
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ratingId = isset($_POST['rating_id']) ? (int)$_POST['rating_id'] : 0;
             $uid = $_SESSION['user_id'] ?? null;
@@ -104,6 +110,7 @@ switch ($action) {
         }
         break;
     case 'dislikeRating':
+        // Bewertung negativ bewerten
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ratingId = isset($_POST['rating_id']) ? (int)$_POST['rating_id'] : 0;
             $uid = $_SESSION['user_id'] ?? null;
@@ -114,6 +121,7 @@ switch ($action) {
         }
         break;
     case 'unlikeRating':
+        // "Gefällt mir" zurücknehmen
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ratingId = isset($_POST['rating_id']) ? (int)$_POST['rating_id'] : 0;
             $uid = $_SESSION['user_id'] ?? null;
@@ -124,6 +132,7 @@ switch ($action) {
         }
         break;
     case 'undislikeRating':
+        // "Gefällt mir nicht" zurücknehmen
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ratingId = isset($_POST['rating_id']) ? (int)$_POST['rating_id'] : 0;
             $uid = $_SESSION['user_id'] ?? null;
@@ -135,6 +144,7 @@ switch ($action) {
         break;
 
     default:
+        // Keine passende Aktion gefunden
         http_response_code(404);
         echo 'Unbekannte Aktion';
 }
