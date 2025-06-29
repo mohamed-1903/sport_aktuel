@@ -1,6 +1,6 @@
 <?php include __DIR__ . '/../layout/header.php'; ?>
 
-<section class="form-wrapper" style="padding:2em; max-width:1000px; margin:auto;">
+<section class="form-wrapper" style="padding:2em; max-width:10000px; margin: 20px;">
 
   <h1 style="text-align:center;">🛍️ Produkte verwalten</h1>
   <?php if (empty($allProducts)): ?>
@@ -29,20 +29,20 @@
                 <form action="index.php?page=admin&action=updateDiscount" method="post" style="display:flex; gap:0.5em;">
                   <input type="hidden" name="product_id" value="<?= (int)$prod['id'] ?>">
                   <input type="hidden" name="discount" value="0">
-                  <button type="submit" class="btn-checkout">Entfernen</button>
+                  <button type="submit" class="btn-checkout">Rabatt Entfernen</button>
                 </form>
               <?php else: ?>
                 <form action="index.php?page=admin&action=updateDiscount" method="post" style="display:flex; gap:0.5em;">
                   <input type="hidden" name="product_id" value="<?= (int)$prod['id'] ?>">
                   <input type="number" name="discount" value="0" min="0" max="90" style="width:70px;">
-                  <button type="submit" class="btn-checkout">Speichern</button>
+                  <button type="submit" class="btn-checkout">Rabatt Speichern</button>
                 </form>
               <?php endif; ?>
 
 
               <form action="index.php?page=admin&action=deleteProduct" method="post" onsubmit="return confirm('Produkt wirklich löschen?');" style="margin-top:0.5em;">
                 <input type="hidden" name="product_id" value="<?= (int)$prod['id'] ?>">
-                <button type="submit" class="btn-delete-all">Löschen</button>
+                <button type="submit" class="btn-delete-all"> Produkt Löschen</button>
               </form>
 
             </td>
