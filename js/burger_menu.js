@@ -15,9 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const dropdownLinks = nav.querySelectorAll('.dropdown > a');
   dropdownLinks.forEach((link) => {
     link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 768) {
 
-      if (window.innerWidth <= 992) {
-        e.preventDefault();
         const item = link.parentElement;
         const isOpen = item.classList.contains('open');
         if (!isOpen) {
@@ -42,10 +41,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Close menu when window is resized above mobile breakpoint
   window.addEventListener('resize', () => {
+    if (window.innerWidth > 768 && nav.classList.contains('open')) {
 
-    if (window.innerWidth > 992 && nav.classList.contains('open')) {
       nav.classList.remove('open');
       document.body.classList.remove('nav-open');
     }
   });
 });
+

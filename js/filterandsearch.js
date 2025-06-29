@@ -522,6 +522,15 @@ function adjustFilterBar() {
   btn.textContent = mobile ? "Filter anzeigen ▼" : "Filter ausblenden ▲";
 }
 
+function adjustFilterBar() {
+  const bar = document.querySelector(".filterbar");
+  const btn = document.querySelector(".filter-toggle");
+  if (!bar || !btn) return;
+  const mobile = window.innerWidth <= 600;
+  bar.classList.toggle("hidden", mobile);
+  btn.textContent = mobile ? "Filter anzeigen ▼" : "Filter ausblenden ▲";
+}
+
 // Wechselt zwischen Listen- und Grid-Layout für die Produktübersicht
 window.toggleLayout = function () {
   const container = document.getElementById("produktContainer");
@@ -645,6 +654,23 @@ window.addEventListener("load", () => {
 window.addEventListener("resize", () => {
   updatePagination();
 });
+
+window.toggleSidebar = function () {
+  const bar = document.querySelector(".sidebar");
+  const btn = document.querySelector(".sidebar-toggle");
+  if (!bar || !btn) return;
+  const open = bar.classList.toggle("mobile-open");
+  btn.textContent = open ? "Kategorien ausblenden ▲" : "Kategorien anzeigen ▼";
+};
+
+function adjustSidebar() {
+  const bar = document.querySelector(".sidebar");
+  const btn = document.querySelector(".sidebar-toggle");
+  if (!bar || !btn) return;
+  const mobile = window.innerWidth <= 768;
+  btn.style.display = mobile ? "block" : "none";
+  if (!mobile) bar.classList.remove("mobile-open");
+}
 
 window.toggleSidebar = function () {
   const bar = document.querySelector(".sidebar");
