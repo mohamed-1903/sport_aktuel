@@ -18,6 +18,10 @@ body {
   font-weight: 800;
   color: #ffd700;
   padding-left: 38px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1;
 }
 
 /* 🟡 Wrapper für Suche + Autocomplete */
