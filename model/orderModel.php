@@ -1,7 +1,13 @@
 <?php
+//Laith
+
+
 // model/orderModel.php
 require_once 'model/db.php';
 
+
+// Speichert eine neue Bestellung für den angegebenen Nutzer. Die einzelnen
+// Warenkorbdaten werden als JSON im Feld admin_comment abgelegt.
 function saveOrder(int $userId, array $cartItems): bool {
     global $db;
 
@@ -17,6 +23,9 @@ function saveOrder(int $userId, array $cartItems): bool {
 
     return false;
 }
+
+// Setzt den Status einer Bestellung auf "storniert", sofern sie noch den
+// Status "neu" besitzt. Diese Logik überschneidet sich mit cancelOrder().
 function cancelOrderIfNew(int $orderId, int $userId): void {
     global $db;
 
@@ -29,6 +38,7 @@ function cancelOrderIfNew(int $orderId, int $userId): void {
 }
 
 
+// Liefert alle Bestellungen eines Nutzers sortiert nach dem Erstellungsdatum.
 function getOrdersByUser(int $userId): array {
     global $db;
     $stmt = $db->prepare("SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC");
@@ -37,12 +47,14 @@ function getOrdersByUser(int $userId): array {
 }
 
 
+// Gibt alle Bestellungen zurück (Admin-Ansicht).
 function getAllOrders(): array {
     global $db;
     $stmt = $db->query("SELECT * FROM orders ORDER BY created_at DESC");
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+// Filtert Bestellungen anhand eines Statuswertes.
 function getOrdersByStatus(string $status): array {
     global $db;
     $stmt = $db->prepare("SELECT * FROM orders WHERE status = ? ORDER BY created_at DESC");
@@ -50,6 +62,7 @@ function getOrdersByStatus(string $status): array {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+// Liefert eine einzelne Bestellung anhand ihrer ID.
 function getOrderById(int $orderId): ?array {
     global $db;
     $stmt = $db->prepare("SELECT * FROM orders WHERE id = ? LIMIT 1");
@@ -58,6 +71,7 @@ function getOrderById(int $orderId): ?array {
     return $order ?: null;
 }
 
+// Aktualisiert den Status einer Bestellung. Bei Ablehnung wird ein Grund gespeichert.
 function updateOrderStatus(int $orderId, string $status, string $reason = null): bool {
     global $db;
     if ($status === 'abgelehnt') {
@@ -69,6 +83,7 @@ function updateOrderStatus(int $orderId, string $status, string $reason = null):
     return $stmt->execute([$status, $orderId]);
 }
 
+// Alternative Stornofunktion mit Rueckmeldung, ob ein Datensatz geaendert wurde.
 function cancelOrder(int $orderId, int $userId): bool {
     global $db;
     $stmt = $db->prepare("UPDATE orders SET status = 'storniert', updated_at = NOW() WHERE id = ? AND user_id = ? AND status = 'neu'");
@@ -76,6 +91,7 @@ function cancelOrder(int $orderId, int $userId): bool {
     return $stmt->rowCount() > 0;
 }
 
+// Zählt alle nicht stornierten Bestellungen eines Nutzers.
 function countOrdersByUser(int $userId): int {
     global $db;
     $stmt = $db->prepare("SELECT COUNT(*) FROM orders WHERE user_id = ? AND status != 'storniert'");

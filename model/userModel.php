@@ -1,7 +1,16 @@
 <?php
+//Laith
+
+
 // model/userModel.php
 require_once 'model/db.php';
 
+/**
+ * Liefert einen Benutzer anhand seiner E-Mail-Adresse.
+ *
+ * @param string $email
+ * @return array|null Benutzer-Datensatz oder null, wenn nicht vorhanden
+ */
 function getUserByEmail(string $email): ?array {
     global $db;
     $stmt = $db->prepare("SELECT * FROM users WHERE email = ? LIMIT 1");
@@ -10,7 +19,12 @@ function getUserByEmail(string $email): ?array {
     return $user ?: null;
 }
 
-// Neuen Benutzer anhand des Benutzernamens ermitteln
+/**
+ * Holt einen Benutzer anhand des Benutzernamens.
+ *
+ * @param string $username
+ * @return array|null
+ */
 function getUserByUsername(string $username): ?array {
     global $db;
     $stmt = $db->prepare("SELECT * FROM users WHERE username = ? LIMIT 1");
@@ -19,6 +33,10 @@ function getUserByUsername(string $username): ?array {
     return $user ?: null;
 }
 
+/**
+ * Prüft Benutzerpasswort und startet die Session.
+ * Gibt den Benutzer oder null zurück.
+ */
 function loginUser(string $email, string $password) {
     $user = getUserByEmail($email);
     if ($user && password_verify($password, $user['password_hash'])) {
@@ -34,6 +52,11 @@ function loginUser(string $email, string $password) {
     return null;
 }
 
+/**
+ * Legt einen neuen Benutzer an, sofern Name und E-Mail einzigartig sind.
+ *
+ * @return array ['success' => bool, 'error' => string|null]
+ */
 function registerUser(string $username, string $email, string $password): array {
     global $db;
 
@@ -50,6 +73,9 @@ function registerUser(string $username, string $email, string $password): array 
     $success = $stmt->execute([$username, $email, $hash]);
     return ['success' => $success];
 }
+/**
+ * Entfernt einen Benutzer, wenn keine Bestellungen vorhanden sind.
+ */
 function deleteUserById(int $id): bool {
     global $db;
 
@@ -61,11 +87,17 @@ function deleteUserById(int $id): bool {
     $stmt = $db->prepare("DELETE FROM users WHERE id = ?");
     return $stmt->execute([$id]);
 }
+/**
+ * Gibt eine Liste aller Benutzer zurück.
+ */
 function getAllUsers(): array {
     global $db;
     $stmt = $db->query("SELECT * FROM users ORDER BY id ASC");
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+/**
+ * Ermittelt, ob der Benutzer Bestellungen besitzt.
+ */
 function userHasOrders($userId): bool {
     global $db;
     $stmt = $db->prepare("SELECT COUNT(*) FROM orders WHERE user_id = ?");
@@ -73,6 +105,9 @@ function userHasOrders($userId): bool {
     return $stmt->fetchColumn() > 0;
 }
 
+/**
+ * Liefert den Benutzer mit der angegebenen ID.
+ */
 function getUserById(int $id): ?array {
     global $db;
     $stmt = $db->prepare("SELECT * FROM users WHERE id = ? LIMIT 1");
@@ -81,12 +116,18 @@ function getUserById(int $id): ?array {
     return $user ?: null;
 }
 
+/**
+ * Aktualisiert den Status eines Benutzers.
+ */
 function setUserStatus(int $id, string $status): bool {
     global $db;
     $stmt = $db->prepare("UPDATE users SET status = ? WHERE id = ?");
     return $stmt->execute([$status, $id]);
 }
 
+/**
+ * Schaltet den Benutzerstatus zwischen "banned" und "active" um.
+ */
 function toggleUserStatus(int $id): void {
     $user = getUserById($id);
     if ($user) {

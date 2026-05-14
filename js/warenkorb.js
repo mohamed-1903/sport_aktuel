@@ -1,8 +1,10 @@
 // Beim Laden der Seite initial den Warenkorb abrufen und Zähler/Buttons aktualisieren
 // Hinweis: updateCartButtons() ist derzeit nirgends definiert und hat somit keine Wirkung
+//Hussein
+
+// Beim Laden der Seite initial den Warenkorb abrufen und Zähler/Buttons aktualisieren
 document.addEventListener("DOMContentLoaded", () => {
   loadList();
-  updateCartButtons();
   updateCartCount();
 });
 // Flag zur Unterscheidung, ob wir uns auf der Produktdetailseite befinden
@@ -546,7 +548,6 @@ function clearList() {
   if (confirm("Wirklich den ganzen Warenkorb löschen?")) {
     fetch("index.php?page=cart&action=clear").then(() => {
       loadList();
-      updateCartButtons();
       updateCartCount();
     });
   }

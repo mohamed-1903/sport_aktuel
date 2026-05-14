@@ -1,9 +1,11 @@
-// Handles the rating modal interactions
+// Warten bis die Seite geladen ist, dann sämtliche Event-Handler registrieren
 window.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('ratingModal');
   if (!modal) return;
+  // merkt sich eine hervorgehobene Bewertung, um sie später zurückzusetzen
   let highlighted = null;
 
+  // Klick auf "Bewertung schreiben" öffnet das Modal
   document.querySelectorAll('.open-review-modal').forEach(btn => {
     btn.addEventListener('click', () => {
       document.body.classList.add('modal-open');
@@ -24,14 +26,17 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Klick außerhalb des Dialogs schließt das Modal
   modal.addEventListener('click', e => {
     if (e.target === modal) closeRatingModal();
   });
 
+  // Modal per Escape-Taste schließen
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeRatingModal();
   });
 
+  // Einfache Textvorschläge je nach gewählter Sternebewertung ein-/ausblenden
   function showSuggestions(rating) {
     document.querySelectorAll('#ratingForm .suggestions-set').forEach(set => {
       set.classList.toggle('hidden', set.dataset.rating !== rating);
@@ -40,12 +45,15 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 
+  // Like/Dislike Buttons an bereits vorhandenen Bewertungen
+  // (diese Logik taucht später noch einmal in addRatingToDom auf → Redundanz)
   document.querySelectorAll('.review-actions').forEach(actions => {
     const likeBtn = actions.querySelector('.like-btn');
     const dislikeBtn = actions.querySelector('.dislike-btn');
     if (!likeBtn || !dislikeBtn) return;
     const id = likeBtn.dataset.id;
 
+    // Serverantwort anwenden und Zähler aktualisieren
     function apply(data) {
       if (!data) return;
       actions.querySelector('.like-btn span').textContent = data.likes;
@@ -55,6 +63,7 @@ window.addEventListener('DOMContentLoaded', () => {
       dislikeBtn.classList.toggle('active', data.user_vote === 'dislike');
     }
 
+    // Vote per AJAX an den Server senden
     function send(action) {
       fetch(`index.php?page=community&action=${action}`, {
         method: 'POST',
@@ -66,6 +75,7 @@ window.addEventListener('DOMContentLoaded', () => {
         .catch(console.error);
     }
 
+    // Handhabung des Like Buttons
     likeBtn.addEventListener('click', () => {
       if (!window.isLoggedIn) { window.location.href = 'index.php?page=auth&action=login'; return; }
       const current = actions.dataset.userVote;
@@ -73,6 +83,7 @@ window.addEventListener('DOMContentLoaded', () => {
       else send('likeRating');
     });
 
+    // Handhabung des Dislike Buttons
     dislikeBtn.addEventListener('click', () => {
       if (!window.isLoggedIn) { window.location.href = 'index.php?page=auth&action=login'; return; }
       const current = actions.dataset.userVote;
@@ -81,6 +92,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // "Antworten" auf bestehende Bewertung öffnet Modal und markiert Zielkommentar
   document.querySelectorAll('.reply-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.body.classList.add('modal-open');
@@ -111,10 +123,13 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Bild-Upload inkl. Vorschau der ausgewählten Dateien
   const imageInput = document.getElementById('ratingImages');
   const previewList = document.getElementById('imagePreviewList');
+  // enthält maximal fünf ausgewählte Dateien
   const selectedFiles = [];
 
+  // Synchronisiert die ausgewählten Dateien mit dem versteckten File-Input
   function syncInput() {
     if (!imageInput) return;
     const dt = new DataTransfer();
@@ -122,6 +137,7 @@ window.addEventListener('DOMContentLoaded', () => {
     imageInput.files = dt.files;
   }
 
+  // Erstellt kleine Vorschaubilder der gewählten Dateien
   function renderPreviews() {
     if (!previewList) return;
     previewList.innerHTML = '';
@@ -148,6 +164,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   }
 
+  // Beim Auswählen neuer Dateien Vorschau erstellen
   if (imageInput && previewList) {
     imageInput.addEventListener('change', () => {
       [...imageInput.files].forEach((file) => {
@@ -158,6 +175,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Klick auf einen Vorschlag füllt das Kommentar-Feld
   const commentField = document.getElementById('ratingComment');
   document.querySelectorAll('#ratingForm .suggest-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -168,13 +186,16 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Beim Laden direkt passende Vorschläge anzeigen
   const checked = document.querySelector('.rating-stars input:checked');
   showSuggestions(checked ? checked.value : '5');
 
+  // Wechsel der Sternebewertung aktualisiert die angezeigten Vorschläge
   document.querySelectorAll('.rating-stars input').forEach(rad => {
     rad.addEventListener('change', () => showSuggestions(rad.value));
   });
 
+  // Klick auf Vorschaubilder öffnet die Galerie
   document.querySelectorAll('.review-images').forEach(container => {
     const images = JSON.parse(container.dataset.images || '[]');
     container.querySelectorAll('img').forEach(img => {
@@ -184,6 +205,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Formular wird via AJAX abgeschickt, um neue Bewertung dynamisch hinzuzufügen
   const ratingForm = document.getElementById('ratingForm');
   if (ratingForm) {
     ratingForm.addEventListener('submit', (e) => {
@@ -214,6 +236,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 });
 
+// Zeigt eine Galerieansicht für Bewertungsbilder an
 function openImageGallery(images, start) {
   if (!images || images.length === 0) return;
   zoomImages = images;
@@ -228,6 +251,7 @@ function openImageGallery(images, start) {
   document.getElementById('zoomModal').classList.remove('hidden');
 }
 
+// Schließt das Bewertungs-Modal und setzt evtl. gesetzte Markierungen zurück
 function closeRatingModal() {
   const modal = document.getElementById('ratingModal');
   if (modal) {
@@ -253,6 +277,7 @@ function closeRatingModal() {
   }
 }
 
+// Fügt eine neue Bewertung inklusive Interaktionen in das DOM ein
 function addRatingToDom(rating) {
   const reviews = document.querySelector('.reviews');
   if (!reviews || !rating) return;
@@ -392,7 +417,7 @@ function addRatingToDom(rating) {
   reviewEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
   setTimeout(() => reviewEl.classList.remove('pulse-highlight'), 1000);
 
-  // attach like/dislike events
+  // Like/Dislike Logik erneut (siehe oben) – könnte in Funktion ausgelagert werden
   actions.dataset.userVote = rating.user_vote || '';
   like.classList.toggle('active', rating.user_vote === 'like');
   dislike.classList.toggle('active', rating.user_vote === 'dislike');

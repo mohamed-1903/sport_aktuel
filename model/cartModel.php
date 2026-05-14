@@ -1,4 +1,6 @@
 <?php
+//Hussein
+
 require_once 'model/db.php'; // Stellt $db (PDO) bereit
 
 /**
@@ -47,12 +49,14 @@ function getCartId(int $userId, bool $create = false): ?int
 
     return $cartId ? (int)$cartId : null;
 }
+// Erstellt falls nötig einen Warenkorb für den Nutzer und gibt dessen ID zurück.
 
 function ensureCart(int $userId): int
 {
     return getCartId($userId, true);
 }
 
+// Fügt einen Artikel zum Warenkorb hinzu oder erhöht die Menge, falls er bereits vorhanden ist.
 function addToCart(int $userId, array $item): void
 {
     global $db;
@@ -146,6 +150,7 @@ if (!function_exists('discountCodeSupported')) {
 }
 
 
+// Gibt alle Warenkorb-Positionen eines Nutzers samt Produktdaten zurück.
 function getCartItems(int $userId): array
 {
     global $db;
@@ -178,33 +183,6 @@ function getCartItems(int $userId): array
              WHERE c.user_id = ?";
 
 
-    $select = $base . ",
-                    p.name,
-                    p.price,
-                    p.image_main
-             FROM cart_items ci
-             JOIN cart c ON ci.cart_id = c.id
-             JOIN products p ON ci.product_id = p.id
-             WHERE c.user_id = ?";
-
-
-    $select = $base . ",
-                    p.name,
-                    p.price,
-                    p.image_main
-             FROM cart_items ci
-             JOIN cart c ON ci.cart_id = c.id
-             JOIN products p ON ci.product_id = p.id
-             WHERE c.user_id = ?";
-
-    $select = $base . ",
-                    p.name,
-                    p.price,
-                    p.image_main
-             FROM cart_items ci
-             JOIN cart c ON ci.cart_id = c.id
-             JOIN products p ON ci.product_id = p.id
-             WHERE c.user_id = ?";
 
 
     $stmt = $db->prepare($select);
@@ -213,6 +191,7 @@ function getCartItems(int $userId): array
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+// Entfernt einen Artikel mit bestimmter Größe aus dem Warenkorb.
 function removeFromCart(int $userId, int $productId, string $size): void
 {
     global $db;
@@ -226,6 +205,7 @@ function removeFromCart(int $userId, int $productId, string $size): void
     $stmt->execute([$cartId, $productId, $size]);
 }
 
+// Aktualisiert die Menge eines Artikels im Warenkorb.
 function updateCartQuantity(int $userId, int $productId, string $size, int $quantity): void
 {
     global $db;
@@ -239,6 +219,7 @@ function updateCartQuantity(int $userId, int $productId, string $size, int $quan
     $stmt->execute([$quantity, $cartId, $productId, $size]);
 }
 
+// Löscht alle Artikel aus dem Warenkorb des Nutzers.
 function clearCart(int $userId): void
 {
     global $db;
@@ -254,6 +235,7 @@ function clearCart(int $userId): void
 
 
 
+// Zählt die Gesamtanzahl der Artikel im Warenkorb des Nutzers.
 function countCartItems(int $userId): int
 {
     global $db;
@@ -267,6 +249,7 @@ function countCartItems(int $userId): int
     $stmt->execute([$userId]);
     return (int) $stmt->fetchColumn();
 }
+// Prüft, ob ein bestimmter Artikel im Warenkorb enthalten ist.
 function isInCart(int $userId, int $productId, string $size): bool
 {
     global $db;

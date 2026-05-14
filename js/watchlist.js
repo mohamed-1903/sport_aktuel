@@ -1,27 +1,35 @@
+//Hussein
+
+// Script zur Verwaltung der Merkliste. Lädt Inhalte nach dem Seitenaufbau
+// und reagiert auf Klicks auf "Zur Merkliste" Buttons.
 document.addEventListener("DOMContentLoaded", () => {
   loadWatchlist();
   updateWatchButtons();
   updateWatchlistCount();
 });
-// avoid conflicts with other scripts
+// Hilfsvariable: true, wenn wir uns auf der Produktdetailseite befinden.
 const isOnProductDetailPageWatch =
   window.location.href.includes("page=product") &&
   window.location.href.includes("action=detail");
 
+// Klickhandler für alle Merkliste-Buttons
 document.addEventListener("click", (e) => {
   const btn = e.target.closest(".btn-add-to-watch");
   if (!btn) return;
 
+  // Produkt-ID aus dem Button oder seinem Elternelement lesen
   let iid = parseInt(btn.dataset.iid);
   if (isNaN(iid)) {
     const parent = btn.closest("[data-iid]");
     iid = parent ? parseInt(parent.dataset.iid) : NaN;
   }
-  if (isNaN(iid)) return;
+  if (isNaN(iid)) return; // ohne ID keine Aktion
 
+  // Produkt in der Merkliste ein- oder ausschalten
   toggleWatchlist(iid, btn);
 });
 
+// Fügt ein Produkt zur Merkliste hinzu oder entfernt es wieder
 function toggleWatchlist(iid, btn = null, info = {}) {
   fetch("index.php?page=watchlist&action=toggle", {
     method: "POST",
@@ -101,6 +109,7 @@ function toggleWatchlist(iid, btn = null, info = {}) {
     });
 }
 
+// Behandelt mehrere Produkte gleichzeitig (z.B. beim Auswählen mehrerer Karten)
 function toggleWatchlistBulk(ids = []) {
   if (!Array.isArray(ids) || ids.length === 0) return;
   fetch("index.php?page=watchlist&action=toggleBulk", {
@@ -122,6 +131,7 @@ function toggleWatchlistBulk(ids = []) {
     .catch((err) => console.error("Watchlist Bulk Error", err));
 }
 
+// Aktualisiert alle Merkliste-Buttons anhand der aktuellen Daten
 function updateWatchButtons() {
   fetch("index.php?page=watchlist&action=json")
     .then((res) => res.json())
@@ -140,6 +150,7 @@ function updateWatchButtons() {
     });
 }
 
+// Zeigt im Header an, wie viele Produkte gemerkt sind
 function updateWatchlistCount() {
   fetch("index.php?page=watchlist&action=count")
     .then((res) => res.json())
@@ -149,6 +160,7 @@ function updateWatchlistCount() {
     });
 }
 
+// Lädt die gespeicherten Produkte und erstellt Karten im Merkliste-Bereich
 function loadWatchlist() {
   const container = document.getElementById("watchlist-container");
   if (!container) return;
@@ -200,6 +212,7 @@ function loadWatchlist() {
     });
 }
 
+// Entfernt ein Produkt aus der Merkliste und zeigt ggf. ein Rückgängig-Popup
 function removeFromWatchlist(id, info = {}) {
   fetch("index.php?page=watchlist&action=remove", {
     method: "POST",
@@ -221,6 +234,7 @@ function removeFromWatchlist(id, info = {}) {
   });
 }
 
+// Löscht die komplette Merkliste nach Bestätigung
 function clearWatchlist() {
   if (
     confirm("Willst du wirklich alle Produkte aus der Merkliste entfernen?")
@@ -232,6 +246,7 @@ function clearWatchlist() {
     });
   }
 }
+// Zeigt kurz ein Herz-Symbol im Hauptbutton zur Bestätigung
 function zeigeWatchButtonBestaetigung() {
   const watchBtn = document.getElementById("watchlist-button");
   if (!watchBtn) return;
@@ -247,15 +262,11 @@ function zeigeWatchButtonBestaetigung() {
   }, 2000);
 }
 
-// 🔔 Popup bei Hinzufügen zur Watchlist
+// 🔔 Popup bei Hinzufügen zur Watchlist anzeigen
 function zeigeWatchPreview({ name, image, price, productId }) {
   const popup = document.getElementById("watchlist-preview-popup");
   if (!popup) return;
-
-  // Prüfen, ob wir uns auf der Produktdetailseite befinden
-  const isOnProductDetailPageWatch =
-    window.location.href.includes("page=product") &&
-    window.location.href.includes("action=detail");
+  // nutzt die globale isOnProductDetailPageWatch-Variable, um Links anzupassen
 
   popup.innerHTML = `
     <div class="popup-content-flex">
@@ -283,7 +294,9 @@ function zeigeWatchPreview({ name, image, price, productId }) {
   }, 4000);
 }
 
+// Popup nach dem Entfernen eines Produkts aus der Merkliste
 function zeigeWatchRemovePreview({ name, image, productId, price = 0 }) {
+  // erneut prüfen, ob wir uns auf einer Produktdetailseite befinden
   const isDetailPage =
     location.href.includes("page=product") &&
     location.href.includes("action=detail");

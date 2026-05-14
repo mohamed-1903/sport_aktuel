@@ -1,9 +1,14 @@
+<!-- Hussein -->
+
 <?php
 // controller/cartController.php
 
+// Startet Session falls notwendig
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+
+// Aktueller Benutzer
 $userId = $_SESSION['user_id'] ?? null;
 
 require_once 'model/cartModel.php';
@@ -11,7 +16,7 @@ require_once 'model/productModel.php';
 
 $action = $_GET['action'] ?? 'view';
 
-
+// Zugriff nur für eingeloggte Benutzer
 if (!isset($_SESSION['user_id'])) {
   header("Location: index.php?page=auth&action=login&redirect=cart");
   exit;
@@ -123,6 +128,6 @@ $total = 0;
     </a>
   </aside>
 </main>
-
+<!-- Scroll-to-Top Button -->
 <button id="scrollTopBtn" title="Nach oben">⬆</button>
 <?php include __DIR__ . '/../layout/footer.php'; ?>

@@ -1,6 +1,17 @@
 <?php
+//Hussein
+
+// model/ratingModel.php
 require_once 'model/db.php';
 
+/**
+ * Prüft beim ersten Aufruf, ob die benötigten Tabellen und Spalten
+ * für Bewertungen vorhanden sind und legt sie bei Bedarf an.
+ * Dank eines statischen Flags passiert dies nur einmal pro Request.
+ *
+ * Redundanz: Für jede Spaltenprüfung wird beinahe identischer Code
+ * verwendet. Eine Hilfsfunktion könnte hier Wiederholungen vermeiden.
+ */
 function ensureRatingSchema(): void {
     global $db;
     static $done = false;
@@ -59,6 +70,10 @@ function ensureRatingSchema(): void {
     $done = true;
 }
 
+/**
+ * Fügt eine neue Bewertung zu einem Produkt hinzu und gibt die erzeugte ID zurück.
+ * Optional kann eine Elternbewertung angegeben werden, falls es sich um eine Antwort handelt.
+ */
 function addRating(int $productId, int $userId, string $displayName, int $stars, string $comment, array $imagePaths, ?int $parentId = null): int {
     ensureRatingSchema();
     global $db;
@@ -68,6 +83,10 @@ function addRating(int $productId, int $userId, string $displayName, int $stars,
     return (int)$db->lastInsertId();
 }
 
+/**
+ * Holt alle Bewertungen zu einem Produkt und ordnet Antworten unter ihre jeweilige Elternbewertung ein.
+ * Ist ein Nutzer angemeldet, wird dessen bisherige Stimme (Like/Dislike) mit ausgeliefert.
+ */
 function getRatingsForProduct(int $productId, ?int $currentUserId = null): array {
     ensureRatingSchema();
     global $db;
@@ -141,6 +160,9 @@ function getRatingsForProduct(int $productId, ?int $currentUserId = null): array
 
 }
 
+/**
+ * Berechnet die durchschnittliche Sternebewertung eines Produkts.
+ */
 function getAverageRating(int $productId): ?float {
     ensureRatingSchema();
     global $db;
@@ -150,6 +172,13 @@ function getAverageRating(int $productId): ?float {
     return $avg ? (float)$avg : null;
 }
 
+/**
+ * Löscht eine Bewertung und entfernt eventuelle Bilder.
+ * Administratoren dürfen jede Bewertung entfernen, normale Nutzer nur ihre eigene.
+ *
+ * Redundanz: Die SQL-Abfragen für Admin und Nutzer unterscheiden sich nur durch
+ * einen zusätzlichen WHERE-Parameter und könnten vereint werden.
+ */
 function deleteRating(int $ratingId, int $userId, bool $isAdmin): bool {
     ensureRatingSchema();
     global $db;
@@ -195,6 +224,10 @@ function deleteRating(int $ratingId, int $userId, bool $isAdmin): bool {
     return $success;
 }
 
+/**
+ * Vermerkt ein "Like" zu einer Bewertung und liefert die neuen Stimmenzahlen zurück.
+ * Großteils identisch zu *dislikeRating()* und daher potenziell zusammenführbar.
+ */
 function likeRating(int $ratingId, int $userId): array {
     ensureRatingSchema();
     global $db;
@@ -216,6 +249,9 @@ function likeRating(int $ratingId, int $userId): array {
     return $votes;
 }
 
+/**
+ * Vermerkt ein "Dislike". Aufbau und Ablauf entsprechen weitgehend dem der Like-Funktion.
+ */
 function dislikeRating(int $ratingId, int $userId): array {
     ensureRatingSchema();
     global $db;
@@ -237,6 +273,9 @@ function dislikeRating(int $ratingId, int $userId): array {
     return $votes;
 }
 
+/**
+ * Entfernt das "Like" eines Nutzers von einer Bewertung.
+ */
 function unlikeRating(int $ratingId, int $userId): array {
     ensureRatingSchema();
     global $db;
@@ -252,6 +291,9 @@ function unlikeRating(int $ratingId, int $userId): array {
     return $votes;
 }
 
+/**
+ * Hebt ein "Dislike" eines Nutzers auf.
+ */
 function undislikeRating(int $ratingId, int $userId): array {
     ensureRatingSchema();
     global $db;
@@ -267,6 +309,9 @@ function undislikeRating(int $ratingId, int $userId): array {
     return $votes;
 }
 
+/**
+ * Liefert die Anzahl der Likes und Dislikes einer Bewertung.
+ */
 function getRatingVotes(int $ratingId): array {
     global $db;
     $stmt = $db->prepare('SELECT likes, dislikes FROM ratings WHERE id = ?');
@@ -275,6 +320,13 @@ function getRatingVotes(int $ratingId): array {
     return $row ?: ['likes' => 0, 'dislikes' => 0];
 }
 
+/**
+ * Lädt eine einzelne Bewertung inklusive Benutzer- und optionaler Elterninformationen.
+ * Abhängig davon, ob eine Nutzer-ID vorliegt, wird auch die eigene Stimme abgefragt.
+ *
+ * Redundanz: Die beiden SELECT-Abfragen sind bis auf den JOIN zu "rating_votes"
+ * nahezu identisch.
+ */
 function getRating(int $ratingId, ?int $currentUserId = null): ?array {
     ensureRatingSchema();
     global $db;

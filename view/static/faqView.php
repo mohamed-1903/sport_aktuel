@@ -1,10 +1,15 @@
-<?php include 'view/layout/header.php'; ?>
+<!-- Laith -->
+<?php 
+include 'view/layout/header.php'; 
+?>
 
 <?php /* faqView.php */ ?>
 <section class="faq-page">
     <div class="faq-container">
+        <!-- Seitentitel -->
         <h1>Häufige Fragen (FAQ)</h1>
 
+        <!-- FAQ-Eintrag 1 -->
         <div class="faq-item">
             <button class="faq-question">Wie kann ich eine Bestellung aufgeben?</button>
             <div class="faq-answer">
@@ -12,13 +17,15 @@
             </div>
         </div>
 
+        <!-- FAQ-Eintrag 2 -->
         <div class="faq-item">
             <button class="faq-question">Wie lange dauert der Versand?</button>
             <div class="faq-answer">
-                <p>Die Lieferzeit innerhalb Deutschlands beträgt 2–4 Werktage. Wir versenden mit DHL und DPD.</p>
+                <p>Die Lieferzeit innerhalb Deutschlands beträgt 2-4 Werktage. Wir versenden mit DHL und DPD.</p>
             </div>
         </div>
 
+        <!-- FAQ-Eintrag 3 -->
         <div class="faq-item">
             <button class="faq-question">Kann ich meine Bestellung ändern oder stornieren?</button>
             <div class="faq-answer">
@@ -26,33 +33,34 @@
             </div>
         </div>
 
+        <!-- FAQ-Eintrag 4 -->
         <div class="faq-item">
             <button class="faq-question">Erhalte ich eine Sendungsverfolgung?</button>
             <div class="faq-answer">
                 <p>Ja, sobald deine Bestellung versendet wurde, erhältst du per E-Mail einen Link zur Sendungsverfolgung.</p>
             </div>
         </div>
-  
 
-    <div class="faq-item">
-        <button class="faq-question">Was passiert, wenn ein Artikel nicht verfügbar ist?</button>
-        <div class="faq-answer">
-            <p>Wenn ein Artikel ausverkauft ist, informieren wir dich direkt nach deiner Bestellung und bieten Alternativen oder eine Rückerstattung an.</p>
+        <!-- FAQ-Eintrag 5 -->
+        <div class="faq-item">
+            <button class="faq-question">Was passiert, wenn ein Artikel nicht verfügbar ist?</button>
+            <div class="faq-answer">
+                <p>Wenn ein Artikel ausverkauft ist, informieren wir dich direkt nach deiner Bestellung und bieten Alternativen oder eine Rückerstattung an.</p>
+            </div>
         </div>
-    </div>
 
-    <div class="faq-item">
-        <button class="faq-question">Wie kann ich mein Kundenkonto löschen?</button>
-        <div class="faq-answer">
-            <p>Kontaktiere unseren Support unter <a href="mailto:support@sportx.de">support@sportx.de</a> mit dem Betreff „Konto löschen“. Wir bearbeiten deine Anfrage umgehend.</p>
+        <!-- FAQ-Eintrag 6 -->
+        <div class="faq-item">
+            <button class="faq-question">Wie kann ich mein Kundenkonto löschen?</button>
+            <div class="faq-answer">
+                <p>Kontaktiere unseren Support unter <a href="mailto:support@sportx.de">support@sportx.de</a> mit dem Betreff „Konto löschen“. Wir bearbeiten deine Anfrage umgehend.</p>
+            </div>
         </div>
-    </div>
 
-    
-    </div>
-    </div>
+    </div> <!-- Ende .faq-container -->
 </section>
 
+<!-- Eingebettetes CSS für FAQ-Seite -->
 <style>
     .faq-page {
         max-width: 800px;
@@ -88,7 +96,7 @@
     }
 
     .faq-answer {
-        display: none;
+        display: none; /* standardmäßig versteckt */
         padding-bottom: 15px;
         color: var(--text-color);
     }
@@ -106,10 +114,11 @@
     }
 
     .faq-item.active .faq-answer {
-        display: block;
+        display: block; /* sichtbar, wenn aktiv */
     }
 </style>
 
+<!-- JavaScript: Klappt bei Klick die jeweilige Antwort auf oder zu -->
 <script>
     document.querySelectorAll(".faq-question").forEach(button => {
         button.addEventListener("click", () => {
@@ -119,5 +128,6 @@
     });
 </script>
 
-
-<?php include 'view/layout/footer.php'; ?>
+<?php 
+include 'view/layout/footer.php'; 
+?>
