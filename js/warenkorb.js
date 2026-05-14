@@ -1,3 +1,5 @@
+// Beim Laden der Seite initial den Warenkorb abrufen und Zähler/Buttons aktualisieren
+// Hinweis: updateCartButtons() ist derzeit nirgends definiert und hat somit keine Wirkung
 //Hussein
 
 // Beim Laden der Seite initial den Warenkorb abrufen und Zähler/Buttons aktualisieren
